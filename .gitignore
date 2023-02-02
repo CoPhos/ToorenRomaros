@@ -40,7 +40,7 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
-
+application.properties
 # dependencies
 /node_modules
 /.pnp
