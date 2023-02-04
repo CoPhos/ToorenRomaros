@@ -1,0 +1,313 @@
+openapi: 3.0.3
+info:
+    title: Tooren Romaros
+    version: "0.1"
+paths: {}
+components:
+    schemas:
+        User:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                user_first_name:
+                    type: string
+                user_last_name:
+                    type: string
+                user_birthday:
+                    type: string
+                user_super_critic:
+                    type: boolean
+                user_about:
+                    type: string
+                user_email:
+                    type: string
+                user_password:
+                    type: string
+        Comment:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                creates_user_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belongs_film_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                comment_body:
+                    type: string
+                comment_datetime:
+                    type: string
+                comment_like_count:
+                    type: integer
+        Critic_Review:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                publish_user_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belongs_film_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                post_datetime:
+                    type: string
+                post_discuss_count:
+                    type: integer
+                post_like_count:
+                    type: integer
+                post_body:
+                    type: string
+                post_tittle:
+                    type: string
+        Discuss:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                publish_user_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_post_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                discuss_like_count:
+                    type: integer
+                discuss_body:
+                    type: string
+                discuss_tittle:
+                    type: string
+        Episodes:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_tv_serie:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                episode_season:
+                    type: string
+                episode_air_date:
+                    type: string
+                episode_synopsis:
+                    type: string
+                episode_photo:
+                    type: string
+                    format: binary
+                episode_runtime:
+                    type: string
+        Movie:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                movie_tittle:
+                    type: string
+                movie_synopsis:
+                    type: string
+                movie_original_langueage:
+                    type: string
+                movie_release_theaters_date:
+                    type: string
+                movie_release_streaming_date:
+                    type: string
+                movie_runtime:
+                    type: string
+                movie_distributor:
+                    type: string
+                movie_box_office:
+                    type: string
+                movie_photo:
+                    type: string
+                    format: binary
+                movie_trailer:
+                    type: string
+                    format: binary
+                movie_suitable_for:
+                    type: string
+                movie_at_theater:
+                    type: string
+        Staff:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                staff_first_name:
+                    type: string
+                staff_last_name:
+                    type: string
+                staff_biography:
+                    type: string
+                staff_birthday:
+                    type: string
+                staff_profile_photo:
+                    type: string
+                    format: binary
+        Tv_Serie:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                tv_serie_tittle:
+                    type: string
+                tv_serie_synopsis:
+                    type: string
+                tv_serie_original_langueage:
+                    type: string
+                tv_serie_release_streaming_date:
+                    type: string
+                tv_serie_runtime:
+                    type: string
+                tv_serie_distributor:
+                    type: string
+                tv_serie_photo:
+                    type: string
+                    format: binary
+                tv_serie_trailer:
+                    type: string
+                    format: binary
+                tv_serie_suitable_for:
+                    type: string
+        Season:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_tv_serie:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                season_number:
+                    type: string
+                season_synopsis:
+                    type: string
+                season_num_episodes:
+                    type: string
+                season_release_date:
+                    type: string
+        Photo:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_staff:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                photo:
+                    type: string
+                    format: binary
+        Video:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                video:
+                    type: string
+                    format: binary
+        Rating:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                rate_user:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                rating:
+                    type: number
+        Genre:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                genre:
+                    type: string
+        Stream_Sites:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                stream_site_name:
+                    type: string
+                stream_site_logo:
+                    type: string
+                    format: binary
+                stream_site_month_price:
+                    type: string
+paths:
+    /users:
+        post:
+            summary: Register User
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+    /users/{id}:
+        parameters:
+            -schema:
+                type: string
+            name: uuid
+            in: path
+            required: true
+        get:
+            summary: View User
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+        put:
+            summary: Modify User
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+        delete:
+            summary: Delete User
+            responses:
+                '204':
+                    description: No content
