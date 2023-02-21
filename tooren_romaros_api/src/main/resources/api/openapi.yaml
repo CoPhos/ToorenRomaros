@@ -82,80 +82,93 @@ components:
                     type: string
                 discuss_tittle:
                     type: string
-        Episodes:
-            type: object
-            properties:
-                uuid:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                belong_tv_serie:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                episode_season:
-                    type: string
-                episode_air_date:
-                    type: string
-                episode_synopsis:
-                    type: string
-                episode_photo:
-                    type: string
-                    format: binary
-                episode_runtime:
-                    type: string
-        Movie:
-            type: object
-            properties:
-                uuid:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                movie_tittle:
-                    type: string
-                movie_synopsis:
-                    type: string
-                movie_original_langueage:
-                    type: string
-                movie_release_theaters_date:
-                    type: string
-                movie_release_streaming_date:
-                    type: string
-                movie_runtime:
-                    type: string
-                movie_distributor:
-                    type: string
-                movie_box_office:
-                    type: string
-                movie_photo:
-                    type: string
-                    format: binary
-                movie_trailer:
-                    type: string
-                    format: binary
-                movie_suitable_for:
-                    type: string
-                movie_at_theater:
-                    type: string
-                genres:
-                    type: array
-                    items:
-                        allOf:
-                            - "$ref": "#/components/schemas/Genre"
-                    description: The genres of the movie.
-                staffs:
-                    type: array
-                    items:
-                        allOf:
-                            - "$ref": "#/components/schemas/Staff"
-                    description: The genres of the movie.
-        Staff:
-            type: object
-            properties:
-                uuid:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                staff_first_name:
-                    type: string
-                staff_last_name:
-                    type: string
+        Film:
+            allOf:
+                - type: object
+                  properties:
+                        uuid:
+                            type: string
+                            pattern: '^[0-9a-fA-F\-]{36}$'
+                        tittle:
+                            type: string
+                        synopsis:
+                            type: string
+                        original_langueage:
+                            type: string
+                        runtime:
+                            type: string
+                        distributor:
+                            type: string
+                        photo:
+                            type: string
+                            format: binary
+                        trailer:
+                            type: string
+                            format: binary
+                        suitable_for:
+                            type: string
+                    - oneOf:
+                        - $ref: '#/components/schema/Movie'
+                        - $ref: '#/components/schema/TvSerie'
+                      discriminator:
+                          propertyName: categories
+                          mapping:
+                              Movie: '#/components/schema/Movie'
+                              TvSerie: '#/components/schema/TvSerie'
+            Movie:
+                type: object
+                properties:
+                    categories:
+                        type: string
+                    release_theaters_date:
+                        type: string
+                    release_streaming_date:
+                        type: string
+                    box_office:
+                        type: string
+                    at_teather:
+                        type: string
+                required:
+                    - categories
+            TvSerie:
+                type: object
+                properties:
+                    categories:
+                        type: string
+                    release_streaming_date:
+                        type: string
+                required:
+                    - categories
+            Episodes:
+                type: object
+                properties:
+                    uuid:
+                        type: string
+                        pattern: '^[0-9a-fA-F\-]{36}$'
+                    belong_tv_serie:
+                        type: string
+                        pattern: '^[0-9a-fA-F\-]{36}$'
+                    episode_season:
+                        type: string
+                    episode_air_date:
+                        type: string
+                    episode_synopsis:
+                        type: string
+                    episode_photo:
+                        type: string
+                        format: binary
+                    episode_runtime:
+                        type: string
+            Staff:
+                type: object
+                properties:
+                    uuid:
+                        type: string
+                        pattern: '^[0-9a-fA-F\-]{36}$'
+                    staff_first_name:
+                        type: string
+                    staff_last_name:
+                        type: string
                 staff_biography:
                     type: string
                 staff_birthday:
@@ -163,32 +176,6 @@ components:
                 staff_profile_photo:
                     type: string
                     format: binary
-        Tv_Serie:
-            type: object
-            properties:
-                uuid:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                tv_serie_tittle:
-                    type: string
-                tv_serie_synopsis:
-                    type: string
-                tv_serie_original_langueage:
-                    type: string
-                tv_serie_release_streaming_date:
-                    type: string
-                tv_serie_runtime:
-                    type: string
-                tv_serie_distributor:
-                    type: string
-                tv_serie_photo:
-                    type: string
-                    format: binary
-                tv_serie_trailer:
-                    type: string
-                    format: binary
-                tv_serie_suitable_for:
-                    type: string
         Season:
             type: object
             properties:
@@ -213,11 +200,9 @@ components:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 belong_film:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                belong_staff:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    type: array
+                    items:
+                        $ref: '#/components/schema/Film'
                 photo:
                     type: string
                     format: binary
@@ -228,8 +213,9 @@ components:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 belong_film:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    type: array
+                    items:
+                        $ref: '#/components/schema/Film'
                 video:
                     type: string
                     format: binary
@@ -240,8 +226,9 @@ components:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 belong_film:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    type: array
+                    items:
+                        $ref: '#/components/schema/Film'
                 rate_user:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
