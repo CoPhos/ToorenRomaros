@@ -2,7 +2,6 @@ openapi: 3.0.3
 info:
     title: Tooren Romaros
     version: "0.1"
-paths: {}
 components:
     schemas:
         User:
@@ -135,6 +134,18 @@ components:
                     type: string
                 movie_at_theater:
                     type: string
+                genres:
+                    type: array
+                    items:
+                        allOf:
+                            - "$ref": "#/components/schemas/Genre"
+                    description: The genres of the movie.
+                staffs:
+                    type: array
+                    items:
+                        allOf:
+                            - "$ref": "#/components/schemas/Staff"
+                    description: The genres of the movie.
         Staff:
             type: object
             properties:
@@ -242,9 +253,6 @@ components:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
-                belong_film:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
                 genre:
                     type: string
         Stream_Sites:
@@ -276,13 +284,13 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/User'
-    /users/{id}:
+    /users/{uuid}:
         parameters:
-            -schema:
+            - schema:
                 type: string
-            name: uuid
-            in: path
-            required: true
+              name: uuid
+              in: path
+              required: true
         get:
             summary: View User
             responses:
@@ -308,6 +316,198 @@ paths:
                             $ref: '#/components/schemas/User'
         delete:
             summary: Delete User
+            responses:
+                '204':
+                    description: No content
+    /movies:
+        post:
+            summary: Create Movie
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Movie'
+        get:
+            summary: List All Movies
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Movie'
+    /movies/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Movie
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Movie'
+        put:
+            summary: Modify Movie
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Movie'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Movie'
+        delete:
+            summary: Delete Movie
+            responses:
+                '204':
+                    description: No content
+    /staffs:
+        post:
+            summary: Create Staff 
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Staff'
+        get:
+            summary: List All Staffs
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Staff'
+    /staffs/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Staff
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Staff'
+        put:
+            summary: Modify Staff
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Staff'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Staff'
+        delete:
+            summary: Delete Staff
+            responses:
+                '204':
+                    description: No content
+    /tv-series:
+        post:
+            summary: Create TV Serie
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Tv_Serie'
+        get:
+            summary: List All TV Series
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Tv_Serie'
+    /tv-serie/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View TV Serie
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Tv_Serie'
+        put:
+            summary: Modify TV Serie
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Tv_Serie'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Tv_Serie'
+        delete:
+            summary: Delete TV Serie
             responses:
                 '204':
                     description: No content
