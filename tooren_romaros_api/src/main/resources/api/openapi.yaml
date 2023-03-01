@@ -82,6 +82,30 @@ components:
                     type: string
                 discuss_tittle:
                     type: string
+        Movie:
+              type: object
+              properties:
+                  categories:
+                      type: string
+                  release_theaters_date:
+                      type: string
+                  release_streaming_date:
+                      type: string
+                  box_office:
+                      type: string
+                  at_teather:
+                      type: string
+              required:
+                  - categories
+        TvSerie:
+              type: object
+              properties:
+                  categories:
+                      type: string
+                  release_streaming_date:
+                      type: string
+              required:
+                  - categories
         Film:
             allOf:
                 - type: object
@@ -107,75 +131,51 @@ components:
                             format: binary
                         suitable_for:
                             type: string
-                    - oneOf:
-                        - $ref: '#/components/schema/Movie'
-                        - $ref: '#/components/schema/TvSerie'
-                      discriminator:
-                          propertyName: categories
-                          mapping:
-                              Movie: '#/components/schema/Movie'
-                              TvSerie: '#/components/schema/TvSerie'
-            Movie:
-                type: object
-                properties:
-                    categories:
-                        type: string
-                    release_theaters_date:
-                        type: string
-                    release_streaming_date:
-                        type: string
-                    box_office:
-                        type: string
-                    at_teather:
-                        type: string
-                required:
-                    - categories
-            TvSerie:
-                type: object
-                properties:
-                    categories:
-                        type: string
-                    release_streaming_date:
-                        type: string
-                required:
-                    - categories
-            Episodes:
-                type: object
-                properties:
-                    uuid:
-                        type: string
-                        pattern: '^[0-9a-fA-F\-]{36}$'
-                    belong_tv_serie:
-                        type: string
-                        pattern: '^[0-9a-fA-F\-]{36}$'
-                    episode_season:
-                        type: string
-                    episode_air_date:
-                        type: string
-                    episode_synopsis:
-                        type: string
-                    episode_photo:
-                        type: string
-                        format: binary
-                    episode_runtime:
-                        type: string
-            Staff:
-                type: object
-                properties:
-                    uuid:
-                        type: string
-                        pattern: '^[0-9a-fA-F\-]{36}$'
-                    staff_first_name:
-                        type: string
-                    staff_last_name:
-                        type: string
-                staff_biography:
+                - oneOf:
+                    - $ref: '#/components/schemas/Movie'
+                    - $ref: '#/components/schemas/TvSerie'
+                  discriminator:
+                    propertyName: categories
+                    mapping:
+                      Movie: '#/components/schemas/Movie'
+                      TvSerie: '#/components/schemas/TvSerie'
+        Episodes:
+            type: object
+            properties:
+                uuid:
                     type: string
-                staff_birthday:
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_tv_serie:
                     type: string
-                staff_profile_photo:
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                episode_season:
+                    type: string
+                episode_air_date:
+                    type: string
+                episode_synopsis:
+                    type: string
+                episode_photo:
                     type: string
                     format: binary
+                episode_runtime:
+                    type: string
+        Staff:
+              type: object
+              properties:
+                  uuid:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
+                  staff_first_name:
+                      type: string
+                  staff_last_name:
+                      type: string
+                  staff_biography:
+                      type: string
+                  staff_birthday:
+                      type: string
+                  staff_profile_photo:
+                      type: string
+                      format: binary
         Season:
             type: object
             properties:
@@ -202,7 +202,7 @@ components:
                 belong_film:
                     type: array
                     items:
-                        $ref: '#/components/schema/Film'
+                        $ref: '#/components/schemas/Film'
                 photo:
                     type: string
                     format: binary
@@ -215,7 +215,7 @@ components:
                 belong_film:
                     type: array
                     items:
-                        $ref: '#/components/schema/Film'
+                        $ref: '#/components/schemas/Film'
                 video:
                     type: string
                     format: binary
@@ -228,7 +228,7 @@ components:
                 belong_film:
                     type: array
                     items:
-                        $ref: '#/components/schema/Film'
+                        $ref: '#/components/schemas/Film'
                 rate_user:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
@@ -306,9 +306,9 @@ paths:
             responses:
                 '204':
                     description: No content
-    /movies:
+    /Film:
         post:
-            summary: Create Movie
+            summary: Create Film
             responses:
                 '201':
                     description: Created
@@ -320,9 +320,9 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/Movie'
+                            $ref: '#/components/schemas/Film'
         get:
-            summary: List All Movies
+            summary: List All Film
             responses:
                 '200':
                     description: OK
@@ -334,8 +334,8 @@ paths:
                                     items:
                                         type: array
                                         items:
-                                            $ref: '#/components/schemas/Movie'
-    /movies/{uuid}:
+                                            $ref: '#/components/schemas/Film'
+    /Film/{uuid}:
         parameters:
             - schema:
                 type: string
@@ -350,23 +350,23 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Movie'
+                                $ref: '#/components/schemas/Film'
         put:
-            summary: Modify Movie
+            summary: Modify Film
             responses:
                 '200':
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Movie'
+                                $ref: '#/components/schemas/Film'
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/Movie'
+                            $ref: '#/components/schemas/Film'
         delete:
-            summary: Delete Movie
+            summary: Delete Film
             responses:
                 '204':
                     description: No content
@@ -431,70 +431,6 @@ paths:
                             $ref: '#/components/schemas/Staff'
         delete:
             summary: Delete Staff
-            responses:
-                '204':
-                    description: No content
-    /tv-series:
-        post:
-            summary: Create TV Serie
-            responses:
-                '201':
-                    description: Created
-                    headers:
-                        Location:
-                            schema:
-                                type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Tv_Serie'
-        get:
-            summary: List All TV Series
-            responses:
-                '200':
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                properties:
-                                    items:
-                                        type: array
-                                        items:
-                                            $ref: '#/components/schemas/Tv_Serie'
-    /tv-serie/{uuid}:
-        parameters:
-            - schema:
-                type: string
-              name: uuid
-              in: path
-              required: true
-        get:
-            summary: View TV Serie
-            responses:
-                '200':
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Tv_Serie'
-        put:
-            summary: Modify TV Serie
-            responses:
-                '200':
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Tv_Serie'
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Tv_Serie'
-        delete:
-            summary: Delete TV Serie
             responses:
                 '204':
                     description: No content
