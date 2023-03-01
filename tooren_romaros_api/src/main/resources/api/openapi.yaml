@@ -24,6 +24,17 @@ components:
                     type: string
                 user_password:
                     type: string
+                user_photo:
+                    type: string
+                    format: binary
+                user_verified_email:
+                    type: boolean
+                user_created_date:
+                    type: string
+                follower_count:
+                    type: integer
+                following_count:
+                    type: integer
         Comment:
             type: object
             properties:
@@ -85,8 +96,6 @@ components:
         Movie:
               type: object
               properties:
-                  categories:
-                      type: string
                   release_theaters_date:
                       type: string
                   release_streaming_date:
@@ -95,17 +104,17 @@ components:
                       type: string
                   at_teather:
                       type: string
-              required:
-                  - categories
+                  sequel:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
+                  prequel:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
         TvSerie:
               type: object
               properties:
-                  categories:
-                      type: string
                   release_streaming_date:
                       type: string
-              required:
-                  - categories
         Film:
             allOf:
                 - type: object
@@ -131,14 +140,47 @@ components:
                             format: binary
                         suitable_for:
                             type: string
+                        has_categories:
+                            type: array
+                            items:
+                              type: string
+                              pattern: '^[0-9a-fA-F\-]{36}$'
+                        takepart_staff:
+                            type: array
+                            items:
+                              type: string
+                              pattern: '^[0-9a-fA-F\-]{36}$'
+                        available_streamsite:
+                            type: array
+                            items:
+                              type: string
+                              pattern: '^[0-9a-fA-F\-]{36}$'
                 - oneOf:
                     - $ref: '#/components/schemas/Movie'
                     - $ref: '#/components/schemas/TvSerie'
-                  discriminator:
-                    propertyName: categories
-                    mapping:
-                      Movie: '#/components/schemas/Movie'
-                      TvSerie: '#/components/schemas/TvSerie'
+        Season:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                season_number:
+                    type: string
+                season_synopsis:
+                    type: string
+                season_num_episodes:
+                    type: string
+                season_release_date:
+                    type: string
+                next_season:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                prev_season:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
         Episodes:
             type: object
             properties:
@@ -176,23 +218,6 @@ components:
                   staff_profile_photo:
                       type: string
                       format: binary
-        Season:
-            type: object
-            properties:
-                uuid:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                belong_tv_serie:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                season_number:
-                    type: string
-                season_synopsis:
-                    type: string
-                season_num_episodes:
-                    type: string
-                season_release_date:
-                    type: string
         Photo:
             type: object
             properties:
@@ -200,9 +225,13 @@ components:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                appears_staff:
                     type: array
                     items:
-                        $ref: '#/components/schemas/Film'
+                        type: string
+                        pattern: '^[0-9a-fA-F\-]{36}$'
                 photo:
                     type: string
                     format: binary
@@ -213,9 +242,8 @@ components:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 belong_film:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Film'
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
                 video:
                     type: string
                     format: binary
@@ -226,9 +254,8 @@ components:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 belong_film:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/Film'
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
                 rate_user:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
@@ -315,7 +342,7 @@ paths:
                     headers:
                         Location:
                             schema:
-                                type: string
+                                type: object
             requestBody:
                 content:
                     application/json:
