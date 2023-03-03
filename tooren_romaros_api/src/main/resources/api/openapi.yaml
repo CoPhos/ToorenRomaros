@@ -53,6 +53,10 @@ components:
                     type: string
                 comment_like_count:
                     type: integer
+                comment_edited:
+                    type: boolean
+                last_edited:
+                    type: string
         Critic_Review:
             type: object
             properties:
@@ -181,7 +185,7 @@ components:
                 prev_season:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
-        Episodes:
+        Episode:
             type: object
             properties:
                 uuid:
@@ -269,7 +273,7 @@ components:
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 genre:
                     type: string
-        Stream_Sites:
+        Stream_Site:
             type: object
             properties:
                 uuid:
@@ -333,7 +337,199 @@ paths:
             responses:
                 '204':
                     description: No content
-    /Film:
+    /comments:
+        post:
+            summary: Post Comment
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Comment'
+        get:
+            summary: List All Comment
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Comment'
+    /comments/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Comment
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Comment'
+        put:
+            summary: Modify Comment
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Comment'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Comment'
+        delete:
+            summary: Delete Comment
+            responses:
+                '204':
+                    description: No content
+    /critic-reviews:
+        post:
+            summary: Post Critic Review
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Critic_Review'
+        get:
+            summary: List All Critic Review
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Critic_Review'
+    /critic-reviews/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Critic Review
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Critic_Review'
+        put:
+            summary: Modify Critic Review
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Critic_Review'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Critic_Review'
+        delete:
+            summary: Delete Critic Review
+            responses:
+                '204':
+                    description: No content
+    /discussions:
+        post:
+            summary: Post Discuss
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Discuss'
+        get:
+            summary: List All Discuss
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Discuss'
+    /discussions/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Discuss
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Discuss'
+        put:
+            summary: Modify Discuss
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Discuss'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Discuss'
+        delete:
+            summary: Delete Discuss
+            responses:
+                '204':
+                    description: No content
+    /films:
         post:
             summary: Create Film
             responses:
@@ -362,7 +558,7 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Film'
-    /Film/{uuid}:
+    /films/{uuid}:
         parameters:
             - schema:
                 type: string
@@ -370,7 +566,7 @@ paths:
               in: path
               required: true
         get:
-            summary: View Movie
+            summary: View Film
             responses:
                 '200':
                     description: OK
@@ -394,6 +590,134 @@ paths:
                             $ref: '#/components/schemas/Film'
         delete:
             summary: Delete Film
+            responses:
+                '204':
+                    description: No content
+    /seasons:
+        post:
+            summary: Create Season
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Season'
+        get:
+            summary: List All Season
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Season'
+    /seasons/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Season
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Season'
+        put:
+            summary: Modify Season
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Season'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Season'
+        delete:
+            summary: Delete Season
+            responses:
+                '204':
+                    description: No content
+    /episodes:
+        post:
+            summary: Create Episode
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Episode'
+        get:
+            summary: List All Episode
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Episode'
+    /episodes/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Episode
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Episode'
+        put:
+            summary: Modify Episode
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Episode'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Episode'
+        delete:
+            summary: Delete Episode
             responses:
                 '204':
                     description: No content
@@ -458,6 +782,326 @@ paths:
                             $ref: '#/components/schemas/Staff'
         delete:
             summary: Delete Staff
+            responses:
+                '204':
+                    description: No content
+    /photos:
+        post:
+            summary: Post Photo 
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Photo'
+        get:
+            summary: List All Photos
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Photo'
+    /photos/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Photo
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Photo'
+        put:
+            summary: Modify Photo
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Photo'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Photo'
+        delete:
+            summary: Delete Photo
+            responses:
+                '204':
+                    description: No content
+    /videos:
+        post:
+            summary: Post Video 
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Video'
+        get:
+            summary: List All Videos
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Video'
+    /videos/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Video
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Video'
+        put:
+            summary: Modify Video
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Video'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Video'
+        delete:
+            summary: Delete Video
+            responses:
+                '204':
+                    description: No content
+    /ratings:
+        post:
+            summary: Post Rating 
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Rating'
+        get:
+            summary: List All Rating
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Rating'
+    /ratings/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Rating
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Rating'
+        put:
+            summary: Modify Rating
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Rating'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Rating'
+        delete:
+            summary: Delete Rating
+            responses:
+                '204':
+                    description: No content
+    /genres:
+        post:
+            summary: Create Genre 
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Genre'
+        get:
+            summary: List All Genre
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Genre'
+    /genres/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Genre
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Genre'
+        put:
+            summary: Modify Genre
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Genre'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Genre'
+        delete:
+            summary: Delete Genre
+            responses:
+                '204':
+                    description: No content
+    /stream-sites:
+        post:
+            summary: Create Stream Site 
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Stream_Site'
+        get:
+            summary: List All Stream Site
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Stream_Site'
+    /stream-sites/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            summary: View Stream Site
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Stream_Site'
+        put:
+            summary: Modify Stream Site
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Stream_Site'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Stream_Site'
+        delete:
+            summary: Delete Stream Site
             responses:
                 '204':
                     description: No content
