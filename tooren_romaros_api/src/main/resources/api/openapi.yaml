@@ -59,14 +59,6 @@ components:
                     type: string
                 post_like_count:
                     type: integer
-        Rating:
-            type: object
-            properties:
-                rating:
-                    type: number
-                belongs_post_id:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
         Post:
           allOf:
             - type: object
@@ -83,11 +75,12 @@ components:
                 publish_date:
                     type: string
                     format: date-time
+                rating:
+                    type: number
+                    format: float
             - oneOf:
               - $ref: '#/components/schemas/Critic_Review'
               - $ref: '#/components/schemas/Comment'
-              - $ref: '#/components/schemas/Rating'
-              
         Discuss:
             type: object
             properties:
@@ -332,7 +325,7 @@ components:
             minimum: 1
             maximum: 20
             default: 10
-          description: The number of items to return.
+          description: The maximum number of items to return.
       sortParam:
           name: sort
           in: query
@@ -343,6 +336,12 @@ components:
                   Use the field name, suffixed with ":asc" for ascending
                   or ":desc" for descending order.
                   Valid fields: publish_date, like_count.
+      cursorParam:
+          name: cursor
+          in: query
+          description: Use the cursos from response to access more results.
+          schema:
+            type: string
 paths:
     /users:
         post:
@@ -410,7 +409,7 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Post'
-    /film/{uuid}/posts:
+    /films/{uuid}/posts:
         parameters:
           - schema:
               type: string
@@ -439,7 +438,7 @@ paths:
                                     page_count:
                                         type: integer
                                         description: Number of pages available.
-    /user/{uuid}/posts:
+    /users/{uuid}/posts:
         parameters:
           - schema:
               type: string
@@ -678,18 +677,8 @@ paths:
                     description: |
                       Return only series available at a specific streaming platform.
                       Provide multiple streaming platform as comma-separated values.
-            - name: limit
-              in: query
-              description: The maximum number of results to return.
-              schema:
-                type: integer
-                default: 20
-                maximum: 50
-            - name: cursor
-              in: query
-              description: Use the cursos from response to access more results.
-              schema:
-                type: string
+            - $ref: '#/components/parameters/limitParam'
+            - $ref: '#/components/parameters/cursorParam'
             - name: sort
               in: query
               description: |
@@ -916,6 +905,10 @@ paths:
             required: true
         get:
             summary: List All Staff From Specific Film
+            operationId: listStaffFromFilm
+            parameters:
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/cursorParam'
             responses:
                 '200':
                     description: OK
@@ -928,6 +921,10 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Staff'
+                                    cursor:
+                                      type: string
+                                      description: Cursor for the next result.
+                                      nullable: true
     /staffs/{uuid}:
         parameters:
             - schema:
@@ -987,6 +984,10 @@ paths:
               required: true
         get:
             summary: List All Photo From Specific Film
+            operationId: listPhotoFromFilm
+            parameters:
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/cursorParam'
             responses:
                 '200':
                     description: OK
@@ -999,6 +1000,10 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Photo'
+                                    cursor:
+                                      type: string
+                                      description: Cursor for the next result.
+                                      nullable: true
     /photos/{uuid}:
         parameters:
             - schema:
@@ -1058,6 +1063,10 @@ paths:
               required: true
         get:
             summary: List All Video From Specific Film
+            operationId: listVideoFromFilm
+            parameters:
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/cursorParam'
             responses:
                 '200':
                     description: OK
@@ -1070,6 +1079,10 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Video'
+                                    cursor:
+                                      type: string
+                                      description: Cursor for the next result.
+                                      nullable: true
     /videos/{uuid}:
         parameters:
             - schema:
@@ -1105,27 +1118,6 @@ paths:
             responses:
                 '204':
                     description: No content
-    /posts/{uuid}/ratings:
-        parameters:
-            - schema:
-                type: string
-              name: uuid
-              in: path
-              required: true
-        get:
-            summary: List Rating From Specific Post
-            responses:
-                '200':
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                properties:
-                                    items:
-                                        type: array
-                                        items:
-                                            $ref: '#/components/schemas/Rating'
     /genres:
         post:
             summary: Create Genre 
