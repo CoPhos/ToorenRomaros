@@ -44,6 +44,8 @@ components:
                     type: boolean
                 last_edited:
                     type: string
+                post_like_count:
+                    type: integer
         Critic_Review:
             type: object
             properties:
@@ -54,7 +56,17 @@ components:
                 tittle:
                     type: string
                 synthesis:
-                    type: string 
+                    type: string
+                post_like_count:
+                    type: integer
+        Rating:
+            type: object
+            properties:
+                rating:
+                    type: number
+                belongs_post_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
         Post:
           allOf:
             - type: object
@@ -71,11 +83,10 @@ components:
                 publish_date:
                     type: string
                     format: date-time
-                post_like_count:
-                    type: integer
             - oneOf:
               - $ref: '#/components/schemas/Critic_Review'
               - $ref: '#/components/schemas/Comment'
+              - $ref: '#/components/schemas/Rating'
               
         Discuss:
             type: object
@@ -284,20 +295,6 @@ components:
                 video:
                     type: string
                     format: binary
-        Rating:
-            type: object
-            properties:
-                uuid:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                belong_film:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                rate_user:
-                    type: string
-                    pattern: '^[0-9a-fA-F\-]{36}$'
-                rating:
-                    type: number
         Genre:
             type: object
             properties:
@@ -413,7 +410,7 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Post'
-    /posts/film/{uuid}:
+    /film/{uuid}/posts:
         parameters:
           - schema:
               type: string
@@ -442,7 +439,7 @@ paths:
                                     page_count:
                                         type: integer
                                         description: Number of pages available.
-    /posts/user/{uuid}:
+    /user/{uuid}/posts:
         parameters:
           - schema:
               type: string
@@ -521,7 +518,7 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Discuss'
-    /discussions/critic-review/{uuid}:
+    /critic-review/{uuid}/discussions:
         parameters:
           - schema:
               type: string
@@ -768,8 +765,15 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Season'
+    /film/{uuid}/seasons:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
         get:
-            summary: List All Season
+            summary: List All Season From Specific Tv Serie
             responses:
                 '200':
                     description: OK
@@ -832,8 +836,15 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Episode'
+    /season/{uuid}/episodes:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
         get:
-            summary: List All Episode
+            summary: List All Episodes From Specific Season
             responses:
                 '200':
                     description: OK
@@ -896,8 +907,15 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Staff'
+    /films/{uuid}/staffs:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
         get:
-            summary: List All Staffs
+            summary: List All Staff From Specific Film
             responses:
                 '200':
                     description: OK
@@ -960,8 +978,15 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Photo'
+    /films/{uuid}/photos:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
         get:
-            summary: List All Photos
+            summary: List All Photo From Specific Film
             responses:
                 '200':
                     description: OK
@@ -1024,8 +1049,15 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Video'
+    /films/{uuid}/videos:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
         get:
-            summary: List All Videos
+            summary: List All Video From Specific Film
             responses:
                 '200':
                     description: OK
@@ -1073,23 +1105,15 @@ paths:
             responses:
                 '204':
                     description: No content
-    /ratings:
-        post:
-            summary: Post Rating 
-            responses:
-                '201':
-                    description: Created
-                    headers:
-                        Location:
-                            schema:
-                                type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Rating'
+    /posts/{uuid}/ratings:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
         get:
-            summary: List All Rating
+            summary: List Rating From Specific Post
             responses:
                 '200':
                     description: OK
@@ -1102,41 +1126,6 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Rating'
-    /ratings/{uuid}:
-        parameters:
-            - schema:
-                type: string
-              name: uuid
-              in: path
-              required: true
-        get:
-            summary: View Rating
-            responses:
-                '200':
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Rating'
-        put:
-            summary: Modify Rating
-            responses:
-                '200':
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Rating'
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/Rating'
-        delete:
-            summary: Delete Rating
-            responses:
-                '204':
-                    description: No content
     /genres:
         post:
             summary: Create Genre 
@@ -1152,8 +1141,15 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Genre'
+    /film/{uuid}/genres:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
         get:
-            summary: List All Genre
+            summary: List All Genre From Specific Film
             responses:
                 '200':
                     description: OK
@@ -1216,8 +1212,15 @@ paths:
                     application/json:
                         schema:
                             $ref: '#/components/schemas/Stream_Site'
+    /film/{uuid}/stream-sites:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
         get:
-            summary: List All Stream Site
+            summary: List All Stream Site From Specific Film
             responses:
                 '200':
                     description: OK
