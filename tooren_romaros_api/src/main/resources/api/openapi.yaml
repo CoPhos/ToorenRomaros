@@ -309,6 +309,45 @@ components:
                     format: binary
                 stream_site_month_price:
                     type: string
+        OASError: 
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    path:
+                      type: string
+                      description: For input validation errors, identifies where in the JSON request body the error occured
+                    message:
+                      type: string
+                      description: Human-readable error message
+                    errorCode:
+                      type: string
+                      description: Code indicating error type
+        Problem: 
+          type: object
+          properties:
+            type:
+              type: string
+              description: URI indicating error type
+            title:
+              type: string
+              description: Human-readable error title
+            status:
+              type: integer
+              description: HTTP status code
+            detail:
+              type: string
+              description: Human-readable error details
+            instance:
+              type: string
+              description: URI indicating error instance
+              
     parameters:
       pageParam:
           name: page
@@ -353,6 +392,12 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                    description: Bad request
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError' 
             requestBody:
                 content:
                     application/json:
@@ -374,6 +419,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError' 
         put:
             summary: Modify User
             responses:
@@ -383,6 +434,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/User'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -393,6 +468,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     
     /posts:
         post:
@@ -404,6 +497,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
             requestBody:
                 content:
                     application/json:
@@ -438,6 +549,18 @@ paths:
                                     page_count:
                                         type: integer
                                         description: Number of pages available.
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /users/{uuid}/posts:
         parameters:
           - schema:
@@ -467,6 +590,18 @@ paths:
                                     page_count:
                                         type: integer
                                         description: Number of pages available.
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /posts/{uuid}:
         parameters:
             - schema:
@@ -483,6 +618,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Post'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Post
             responses:
@@ -492,6 +633,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Post'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -502,6 +667,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /discussions:
         post:
             summary: Post Discuss
@@ -512,6 +695,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
             requestBody:
                 content:
                     application/json:
@@ -544,6 +745,18 @@ paths:
                                     page_count:
                                         type: integer
                                         description: Number of pages available.
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /discussions/{uuid}:
         parameters:
             - schema:
@@ -560,6 +773,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Discuss'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Discuss
             responses:
@@ -569,6 +788,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Discuss'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -579,6 +822,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /films:
         post:
             summary: Create Film
@@ -589,6 +850,24 @@ paths:
                         Location:
                             schema:
                                 type: object
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
             requestBody:
                 content:
                     application/json:
@@ -704,6 +983,18 @@ paths:
                                       type: string
                                       description: Cursor for the next result.
                                       nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /films/{uuid}:
         parameters:
             - schema:
@@ -720,6 +1011,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Film'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Film
             responses:
@@ -729,6 +1026,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Film'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -739,6 +1060,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /seasons:
         post:
             summary: Create Season
@@ -749,6 +1088,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
             requestBody:
                 content:
                     application/json:
@@ -775,6 +1132,18 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Season'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /seasons/{uuid}:
         parameters:
             - schema:
@@ -791,6 +1160,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Season'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Season
             responses:
@@ -800,6 +1175,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Season'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -810,6 +1209,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /episodes:
         post:
             summary: Create Episode
@@ -820,6 +1237,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
             requestBody:
                 content:
                     application/json:
@@ -846,6 +1281,18 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Episode'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /episodes/{uuid}:
         parameters:
             - schema:
@@ -861,7 +1308,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Episode'
+                                $ref: '#/components/schemas/Episode' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Episode
             responses:
@@ -871,6 +1324,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Episode'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -881,6 +1358,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /staffs:
         post:
             summary: Create Staff 
@@ -891,6 +1386,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
             requestBody:
                 content:
                     application/json:
@@ -925,6 +1438,18 @@ paths:
                                       type: string
                                       description: Cursor for the next result.
                                       nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /staffs/{uuid}:
         parameters:
             - schema:
@@ -941,6 +1466,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Staff'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Staff
             responses:
@@ -950,6 +1481,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Staff'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -960,6 +1515,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /photos:
         post:
             summary: Post Photo 
@@ -970,6 +1543,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
             requestBody:
                 content:
                     application/json:
@@ -1004,6 +1595,18 @@ paths:
                                       type: string
                                       description: Cursor for the next result.
                                       nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /photos/{uuid}:
         parameters:
             - schema:
@@ -1020,6 +1623,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Photo'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Photo
             responses:
@@ -1029,6 +1638,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Photo'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -1039,6 +1672,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /videos:
         post:
             summary: Post Video 
@@ -1049,6 +1700,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
             requestBody:
                 content:
                     application/json:
@@ -1083,6 +1752,18 @@ paths:
                                       type: string
                                       description: Cursor for the next result.
                                       nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /videos/{uuid}:
         parameters:
             - schema:
@@ -1098,7 +1779,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Video'
+                                $ref: '#/components/schemas/Video' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Video
             responses:
@@ -1108,6 +1795,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Video'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -1118,6 +1829,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /genres:
         post:
             summary: Create Genre 
@@ -1128,6 +1857,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
             requestBody:
                 content:
                     application/json:
@@ -1154,6 +1901,18 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Genre'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /genres/{uuid}:
         parameters:
             - schema:
@@ -1170,6 +1929,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Genre'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Genre
             responses:
@@ -1179,6 +1944,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Genre'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -1189,6 +1978,24 @@ paths:
             responses:
                 '204':
                     description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /stream-sites:
         post:
             summary: Create Stream Site 
@@ -1199,6 +2006,24 @@ paths:
                         Location:
                             schema:
                                 type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
             requestBody:
                 content:
                     application/json:
@@ -1225,6 +2050,18 @@ paths:
                                         type: array
                                         items:
                                             $ref: '#/components/schemas/Stream_Site'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
     /stream-sites/{uuid}:
         parameters:
             - schema:
@@ -1240,7 +2077,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Stream_Site'
+                                $ref: '#/components/schemas/Stream_Site' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
         put:
             summary: Modify Stream Site
             responses:
@@ -1250,6 +2093,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Stream_Site'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
             requestBody:
                 content:
                     application/json:
@@ -1259,4 +2126,22 @@ paths:
             summary: Delete Stream Site
             responses:
                 '204':
-                    description: No content
+                    description: No content 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
