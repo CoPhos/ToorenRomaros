@@ -1,7 +1,42 @@
 openapi: 3.0.3
 info:
     title: Tooren Romaros
-    version: "0.1"
+    version: "1.0"
+    description: |-
+      This is a Movies/Tv-series Review Server based on the OpenAPI 3.0 specification.
+      First version of the API using the design first approach.
+      
+      If you want to know more about the project here are some useful links:
+      - [The Tooren Romaros repository](https://github.com/CoPhos/ToorenRomaros/tree/master)
+      - [The source API definition for the Tooren Romaros project](https://github.com/CoPhos/ToorenRomaros/blob/develop/tooren_romaros_api/src/main/resources/api/openapi.yaml)
+    contact:
+      email: cobos1932@gmail.com
+    license:
+      name: Apache 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://localhost:1000/api/v3
+tags:
+  - name: user
+    description: Operations about user
+  - name: post
+    description: Operations for a commont user post or a complete critic review
+  - name: discuss
+    description: Access to ciritc review discussion
+  - name: film
+    description: Everything about films, movies and Tv series include
+  - name: season
+    description: Operations about season
+  - name: episode
+    description: Operations about episode
+  - name: staff
+    description: Operations about staff
+  - name: photo
+    description: Operations about photo
+  - name: video
+    description: Operations about video
+  - name: stream site
+    description: Operations about stream site
 components:
     schemas:
         User:
@@ -10,20 +45,41 @@ components:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 user_first_name:
                     type: string
+                    minLength: 2 
+                    maxLength: 35
                 user_last_name:
                     type: string
+                    minLength: 2 
+                    maxLength: 35
+                user_nickname:
+                    type: string
+                    minLength: 2 
+                    maxLength: 35
                 user_birthday:
                     type: string
-                user_super_critic:
-                    type: boolean
+                roles:
+                    type: array 
+                    minItems: 1 
+                    uniqueItems: true 
+                    items:
+                      type: string 
+                      enum: 
+                        - SuperCritic
+                        - CommonUser
+                        - Admin
                 user_about:
                     type: string
                 user_email:
                     type: string
+                    format: email 
                 user_password:
                     type: string
+                    format: password 
+                    writeOnly: true 
+                    minLength: 8 
                 user_photo:
                     type: string
                     format: binary
@@ -35,6 +91,12 @@ components:
                     type: integer
                 following_count:
                     type: integer
+            required: 
+              - user_email
+              - user_first_name
+              - user_last_name
+              - user_nickname
+              - roles
         Comment:
             type: object
             properties:
@@ -46,6 +108,7 @@ components:
                     type: string
                 post_like_count:
                     type: integer
+                    default: 0
         Critic_Review:
             type: object
             properties:
@@ -59,6 +122,7 @@ components:
                     type: string
                 post_like_count:
                     type: integer
+                    default: 0
         Post:
           allOf:
             - type: object
@@ -66,6 +130,7 @@ components:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 publish_user_id:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
@@ -78,15 +143,21 @@ components:
                 rating:
                     type: number
                     format: float
+                    default: 0.0
             - oneOf:
               - $ref: '#/components/schemas/Critic_Review'
               - $ref: '#/components/schemas/Comment'
+          required: 
+            - uuid
+            - publish_user_id
+            - belongs_film_id
         Discuss:
             type: object
             properties:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 publish_user_id:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
@@ -95,10 +166,17 @@ components:
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 discuss_like_count:
                     type: integer
+                    default: 0
                 discuss_body:
                     type: string
+                    maxLength: 255
                 discuss_tittle:
                     type: string
+                    maxLength: 50
+            required: 
+            - uuid
+            - publish_user_id
+            - belong_post_id
         Movie:
               type: object
               properties:
@@ -117,9 +195,11 @@ components:
                   sequel:
                       type: string
                       pattern: '^[0-9a-fA-F\-]{36}$'
+                      default: null
                   prequel:
                       type: string
                       pattern: '^[0-9a-fA-F\-]{36}$'
+                      default: null
                   available_streamsite:
                             type: array
                             items:
@@ -145,6 +225,7 @@ components:
                         uuid:
                             type: string
                             pattern: '^[0-9a-fA-F\-]{36}$'
+                            readOnly: true 
                         tittle:
                             type: string
                         synopsis:
@@ -197,12 +278,17 @@ components:
                 - oneOf:
                     - $ref: '#/components/schemas/Movie'
                     - $ref: '#/components/schemas/TvSerie'
+            required:
+              - uuid
+              - takepart_staff
+              - has_genres
         Season:
             type: object
             properties:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 belong_film:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
@@ -221,12 +307,16 @@ components:
                 prev_season:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+            required:
+              - uuid
+              - belong_film
         Episode:
             type: object
             properties:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 belong_tv_serie:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
@@ -242,12 +332,16 @@ components:
                     format: binary
                 episode_runtime:
                     type: string
+            required:
+              - uuid
+              - belong_tv_serie
         Staff:
               type: object
               properties:
                   uuid:
                       type: string
                       pattern: '^[0-9a-fA-F\-]{36}$'
+                      readOnly: true 
                   staff_first_name:
                       type: string
                   staff_last_name:
@@ -259,12 +353,15 @@ components:
                   staff_profile_photo:
                       type: string
                       format: binary
+              required:
+              - uuid 
         Photo:
             type: object
             properties:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 belong_film:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
@@ -276,32 +373,44 @@ components:
                 photo:
                     type: string
                     format: binary
+            required:
+              - uuid
+              - belong_film
+              - appears_staff
         Video:
             type: object
             properties:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 belong_film:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
                 video:
                     type: string
                     format: binary
+            required:
+              - uuid
+              - belong_film
         Genre:
             type: object
             properties:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 genre:
                     type: string
+            required:
+              - uuid
         Stream_Site:
             type: object
             properties:
                 uuid:
                     type: string
                     pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
                 stream_site_name:
                     type: string
                 stream_site_logo:
@@ -309,6 +418,8 @@ components:
                     format: binary
                 stream_site_month_price:
                     type: string
+            required:
+              - uuid
         OASError: 
             type: object
             properties:
@@ -384,6 +495,8 @@ components:
 paths:
     /users:
         post:
+            tags:
+            - user
             summary: Register User
             responses:
                 '201':
@@ -411,6 +524,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+            - user
             summary: View User
             responses:
                 '200':
@@ -426,6 +541,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError' 
         put:
+            tags:
+            - user
             summary: Modify User
             responses:
                 '200':
@@ -464,6 +581,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/User'
         delete:
+            tags:
+            - user
             summary: Delete User
             responses:
                 '204':
@@ -489,6 +608,8 @@ paths:
     
     /posts:
         post:
+            tags:
+            - post
             summary: Publish Post
             responses:
                 '201':
@@ -528,6 +649,8 @@ paths:
             in: path
             required: true
         get:
+            tags:
+            - post
             summary: List/Search All Posts From Specefic Film
             operationId: ListOrSearchPostsByFilm
             parameters:
@@ -569,6 +692,8 @@ paths:
             in: path
             required: true
         get:
+            tags:
+              - post
             summary: List/Search All Posts From Specefic User
             operationId: ListOrSearchPostsByUser
             parameters:
@@ -610,6 +735,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - post
             summary: View Post
             responses:
                 '200':
@@ -625,6 +752,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - post
             summary: Modify Post
             responses:
                 '200':
@@ -687,6 +816,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /discussions:
         post:
+            tags:
+              - discuss
             summary: Post Discuss
             responses:
                 '201':
@@ -726,6 +857,8 @@ paths:
             in: path
             required: true
         get:
+            tags:
+              - discuss
             summary: List All Discusses By Critic Review
             operationId: listDiscussesByCriticReview
             parameters:
@@ -765,6 +898,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - discuss
             summary: View Discuss
             responses:
                 '200':
@@ -780,6 +915,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - discuss
             summary: Modify Discuss
             responses:
                 '200':
@@ -818,6 +955,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Discuss'
         delete:
+            tags:
+              - discuss
             summary: Delete Discuss
             responses:
                 '204':
@@ -842,6 +981,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /films:
         post:
+            tags:
+              - film
             summary: Create Film
             responses:
                 '201':
@@ -874,6 +1015,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Film'
         get:
+            tags:
+              - film
             summary: List/Search For Film
             operationId: listOrSearchForFilm
             parameters:
@@ -1003,6 +1146,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - film
             summary: View Film
             responses:
                 '200':
@@ -1018,6 +1163,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - film
             summary: Modify Film
             responses:
                 '200':
@@ -1056,6 +1203,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Film'
         delete:
+            tags:
+              - film
             summary: Delete Film
             responses:
                 '204':
@@ -1080,6 +1229,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /seasons:
         post:
+            tags:
+              - season
             summary: Create Season
             responses:
                 '201':
@@ -1119,6 +1270,8 @@ paths:
             in: path
             required: true
         get:
+            tags:
+              - season
             summary: List All Season From Specific Tv Serie
             responses:
                 '200':
@@ -1152,6 +1305,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - season
             summary: View Season
             responses:
                 '200':
@@ -1167,6 +1322,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - season
             summary: Modify Season
             responses:
                 '200':
@@ -1205,6 +1362,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Season'
         delete:
+            tags:
+              - season
             summary: Delete Season
             responses:
                 '204':
@@ -1229,6 +1388,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /episodes:
         post:
+            tags:
+              - episode
             summary: Create Episode
             responses:
                 '201':
@@ -1268,6 +1429,8 @@ paths:
             in: path
             required: true
         get:
+            tags:
+              - episode
             summary: List All Episodes From Specific Season
             responses:
                 '200':
@@ -1301,6 +1464,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - episode
             summary: View Episode
             responses:
                 '200':
@@ -1316,6 +1481,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - episode
             summary: Modify Episode
             responses:
                 '200':
@@ -1354,6 +1521,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Episode'
         delete:
+            tags:
+              - episode
             summary: Delete Episode
             responses:
                 '204':
@@ -1378,6 +1547,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /staffs:
         post:
+            tags:
+              - staff
             summary: Create Staff 
             responses:
                 '201':
@@ -1417,6 +1588,8 @@ paths:
             in: path
             required: true
         get:
+            tags:
+              - staff
             summary: List All Staff From Specific Film
             operationId: listStaffFromFilm
             parameters:
@@ -1458,6 +1631,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - staff
             summary: View Staff
             responses:
                 '200':
@@ -1473,6 +1648,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - staff
             summary: Modify Staff
             responses:
                 '200':
@@ -1511,6 +1688,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Staff'
         delete:
+            tags:
+              - staff
             summary: Delete Staff
             responses:
                 '204':
@@ -1535,6 +1714,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /photos:
         post:
+            tags:
+              - photo
             summary: Post Photo 
             responses:
                 '201':
@@ -1574,6 +1755,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - photo
             summary: List All Photo From Specific Film
             operationId: listPhotoFromFilm
             parameters:
@@ -1615,6 +1798,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - photo
             summary: View Photo
             responses:
                 '200':
@@ -1630,6 +1815,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - photo
             summary: Modify Photo
             responses:
                 '200':
@@ -1668,6 +1855,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Photo'
         delete:
+            tags:
+              - photo
             summary: Delete Photo
             responses:
                 '204':
@@ -1692,6 +1881,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /videos:
         post:
+            tags:
+              - video
             summary: Post Video 
             responses:
                 '201':
@@ -1731,6 +1922,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - video
             summary: List All Video From Specific Film
             operationId: listVideoFromFilm
             parameters:
@@ -1772,6 +1965,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - video
             summary: View Video
             responses:
                 '200':
@@ -1787,6 +1982,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - video
             summary: Modify Video
             responses:
                 '200':
@@ -1825,6 +2022,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Video'
         delete:
+            tags:
+              - video
             summary: Delete Video
             responses:
                 '204':
@@ -1849,6 +2048,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /genres:
         post:
+            tags:
+              - genre
             summary: Create Genre 
             responses:
                 '201':
@@ -1888,6 +2089,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - genre
             summary: List All Genre From Specific Film
             responses:
                 '200':
@@ -1921,6 +2124,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - genre
             summary: View Genre
             responses:
                 '200':
@@ -1936,6 +2141,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - genre
             summary: Modify Genre
             responses:
                 '200':
@@ -1974,6 +2181,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Genre'
         delete:
+            tags:
+              - genre
             summary: Delete Genre
             responses:
                 '204':
@@ -1998,6 +2207,8 @@ paths:
                           $ref: '#/components/schemas/OASError'
     /stream-sites:
         post:
+            tags:
+              - stream site
             summary: Create Stream Site 
             responses:
                 '201':
@@ -2037,6 +2248,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - stream site
             summary: List All Stream Site From Specific Film
             responses:
                 '200':
@@ -2070,6 +2283,8 @@ paths:
               in: path
               required: true
         get:
+            tags:
+              - stream site
             summary: View Stream Site
             responses:
                 '200':
@@ -2085,6 +2300,8 @@ paths:
                         schema:
                           $ref: '#/components/schemas/OASError'
         put:
+            tags:
+              - stream site
             summary: Modify Stream Site
             responses:
                 '200':
@@ -2123,6 +2340,8 @@ paths:
                         schema:
                             $ref: '#/components/schemas/Stream_Site'
         delete:
+            tags:
+              - stream site
             summary: Delete Stream Site
             responses:
                 '204':
