@@ -3,7 +3,7 @@ info:
     title: Tooren Romaros
     version: "1.0"
     description: |-
-      This is a Movies/Tv-series Review Server based on the OpenAPI 3.0 specification.
+      This is a Movies/Tv-series Reviews Server based on the OpenAPI 3.0 specification.
       First version of the API using the design first approach.
       
       If you want to know more about the project here are some useful links:
@@ -37,6 +37,8 @@ tags:
     description: Operations about video
   - name: stream site
     description: Operations about stream site
+  - name: Security
+    description: Token generator endpoint for basic security
 components:
     schemas:
         User:
@@ -458,7 +460,11 @@ components:
             instance:
               type: string
               description: URI indicating error instance
-              
+    securitySchemes:
+      MyUserToken:
+        type: apiKey
+        in: header
+        name: Authorization
     parameters:
       pageParam:
           name: page
@@ -501,10 +507,15 @@ paths:
             responses:
                 '201':
                     description: Created
-                    headers:
-                        Location:
-                            schema:
-                                type: string
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            username:
+                              type: string
+                            uuid:
+                              type: string
                 '400': 
                     description: Bad request
                     content:
@@ -527,6 +538,8 @@ paths:
             tags:
             - user
             summary: View User
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -544,6 +557,8 @@ paths:
             tags:
             - user
             summary: Modify User
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -584,6 +599,8 @@ paths:
             tags:
             - user
             summary: Delete User
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -611,6 +628,8 @@ paths:
             tags:
             - post
             summary: Publish Post
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -652,6 +671,8 @@ paths:
             tags:
             - post
             summary: List/Search All Posts From Specefic Film
+            security: 
+              - {}
             operationId: ListOrSearchPostsByFilm
             parameters:
               - $ref: '#/components/parameters/pageParam'
@@ -695,6 +716,8 @@ paths:
             tags:
               - post
             summary: List/Search All Posts From Specefic User
+            security: 
+              - {}
             operationId: ListOrSearchPostsByUser
             parameters:
               - $ref: '#/components/parameters/pageParam'
@@ -738,6 +761,8 @@ paths:
             tags:
               - post
             summary: View Post
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -755,6 +780,8 @@ paths:
             tags:
               - post
             summary: Modify Post
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -793,6 +820,8 @@ paths:
                             $ref: '#/components/schemas/Post'
         delete:
             summary: Delete Post
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -819,6 +848,8 @@ paths:
             tags:
               - discuss
             summary: Post Discuss
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -860,6 +891,8 @@ paths:
             tags:
               - discuss
             summary: List All Discusses By Critic Review
+            security: 
+              - {}
             operationId: listDiscussesByCriticReview
             parameters:
               - $ref: '#/components/parameters/sortParam'
@@ -901,6 +934,8 @@ paths:
             tags:
               - discuss
             summary: View Discuss
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -918,6 +953,8 @@ paths:
             tags:
               - discuss
             summary: Modify Discuss
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -958,6 +995,8 @@ paths:
             tags:
               - discuss
             summary: Delete Discuss
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -984,6 +1023,8 @@ paths:
             tags:
               - film
             summary: Create Film
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -1018,6 +1059,8 @@ paths:
             tags:
               - film
             summary: List/Search For Film
+            security: 
+              - {}
             operationId: listOrSearchForFilm
             parameters:
             - name: average_critic_review_before
@@ -1149,6 +1192,8 @@ paths:
             tags:
               - film
             summary: View Film
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1166,6 +1211,8 @@ paths:
             tags:
               - film
             summary: Modify Film
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -1206,6 +1253,8 @@ paths:
             tags:
               - film
             summary: Delete Film
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -1232,6 +1281,8 @@ paths:
             tags:
               - season
             summary: Create Season
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -1273,6 +1324,8 @@ paths:
             tags:
               - season
             summary: List All Season From Specific Tv Serie
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1308,6 +1361,8 @@ paths:
             tags:
               - season
             summary: View Season
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1325,6 +1380,8 @@ paths:
             tags:
               - season
             summary: Modify Season
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -1365,6 +1422,8 @@ paths:
             tags:
               - season
             summary: Delete Season
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -1391,6 +1450,8 @@ paths:
             tags:
               - episode
             summary: Create Episode
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -1432,6 +1493,8 @@ paths:
             tags:
               - episode
             summary: List All Episodes From Specific Season
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1467,6 +1530,8 @@ paths:
             tags:
               - episode
             summary: View Episode
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1484,6 +1549,8 @@ paths:
             tags:
               - episode
             summary: Modify Episode
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -1524,6 +1591,8 @@ paths:
             tags:
               - episode
             summary: Delete Episode
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -1550,6 +1619,8 @@ paths:
             tags:
               - staff
             summary: Create Staff 
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -1591,6 +1662,8 @@ paths:
             tags:
               - staff
             summary: List All Staff From Specific Film
+            security: 
+              - {}
             operationId: listStaffFromFilm
             parameters:
               - $ref: '#/components/parameters/limitParam'
@@ -1634,6 +1707,8 @@ paths:
             tags:
               - staff
             summary: View Staff
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1651,6 +1726,8 @@ paths:
             tags:
               - staff
             summary: Modify Staff
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -1691,6 +1768,8 @@ paths:
             tags:
               - staff
             summary: Delete Staff
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -1716,7 +1795,9 @@ paths:
         post:
             tags:
               - photo
-            summary: Post Photo 
+            summary: Post Photo
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -1758,6 +1839,8 @@ paths:
             tags:
               - photo
             summary: List All Photo From Specific Film
+            security: 
+              - {}
             operationId: listPhotoFromFilm
             parameters:
               - $ref: '#/components/parameters/limitParam'
@@ -1801,6 +1884,8 @@ paths:
             tags:
               - photo
             summary: View Photo
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1818,6 +1903,8 @@ paths:
             tags:
               - photo
             summary: Modify Photo
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -1858,6 +1945,8 @@ paths:
             tags:
               - photo
             summary: Delete Photo
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -1884,6 +1973,8 @@ paths:
             tags:
               - video
             summary: Post Video 
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -1925,6 +2016,8 @@ paths:
             tags:
               - video
             summary: List All Video From Specific Film
+            security: 
+              - {}
             operationId: listVideoFromFilm
             parameters:
               - $ref: '#/components/parameters/limitParam'
@@ -1968,6 +2061,8 @@ paths:
             tags:
               - video
             summary: View Video
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -1985,6 +2080,8 @@ paths:
             tags:
               - video
             summary: Modify Video
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -2025,6 +2122,8 @@ paths:
             tags:
               - video
             summary: Delete Video
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -2051,6 +2150,8 @@ paths:
             tags:
               - genre
             summary: Create Genre 
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -2092,6 +2193,8 @@ paths:
             tags:
               - genre
             summary: List All Genre From Specific Film
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -2127,6 +2230,8 @@ paths:
             tags:
               - genre
             summary: View Genre
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -2144,6 +2249,8 @@ paths:
             tags:
               - genre
             summary: Modify Genre
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -2184,6 +2291,8 @@ paths:
             tags:
               - genre
             summary: Delete Genre
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content
@@ -2210,6 +2319,8 @@ paths:
             tags:
               - stream site
             summary: Create Stream Site 
+            security: 
+              - MyUserToken: []
             responses:
                 '201':
                     description: Created
@@ -2251,6 +2362,8 @@ paths:
             tags:
               - stream site
             summary: List All Stream Site From Specific Film
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -2286,6 +2399,8 @@ paths:
             tags:
               - stream site
             summary: View Stream Site
+            security: 
+              - {}
             responses:
                 '200':
                     description: OK
@@ -2303,6 +2418,8 @@ paths:
             tags:
               - stream site
             summary: Modify Stream Site
+            security: 
+              - MyUserToken: []
             responses:
                 '200':
                     description: OK
@@ -2343,6 +2460,8 @@ paths:
             tags:
               - stream site
             summary: Delete Stream Site
+            security: 
+              - MyUserToken: []
             responses:
                 '204':
                     description: No content 
@@ -2364,3 +2483,31 @@ paths:
                       application/json:
                         schema:
                           $ref: '#/components/schemas/OASError'
+    /tokens:
+      post: 
+        tags:
+          - security
+        description: Create a new token
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: ponelat
+                  password:
+                    type: string
+                    format: password
+            
+        responses:
+          '201':
+            description: Create a new token for gaining authenticated access to resources
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    token:
+                      type: string
