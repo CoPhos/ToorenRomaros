@@ -1,0 +1,2 @@
+/*INSERT IGNORE INTO `tooren_romaros`.`comment` (`id`, `user`, `body`, `datetime`, `like_count`) VALUES 
+('895bde76-9660-4dd0-9e52-aa05e9b68939', 'commonuser', 'Its been a LONG time since F.O.O.L appeared on your channel, xKito! OoO This is a nice welcome. :3','2023-06-12 12:00:05', '4');*/
