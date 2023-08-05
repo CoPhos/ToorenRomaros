@@ -1,0 +1,2513 @@
+openapi: 3.0.3
+info:
+    title: Tooren Romaros
+    version: "1.0"
+    description: |-
+      This is a Movies/Tv-series Reviews Server based on the OpenAPI 3.0 specification.
+      First version of the API using the design first approach.
+      
+      If you want to know more about the project here are some useful links:
+      - [The Tooren Romaros repository](https://github.com/CoPhos/ToorenRomaros/tree/master)
+      - [The source API definition for the Tooren Romaros project](https://github.com/CoPhos/ToorenRomaros/blob/develop/tooren_romaros_api/src/main/resources/api/openapi.yaml)
+    contact:
+      email: cobos1932@gmail.com
+    license:
+      name: Apache 2.0
+      url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: https://localhost:1000/api/v3
+tags:
+  - name: user
+    description: Operations about user
+  - name: post
+    description: Operations for a commont user post or a complete critic review
+  - name: discuss
+    description: Access to ciritc review discussion
+  - name: film
+    description: Everything about films, movies and Tv series include
+  - name: season
+    description: Operations about season
+  - name: episode
+    description: Operations about episode
+  - name: staff
+    description: Operations about staff
+  - name: photo
+    description: Operations about photo
+  - name: video
+    description: Operations about video
+  - name: stream site
+    description: Operations about stream site
+  - name: Security
+    description: Token generator endpoint for basic security
+components:
+    schemas:
+        User:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                user_first_name:
+                    type: string
+                    minLength: 2 
+                    maxLength: 35
+                user_last_name:
+                    type: string
+                    minLength: 2 
+                    maxLength: 35
+                user_nickname:
+                    type: string
+                    minLength: 2 
+                    maxLength: 35
+                user_birthday:
+                    type: string
+                roles:
+                    type: array 
+                    minItems: 1 
+                    uniqueItems: true 
+                    items:
+                      type: string 
+                      enum: 
+                        - SuperCritic
+                        - CommonUser
+                        - Admin
+                user_about:
+                    type: string
+                user_email:
+                    type: string
+                    format: email 
+                user_password:
+                    type: string
+                    format: password 
+                    writeOnly: true 
+                    minLength: 8 
+                user_photo:
+                    type: string
+                    format: binary
+                user_verified_email:
+                    type: boolean
+                user_created_date:
+                    type: string
+                follower_count:
+                    type: integer
+                following_count:
+                    type: integer
+            required: 
+              - user_email
+              - user_first_name
+              - user_last_name
+              - user_nickname
+              - roles
+        Comment:
+            type: object
+            properties:
+                text:
+                    type: string
+                edited:
+                    type: boolean
+                last_edited:
+                    type: string
+                post_like_count:
+                    type: integer
+                    default: 0
+        Critic_Review:
+            type: object
+            properties:
+                discuss_count:
+                    type: integer
+                body:
+                    type: string
+                tittle:
+                    type: string
+                synthesis:
+                    type: string
+                post_like_count:
+                    type: integer
+                    default: 0
+        Post:
+          allOf:
+            - type: object
+              properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                publish_user_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belongs_film_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                publish_date:
+                    type: string
+                    format: date-time
+                rating:
+                    type: number
+                    format: float
+                    default: 0.0
+            - oneOf:
+              - $ref: '#/components/schemas/Critic_Review'
+              - $ref: '#/components/schemas/Comment'
+          required: 
+            - uuid
+            - publish_user_id
+            - belongs_film_id
+        Discuss:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                publish_user_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                belong_post_id:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                discuss_like_count:
+                    type: integer
+                    default: 0
+                discuss_body:
+                    type: string
+                    maxLength: 255
+                discuss_tittle:
+                    type: string
+                    maxLength: 50
+            required: 
+            - uuid
+            - publish_user_id
+            - belong_post_id
+        Movie:
+              type: object
+              properties:
+                  release_theaters_date:
+                      type: string
+                      format: date
+                  release_streaming_date:
+                      type: string
+                      format: date
+                  box_office:
+                      type: string
+                  at_teather:
+                      type: boolean
+                  at_streaming:
+                      type: boolean
+                  sequel:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
+                      default: null
+                  prequel:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
+                      default: null
+                  available_streamsite:
+                            type: array
+                            items:
+                              type: string
+                              pattern: '^[0-9a-fA-F\-]{36}$'
+        TvSerie:
+              type: object
+              properties:
+                  release_streaming_date:
+                      type: string
+                      format: date
+                  at_streaming:
+                      type: boolean
+                  available_streamsite:
+                            type: array
+                            items:
+                              type: string
+                              pattern: '^[0-9a-fA-F\-]{36}$'
+        Film:
+            allOf:
+                - type: object
+                  properties:
+                        uuid:
+                            type: string
+                            pattern: '^[0-9a-fA-F\-]{36}$'
+                            readOnly: true 
+                        tittle:
+                            type: string
+                        synopsis:
+                            type: string
+                        original_langueage:
+                            type: string
+                        runtime:
+                            type: string
+                        distributor:
+                            type: string
+                        photo:
+                            type: string
+                            format: binary
+                        trailer:
+                            type: string
+                            format: binary
+                        publish_date:
+                            type: string
+                            format: date
+                        suitable_for:
+                            type: string
+                        user_view:
+                            type: integer
+                        critic_review:
+                            type: integer
+                        audience_review:
+                            type: integer
+                        average_critic_review:
+                            type: number
+                            format: float
+                            minimum: 0
+                            exclusiveMaximum: true
+                            maximum: 101
+                        average_audience_review:
+                            type: number
+                            format: float
+                            minimum: 0
+                            exclusiveMaximum: true
+                            maximum: 101
+                        has_genres:
+                            type: array
+                            items:
+                              type: string
+                              pattern: '^[0-9a-fA-F\-]{36}$'
+                        takepart_staff:
+                            type: array
+                            items:
+                              type: string
+                              pattern: '^[0-9a-fA-F\-]{36}$'
+                - oneOf:
+                    - $ref: '#/components/schemas/Movie'
+                    - $ref: '#/components/schemas/TvSerie'
+            required:
+              - uuid
+              - takepart_staff
+              - has_genres
+        Season:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                season_number:
+                    type: string
+                season_synopsis:
+                    type: string
+                season_num_episodes:
+                    type: string
+                season_release_date:
+                    type: string
+                    format: date
+                next_season:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                prev_season:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+            required:
+              - uuid
+              - belong_film
+        Episode:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                belong_tv_serie:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                episode_season:
+                    type: string
+                episode_air_date:
+                    type: string
+                    format: date
+                episode_synopsis:
+                    type: string
+                episode_photo:
+                    type: string
+                    format: binary
+                episode_runtime:
+                    type: string
+            required:
+              - uuid
+              - belong_tv_serie
+        Staff:
+              type: object
+              properties:
+                  uuid:
+                      type: string
+                      pattern: '^[0-9a-fA-F\-]{36}$'
+                      readOnly: true 
+                  staff_first_name:
+                      type: string
+                  staff_last_name:
+                      type: string
+                  staff_biography:
+                      type: string
+                  staff_birthday:
+                      type: string
+                  staff_profile_photo:
+                      type: string
+                      format: binary
+              required:
+              - uuid 
+        Photo:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                appears_staff:
+                    type: array
+                    items:
+                        type: string
+                        pattern: '^[0-9a-fA-F\-]{36}$'
+                photo:
+                    type: string
+                    format: binary
+            required:
+              - uuid
+              - belong_film
+              - appears_staff
+        Video:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                belong_film:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                video:
+                    type: string
+                    format: binary
+            required:
+              - uuid
+              - belong_film
+        Genre:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                genre:
+                    type: string
+            required:
+              - uuid
+        Stream_Site:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    pattern: '^[0-9a-fA-F\-]{36}$'
+                    readOnly: true 
+                stream_site_name:
+                    type: string
+                stream_site_logo:
+                    type: string
+                    format: binary
+                stream_site_month_price:
+                    type: string
+            required:
+              - uuid
+        OASError: 
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    path:
+                      type: string
+                      description: For input validation errors, identifies where in the JSON request body the error occured
+                    message:
+                      type: string
+                      description: Human-readable error message
+                    errorCode:
+                      type: string
+                      description: Code indicating error type
+        Problem: 
+          type: object
+          properties:
+            type:
+              type: string
+              description: URI indicating error type
+            title:
+              type: string
+              description: Human-readable error title
+            status:
+              type: integer
+              description: HTTP status code
+            detail:
+              type: string
+              description: Human-readable error details
+            instance:
+              type: string
+              description: URI indicating error instance
+    securitySchemes:
+      MyUserToken:
+        type: apiKey
+        in: header
+        name: Authorization
+    parameters:
+      pageParam:
+          name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+          description: The number of items to skip before starting to collect the result set.
+      limitParam:
+          name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 20
+            default: 10
+          description: The maximum number of items to return.
+      sortParam:
+          name: sort
+          in: query
+          schema:
+            type: string
+          description: |
+                  Indicate the sorting key and direction for the results.
+                  Use the field name, suffixed with ":asc" for ascending
+                  or ":desc" for descending order.
+                  Valid fields: publish_date, like_count.
+      cursorParam:
+          name: cursor
+          in: query
+          description: Use the cursos from response to access more results.
+          schema:
+            type: string
+paths:
+    /users:
+        post:
+            tags:
+            - user
+            summary: Register User
+            responses:
+                '201':
+                    description: Created
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            username:
+                              type: string
+                            uuid:
+                              type: string
+                '400': 
+                    description: Bad request
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError' 
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+    /users/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+            - user
+            summary: View User
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError' 
+        put:
+            tags:
+            - user
+            summary: Modify User
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/User'
+        delete:
+            tags:
+            - user
+            summary: Delete User
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    
+    /posts:
+        post:
+            tags:
+            - post
+            summary: Publish Post
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Post'
+    /films/{uuid}/posts:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
+        get:
+            tags:
+            - post
+            summary: List/Search All Posts From Specefic Film
+            security: 
+              - {}
+            operationId: ListOrSearchPostsByFilm
+            parameters:
+              - $ref: '#/components/parameters/pageParam'
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/sortParam'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Post'
+                                    page_count:
+                                        type: integer
+                                        description: Number of pages available.
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /users/{uuid}/posts:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
+        get:
+            tags:
+              - post
+            summary: List/Search All Posts From Specefic User
+            security: 
+              - {}
+            operationId: ListOrSearchPostsByUser
+            parameters:
+              - $ref: '#/components/parameters/pageParam'
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/sortParam'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Post'
+                                    page_count:
+                                        type: integer
+                                        description: Number of pages available.
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /posts/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - post
+            summary: View Post
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Post'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - post
+            summary: Modify Post
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Post'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Post'
+        delete:
+            summary: Delete Post
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /discussions:
+        post:
+            tags:
+              - discuss
+            summary: Post Discuss
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Discuss'
+    /critic-review/{uuid}/discussions:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
+        get:
+            tags:
+              - discuss
+            summary: List All Discusses By Critic Review
+            security: 
+              - {}
+            operationId: listDiscussesByCriticReview
+            parameters:
+              - $ref: '#/components/parameters/sortParam'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Discuss'
+                                    page_count:
+                                        type: integer
+                                        description: Number of pages available.
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /discussions/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - discuss
+            summary: View Discuss
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Discuss'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - discuss
+            summary: Modify Discuss
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Discuss'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Discuss'
+        delete:
+            tags:
+              - discuss
+            summary: Delete Discuss
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /films:
+        post:
+            tags:
+              - film
+            summary: Create Film
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: object
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Film'
+        get:
+            tags:
+              - film
+            summary: List/Search For Film
+            security: 
+              - {}
+            operationId: listOrSearchForFilm
+            parameters:
+            - name: average_critic_review_before
+              in: query
+              description: Search films starting before this number. (critic score)
+              schema:
+                type: number
+                format: float
+            - name: average_critic_review_after
+              in: query
+              description: Search films starting after this number. (critic score)
+              schema:
+                type: number
+                format: float
+            - name: average_audience_review_before
+              in: query
+              description: Search films starting before this number. (audience score)
+              schema:
+                type: number
+                format: float
+            - name: average_critic_audience_after
+              in: query
+              description: Search films starting after this number. (audience score)
+              schema:
+                type: number
+                format: float
+            - name: date_film
+              in: query
+              description: Search films only in the specific date.
+              schema:
+                type: string
+                format: date-time
+            - name: tittle
+              in: query
+              description: Performs a full-text search for the tittle entered in the film.
+              schema:
+                type: string
+            - name: genre
+              in: query
+              description: Search films matching specific genres.
+              schema:
+                type: array
+                items:
+                  type: string
+            - name: movies
+              in: query
+              description: Search for movies matching specific criteria.
+              style: deepObject
+              schema:
+                type: object
+                properties:
+                  at_theaters:
+                    type: boolean
+                    description: Return only films available at theaters.
+                  at_streaming:
+                    type: boolean
+                    description: Return only films available at streaming platforms.
+                  available_streaming:
+                    type: array
+                    items:
+                      type: string
+                    description: |
+                      Return only films available at a specific streaming platform.
+                      Provide multiple streaming platform as comma-separated values.
+            - name: series
+              in: query
+              description: Search for series matching specific criteria.
+              style: deepObject
+              schema:
+                type: object
+                properties:
+                  at_streaming:
+                    type: boolean
+                    description: Return only series available at streaming platforms.
+                  available_streaming:
+                    type: array
+                    items:
+                      type: string
+                    description: |
+                      Return only series available at a specific streaming platform.
+                      Provide multiple streaming platform as comma-separated values.
+            - $ref: '#/components/parameters/limitParam'
+            - $ref: '#/components/parameters/cursorParam'
+            - name: sort
+              in: query
+              description: |
+                Indicate the sorting key and direction for the results.
+                Use the field name, suffixed with ":asc" for ascending
+                or ":desc" for descending order.
+                Valid fields: publish_date, tittle, user_view, average_critic_review, average_audience_review.
+              schema:
+                type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                      type: array
+                                      items:
+                                        $ref: '#/components/schemas/Film'
+                                    cursor:
+                                      type: string
+                                      description: Cursor for the next result.
+                                      nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /films/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - film
+            summary: View Film
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Film'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - film
+            summary: Modify Film
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Film'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Film'
+        delete:
+            tags:
+              - film
+            summary: Delete Film
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /seasons:
+        post:
+            tags:
+              - season
+            summary: Create Season
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Season'
+    /film/{uuid}/seasons:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
+        get:
+            tags:
+              - season
+            summary: List All Season From Specific Tv Serie
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Season'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /seasons/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - season
+            summary: View Season
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Season'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - season
+            summary: Modify Season
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Season'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Season'
+        delete:
+            tags:
+              - season
+            summary: Delete Season
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /episodes:
+        post:
+            tags:
+              - episode
+            summary: Create Episode
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Episode'
+    /season/{uuid}/episodes:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
+        get:
+            tags:
+              - episode
+            summary: List All Episodes From Specific Season
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Episode'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /episodes/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - episode
+            summary: View Episode
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Episode' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - episode
+            summary: Modify Episode
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Episode'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Episode'
+        delete:
+            tags:
+              - episode
+            summary: Delete Episode
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /staffs:
+        post:
+            tags:
+              - staff
+            summary: Create Staff 
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Staff'
+    /films/{uuid}/staffs:
+        parameters:
+          - schema:
+              type: string
+            name: uuid
+            in: path
+            required: true
+        get:
+            tags:
+              - staff
+            summary: List All Staff From Specific Film
+            security: 
+              - {}
+            operationId: listStaffFromFilm
+            parameters:
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/cursorParam'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Staff'
+                                    cursor:
+                                      type: string
+                                      description: Cursor for the next result.
+                                      nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /staffs/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - staff
+            summary: View Staff
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Staff'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - staff
+            summary: Modify Staff
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Staff'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Staff'
+        delete:
+            tags:
+              - staff
+            summary: Delete Staff
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /photos:
+        post:
+            tags:
+              - photo
+            summary: Post Photo
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Photo'
+    /films/{uuid}/photos:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - photo
+            summary: List All Photo From Specific Film
+            security: 
+              - {}
+            operationId: listPhotoFromFilm
+            parameters:
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/cursorParam'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Photo'
+                                    cursor:
+                                      type: string
+                                      description: Cursor for the next result.
+                                      nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /photos/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - photo
+            summary: View Photo
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Photo'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - photo
+            summary: Modify Photo
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Photo'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Photo'
+        delete:
+            tags:
+              - photo
+            summary: Delete Photo
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /videos:
+        post:
+            tags:
+              - video
+            summary: Post Video 
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Video'
+    /films/{uuid}/videos:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - video
+            summary: List All Video From Specific Film
+            security: 
+              - {}
+            operationId: listVideoFromFilm
+            parameters:
+              - $ref: '#/components/parameters/limitParam'
+              - $ref: '#/components/parameters/cursorParam'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Video'
+                                    cursor:
+                                      type: string
+                                      description: Cursor for the next result.
+                                      nullable: true
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /videos/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - video
+            summary: View Video
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Video' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - video
+            summary: Modify Video
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Video'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Video'
+        delete:
+            tags:
+              - video
+            summary: Delete Video
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /genres:
+        post:
+            tags:
+              - genre
+            summary: Create Genre 
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Genre'
+    /film/{uuid}/genres:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - genre
+            summary: List All Genre From Specific Film
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Genre'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /genres/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - genre
+            summary: View Genre
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Genre'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - genre
+            summary: Modify Genre
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Genre'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Genre'
+        delete:
+            tags:
+              - genre
+            summary: Delete Genre
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /stream-sites:
+        post:
+            tags:
+              - stream site
+            summary: Create Stream Site 
+            security: 
+              - MyUserToken: []
+            responses:
+                '201':
+                    description: Created
+                    headers:
+                        Location:
+                            schema:
+                                type: string
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Stream_Site'
+    /film/{uuid}/stream-sites:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - stream site
+            summary: List All Stream Site From Specific Film
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    items:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/Stream_Site'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError'
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /stream-sites/{uuid}:
+        parameters:
+            - schema:
+                type: string
+              name: uuid
+              in: path
+              required: true
+        get:
+            tags:
+              - stream site
+            summary: View Stream Site
+            security: 
+              - {}
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Stream_Site' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+        put:
+            tags:
+              - stream site
+            summary: Modify Stream Site
+            security: 
+              - MyUserToken: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Stream_Site'
+                '400': 
+                  description: Bad request
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Stream_Site'
+        delete:
+            tags:
+              - stream site
+            summary: Delete Stream Site
+            security: 
+              - MyUserToken: []
+            responses:
+                '204':
+                    description: No content 
+                '401': 
+                  description: Unauthorized
+                  content:
+                    application/json:
+                      schema:
+                        $ref: '#/components/schemas/OASError' 
+                '403': 
+                  description: Forbidden
+                  content:
+                    application/problem+json: 
+                      schema:
+                        $ref: '#/components/schemas/Problem' 
+                '404': 
+                    description: Not found
+                    content:
+                      application/json:
+                        schema:
+                          $ref: '#/components/schemas/OASError'
+    /tokens:
+      post: 
+        tags:
+          - security
+        description: Create a new token
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: ponelat
+                  password:
+                    type: string
+                    format: password
+            
+        responses:
+          '201':
+            description: Create a new token for gaining authenticated access to resources
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    token:
+                      type: string
