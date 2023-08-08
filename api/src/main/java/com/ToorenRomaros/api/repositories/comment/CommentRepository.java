@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.ToorenRomaros.api.entities.Comment;
 
-public interface CommentRepository extends JpaRepository<Comment, Integer>{
+public interface CommentRepository extends JpaRepository<Comment, UUID>{
 	@Query("SELECT c FROM Comment c WHERE c.user = ?#{ authentication.name }")List<Comment> findAllByUser();
 }

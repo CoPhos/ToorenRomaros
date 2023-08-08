@@ -40,7 +40,7 @@ public class CommentService {
 		return commentRepository.findAllByUser();
 	}
 	
-	public void deleteComment(int id) { 
+	public void deleteComment(UUID id) {
 		commentRepository.deleteById(id);
 	}
 }
