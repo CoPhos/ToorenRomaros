@@ -1,4 +1,4 @@
-package com.ToorenRomaros.api.repositories.comment;
+package com.ToorenRomaros.api.repositories;
 
 import java.util.List;
 import java.util.UUID;

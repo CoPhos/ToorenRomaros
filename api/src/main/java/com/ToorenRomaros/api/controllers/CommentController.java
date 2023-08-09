@@ -1,4 +1,4 @@
-package com.ToorenRomaros.api.controllers.comment;
+package com.ToorenRomaros.api.controllers;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.ToorenRomaros.api.entities.Comment;
-import com.ToorenRomaros.api.services.comment.CommentService;
+import com.ToorenRomaros.api.services.CommentService;
 
 @RestController 
 @RequestMapping("/api/v1")
