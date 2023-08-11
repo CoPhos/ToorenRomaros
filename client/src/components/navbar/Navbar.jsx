@@ -4,18 +4,29 @@ import styled from 'styled-components';
 
 function Navbar() {
   return (
-    <nav>
-        <NavBox> <img src={logo}></img>
-        <div>asdasdasdas</div></NavBox>
-       
-    </nav>
+      <nav>
+          <ColorBox color={'main'}>
+              <img src={logo}></img>
+              <div>
+                  <FlexBox>
+                      <img src={logo}></img>
+                      <SearchBar type="text" id="fname" name="fname"/>
+                  </FlexBox>
+              </div>
+          </ColorBox>
+      </nav>
   )
 }
 
-const NavBox = styled.div`
+const FlexBox = styled.div`
     display: flex;
-    background-color: ${props => props.theme.colors.mainColor};
-
+`;
+const ColorBox = styled(FlexBox)`
+    background-color: ${(props) =>
+        props.color ? props.theme.colors.main : 'trasnparent'};
+`
+const SearchBar = styled.input`
+      height: 85%;
 `;
 
 export default Navbar
