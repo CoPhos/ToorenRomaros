@@ -22,6 +22,10 @@ export const GlobalStyle = createGlobalStyle`
           background-color: #FFFFFF;
         }
     }
+    #root{
+      position: relative;
+      min-height: 100vh;
+    }
     h1 {
       font-size: 3.815rem;
     }
@@ -88,7 +92,8 @@ export const fontSizes = {
     mh4: '1.424rem',
     mh5: '1.266rem',
     mh6: '1.125rem',
-    mcaption: '0.889rem',
+    mCaption: '0.889rem',
+    base: '16px',
     h1: '3.815rem',
     h2: '3.052rem',
     h3: '2.441rem',
