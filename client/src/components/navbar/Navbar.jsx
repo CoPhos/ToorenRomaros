@@ -2,6 +2,7 @@ import React from 'react'
 import logo from '../../assests/logo.webp'
 import loup from '../../assests/loupe.png'
 import user from '../../assests/user.png'
+import { menuPanel } from '../data.js'
 import MenuPanel from './MenuPanel'
 import styled from 'styled-components'
 
@@ -25,21 +26,22 @@ function Navbar(props) {
                 <AnchorMovies>
                     MOVIES
                     <div id="aaa">
-                        <MenuPanel number={1}></MenuPanel>
+                        <MenuPanel data={menuPanel.movies}></MenuPanel>
                     </div>
                 </AnchorMovies>
-                <AnchorNews>
-                    NEWS
-                    <div id="aab">
-                        <MenuPanel number={2}></MenuPanel>
-                    </div>
-                </AnchorNews>
                 <AnchorTv>
                     TV SHOW
                     <div id="aac">
-                        <MenuPanel number={3}></MenuPanel>
+                        <MenuPanel data={menuPanel.tv}></MenuPanel>
                     </div>
                 </AnchorTv>
+                <AnchorNews>
+                    NEWS
+                    <div id="aab">
+                        <MenuPanel data={menuPanel.news}></MenuPanel>
+                    </div>
+                </AnchorNews>
+
                 {isLoggedIn ? (
                     <ButtonLogin>
                         <FlexBox>
@@ -69,7 +71,9 @@ const Nav = styled.nav`
     height: 56px;
     padding: 0 8px;
     gap: 8px;
-    #aaa, #aab, #aac {
+    #aaa,
+    #aab,
+    #aac {
         visibility: hidden;
     }
 `
@@ -111,31 +115,45 @@ const ButtonSearch = styled.button`
     margin: 0;
     cursor: pointer;
 `
-const AnchorMovies = styled.a`
+const BaseAnchor = styled.a`
+    height: 48px;
+    padding: 0 8px;
+    padding-top: 8px;
+    text-align: center;
+    align-self: flex-end;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-weight: bold;
+`
+const AnchorMovies = styled(BaseAnchor)`
     &:hover {
-        color: red;
+        color: black;
+        background-color: white;
         #aaa {
             color: black;
             visibility: visible;
         }
     }
 `
-const AnchorNews = styled.a`
+const AnchorNews = styled(BaseAnchor)`
     &:hover {
-        color: red;
+        color: black;
+        background-color: white;
         #aab {
             color: black;
             visibility: visible;
         }
     }
 `
-const AnchorTv = styled.a`
+const AnchorTv = styled(BaseAnchor)`
     &:hover {
-        color: red;
+        color: black;
+        background-color: white;
         #aac {
             color: black;
             visibility: visible;
         }
+    }
     }
 `
 const ButtonGetStarted = styled.button`
