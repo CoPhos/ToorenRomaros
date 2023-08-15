@@ -5,6 +5,7 @@ import { fontSizes } from './components/globalStyles'
 import { GlobalStyle } from './components/globalStyles'
 import NavbarContainer from './components/navbar/NavbarContainer'
 import Footer from './components/footer/Footer'
+import MobileNavMenu from './components/MobileNavMenu'
 
 const theme = {
     colors: colors,
@@ -16,6 +17,56 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <GlobalStyle />
             <NavbarContainer></NavbarContainer>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p> <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <p>the younges Gem</p>
+            <MobileNavMenu></MobileNavMenu>
             <Footer></Footer>
         </ThemeProvider>
     )

@@ -60,6 +60,8 @@ const FlexBox = styled.div`
     align-items: center;
 `
 const Nav = styled.nav`
+    position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
     width: 100%;
