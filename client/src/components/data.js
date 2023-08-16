@@ -137,7 +137,7 @@ export const menuPanel = {
     },
     tv: {
         0: {
-            tiitle: 'NEW TV TONIGHT',
+            tittle: 'NEW TV TONIGHT',
             subItems: {
                 0: {
                     image: '',
@@ -178,7 +178,7 @@ export const menuPanel = {
                     image: '',
                     text: 'Painkiller: Season 0',
                     rating: '38%',
-                    ratingImg: '0',
+                    ratingImg: 1,
                 },
                 1: {
                     image: '',
@@ -196,7 +196,7 @@ export const menuPanel = {
                     image: '',
                     text: 'The Crowded Room: Season 0',
                     rating: '22%',
-                    ratingImg: '0',
+                    ratingImg: 1,
                 },
                 4: {
                     image: '',
@@ -220,7 +220,7 @@ export const menuPanel = {
                     image: '',
                     text: 'The Crowded Room: Season 0',
                     rating: '22%',
-                    ratingImg: '0',
+                    ratingImg: 1,
                 },
             },
         },
