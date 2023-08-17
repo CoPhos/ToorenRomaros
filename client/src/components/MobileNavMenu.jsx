@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import home from '../assests/home.png'
 import news from '../assests/news.png'
 import tv from '../assests/tv.png'
-import user from '../assests/user.png'
+import user from '../assests/user2.png'
 
 function MobileNavMenu() {
     return (

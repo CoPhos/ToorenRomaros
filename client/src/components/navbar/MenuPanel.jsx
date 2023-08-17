@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import smiling from '../../assests/smiling.png'
 import neutral from '../../assests/neutral.png'
 import sad from '../../assests/sad.png'
+import greyNeutral from '../../assests/greyNeutral.png'
 
 function MenuPanel(props) {
     return (
@@ -11,7 +12,7 @@ function MenuPanel(props) {
                 if (value.tittle == 'CERTIFIED FRESH PICKS') {
                     return (
                         <SubPanel>
-                            <p id="notMaxW">{value.tittle}</p>
+                            <p id="tittle">{value.tittle}</p>
                             <Flex>
                                 {Object.values(value.subItems).map(
                                     (value, index) => {
@@ -24,7 +25,7 @@ function MenuPanel(props) {
                 } else {
                     return (
                         <SubPanel>
-                            <p id="notMaxW">{value.tittle}</p>
+                            <p id="tittle">{value.tittle}</p>
                             {Object.values(value.subItems).map(
                                 (value, index) => {
                                     return iterateData(value, index, 0)
@@ -39,7 +40,7 @@ function MenuPanel(props) {
 }
 
 function iterateData(value, index, flag) {
-    if(flag){
+    if (flag) {
         return (
             <FlexCertified>
                 {value.image && (
@@ -80,18 +81,23 @@ function iterateData(value, index, flag) {
                                         height="16"
                                     ></img>
                                 )
+                            case 4:
+                                return (
+                                    <img
+                                        key={index}
+                                        src={greyNeutral}
+                                        width="16"
+                                        height="16"
+                                    ></img>
+                                )
                             default:
                                 return ''
                         }
                     })()}
-                    {value.rating && (
-                        <p id="100" key={index}>
-                            {value.rating}
-                        </p>
-                    )}
+                    {value.rating && <p key={index}>{value.rating}</p>}
                 </FlexRating>
                 {value.text && (
-                    <p id="100" key={index}>
+                    <p className={value.textType} key={index}>
                         {value.text}
                     </p>
                 )}
@@ -138,12 +144,25 @@ function iterateData(value, index, flag) {
                                     height="16"
                                 ></img>
                             )
+                        case 4:
+                            return (
+                                <img
+                                    key={index}
+                                    src={greyNeutral}
+                                    width="16"
+                                    height="16"
+                                ></img>
+                            )
                         default:
                             return ''
                     }
                 })()}
-                {value.rating && <p id="100" key={index}>{value.rating}</p>}
-                {value.text && <p key={index}>{value.text}</p>}
+                
+                {value.text && (
+                    <p className={value.textType} key={index}>
+                        {value.rating + " " +value.text}
+                    </p>
+                )}
             </FlexRatingRow>
         </Fragment>
     )
@@ -204,22 +223,21 @@ const FlexBoxPanel = styled.div`
     top: 56px;
     left: 0;
     margin: 0px;
-    padding: 0 42px;
+    padding: 0 1vw;
     background-color: white;
     cursor: default;
     box-shadow: 3px 3px ${(props) => props.theme.colors.background};
-    p:not(#notMaxW) {
+    p:not(#tittle) {
         margin: 0;
         font-weight: normal;
         cursor: pointer;
-        color: ${(props) => props.theme.colors.hyperlinks};
-    }
-    p:not(#100) {
-        width: 100%;
+        color: black;
+        &:hover {
+            color: ${(props) => props.theme.colors.hyperlinks};
+        }
     }
     p {
         text-align: start;
-        
     }
 `
 const Flex = styled.div`
@@ -232,13 +250,33 @@ const SubPanel = styled.div`
     flex-grow: 1;
     flex-shrink: 1;
     padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .movieRtng {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
 `
 
 const FlexRatingRow = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap:4px;
+    justify-content: center;
+    gap: 4px;
+    .news {
+        max-width: 210px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 `
 
 const FlexRating = styled.div`
@@ -254,6 +292,15 @@ const FlexCertified = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    .movieImg {
+        max-width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 `
 
 export default MenuPanel

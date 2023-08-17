@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import logo from '../../assests/logo.webp'
 import loup from '../../assests/loupe.png'
-import user from '../../assests/user.png'
+import user from '../../assests/user.jpg'
 import { menuPanel } from '../data.js'
 import MenuPanel from './MenuPanel'
+import UserPanel from './UserPanel'
 import styled from 'styled-components'
 
 function Navbar(props) {
@@ -44,10 +45,13 @@ function Navbar(props) {
 
                 {isLoggedIn ? (
                     <ButtonLogin>
-                        <FlexBox>
-                            <img src={user} width="40" height="40"></img>
-                            <p>the younges Gem</p>
-                        </FlexBox>
+                        <FlexImg>
+                            <User src={user} width="40" height="40"></User>
+                            <p>Xavier</p>
+                        </FlexImg>
+                        <div id="aae">
+                            <UserPanel data={menuPanel.news}></UserPanel>
+                        </div>
                     </ButtonLogin>
                 ) : (
                     <ButtonGetStarted>Get started</ButtonGetStarted>
@@ -61,6 +65,9 @@ const FlexBox = styled.div`
     display: flex;
     align-items: center;
 `
+const FlexImg = styled(FlexBox)`
+    max-height: 48px;
+`
 const Nav = styled.nav`
     position: sticky;
     top: 0;
@@ -73,7 +80,8 @@ const Nav = styled.nav`
     gap: 8px;
     #aaa,
     #aab,
-    #aac {
+    #aac,
+    #aae {
         visibility: hidden;
     }
 `
@@ -154,7 +162,6 @@ const AnchorTv = styled(BaseAnchor)`
             visibility: visible;
         }
     }
-    }
 `
 const ButtonGetStarted = styled.button`
     background-color: ${(props) => props.theme.colors.secondary};
@@ -166,12 +173,32 @@ const ButtonGetStarted = styled.button`
     padding: 8px;
     cursor: pointer;
 `
+const User = styled.img`
+    border-radius: 50%;
+    margin-right: 8px;
+`
+
 const ButtonLogin = styled.button`
+    padding: 0 8px;
+    text-align: center;
+    align-self: flex-end;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-weight: bold;
+    min-width: 150px;
     background-color: ${(props) => props.theme.colors.main};
     border-width: 0;
     height: 48px;
     color: white;
-    padding: 8px, 0;
     cursor: pointer;
+    &:hover {
+        color: black;
+        background-color: white;
+        #aae {
+            color: black;
+            visibility: visible;
+        }
+    }
 `
+
 export default Navbar
