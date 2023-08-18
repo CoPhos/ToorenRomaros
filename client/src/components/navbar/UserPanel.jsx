@@ -1,17 +1,12 @@
 import React from 'react'
+import { profilePanel } from '../../utils/data.js'
 import styled from 'styled-components'
 function UserPanel() {
-  return (
-    //todo: use props
-      <FlexBoxPanel>
-          <p>User</p>
-          <p>Config</p>
-          <p>Favorite</p>
-          <p>Profile</p>
-          <p>Followers</p>
-          <p>Log out</p>
-      </FlexBoxPanel>
-  )
+  return <FlexBoxPanel>
+    {profilePanel.map((value, key) =>{
+        return(<p key={key}>{value}</p>)}
+    )}
+    </FlexBoxPanel>
 }
 
 const FlexBoxPanel = styled.div`
@@ -31,6 +26,7 @@ const FlexBoxPanel = styled.div`
     border-top: none;
     p {
         cursor: pointer;
+        font-weight: normal;
         &:hover {
             color: ${(props) => props.theme.colors.hyperlinks};
         }

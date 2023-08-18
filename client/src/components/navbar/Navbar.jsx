@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import logo from '../../assests/logo.webp'
 import loup from '../../assests/loupe.png'
 import user from '../../assests/user.jpg'
-import { menuPanel } from '../data.js'
 import MenuPanel from './MenuPanel'
 import UserPanel from './UserPanel'
 import styled from 'styled-components'
@@ -27,19 +26,21 @@ function Navbar(props) {
                 <AnchorMovies>
                     MOVIES
                     <div id="aaa">
-                        <MenuPanel data={menuPanel.movies}></MenuPanel>
+                        <MenuPanel
+                            data={props.menuPanelData.movies}
+                        ></MenuPanel>
                     </div>
                 </AnchorMovies>
                 <AnchorTv>
                     TV SHOW
                     <div id="aac">
-                        <MenuPanel data={menuPanel.tv}></MenuPanel>
+                        <MenuPanel data={props.menuPanelData.tv}></MenuPanel>
                     </div>
                 </AnchorTv>
                 <AnchorNews>
                     NEWS
                     <div id="aab">
-                        <MenuPanel data={menuPanel.news}></MenuPanel>
+                        <MenuPanel data={props.menuPanelData.news}></MenuPanel>
                     </div>
                 </AnchorNews>
 
@@ -50,7 +51,7 @@ function Navbar(props) {
                             <p>Xavier</p>
                         </FlexImg>
                         <div id="aae">
-                            <UserPanel data={menuPanel.news}></UserPanel>
+                            <UserPanel></UserPanel>
                         </div>
                     </ButtonLogin>
                 ) : (
@@ -67,6 +68,9 @@ const FlexBox = styled.div`
 `
 const FlexImg = styled(FlexBox)`
     max-height: 48px;
+    p {
+        font-weight: normal;
+    }
 `
 const Nav = styled.nav`
     position: sticky;
@@ -131,7 +135,6 @@ const BaseAnchor = styled.a`
     align-self: flex-end;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    font-weight: bold;
 `
 const AnchorMovies = styled(BaseAnchor)`
     &:hover {

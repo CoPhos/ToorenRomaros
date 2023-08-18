@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import home from '../assests/home.png'
-import news from '../assests/news.png'
-import tv from '../assests/tv.png'
-import user from '../assests/user2.png'
+import home from '../../assests/home.png'
+import news from '../../assests/news.png'
+import tv from '../../assests/tv.png'
+import movies from '../../assests/movies.png'
+import user from '../../assests/user2.png'
 
 function MobileNavMenu() {
     return (
@@ -13,11 +14,15 @@ function MobileNavMenu() {
                     <img src={home} width="42" height="42"></img>
                 </ButtonMenu>
                 <ButtonMenu>
+                    <img src={movies} width="42" height="42"></img>
+                </ButtonMenu>
+                <ButtonMenu>
                     <img src={tv} width="42" height="42"></img>
                 </ButtonMenu>
                 <ButtonMenu>
                     <img src={news} width="42" height="42"></img>
                 </ButtonMenu>
+
                 <ButtonMenu>
                     <img src={user} width="42" height="42"></img>
                 </ButtonMenu>

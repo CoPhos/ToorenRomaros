@@ -1,11 +1,11 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
-import { colors } from './components/globalStyles'
-import { fontSizes } from './components/globalStyles'
-import { GlobalStyle } from './components/globalStyles'
+import { colors } from './utils/globalStyles'
+import { fontSizes } from './utils/globalStyles'
+import { GlobalStyle } from './utils/globalStyles'
 import NavbarContainer from './components/navbar/NavbarContainer'
 import Footer from './components/footer/Footer'
-import MobileNavMenu from './components/MobileNavMenu'
+import MobileNavMenu from './components/navbar/MobileNavMenu'
 
 const theme = {
     colors: colors,

@@ -2,6 +2,7 @@ export const menuPanel = {
     movies: {
         0: {
             tittle: 'MOVIES IN THEATHERS',
+            id: '0XP4',
             subItems: {
                 0: {
                     image: '',
@@ -9,6 +10,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'XQ07',
                 },
                 1: {
                     image: '',
@@ -16,6 +18,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'VVMD',
                 },
                 2: {
                     image: '',
@@ -23,11 +26,13 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'WBKU',
                 },
             },
         },
         1: {
             tittle: 'MOVIES AT HOME',
+            id: 'HTJM',
             subItems: {
                 0: {
                     image: '',
@@ -35,6 +40,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: '4WUQ',
                 },
                 1: {
                     image: '',
@@ -42,6 +48,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: '20GV',
                 },
                 2: {
                     image: '',
@@ -49,6 +56,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'CGEM',
                 },
                 3: {
                     image: '',
@@ -56,6 +64,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'OYDE',
                 },
                 4: {
                     image: '',
@@ -63,6 +72,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'LRO8',
                 },
                 5: {
                     image: '',
@@ -70,6 +80,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'JWAN',
                 },
                 6: {
                     image: '',
@@ -77,6 +88,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'JCY4',
                 },
                 7: {
                     image: '',
@@ -84,6 +96,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: '537W',
                 },
                 8: {
                     image: '',
@@ -91,6 +104,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'SXIR',
                 },
                 9: {
                     image: '',
@@ -98,11 +112,13 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'Q146',
                 },
             },
         },
         2: {
             tittle: 'MORE',
+            id: '0HSN',
             subItems: {
                 0: {
                     image: '',
@@ -110,6 +126,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'CZ1F',
                 },
                 1: {
                     image: '',
@@ -117,6 +134,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'Z2BJ',
                 },
                 2: {
                     image: '',
@@ -124,11 +142,13 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'X6YO',
                 },
             },
         },
         3: {
             tittle: 'CERTIFIED FRESH PICKS',
+            id: '7MM5',
             subItems: {
                 0: {
                     image: './prey.webp',
@@ -136,6 +156,7 @@ export const menuPanel = {
                     rating: '40%',
                     ratingImg: 2,
                     textType: 'movieImg',
+                    id: 'S4VX',
                 },
                 1: {
                     image: './prey.webp',
@@ -143,6 +164,7 @@ export const menuPanel = {
                     rating: '81%',
                     ratingImg: 3,
                     textType: 'movieImg',
+                    id: 'FY51',
                 },
                 2: {
                     image: './prey.webp',
@@ -150,6 +172,7 @@ export const menuPanel = {
                     rating: '81%',
                     ratingImg: 3,
                     textType: 'movieImg',
+                    id: 'ECR7',
                 },
             },
         },
@@ -157,6 +180,7 @@ export const menuPanel = {
     tv: {
         0: {
             tittle: 'NEW TV TONIGHT',
+            id: 'OIFO',
             subItems: {
                 0: {
                     image: '',
@@ -164,27 +188,31 @@ export const menuPanel = {
                     rating: '50%',
                     ratingImg: 1,
                     textType: 'movieRtng',
+                    id: 'ZAOG',
                 },
                 1: {
                     image: '',
                     text: 'The Chosen One: season 0',
-                    rating:'--',
+                    rating: '--',
                     ratingImg: 4,
                     textType: 'movieRtng',
+                    id: 'M3ZK',
                 },
                 2: {
                     image: '',
                     text: 'The Upshaws: Season 3',
-                    rating:'--',
+                    rating: '--',
                     ratingImg: 4,
                     textType: 'movieRtng',
+                    id: 'L7LP',
                 },
                 3: {
                     image: '',
                     text: 'Solar Opposites: Season 3',
-                    rating:'--',
+                    rating: '--',
                     ratingImg: 4,
                     textType: 'movieRtng',
+                    id: 'VN9G',
                 },
                 4: {
                     image: '',
@@ -192,11 +220,13 @@ export const menuPanel = {
                     rating: '38%',
                     ratingImg: 1,
                     textType: 'movieRtng',
+                    id: 'GFIY',
                 },
             },
         },
         1: {
             tittle: 'MOST POPULAR TV ON RT',
+            id: '38T2',
             subItems: {
                 0: {
                     image: '',
@@ -204,6 +234,7 @@ export const menuPanel = {
                     rating: '38%',
                     ratingImg: 1,
                     textType: 'movieRtng',
+                    id: '1DFH',
                 },
                 1: {
                     image: '',
@@ -211,6 +242,7 @@ export const menuPanel = {
                     rating: '88%',
                     ratingImg: 2,
                     textType: 'movieRtng',
+                    id: 'BT3Y',
                 },
                 2: {
                     image: '',
@@ -218,6 +250,7 @@ export const menuPanel = {
                     rating: '100%',
                     ratingImg: 2,
                     textType: 'movieRtng',
+                    id: 'NACQ',
                 },
                 3: {
                     image: '',
@@ -225,6 +258,7 @@ export const menuPanel = {
                     rating: '22%',
                     ratingImg: 1,
                     textType: 'movieRtng',
+                    id: 'ADNK',
                 },
                 4: {
                     image: '',
@@ -232,6 +266,7 @@ export const menuPanel = {
                     rating: '38%',
                     ratingImg: 1,
                     textType: 'movieRtng',
+                    id: '9IZ0',
                 },
                 5: {
                     image: '',
@@ -239,6 +274,7 @@ export const menuPanel = {
                     rating: '88%',
                     ratingImg: 2,
                     textType: 'movieRtng',
+                    id: 'IOXG',
                 },
                 6: {
                     image: '',
@@ -246,6 +282,7 @@ export const menuPanel = {
                     rating: '100%',
                     ratingImg: 2,
                     textType: 'movieRtng',
+                    id: 'UGW9',
                 },
                 7: {
                     image: '',
@@ -253,11 +290,13 @@ export const menuPanel = {
                     rating: '22%',
                     ratingImg: 1,
                     textType: 'movieRtng',
+                    id: 'R9HC',
                 },
             },
         },
         2: {
             tittle: 'MORE',
+            id: 'PETI',
             subItems: {
                 0: {
                     image: '',
@@ -265,6 +304,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'PURZ',
                 },
                 1: {
                     image: '',
@@ -272,6 +312,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'BLQR',
                 },
                 2: {
                     image: '',
@@ -279,6 +320,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'YEBV',
                 },
                 3: {
                     image: '',
@@ -286,6 +328,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'WJN0',
                 },
                 4: {
                     image: '',
@@ -293,6 +336,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: '6ZLH',
                 },
                 5: {
                     image: '',
@@ -300,6 +344,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'IHKA',
                 },
                 6: {
                     image: '',
@@ -307,6 +352,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'EJVD',
                 },
                 7: {
                     image: '',
@@ -314,6 +360,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'DOHJ',
                 },
                 8: {
                     image: '',
@@ -321,6 +368,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'DUF0',
                 },
                 9: {
                     image: '',
@@ -328,6 +376,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'YMES',
                 },
                 10: {
                     image: '',
@@ -335,11 +384,13 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'LFPW',
                 },
             },
         },
         3: {
             tittle: 'CERTIFIED FRESH PICKS',
+            id: 'KKBB',
             subItems: {
                 0: {
                     image: './prey.webp',
@@ -347,6 +398,7 @@ export const menuPanel = {
                     rating: '81%',
                     ratingImg: 2,
                     textType: 'movieImg',
+                    id: 'U08S',
                 },
             },
         },
@@ -354,6 +406,7 @@ export const menuPanel = {
     news: {
         0: {
             tittle: 'TOPICS',
+            id: '5R8K',
             subItems: {
                 0: {
                     image: '',
@@ -361,6 +414,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'TKJE',
                 },
                 1: {
                     image: '',
@@ -368,6 +422,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'RP5T',
                 },
                 2: {
                     image: '',
@@ -375,6 +430,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: '152A',
                 },
                 3: {
                     image: '',
@@ -382,6 +438,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'MN23',
                 },
                 4: {
                     image: '',
@@ -389,6 +446,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: '9QCX',
                 },
                 5: {
                     image: '',
@@ -396,6 +454,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: '8UZC',
                 },
                 6: {
                     image: '',
@@ -403,6 +462,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'HAWT',
                 },
                 7: {
                     image: '',
@@ -410,11 +470,13 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'default',
+                    id: 'TSVL',
                 },
             },
         },
         1: {
             tittle: 'GUIDES',
+            id: 'GL6P',
             subItems: {
                 0: {
                     image: './guidesNews.PNG',
@@ -422,6 +484,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'news',
+                    id: 'FQSU',
                 },
                 1: {
                     image: './guidesNews.PNG',
@@ -429,11 +492,13 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'news',
+                    id: 'P6QB',
                 },
             },
         },
         2: {
             tittle: 'HUBS',
+            id: 'IH99',
             subItems: {
                 0: {
                     image: './guidesNews.PNG',
@@ -441,6 +506,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'news',
+                    id: 'SX6Q',
                 },
                 1: {
                     image: './guidesNews.PNG',
@@ -448,11 +514,13 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'news',
+                    id: '3P6I',
                 },
             },
         },
         3: {
             tittle: 'TR NEWS',
+            id: 'QIGC',
             subItems: {
                 0: {
                     image: './guidesNews.PNG',
@@ -460,6 +528,7 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'news',
+                    id: 'PN2R',
                 },
                 1: {
                     image: './guidesNews.PNG',
@@ -467,8 +536,18 @@ export const menuPanel = {
                     rating: '',
                     ratingImg: '',
                     textType: 'news',
+                    id: 'Z308',
                 },
             },
         },
     },
 }
+
+export const profilePanel = [
+    'User',
+    'Config',
+    'Favorite',
+    'Profile',
+    'Followers',
+    'Log out',
+]

@@ -11,27 +11,31 @@ function MenuPanel(props) {
             {Object.values(props.data).map((value, index) => {
                 if (value.tittle == 'CERTIFIED FRESH PICKS') {
                     return (
-                        <SubPanel>
-                            <p id="tittle">{value.tittle}</p>
-                            <Flex>
-                                {Object.values(value.subItems).map(
-                                    (value, index) => {
-                                        return iterateData(value, index, 1)
-                                    }
-                                )}
-                            </Flex>
-                        </SubPanel>
+                        <Fragment key={index}>
+                            <SubPanel>
+                                <p id="tittle">{value.tittle}</p>
+                                <Flex>
+                                    {Object.values(value.subItems).map(
+                                        (value, index) => {
+                                            return iterateData(value, index, 1)
+                                        }
+                                    )}
+                                </Flex>
+                            </SubPanel>
+                        </Fragment>
                     )
                 } else {
                     return (
-                        <SubPanel>
-                            <p id="tittle">{value.tittle}</p>
-                            {Object.values(value.subItems).map(
-                                (value, index) => {
-                                    return iterateData(value, index, 0)
-                                }
-                            )}
-                        </SubPanel>
+                        <Fragment key={(index + 1) * 100}>
+                            <SubPanel>
+                                <p id="tittle">{value.tittle}</p>
+                                {Object.values(value.subItems).map(
+                                    (value, index) => {
+                                        return iterateData(value, index, 0)
+                                    }
+                                )}
+                            </SubPanel>
+                        </Fragment>
                     )
                 }
             })}
@@ -42,112 +46,80 @@ function MenuPanel(props) {
 function iterateData(value, index, flag) {
     if (flag) {
         return (
-            <FlexCertified>
-                {value.image && (
-                    <img
-                        key={index}
-                        src={value.image}
-                        width="130"
-                        height="200"
-                    ></img>
-                )}
-                <FlexRating>
-                    {(() => {
-                        switch (value.ratingImg) {
-                            case 1:
-                                return (
-                                    <img
-                                        key={index}
-                                        src={sad}
-                                        width="16"
-                                        height="16"
-                                    ></img>
-                                )
-                            case 2:
-                                return (
-                                    <img
-                                        key={index}
-                                        src={neutral}
-                                        width="16"
-                                        height="16"
-                                    ></img>
-                                )
-                            case 3:
-                                return (
-                                    <img
-                                        key={index}
-                                        src={smiling}
-                                        width="16"
-                                        height="16"
-                                    ></img>
-                                )
-                            case 4:
-                                return (
-                                    <img
-                                        key={index}
-                                        src={greyNeutral}
-                                        width="16"
-                                        height="16"
-                                    ></img>
-                                )
-                            default:
-                                return ''
-                        }
-                    })()}
-                    {value.rating && <p key={index}>{value.rating}</p>}
-                </FlexRating>
-                {value.text && (
-                    <p className={value.textType} key={index}>
-                        {value.text}
-                    </p>
-                )}
-            </FlexCertified>
+            <Fragment key={(index + 2) * 10}>
+                <FlexCertified>
+                    {value.image && (
+                        <img src={value.image} width="130" height="200"></img>
+                    )}
+                    <FlexRating>
+                        {(() => {
+                            switch (value.ratingImg) {
+                                case 1:
+                                    return (
+                                        <img
+                                            src={sad}
+                                            width="16"
+                                            height="16"
+                                        ></img>
+                                    )
+                                case 2:
+                                    return (
+                                        <img
+                                            src={neutral}
+                                            width="16"
+                                            height="16"
+                                        ></img>
+                                    )
+                                case 3:
+                                    return (
+                                        <img
+                                            src={smiling}
+                                            width="16"
+                                            height="16"
+                                        ></img>
+                                    )
+                                case 4:
+                                    return (
+                                        <img
+                                            src={greyNeutral}
+                                            width="16"
+                                            height="16"
+                                        ></img>
+                                    )
+                                default:
+                                    return ''
+                            }
+                        })()}
+                        {value.rating && <p>{value.rating}</p>}
+                    </FlexRating>
+                    {value.text && (
+                        <p className={value.textType}>{value.text}</p>
+                    )}
+                </FlexCertified>
+            </Fragment>
         )
     }
     return (
-        <Fragment>
+        <Fragment key={(index + 3) * 1000}>
             {value.image && (
-                <img
-                    key={index}
-                    src={value.image}
-                    width="210"
-                    height="118"
-                ></img>
+                <img src={value.image} width="210" height="118"></img>
             )}
             <FlexRatingRow>
                 {(() => {
                     switch (value.ratingImg) {
                         case 1:
-                            return (
-                                <img
-                                    key={index}
-                                    src={sad}
-                                    width="16"
-                                    height="16"
-                                ></img>
-                            )
+                            return <img src={sad} width="16" height="16"></img>
                         case 2:
                             return (
-                                <img
-                                    key={index}
-                                    src={neutral}
-                                    width="16"
-                                    height="16"
-                                ></img>
+                                <img src={neutral} width="16" height="16"></img>
                             )
                         case 3:
                             return (
-                                <img
-                                    key={index}
-                                    src={smiling}
-                                    width="16"
-                                    height="16"
-                                ></img>
+                                <img src={smiling} width="16" height="16"></img>
                             )
                         case 4:
                             return (
                                 <img
-                                    key={index}
                                     src={greyNeutral}
                                     width="16"
                                     height="16"
@@ -157,62 +129,16 @@ function iterateData(value, index, flag) {
                             return ''
                     }
                 })()}
-                
+
                 {value.text && (
-                    <p className={value.textType} key={index}>
-                        {value.rating + " " +value.text}
+                    <p className={value.textType}>
+                        {value.rating + ' ' + value.text}
                     </p>
                 )}
             </FlexRatingRow>
         </Fragment>
     )
 }
-
-// function iterateData(value, index) {
-//     let html = '<Fragment>'
-//     if (value.image) {
-//         console.log("in function")
-//         html += `<img
-//                     key=${index}
-//                     src=${value.image}
-//                     width="130"
-//                     height="200"
-//                 ></img>`
-//     }
-//     if (value.text) {
-//         html += `<p key=${index}>${value.text}</p>`
-//     }
-//     if (value.rating) {
-//         html += `p key=${index}>${value.rating}</p>`
-//     }
-//     switch (value.ratingImg) {
-//         case 1:
-//             html += `<img
-//                         key=${index}
-//                         src=${sad}
-//                         width="16"
-//                         height="16"
-//                     </img>`
-//         case 2:
-//             html += `<img
-//                         key=${index}
-//                         src=${neutral}
-//                         width="16"
-//                         height="16"
-//                     ></img>`
-//         case 3:
-//             html += `<img
-//                         key=${index}
-//                         src=${smiling}
-//                         width="16"
-//                         height="16"
-//                     ></img>`
-//         default:
-//             html += ''
-//     }
-//     html += '</Fragment>'
-//     return html
-// }
 
 const FlexBoxPanel = styled.div`
     display: flex;
@@ -224,6 +150,7 @@ const FlexBoxPanel = styled.div`
     left: 0;
     margin: 0px;
     padding: 0 1vw;
+    padding-bottom: 16px;
     background-color: white;
     cursor: default;
     box-shadow: 3px 3px ${(props) => props.theme.colors.background};
@@ -235,6 +162,9 @@ const FlexBoxPanel = styled.div`
         &:hover {
             color: ${(props) => props.theme.colors.hyperlinks};
         }
+    }
+    #tittle {
+        font-weight: bold;
     }
     p {
         text-align: start;
