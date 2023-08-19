@@ -14,10 +14,9 @@ const FlexBoxPanel = styled.div`
     align-items: flex-start;
     flex-direction: column;
     justify-content: space-around;
-    width: calc(100% + 16px);
+    width: 100%;
     position: relative;
     top: 0;
-    right: 8px;
     margin: 0px;
     padding: 0 16px;
     background-color: white;

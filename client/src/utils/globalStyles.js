@@ -23,8 +23,10 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
     #root{
-      position: relative;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
     }
     h1 {
       font-size: 3.815rem;

@@ -9,7 +9,11 @@ function MainCarousel({slides}) {
             </Arrow>
             {slides.map((value, key) => {
                 return (
-                    <ImageContainer key={key} theme={{img: value}}>
+                    <ImageContainer key={key} theme={{ img: value }}>
+                        <p>
+                            the youngest Gemthe youngest Gemthe youngest Gemthe
+                            youngest Gem the youngest Gem the youngest Gem
+                        </p>
                     </ImageContainer>
                 )
             })}
@@ -25,23 +29,35 @@ const Wrapper = styled.div`
     justify-content: flex-start;
     gap: 16px;
     height: 256px;
-    width: 100vw;
     overflow: hidden;
-    .left{
-      left: 8px;
+    margin-top: 16px;
+    .left {
+        left: 8px;
     }
-    .right{
-      right: 8px;
+    .right {
+        right: 8px;
     }
 `
 const ImageContainer = styled.div`
-    display: inline-block;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.65) 100%
-    );
-    background-image: url(${(props) => props.theme.img});
+    display: flex;
+    background-image: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.3),
+            rgba(0, 0, 0, 0.8)
+        ),
+        url(http://localhost:3000${(props) => props.theme.img});
+    min-width: 384px;
+    min-height: 256px;
+    align-items: flex-end;
+    p {
+        color: white;
+        margin: 0 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
 `
 
 
@@ -50,12 +66,20 @@ const Arrow = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: white;
     width: 40px;
     height: 40px;
     position: absolute;
-    z-index: 1;
+    z-index: 0;
+    background-color: grey;
+    &:hover {
+        background-color: white;
+        i {
+            color:black;
+        }
+    }
     i {
+        cursor:pointer;
+        color: white;
         font-size: ${(props) => props.theme.fontSizes.mh1};
     }
 `

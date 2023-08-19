@@ -101,8 +101,6 @@ const FooterContainer = styled.footer`
     justify-content: center;
     padding: 16px;
     gap: 16px;
-    position: relative;
-    bottom: 0;
     width: 100%;
     p,
     a {

@@ -21,55 +21,6 @@ export default function App() {
             <GlobalStyle />
             <NavbarContainer></NavbarContainer>
             <MainCarouselContainer></MainCarouselContainer>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p> <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
-            <p>the younges Gem</p>
             <MobileNavMenu></MobileNavMenu>
             <Footer></Footer>
         </ThemeProvider>

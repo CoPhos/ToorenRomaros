@@ -47,12 +47,17 @@ function Navbar(props) {
                 {isLoggedIn ? (
                     <ButtonLogin>
                         <FlexImg>
-                            <User src={user} width="40" height="40"></User>
-                            <p>Xavier</p>
+                            <FlexBox>
+                                <User src={user} width="40" height="40"></User>
+                                <p>XavierXavier</p>
+                            </FlexBox>
+                            <div
+                                style={{ width: 'calc(100% + 16px)' }}
+                                id="aae"
+                            >
+                                <UserPanel></UserPanel>
+                            </div>
                         </FlexImg>
-                        <div id="aae">
-                            <UserPanel></UserPanel>
-                        </div>
                     </ButtonLogin>
                 ) : (
                     <ButtonGetStarted>Get started</ButtonGetStarted>
@@ -68,9 +73,11 @@ const FlexBox = styled.div`
 `
 const FlexImg = styled(FlexBox)`
     max-height: 48px;
+    flex-direction: column;
     p {
         font-weight: normal;
     }
+    width: 100%;
 `
 const Nav = styled.nav`
     position: sticky;
@@ -82,6 +89,7 @@ const Nav = styled.nav`
     height: 56px;
     padding: 0 8px;
     gap: 8px;
+    z-index: 2;
     #aaa,
     #aab,
     #aac,
@@ -188,7 +196,6 @@ const ButtonLogin = styled.button`
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     font-weight: bold;
-    min-width: 150px;
     background-color: ${(props) => props.theme.colors.main};
     border-width: 0;
     height: 48px;

@@ -159,7 +159,7 @@ export const menuPanel = {
                     id: 'S4VX',
                 },
                 1: {
-                    image: 'http://localhost:3000/prey.webp',
+                    image: './prey.webp',
                     text: 'Prey',
                     rating: '81%',
                     ratingImg: 3,
@@ -167,7 +167,7 @@ export const menuPanel = {
                     id: 'FY51',
                 },
                 2: {
-                    image: 'http://localhost:3000/prey.webp',
+                    image: './prey.webp',
                     text: 'Prey',
                     rating: '81%',
                     ratingImg: 3,
@@ -393,7 +393,7 @@ export const menuPanel = {
             id: 'KKBB',
             subItems: {
                 0: {
-                    image: 'http://localhost:3000/prey.webp',
+                    image: '/./prey.webp',
                     text: 'Prey',
                     rating: '81%',
                     ratingImg: 2,
@@ -479,7 +479,7 @@ export const menuPanel = {
             id: 'GL6P',
             subItems: {
                 0: {
-                    image: 'http://localhost:3000/guidesNews.PNG',
+                    image: './guidesNews.PNG',
                     text: '10 best Jenifer Lawrence Movies Ranked',
                     rating: '',
                     ratingImg: '',
@@ -487,7 +487,7 @@ export const menuPanel = {
                     id: 'FQSU',
                 },
                 1: {
-                    image: 'http://localhost:3000/guidesNews.PNG',
+                    image: './guidesNews.PNG',
                     text: '36 Best Denzel Washintong Movies Ranked',
                     rating: '',
                     ratingImg: '',
@@ -501,7 +501,7 @@ export const menuPanel = {
             id: 'IH99',
             subItems: {
                 0: {
-                    image: 'http://localhost:3000/guidesNews.PNG',
+                    image: './guidesNews.PNG',
                     text: 'TR14: Celebrating 14 Years of Toren Romaros',
                     rating: '',
                     ratingImg: '',
@@ -509,7 +509,7 @@ export const menuPanel = {
                     id: 'SX6Q',
                 },
                 1: {
-                    image: 'http://localhost:3000/guidesNews.PNG',
+                    image: './guidesNews.PNG',
                     text: 'What to Watch: In Theathers and On Streaming',
                     rating: '',
                     ratingImg: '',
@@ -523,7 +523,7 @@ export const menuPanel = {
             id: 'QIGC',
             subItems: {
                 0: {
-                    image: 'http://localhost:3000/guidesNews.PNG',
+                    image: './guidesNews.PNG',
                     text: 'The Most Anticipated TV and Streaming Shows of 911: New And Returning Shows We Can"t Wait to see',
                     rating: '',
                     ratingImg: '',
@@ -531,7 +531,7 @@ export const menuPanel = {
                     id: 'PN2R',
                 },
                 1: {
-                    image: 'http://localhost:3000/guidesNews.PNG',
+                    image: './guidesNews.PNG',
                     text: 'Weekend Box Office Results: Barbie Leads for Fourth Week in a Row',
                     rating: '',
                     ratingImg: '',
