@@ -85,6 +85,9 @@ export const colors = {
     caption: '#959595',
     background: '#F2F2F2',
     line: '#E9E9EA',
+    red: '#F02D2D',
+    yellow: '#FFCB34',
+    green: '#66CC33',
 }
 
 export const fontSizes = {
