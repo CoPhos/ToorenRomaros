@@ -25,7 +25,7 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <GlobalStyle />
             <NavbarContainer></NavbarContainer>
-            <MainCarouselContainer></MainCarouselContainer>
+            <MainCarouselContainer size={'small'}></MainCarouselContainer>
             <CirlceRating cursor={1}></CirlceRating>
             <WhereWatch></WhereWatch>
             <RatingScore number={78} tittle={'User Score'} cursor={1}></RatingScore>

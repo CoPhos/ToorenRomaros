@@ -3,7 +3,8 @@ import React from 'react'
 //components
 import MainCarousel from './MainCarousel'
 
-function MainCarouselContainer() {
+function MainCarouselContainer(props) {
+
   const slides = [
       '/mainCarouselMobile.webp',
       '/mainCarouselMobile.webp',
@@ -14,7 +15,7 @@ function MainCarouselContainer() {
       '/mainCarouselMobile.webp',
       '/mainCarouselMobile.webp',
   ]
-  return <MainCarousel slides={slides}></MainCarousel>
+  return <MainCarousel slides={slides} size={props.size}></MainCarousel>
 }
 
 export default MainCarouselContainer
