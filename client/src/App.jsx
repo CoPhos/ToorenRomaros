@@ -15,6 +15,34 @@ import RatingScore from './components/ratingScore/RatingScore'
 import RatingScoreOverall from './components/ratingScore/RatingScoreOverall'
 import Review from './components/review/Review'
 
+const mSlides = [
+    '/mainCarouselDesktop.webp',
+    '/mainCarouselDesktop.webp',
+    '/mainCarouselDesktop.webp',
+    '/mainCarouselDesktop.webp',
+    '/mainCarouselDesktop.webp',
+    '/mainCarouselDesktop.webp',
+    '/mainCarouselDesktop.webp',
+    '/mainCarouselDesktop.webp',
+]
+
+const dSlides = [
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+    '/placeholder2.jpg',
+]
+
 const theme = {
     colors: colors,
     fontSizes: fontSizes,
@@ -25,10 +53,21 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <GlobalStyle />
             <NavbarContainer></NavbarContainer>
-            <MainCarouselContainer size={'small'}></MainCarouselContainer>
+            <MainCarouselContainer
+                slides={mSlides}
+                type={'main'}
+            ></MainCarouselContainer>
+            <MainCarouselContainer
+                slides={dSlides}
+                type={'movies'}
+            ></MainCarouselContainer>
             <CirlceRating cursor={1}></CirlceRating>
             <WhereWatch></WhereWatch>
-            <RatingScore number={78} tittle={'User Score'} cursor={1}></RatingScore>
+            <RatingScore
+                number={78}
+                tittle={'User Score'}
+                cursor={1}
+            ></RatingScore>
             <RatingScoreOverall></RatingScoreOverall>
             <Review></Review>
 

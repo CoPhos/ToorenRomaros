@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: inherit;
     }
     #root{
-            max-width: 1624px;
+            max-width: 1200px;
             background-color: #FFFFFF;
             margin: 0 auto;
         }

@@ -4,18 +4,8 @@ import React from 'react'
 import MainCarousel from './MainCarousel'
 
 function MainCarouselContainer(props) {
-
-  const slides = [
-      '/mainCarouselMobile.webp',
-      '/mainCarouselMobile.webp',
-      '/mainCarouselMobile.webp',
-      '/mainCarouselMobile.webp',
-      '/mainCarouselMobile.webp',
-      '/mainCarouselMobile.webp',
-      '/mainCarouselMobile.webp',
-      '/mainCarouselMobile.webp',
-  ]
-  return <MainCarousel slides={slides} size={props.size}></MainCarousel>
+      
+  return <MainCarousel slides={props.slides} type={props.type}></MainCarousel>
 }
 
 export default MainCarouselContainer
