@@ -1,90 +1,133 @@
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 function MainCarousel({ slides, type }) {
     const ref = useRef(null)
+    const slide = useRef(0)
+    const width = useRef(null)
+    const rightDirection = useRef(null);
     let isDragging = false
-    window.addEventListener('mouseup', function (e) {
-        isDragging = false
-        ref.current.classList.remove('dragging')
-    })
+
     window.addEventListener('touchend', function (e) {
         isDragging = false
-        ref.current.classList.remove('dragging')
     })
 
     function dragging(e) {
         if (!isDragging) {
             return
         }
-        ref.current.classList.add('dragging')
-        ref.current.scrollLeft -= e.movementX
+        moveSlides(rightDirection.current)
+    }
+
+    function direction(e){
+        if (e.movementX == -4) {
+            rightDirection.current = true
+        } else if (e.movementX == 4) {
+            rightDirection.current = false
+        }
+    }
+
+    function moveSlides(right) {
+        if (right) {
+            const cardPerSlide = Math.ceil(
+                ref.current.clientWidth / (width.current.clientWidth + 16)
+            )
+            console.log(cardPerSlide)
+            const maxWidth =
+                (width.current.clientWidth + 16) * slides.length -
+                (width.current.clientWidth + 16) * cardPerSlide
+
+            if (ref.current.scrollLeft >= maxWidth) {
+                slide.current = 0
+                ref.current.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth',
+                })
+            } else {
+                slide.current++
+                ref.current.scrollTo({
+                    top: 0,
+                    left: (ref.current.clientWidth + 16) * slide.current,
+                    behavior: 'smooth',
+                })
+            }
+        } else if (!right) {
+            if (slide.current == 0) {
+                return
+            } else {
+                ref.current.scrollTo({
+                    top: 0,
+                    left:
+                        (ref.current.clientWidth + 16) * slide.current -
+                        (ref.current.clientWidth + 16),
+                    behavior: 'smooth',
+                })
+                slide.current--
+            }
+        }
+    }
+    function iterateData(value, key, type) {
+        if (type == 'main') {
+            return (
+                <Fragment key={key}>
+                    <ImageContainer
+                        ref={width}
+                        theme={{ img: value }}
+                        type={{ value: type }}
+                    >
+                        {type == 'main' && (
+                            <p>
+                                the youngest Gemthe youngest Gemthe youngest
+                                Gemthe youngest Gem the youngest Gem the
+                                youngest Gem
+                            </p>
+                        )}
+                    </ImageContainer>
+                </Fragment>
+            )
+        } else {
+            return (
+                <Moviesdiv key={key}>
+                    <ImageContainer
+                        ref={width}
+                        theme={{ img: value }}
+                        type={{ value: type }}
+                    >
+                        {type == 'main' && (
+                            <p>
+                                the youngest Gemthe youngest Gemthe youngest
+                                Gemthe youngest Gem the youngest Gem the
+                                youngest Gem
+                            </p>
+                        )}
+                    </ImageContainer>
+                    {type == 'movies' && <p>45% Civil war45% Civil war</p>}
+                </Moviesdiv>
+            )
+        }
     }
 
     return (
         <Wrapper>
             <Arrow className="left">
-                <i
-                    onClick={() =>
-                        (ref.current.scrollLeft +=
-                            -ref.current.clientWidth - 16)
-                    }
-                >
-                    {'<'}
-                </i>
+                <i onClick={() => moveSlides(false)}>{'<'}</i>
             </Arrow>
             <Div
                 ref={ref}
-                onPointerMove={(e) => dragging(e)}
-                onMouseDown={() => (isDragging = true)}
+                onPointerMove={(e) => direction(e)}
                 onTouchStart={() => (isDragging = true)}
+                onTouchEnd={(e) => dragging(e)}
             >
                 {slides.map((value, key) => {
                     return iterateData(value, key, type)
                 })}
             </Div>
             <Arrow className="right">
-                <i
-                    onClick={() =>
-                        (ref.current.scrollLeft += ref.current.clientWidth + 16)
-                    }
-                >
-                    {'>'}
-                </i>
+                <i onClick={() => moveSlides(true)}>{'>'}</i>
             </Arrow>
         </Wrapper>
     )
-}
-
-function iterateData(value, key, type) {
-    if (type == 'main') {
-        return (
-            <Fragment key={key}>
-                <ImageContainer theme={{ img: value }} type={{ value: type }}>
-                    {type == 'main' && (
-                        <p>
-                            the youngest Gemthe youngest Gemthe youngest Gemthe
-                            youngest Gem the youngest Gem the youngest Gem
-                        </p>
-                    )}
-                </ImageContainer>
-            </Fragment>
-        )
-    } else {
-        return (
-            <moviesDiv key={key}>
-                <ImageContainer theme={{ img: value }} type={{ value: type }}>
-                    {type == 'main' && (
-                        <p>
-                            the youngest Gemthe youngest Gemthe youngest Gemthe
-                            youngest Gem the youngest Gem the youngest Gem
-                        </p>
-                    )}
-                </ImageContainer>
-                {type == 'movies' && <p>45% Civil war45% Civil war</p>}
-            </moviesDiv>
-        )
-    }
 }
 
 const Wrapper = styled.div`
@@ -93,6 +136,9 @@ const Wrapper = styled.div`
     justify-content: flex-start;
     margin-top: 16px;
     padding: 0 16px;
+    @media only screen and (max-width: 650px) {
+        width: 100vw;
+    }
     .left {
         left: 8px;
     }
@@ -104,12 +150,8 @@ const Wrapper = styled.div`
         -ms-user-select: none;
         user-select: none;
     }
-    .dragging {
-        scroll-behavior: auto;
-        cursor: grab;
-    }
 `
-const moviesDiv = styled.div`
+const Moviesdiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -120,10 +162,8 @@ const Div = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 16px;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    cursor: grab;
     touch-action: none;
     p {
         margin: 0;
@@ -136,6 +176,7 @@ const Div = styled.div`
 `
 const ImageContainer = styled.div`
     display: flex;
+    margin-right: 16px;
     background-image: linear-gradient(
             to bottom,
             rgba(255, 255, 255, 0.3),
@@ -214,20 +255,17 @@ const Arrow = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    @media only screen and (max-width: 800px) {
+        display: none;
+    }
     width: 40px;
     height: 40px;
     position: absolute;
     z-index: 0;
-    background-color: grey;
-    &:hover {
-        background-color: white;
-        i {
-            color: black;
-        }
-    }
+    background-color: white;
     i {
         cursor: pointer;
-        color: white;
+        color: black;
         font-size: ${(props) => props.theme.fontSizes.mh1};
     }
 `
