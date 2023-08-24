@@ -135,7 +135,6 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: flex-start;
     margin-top: 16px;
-    padding: 0 16px;
     @media only screen and (max-width: 650px) {
         width: 100vw;
     }
@@ -164,6 +163,7 @@ const Div = styled.div`
     justify-content: flex-start;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    gap: 16px;  
     touch-action: none;
     p {
         margin: 0;
@@ -176,65 +176,63 @@ const Div = styled.div`
 `
 const ImageContainer = styled.div`
     display: flex;
-    margin-right: 16px;
     background-image: linear-gradient(
             to bottom,
             rgba(255, 255, 255, 0.3),
             rgba(0, 0, 0, 0.8)
         ),
         url(http://localhost:3000${(props) => props.theme.img});
-    @media only screen and (max-width: 650px) {
+    @media only screen and (max-width: 800px) {
         min-width: ${(props) => {
-            if (props.type.value == 'main') return 'calc(100vw - 32px)'
+            if (props.type.value == 'main') return 'calc(100vw)'
             else {
-                return 'calc(28vw - 32px)'
+                return '130px'
             }
         }};
         min-height: ${(props) => {
-            if (props.type.value == 'main')
-                return 'calc((100vw - 32px) * 0.665)'
+            if (props.type.value == 'main') return 'calc((100vw ) * 0.665)'
             else {
-                return 'calc((28vw - 32px) * 1.6)'
+                return '186px'
             }
         }};
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
     }
-    @media only screen and (min-width: 651px) {
+    @media only screen and (min-width: 801px) {
         min-width: ${(props) => {
-            if (props.type.value == 'main') return 'calc(50vw - 16px)'
+            if (props.type.value == 'main') return 'calc(50vw - 8px)'
             else {
-                return '132px'
+                return '130px'
             }
         }};
         min-height: ${(props) => {
-            if (props.type.value == 'main') return 'calc((50vw - 16px) * 0.9)'
+            if (props.type.value == 'main') return 'calc((50vw - 8px) * 0.665)'
             else {
-                return '211px'
+                return '186px'
             }
         }};
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
     }
-    @media only screen and (min-width: 1100px) {
+    @media only screen and (min-width: 1200px) {
         min-width: ${(props) => {
-            if (props.type.value == 'main') return '575px'
+            if (props.type.value == 'main') return '592px'
             else {
-                return '137px'
+                return '180px'
             }
         }};
         min-height: ${(props) => {
-            if (props.type.value == 'main') return '382px'
+            if (props.type.value == 'main') return 'calc(592 * 0.665)'
             else {
-                return '220px'
+                return '258px'
             }
         }};
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
     }
+    border-radius: ${(props) => {
+        if (props.type.value == 'main') return ''
+        else {
+            return '8px'
+        }
+    }};
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
     align-items: flex-end;
     p {
         color: white;
@@ -255,7 +253,7 @@ const Arrow = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 904px) {
         display: none;
     }
     width: 40px;

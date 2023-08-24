@@ -100,6 +100,7 @@ const Nav = styled.nav`
 const SearchContainer = styled(FlexBox)`
     padding: 16px 8px;
     border-radius: 25px;
+    margin-right: 8px;
     border: solid 1px white;
     height: 32px;
     flex-grow: 3;
