@@ -15,7 +15,7 @@ import RatingScore from './components/ratingScore/RatingScore'
 import RatingScoreOverall from './components/ratingScore/RatingScoreOverall'
 import Review from './components/review/Review'
 
-const mSlides = [
+const mainSlides = [
     '/mainCarouselDesktop.webp',
     '/mainCarouselDesktop.webp',
     '/mainCarouselDesktop.webp',
@@ -26,7 +26,7 @@ const mSlides = [
     '/mainCarouselDesktop.webp',
 ]
 
-const dSlides = [
+const moviesSlides = [
     '/placeholder2.jpg',
     '/placeholder2.jpg',
     '/placeholder2.jpg',
@@ -42,6 +42,18 @@ const dSlides = [
     '/placeholder2.jpg',
     '/placeholder2.jpg',
 ]
+
+const mainSizes = {
+    mobile: { height: 'calc(100vw * 0.665)', width: '100vw' },
+    tablet: { height: 'calc((50vw - 8px) * 0.665)', width: 'calc(50vw - 8px)' },
+    desktop: { height: '408px', width: '592px' },
+}
+
+const moviesSizes = {
+    mobile: { height: '186px', width: '130px' },
+    tablet: { height: '186px', width: '130px' },
+    desktop: { height: '258px', width: '180px' },
+}
 
 const theme = {
     colors: colors,
@@ -54,12 +66,18 @@ export default function App() {
             <GlobalStyle />
             <NavbarContainer></NavbarContainer>
             <MainCarouselContainer
-                slides={mSlides}
-                type={'main'}
+                slides={mainSlides}
+                dimension={mainSizes}
+                insideText={true}
+                belowText={false}
+                gradient={true}
             ></MainCarouselContainer>
             <MainCarouselContainer
-                slides={dSlides}
-                type={'movies'}
+                slides={moviesSlides}
+                dimension={moviesSizes}
+                belowText={true}
+                border={'8px'}
+                gradient={false}
             ></MainCarouselContainer>
             <CirlceRating cursor={1}></CirlceRating>
             <WhereWatch></WhereWatch>
