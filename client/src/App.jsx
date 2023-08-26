@@ -79,7 +79,7 @@ export default function App() {
                 border={'8px'}
                 gradient={false}
             ></MainCarouselContainer>
-            <CirlceRating cursor={1}></CirlceRating>
+            {/* <CirlceRating cursor={1}></CirlceRating>
             <WhereWatch></WhereWatch>
             <RatingScore
                 number={78}
@@ -87,8 +87,7 @@ export default function App() {
                 cursor={1}
             ></RatingScore>
             <RatingScoreOverall></RatingScoreOverall>
-            <Review></Review>
-
+            <Review></Review> */}
             <MobileNavMenu></MobileNavMenu>
             <Footer></Footer>
         </ThemeProvider>

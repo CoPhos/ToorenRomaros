@@ -1,13 +1,37 @@
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment, useRef, useCallback, useState } from 'react'
 import arrow from '../../assests/arrow.png'
 import styled from 'styled-components'
 
-function MainCarousel({ slides, border, dimension, belowText, insideText, gradient }) {
+function MainCarousel({
+    slides,
+    border,
+    dimension,
+    belowText,
+    insideText,
+    gradient,
+}) {
     const ref = useRef(null)
     const slide = useRef(0)
     const width = useRef(null)
     const rightDirection = useRef(null)
     let isDragging = false
+
+    const [containerWidth, setcontainerWidth] = useState(0)
+    const [imageWidth, setimageWidth] = useState(0)
+
+    const containerRef = useCallback((node) => {
+        if (node !== null) {
+            ref.current = node
+            setcontainerWidth(node.getBoundingClientRect().width)
+        }
+    }, [])
+
+    const imageRef = useCallback((node) => {
+        if (node !== null) {
+            width.current = node
+            setimageWidth(node.getBoundingClientRect().width)
+        }
+    }, [])
 
     window.addEventListener('touchend', function (e) {
         isDragging = false
@@ -27,17 +51,18 @@ function MainCarousel({ slides, border, dimension, belowText, insideText, gradie
             rightDirection.current = false
         }
     }
-
     function moveSlides(right) {
+        let gap = 16
         if (right) {
             const cardPerSlide = Math.ceil(
-                ref.current.clientWidth / (width.current.clientWidth + 16)
+                ref.current.getBoundingClientRect().width /
+                    (width.current.getBoundingClientRect().width + gap)
             )
-            console.log(cardPerSlide)
             const maxWidth =
-                (width.current.clientWidth + 16) * slides.length -
-                (width.current.clientWidth + 16) * cardPerSlide
-
+                (width.current.getBoundingClientRect().width + gap) *
+                    slides.length -
+                (width.current.getBoundingClientRect().width + gap) *
+                    cardPerSlide
             if (ref.current.scrollLeft >= maxWidth) {
                 slide.current = 0
                 ref.current.scrollTo({
@@ -47,9 +72,21 @@ function MainCarousel({ slides, border, dimension, belowText, insideText, gradie
                 })
             } else {
                 slide.current++
+                let increment =
+                    (ref.current.getBoundingClientRect().width) *
+                        slide.current +
+                    slide.current * gap
+                if (ref.current.getBoundingClientRect().width <= 800) {
+                    increment =
+                        (ref.current.getBoundingClientRect().width + 17) *
+                            slide.current +
+                        slide.current * gap
+                }
+                console.log(increment)
+                
                 ref.current.scrollTo({
                     top: 0,
-                    left: (ref.current.clientWidth + 16) * slide.current,
+                    left: increment,
                     behavior: 'smooth',
                 })
             }
@@ -57,21 +94,37 @@ function MainCarousel({ slides, border, dimension, belowText, insideText, gradie
             if (slide.current == 0) {
                 return
             } else {
+                let dicrement =
+                   (ref.current.getBoundingClientRect().width + gap) *
+                            slide.current -
+                        (ref.current.getBoundingClientRect().width + gap)
+
+                if (ref.current.getBoundingClientRect().width <= 800) {
+                    dicrement =
+                        (ref.current.getBoundingClientRect().width + gap) *
+                            slide.current -
+                        (ref.current.getBoundingClientRect().width + gap) +
+                        17 * (slide.current - 1)
+                        
+                       
+                }
+                console.log(dicrement )
                 ref.current.scrollTo({
                     top: 0,
-                    left:
-                        (ref.current.clientWidth + 16) * slide.current -
-                        (ref.current.clientWidth + 16),
+                    left: dicrement,
                     behavior: 'smooth',
                 })
                 slide.current--
             }
         }
     }
+
+    function dots() {}
+
     function iterateData(value, key) {
         const component = (
             <ImageContainer
-                ref={width}
+                ref={imageRef}
                 theme={{
                     img: value,
                     borderValue: border,
@@ -81,8 +134,7 @@ function MainCarousel({ slides, border, dimension, belowText, insideText, gradie
             >
                 {insideText && (
                     <ImageTextWrapper>
-                        <RedBar>
-                        </RedBar>
+                        <RedBar></RedBar>
                         <TextContainer>
                             <p id="tittle">Text Tittle</p>
                             <p>
@@ -124,21 +176,19 @@ function MainCarousel({ slides, border, dimension, belowText, insideText, gradie
                 <img src={arrow} onClick={() => moveSlides(false)}></img>
             </Arrow>
             <Div
-                ref={ref}
+                ref={containerRef}
                 onPointerMove={(e) => direction(e)}
                 onTouchStart={() => (isDragging = true)}
                 onTouchEnd={(e) => dragging(e)}
             >
                 {slides.map((value, key) => {
-                    return iterateData(
-                        value,
-                        key,
-                    )
+                    return iterateData(value, key)
                 })}
             </Div>
             <Arrow className="right">
                 <img src={arrow} onClick={() => moveSlides(true)}></img>
             </Arrow>
+            <DotsDiv>{}</DotsDiv>
         </Wrapper>
     )
 }
@@ -188,14 +238,14 @@ const Div = styled.div`
 const ImageContainer = styled.div`
     display: flex;
     background-image: ${(props) => {
-        if (props.theme.gradientValue) {
-            return `linear-gradient(
+            if (props.theme.gradientValue) {
+                return `linear-gradient(
             to bottom,
             rgba(255, 255, 255, 0.3),
             rgba(0, 0, 0, 0.8)
         ),`
-        }
-    }} 
+            }
+        }}
         url(http://localhost:3000${(props) => props.theme.img});
     @media only screen and (max-width: 800px) {
         min-width: ${(props) => props.theme.dimensionValue.mobile.width};
@@ -226,7 +276,6 @@ const ImageTextWrapper = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     padding: 8px 8px;
-    
 `
 
 const RedBar = styled.div`
@@ -261,15 +310,12 @@ const TextContainer = styled.div`
     }
 `
 
-
 const Arrow = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    @media only screen and (max-width: 904px) {
-        display: none;
-    }
+
     width: 40px;
     height: 40px;
     position: absolute;
@@ -279,5 +325,7 @@ const Arrow = styled.div`
         cursor: pointer;
     }
 `
+
+const DotsDiv = styled.div``
 
 export default MainCarousel
