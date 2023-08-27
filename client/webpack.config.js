@@ -38,6 +38,6 @@ module.exports = {
   },
   // pass all js files through Babel
   resolve: {
-    extensions: ["*", ".js", ".jsx"],    
+    extensions: [".*", ".js", ".jsx"],    
   },
 };

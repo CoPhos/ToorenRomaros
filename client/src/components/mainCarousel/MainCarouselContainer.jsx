@@ -10,8 +10,11 @@ function MainCarouselContainer(props) {
             dimension={props.dimension}
             insideText={props.insideText}
             belowText={props.belowText}
-            border={props.border}
             gradient={props.gradient}
+            cardPerSlide={props.cardPerSlide}
+            pagination={props.pagination}
+            breakPoints={props.breakPoints}
+            border={props.border}
         ></MainCarousel>
     )
 }

@@ -49,7 +49,7 @@ function Navbar(props) {
                         <FlexImg>
                             <FlexBox>
                                 <User src={user} width="40" height="40"></User>
-                                <p>XavierXavier</p>
+                                <p id="mar">XavierXavier</p>
                             </FlexBox>
                             <div
                                 style={{ width: 'calc(100% + 16px)' }}
@@ -70,6 +70,9 @@ function Navbar(props) {
 const FlexBox = styled.div`
     display: flex;
     align-items: center;
+    #mar{
+        margin-bottom: 14px;
+    }
 `
 const FlexImg = styled(FlexBox)`
     max-height: 48px;

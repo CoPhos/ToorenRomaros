@@ -44,13 +44,13 @@ const moviesSlides = [
 ]
 
 const mainSizes = {
-    mobile: { height: 'calc(100vw * 0.665)', width: '100vw' },
-    tablet: { height: 'calc((50vw - 8px) * 0.665)', width: 'calc(50vw - 8px)' },
-    desktop: { height: '408px', width: '592px' },
+    mobile: { height: '280px', width: '100%' },
+    tablet: { height: '340px', width: '50%' },
+    desktop: { height: '408px', width: '50%' },
 }
 
 const moviesSizes = {
-    mobile: { height: '186px', width: '130px' },
+    mobile: { height: '186px', width: '125px' },
     tablet: { height: '186px', width: '130px' },
     desktop: { height: '258px', width: '180px' },
 }
@@ -59,6 +59,18 @@ const theme = {
     colors: colors,
     fontSizes: fontSizes,
 }
+
+const breakPointsMovie = [
+    { width: 1, itemsToShow: 2, itemsToScroll: 2 },
+    { width: 420, itemsToShow: 3, itemsToScroll: 3 },
+    { width: 600, itemsToShow: 4, itemsToScroll: 4 },
+    { width: 1000, itemsToShow: 5, itemsToScroll: 5 },
+]
+const breakPointsMain = [
+    { width: 1, itemsToShow: 1, itemsToScroll: 1 },
+    { width: 470, itemsToShow: 2, itemsToScroll: 2 },
+]
+
 
 export default function App() {
     return (
@@ -71,13 +83,17 @@ export default function App() {
                 insideText={true}
                 belowText={false}
                 gradient={true}
+                breakPoints={breakPointsMain}
+                pagination={true}
             ></MainCarouselContainer>
             <MainCarouselContainer
                 slides={moviesSlides}
                 dimension={moviesSizes}
                 belowText={true}
-                border={'8px'}
                 gradient={false}
+                breakPoints={breakPointsMovie}
+                pagination={false}
+                border={'8px'}
             ></MainCarouselContainer>
             {/* <CirlceRating cursor={1}></CirlceRating>
             <WhereWatch></WhereWatch>
