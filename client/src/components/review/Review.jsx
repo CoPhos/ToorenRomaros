@@ -18,12 +18,10 @@ function Review() {
               title, with some styles attached to it:`;
     if (height > 87) {
         seeMore = <p>See full review</p>
-        console.log(height)
     }
     else{
         seeMore = <p></p>
     }
-    console.log(elementRef)
   return (
       <Wrapper>
           <RatingScore

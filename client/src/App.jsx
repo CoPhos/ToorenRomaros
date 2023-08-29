@@ -19,6 +19,10 @@ import RatingScoreOverall from './components/ratingScore/RatingScoreOverall'
 import Review from './components/review/Review'
 import SimpleTopContainer from './components/SimpleTop/SimpleTopContainer'
 import NewsSectionContainer from './components/News&Blog/NewsSectionContainer'
+import CastContainer from './components/cast/CastContainer'
+import FilmContainer from './components/Film/FilmContainer'
+import FilmScoreContainer from './components/FilmScore/FilmScoreContainer'
+import FilmsPanelContainer from './components/FilmsPanel/FilmsPanelContainer'
 
 //slides
 const mainSlides = [
@@ -130,7 +134,7 @@ export default function App() {
             <GlobalStyle />
             <NavbarContainer></NavbarContainer>
             {/*Main Page Movies */}
-            <Fragment>
+            {/* <Fragment>
                 <MainCarouselContainer
                     slides={mainSlides}
                     dimension={mainSizes}
@@ -258,10 +262,14 @@ export default function App() {
                     border={'8px'}
                     rating={false}
                 ></MainCarouselContainer>
-            </Fragment>
+            </Fragment> */}
             {/*Main Page Movies */}
 
-            {/* <CirlceRating cursor={1}></CirlceRating>
+            {/*Movie Details */}
+            <FilmContainer></FilmContainer>
+            <FilmScoreContainer></FilmScoreContainer>
+            <CirlceRating cursor={1}></CirlceRating>
+            <FilmsPanelContainer></FilmsPanelContainer>
             <WhereWatch></WhereWatch>
             <RatingScore
                 number={78}
@@ -269,7 +277,9 @@ export default function App() {
                 cursor={1}
             ></RatingScore>
             <RatingScoreOverall></RatingScoreOverall>
-            <Review></Review> */}
+            <Review></Review>
+            <CastContainer></CastContainer>
+            {/*Movie Details */}
             <MobileNavMenu></MobileNavMenu>
             <Footer></Footer>
         </ThemeProvider>

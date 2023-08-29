@@ -17,11 +17,10 @@ function RatingScoreOverall() {
                             <p>{value.percentage}%</p>
                         </ItemsContainer>
                         <BarsContainer
-                            color={{ rate: index }}
-                            size={{ rate: value.percentage }}
+                            args={{ color: index, size: value.percentage  }}
                         >
-                            <div></div>
-                            <div></div>
+                            <div id='first'></div>
+                            <div id='last'></div>
                         </BarsContainer>
                     </Fragment>
                 )
@@ -35,6 +34,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    width: 100%;
     gap: 8px;
 `
 
@@ -65,9 +65,9 @@ const BarsContainer = styled.div`
     div {
         height: 3px;
         background-color: ${(props) => {
-            if (props.color.rate == 0) {
+            if (props.args.color == 0) {
                 return props.theme.colors.green
-            } else if (props.color.rate == 1) {
+            } else if (props.args.color == 1) {
                 return props.theme.colors.yellow
             } else {
                 return props.theme.colors.red
@@ -75,10 +75,16 @@ const BarsContainer = styled.div`
         }};
     }
     :first-child {
-        width: ${(props) => props.size.rate}%;
+
+    }
+    #first {
+        width: ${(props) => props.args.size}%;
     }
     :last-child {
-        width: calc(100% - ${(props) => props.size.rate}%);
+
+    }
+    #last {
+        width: calc(100% - ${(props) => props.args.size}%);
         opacity: 35%;
     }
 `
