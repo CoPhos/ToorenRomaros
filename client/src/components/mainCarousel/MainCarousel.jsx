@@ -1,7 +1,9 @@
-import React, { Fragment, useRef, useCallback, useState } from 'react'
-import arrow from '../../assests/arrow.png'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import smiling from '../../assests/smiling.png'
 import Carousel from 'react-elastic-carousel'
+import Tittle from '../../utils/Tittle'
+import { fontSizes } from '../../utils/globalStyles'
 
 function MainCarousel({
     breakPoints,
@@ -12,54 +14,13 @@ function MainCarousel({
     belowText,
     insideText,
     border,
+    rating,
 }) {
-    function iterateData(value, key) {
-        const component = (
-            <ImageContainer
-                theme={{
-                    img: value,
-                    dimensionValue: dimension,
-                    gradientValue: gradient,
-                    borderValue: border,
-                }}
-            >
-                {insideText && (
-                    <ImageTextWrapper>
-                        <RedBar></RedBar>
-                        <TextContainer>
-                            <p id="tittle">Text Tittle</p>
-                            <p>
-                                the youngest Gemthe youngest Gemthe youngest
-                                Gemthe youngest Gem the youngest Gem the
-                                youngest Gem the youngest Gemthe youngest Gemthe
-                                youngest Gemthe youngest Gem the youngest Gem
-                                the youngest Gem the youngest Gemthe youngest
-                                Gemthe youngest Gemthe youngest Gem the youngest
-                                Gem the youngest Gem the youngest Gemthe
-                                youngest Gemthe youngest Gemthe youngest Gem the
-                                youngest Gem the youngest Gem the youngest
-                                Gemthe youngest Gemthe youngest Gemthe youngest
-                                Gem the youngest Gem the youngest Gem the
-                                youngest Gemthe youngest Gemthe youngest Gemthe
-                                youngest Gem the youngest Gem the youngest Gem
-                            </p>
-                        </TextContainer>
-                    </ImageTextWrapper>
-                )}
-            </ImageContainer>
-        )
-        if (!belowText) {
-            return <Fragment key={key}>{component}</Fragment>
-        } else {
-            return (
-                <Moviesdiv key={key}>
-                    {component}
-                    {belowText && <p>45% Civil war45% Civil war</p>}
-                </Moviesdiv>
-            )
-        }
+    const sizes = {
+        tittleM: fontSizes.mh3,
+        tittleD: fontSizes.h3,
+        base: fontSizes.base,
     }
-
     return (
         <Carousel
             disableArrowsOnEnd={false}
@@ -68,10 +29,80 @@ function MainCarousel({
             pagination={pagination}
         >
             {slides.map((value, key) => {
-                return iterateData(value, key)
+                return generateCard(
+                    value,
+                    key,
+                    dimension,
+                    gradient,
+                    border,
+                    belowText,
+                    rating,
+                    insideText,
+                    sizes
+                )
             })}
         </Carousel>
     )
+}
+
+export function generateCard(
+    value,
+    key,
+    dimension,
+    gradient,
+    border,
+    belowText,
+    rating,
+    insideText,
+    sizes
+) {
+    const component = (
+        <ImageContainer
+            theme={{
+                img: value,
+                dimensionValue: dimension,
+                gradientValue: gradient,
+                borderValue: border,
+            }}
+        >
+            {insideText && (
+                <ImageTextWrapper>
+                    <TextContainer>
+                        <Tittle
+                            tittle={insideText.tittle}
+                            text={insideText.text}
+                            sizes={sizes}
+                        ></Tittle>
+                    </TextContainer>
+                </ImageTextWrapper>
+            )}
+        </ImageContainer>
+    )
+    if (!belowText) {
+        return <Fragment key={key}>{component}</Fragment>
+    } else {
+        return (
+            <Moviesdiv
+                theme={{
+                    dimensionValue: dimension,
+                }}
+                key={key}
+            >
+                {component}
+                {belowText && (
+                    <RatingContainer>
+                        {rating && (
+                            <RatingDiv>
+                                <img src={smiling} width="16" height="16"></img>
+                                <p className="left">85%</p>
+                            </RatingDiv>
+                        )}
+                        <p>Captitan America: Winter Soldier</p>
+                    </RatingContainer>
+                )}
+            </Moviesdiv>
+        )
+    }
 }
 
 const Moviesdiv = styled.div`
@@ -79,31 +110,79 @@ const Moviesdiv = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-`
-
-const ImageContainer = styled.div`
-    display: flex;
-    background-image: ${(props) => {
-            if (props.theme.gradientValue) {
-                return `linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.3),
-            rgba(0, 0, 0, 0.8)
-        ),`
-            }
-        }}
-        url(http://localhost:3000${(props) => props.theme.img});
     @media only screen and (max-width: 800px) {
         min-width: ${(props) => props.theme.dimensionValue.mobile.width};
         min-height: ${(props) => props.theme.dimensionValue.mobile.height};
+        max-width: ${(props) => props.theme.dimensionValue.mobile.maxWidth};
     }
     @media only screen and (min-width: 801px) {
         min-width: ${(props) => props.theme.dimensionValue.tablet.width};
         min-height: ${(props) => props.theme.dimensionValue.tablet.height};
+        max-width: ${(props) => props.theme.dimensionValue.tablet.maxWidth};
     }
     @media only screen and (min-width: 1200px) {
         min-width: ${(props) => props.theme.dimensionValue.desktop.width};
         min-height: ${(props) => props.theme.dimensionValue.desktop.height};
+        max-width: ${(props) => props.theme.dimensionValue.desktop.maxWidth};
+    }
+    &:hover {
+        cursor:pointer;
+        p:not(.notBlue) {
+            color: #51a9ee;
+        }
+    }
+`
+const RatingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    p {
+        margin: 0;
+    }
+    :hover,
+    :focus {
+        p {
+            cursor: pointer;
+            color: ${(props) => props.theme.colors.hyperlinks};
+        }
+    }
+`
+const RatingDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    .left {
+        margin-left: 4px;
+        font-weight: bold;
+    }
+`
+const ImageContainer = styled.div`
+    display: flex;
+    background-image: ${(props) => {
+        if (props.theme.gradientValue) {
+            return `linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.3),
+            rgba(0, 0, 0, 0.8)
+        ),`
+        }
+    }}
+        url(http://localhost:3000${(props) => props.theme.img});
+    @media only screen and (max-width: 800px) {
+        min-width: ${(props) => props.theme.dimensionValue.mobile.width};
+        min-height: ${(props) => props.theme.dimensionValue.mobile.height};
+        max-width: ${(props) => props.theme.dimensionValue.mobile.maxWidth};
+    }
+    @media only screen and (min-width: 801px) {
+        min-width: ${(props) => props.theme.dimensionValue.tablet.width};
+        min-height: ${(props) => props.theme.dimensionValue.tablet.height};
+        max-width: ${(props) => props.theme.dimensionValue.tablet.maxWidth};
+    }
+    @media only screen and (min-width: 1200px) {
+        min-width: ${(props) => props.theme.dimensionValue.desktop.width};
+        min-height: ${(props) => props.theme.dimensionValue.desktop.height};
+        max-width: ${(props) => props.theme.dimensionValue.desktop.maxWidth};
     }
     border-radius: ${(props) => {
         if (!props.theme.borderValue) return ''
@@ -115,6 +194,8 @@ const ImageContainer = styled.div`
     background-repeat: no-repeat;
     background-position: center center;
     align-items: flex-end;
+    &:hover{
+        cursor:pointer;}
 `
 const ImageTextWrapper = styled.div`
     display: flex;
@@ -123,22 +204,8 @@ const ImageTextWrapper = styled.div`
     justify-content: flex-start;
     padding: 8px 8px;
 `
-
-const RedBar = styled.div`
-    min-height: 122px;
-    min-width: 4px;
-    background-color: ${(props) => props.theme.colors.main};
-`
-
 const TextContainer = styled.div`
-    min-height: 122px;
     padding-left: 8px;
-    #tittle {
-        font-size: ${(props) => props.theme.fontSizes.mh3};
-        @media only screen and (min-width: 904px) {
-            font-size: ${(props) => props.theme.fontSizes.h3};
-        }
-    }
     p {
         color: white;
         margin: 0;
@@ -155,7 +222,4 @@ const TextContainer = styled.div`
         }
     }
 `
-
-
-
 export default MainCarousel

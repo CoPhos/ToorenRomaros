@@ -15,6 +15,7 @@ function MainCarouselContainer(props) {
             pagination={props.pagination}
             breakPoints={props.breakPoints}
             border={props.border}
+            rating={props.rating}
         ></MainCarousel>
     )
 }

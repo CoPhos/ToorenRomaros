@@ -90,17 +90,19 @@ function iterateData(value, index, flag) {
                                     return ''
                             }
                         })()}
-                        {value.rating && <p>{value.rating}</p>}
+                        {value.rating && (
+                            <p className='blue'>{value.rating}</p>
+                        )}
                     </FlexRating>
                     {value.text && (
-                        <p className={value.textType}>{value.text}</p>
+                        <p className={value.textType + ' blue'}>{value.text}</p>
                     )}
                 </FlexCertified>
             </Fragment>
         )
     }
     return (
-        <Fragment key={(index + 3) * 1000}>
+        <DivNews key={(index + 3) * 1000}>
             {value.image && (
                 <img src={value.image} width="210" height="118"></img>
             )}
@@ -131,12 +133,12 @@ function iterateData(value, index, flag) {
                 })()}
 
                 {value.text && (
-                    <p className={value.textType}>
+                    <p className={value.textType + ' blue'}>
                         {value.rating + ' ' + value.text}
                     </p>
                 )}
             </FlexRatingRow>
-        </Fragment>
+        </DivNews>
     )
 }
 
@@ -158,8 +160,7 @@ const FlexBoxPanel = styled.div`
         margin: 0;
         font-weight: normal;
         cursor: pointer;
-        color: black;
-        &:hover {
+        :hover {
             color: ${(props) => props.theme.colors.hyperlinks};
         }
     }
@@ -207,6 +208,9 @@ const FlexRatingRow = styled.div`
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+    :hover {
+        cursor: pointer;
+    }
 `
 
 const FlexRating = styled.div`
@@ -231,6 +235,23 @@ const FlexCertified = styled.div`
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+    :hover,
+    :focus {
+        cursor: pointer;
+        .blue {
+            color: ${(props) => props.theme.colors.hyperlinks};
+        }
+    }
 `
+const DivNews = styled.div`
+    :hover,
+    :focus {
+        cursor: pointer;
+        .blue {
+            color: ${(props) => props.theme.colors.hyperlinks};
+        }
+    }
+`
+
 
 export default MenuPanel

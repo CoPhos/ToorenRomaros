@@ -36,6 +36,7 @@ const Container = styled.div`
     position: sticky;
     bottom: 0;
     margin-top: auto;
+    z-index:2;
     @media only screen and (min-width: 904px) {
         #hide {
             display: none;
