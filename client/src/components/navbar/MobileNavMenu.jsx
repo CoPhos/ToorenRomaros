@@ -36,11 +36,14 @@ const Container = styled.div`
     position: sticky;
     bottom: 0;
     margin-top: auto;
-    z-index:2;
+    z-index: 2;
     @media only screen and (min-width: 904px) {
         #hide {
             display: none;
         }
+    }
+    @media only screen and (max-width: 300px) {
+        height: 106px;
     }
 `
 const Wrapper = styled.div`
@@ -49,6 +52,12 @@ const Wrapper = styled.div`
     align-items: center;
     height: 64px;
     background-color: ${(props) => props.theme.colors.secondary};
+    @media only screen and (max-width: 300px) {
+        flex-wrap: wrap;
+    }
+    @media only screen and (max-width: 300px) {
+        height: 106px;
+    }
 `
 
 const ButtonMenu = styled.button`

@@ -15,14 +15,13 @@ import MainCarouselContainer from './components/mainCarousel/MainCarouselContain
 import CirlceRating from './components/rating/CirlceRating'
 import WhereWatch from './components/whereWatch/WhereWatch'
 import RatingScore from './components/ratingScore/RatingScore'
-import RatingScoreOverall from './components/ratingScore/RatingScoreOverall'
-import Review from './components/review/Review'
 import SimpleTopContainer from './components/SimpleTop/SimpleTopContainer'
 import NewsSectionContainer from './components/News&Blog/NewsSectionContainer'
 import CastContainer from './components/cast/CastContainer'
 import FilmContainer from './components/Film/FilmContainer'
 import FilmScoreContainer from './components/FilmScore/FilmScoreContainer'
 import FilmsPanelContainer from './components/FilmsPanel/FilmsPanelContainer'
+import ReviewsContainer from './components/review/ReviewsContainer'
 
 //slides
 const mainSlides = [
@@ -271,13 +270,8 @@ export default function App() {
             <CirlceRating cursor={1}></CirlceRating>
             <FilmsPanelContainer></FilmsPanelContainer>
             <WhereWatch></WhereWatch>
-            <RatingScore
-                number={78}
-                tittle={'User Score'}
-                cursor={1}
-            ></RatingScore>
-            <RatingScoreOverall></RatingScoreOverall>
-            <Review></Review>
+            
+            <ReviewsContainer></ReviewsContainer>
             <CastContainer></CastContainer>
             {/*Movie Details */}
             <MobileNavMenu></MobileNavMenu>

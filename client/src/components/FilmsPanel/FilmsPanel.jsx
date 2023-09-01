@@ -138,6 +138,9 @@ const Wrapper = styled.div`
         background-color: ${(props) => props.theme.colors.background};
         border: 1px solid ${(props) => props.theme.colors.line};
     }
+    @media only screen and (max-width: 904px) {
+        display: none;
+    }
 `
 const Button = styled.button`
     border: none;

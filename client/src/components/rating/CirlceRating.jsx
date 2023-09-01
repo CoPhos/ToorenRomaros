@@ -1,7 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import Carousel from 'react-elastic-carousel'
 
 function CirlceRating(props) {
+    const breakPoints = [
+        { width: 1, itemsToShow: 4 },
+        { width: 290, itemsToShow: 6 },
+        { width: 410, itemsToShow: 8 },
+        { width: 545, itemsToShow: 10 },
+    ]
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     const listItems = numbers.map((number) => (
         <CircleDiv
@@ -20,7 +27,17 @@ function CirlceRating(props) {
             </CircleDiv>
         )
     } else {
-        return <Wrapper>{listItems}</Wrapper>
+        return (
+            <Wrapper>
+                <Carousel
+                    pagination={false}
+                    showArrows={false}
+                    breakPoints={breakPoints}
+                >
+                    {listItems}
+                </Carousel>
+            </Wrapper>
+        )
     }
 }
 
@@ -51,10 +68,7 @@ const CircleDiv = styled.div`
 `
 
 const Wrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
+    max-width: 904px;
 `
 
 export default CirlceRating

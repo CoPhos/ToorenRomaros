@@ -136,6 +136,10 @@ const FooterContainer = styled.footer`
         }
         padding: 16px 10%;
     }
+    @media only screen and (max-width: 300px) {
+        margin: 0;
+        padding: 2px;
+    }
 `
 const Line = styled.div`
     width: 2px;

@@ -23,7 +23,10 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    gap: 16px;
+    @media only screen and (max-width: 350px) {
+        flex-wrap: wrap;
+    }
 `
 
 const Card = styled.div`
@@ -41,6 +44,7 @@ const Image = styled.img`
     border-radius: 50%;
     width: 70px;
     height: 70px;
-`;
+    
+`
 
 export default WhereWatch
