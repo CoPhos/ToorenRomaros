@@ -32,10 +32,5 @@ public class CommentController {
 	@PreAuthorize("hasRole('adminrole')")
 	@DeleteMapping("/{id}") public void delete(@PathVariable UUID id) {
 		commentService.deleteComment(id);
-	} 
-	
-	@GetMapping("/hello")
-	public String hello() {
-		return "hello there admin";
 	}
 }
