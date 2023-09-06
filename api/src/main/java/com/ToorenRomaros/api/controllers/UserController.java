@@ -1,6 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.entities.User;
+import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,13 +16,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/users")
-    public void add(@RequestBody User user){
-        userService.saveUser(user);
+    public void add(@RequestBody UserEntity userEntity){
+        userService.saveUser(userEntity);
     }
 
     @GetMapping("/users/{username}")
-    public List<User> findById(@PathVariable String username){
-        return userService.getUser(username);
+    public List<UserEntity> findById(@PathVariable String username){
+        return userService.getUserById(username);
     }
 
     @PreAuthorize("hasRole('adminrole')")

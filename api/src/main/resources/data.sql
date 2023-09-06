@@ -1,4 +1,4 @@
-INSERT INTO user (username, birthday, created_date, about, following_count, followme_count)
+INSERT INTO user_entity (username, birthday, created_date, about, following_count, followme_count)
 VALUES 
     ('john_doe', '1990-05-15', '2022-01-10', 'I love coding.', 300, 500),
     ('jane_smith', '1985-08-20', '2021-11-22', 'Passionate about travel.', 200, 400),

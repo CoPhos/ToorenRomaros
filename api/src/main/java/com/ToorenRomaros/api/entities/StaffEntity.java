@@ -1,14 +1,14 @@
 package com.ToorenRomaros.api.entities;
 
-import com.ToorenRomaros.api.entities.film.Film;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.media.PhotoEntity;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class StreamSite {
-
+public class StaffEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
@@ -33,12 +33,19 @@ public class StreamSite {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "streamSite_film",
+            name = "staff_film",
             joinColumns = @JoinColumn(name = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "streamSite_id"))
-    private List<Film> films;
+            inverseJoinColumns = @JoinColumn(name = "staff_id"))
+    private List<FilmEntity> films;
 
-    public void setFilms(List<Film> films) {
-        this.films = films;
+    public void setFilms(List<FilmEntity> filmEntities) {
+        this.films = filmEntities;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="staff")
+    private List<PhotoEntity> photo;
+    public List<PhotoEntity> getPhoto() { return photo;
+    }
+    public void setPohot(List<PhotoEntity> photoEntities) { this.photo = photoEntities;
     }
 }

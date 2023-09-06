@@ -1,7 +1,7 @@
 package com.ToorenRomaros.api.entities.publication;
 
-import com.ToorenRomaros.api.entities.User;
-import com.ToorenRomaros.api.entities.film.Film;
+import com.ToorenRomaros.api.entities.UserEntity;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Publication {
+public class PublicationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
@@ -19,12 +19,12 @@ public class Publication {
     private LocalDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "film")
-    private Film film;
-    public void setRaiting(Film film) { this.film = film;
+    private FilmEntity film;
+    public void setRaiting(FilmEntity filmEntity) { this.film = filmEntity;
     }
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user")
-    private User user;
-    public void setUser(User user) { this.user = user;
+    private UserEntity user;
+    public void setUser(UserEntity user) { this.user = user;
     }
 }

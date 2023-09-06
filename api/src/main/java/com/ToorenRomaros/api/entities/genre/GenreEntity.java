@@ -1,14 +1,13 @@
 package com.ToorenRomaros.api.entities.genre;
 
-import com.ToorenRomaros.api.entities.film.Film;
-import com.ToorenRomaros.api.entities.media.Video;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class Genre {
+public class GenreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
@@ -35,9 +34,9 @@ public class Genre {
             name = "genre_film",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Film> films;
+    private List<FilmEntity> films;
 
-    public void setFilms(List<Film> films) {
-        this.films = films;
+    public void setFilms(List<FilmEntity> filmEntities) {
+        this.films = filmEntities;
     }
 }

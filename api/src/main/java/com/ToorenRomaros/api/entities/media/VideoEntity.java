@@ -1,12 +1,12 @@
 package com.ToorenRomaros.api.entities.media;
 
-import com.ToorenRomaros.api.entities.film.Film;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Video {
+public class VideoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
@@ -30,8 +30,8 @@ public class Video {
     }
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "film")
-    private Film film;
+    private FilmEntity film;
 
-    public void setFilm(Film film) { this.film = film;
+    public void setFilm(FilmEntity filmEntity) { this.film = filmEntity;
     }
 }

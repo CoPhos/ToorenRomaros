@@ -1,14 +1,14 @@
 package com.ToorenRomaros.api.entities;
 
-import com.ToorenRomaros.api.entities.publication.Publication;
-import com.ToorenRomaros.api.entities.publication.Rating;
+import com.ToorenRomaros.api.entities.publication.PublicationEntity;
+import com.ToorenRomaros.api.entities.publication.RatingEntity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class User {
+public class UserEntity {
     @Id
     private String username;
     private LocalDate birthday;
@@ -18,6 +18,19 @@ public class User {
     private byte[] photo;*/
     private String about;
     private Integer followingCount, followmeCount;
+
+    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> followers, List<UserEntity> following, List<PublicationEntity> publicationEntities, List<RatingEntity> ratings) {
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+        this.about = about;
+        this.followingCount = followingCount;
+        this.followmeCount = followmeCount;
+        this.followers = followers;
+        this.following = following;
+        this.publicationEntities = publicationEntities;
+        this.ratings = ratings;
+    }
 
     public String getUsername() {
         return username;
@@ -67,49 +80,49 @@ public class User {
         this.followmeCount = followmeCount;
     }
 
-    public List<User> getFollowers() {
+    public List<UserEntity> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<User> followers) {
+    public void setFollowers(List<UserEntity> followers) {
         this.followers = followers;
     }
 
-    public List<User> getFollowing() {
+    public List<UserEntity> getFollowing() {
         return following;
     }
 
-    public void setFollowing(List<User> following) {
+    public void setFollowing(List<UserEntity> following) {
         this.following = following;
     }
 
-    public List<Publication> getPublications() {
-        return publications;
+    public List<PublicationEntity> getPublications() {
+        return publicationEntities;
     }
 
-    public void setPublications(List<Publication> publications) {
-        this.publications = publications;
+    public void setPublications(List<PublicationEntity> publicationEntities) {
+        this.publicationEntities = publicationEntities;
     }
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "following")
-    private List<User> followers;
+    private List<UserEntity> followers;
     @JoinTable(name = "followers",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "follower_id")})
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<User> following;
+    private List<UserEntity> following;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    private List<Publication> publications;
-    public List<Publication> getPublication() { return publications;
+    private List<PublicationEntity> publicationEntities;
+    public List<PublicationEntity> getPublication() { return publicationEntities;
     }
-    public void setPublication(List<Publication> publications) { this.publications = publications;
+    public void setPublication(List<PublicationEntity> publicationEntities) { this.publicationEntities = publicationEntities;
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    private List<Rating> ratings;
-    public List<Rating> getRatings() { return ratings;
+    private List<RatingEntity> ratings;
+    public List<RatingEntity> getRatings() { return ratings;
     }
-    public void setRatings(List<Rating> ratings) { this.ratings = ratings;
+    public void setRatings(List<RatingEntity> ratings) { this.ratings = ratings;
     }
 }

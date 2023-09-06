@@ -1,13 +1,13 @@
 package com.ToorenRomaros.api.entities.media;
 
-import com.ToorenRomaros.api.entities.Staff;
-import com.ToorenRomaros.api.entities.film.Film;
+import com.ToorenRomaros.api.entities.StaffEntity;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Photo {
+public class PhotoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
@@ -30,15 +30,15 @@ public class Photo {
         this.photo = photo;
     }
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "film")
-    private Film film;
+    private FilmEntity film;
 
-    public void setFilm(Film film) { this.film = film;
+    public void setFilm(FilmEntity filmEntity) { this.film = filmEntity;
     }
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "staff")
-    private Staff staff;
+    private StaffEntity staff;
 
-    public void setStaff(Staff staff) { this.staff = staff;
+    public void setStaff(StaffEntity staffEntity) { this.staff = staffEntity;
     }
 
 }

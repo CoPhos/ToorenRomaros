@@ -1,13 +1,11 @@
 package com.ToorenRomaros.api.entities.film;
 
-import com.ToorenRomaros.api.entities.media.Photo;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class Saga {
+public class SagaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
@@ -31,9 +29,9 @@ public class Saga {
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="saga")
-    private List<Film> films;
-    public List<Film> getFilms() { return films;
+    private List<FilmEntity> filmEntities;
+    public List<FilmEntity> getFilms() { return filmEntities;
     }
-    public void setFilm(List<Film> films) { this.films = films;
+    public void setFilm(List<FilmEntity> filmEntities) { this.filmEntities = filmEntities;
     }
 }

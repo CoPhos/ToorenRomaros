@@ -1,25 +1,25 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.entities.User;
+import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public void saveUser(User user){
-        userRepository.save(user);
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public List<User> getUser(String username){
+    public void saveUser(UserEntity userEntity){
+        userRepository.save(userEntity);
+    }
+
+    public List<UserEntity> getUserById(String username){
         return userRepository.findUserById(username);
     }
 
