@@ -5,6 +5,7 @@ import com.ToorenRomaros.api.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -19,11 +20,18 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public List<UserEntity> getUserById(String username){
-        return userRepository.findUserById(username);
+    public Optional<UserEntity> getUserById(String username){
+        return userRepository.findById(username);
     }
 
-    public void deleteUser(String id){
-        userRepository.deleteById(id);
+    public List<UserEntity> findAllFollowersOf(String username){
+        return userRepository.findAllFollowersOf(username);
+    }
+
+    public void deleteUserById(String id){
+        userRepository.findById(id).map(userEntity -> {
+                    userRepository.delete(userEntity);
+                    return true;
+                }).orElseThrow(() -> new RuntimeException("No user with id " + id));
     }
 }

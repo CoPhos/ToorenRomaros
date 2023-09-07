@@ -19,7 +19,7 @@ public class UserEntity {
     private String about;
     private Integer followingCount, followmeCount;
 
-    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> followers, List<UserEntity> following, List<PublicationEntity> publicationEntities, List<RatingEntity> ratings) {
+    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> followers, List<PublicationEntity> publicationEntities, List<RatingEntity> ratings) {
         this.username = username;
         this.birthday = birthday;
         this.createdDate = createdDate;
@@ -27,7 +27,6 @@ public class UserEntity {
         this.followingCount = followingCount;
         this.followmeCount = followmeCount;
         this.followers = followers;
-        this.following = following;
         this.publicationEntities = publicationEntities;
         this.ratings = ratings;
     }
@@ -88,13 +87,6 @@ public class UserEntity {
         this.followers = followers;
     }
 
-    public List<UserEntity> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(List<UserEntity> following) {
-        this.following = following;
-    }
 
     public List<PublicationEntity> getPublications() {
         return publicationEntities;
@@ -104,13 +96,9 @@ public class UserEntity {
         this.publicationEntities = publicationEntities;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "following")
-    private List<UserEntity> followers;
-    @JoinTable(name = "followers",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "follower_id")})
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<UserEntity> following;
+
+    @OneToMany(mappedBy = "followers")
+    List<UserEntity> followers;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     private List<PublicationEntity> publicationEntities;
