@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, String> {
 
-    @Query("select uf.username_follower from userFollowerEntity where u.username = ?1")
-    List<UserEntity> findAllFollowersOf(String username);
+//    @Query("select uf.username_follower from userFollowerEntity where u.username = ?1")
+//    List<UserEntity> findAllFollowersOf(String username);
+
+
 
 }

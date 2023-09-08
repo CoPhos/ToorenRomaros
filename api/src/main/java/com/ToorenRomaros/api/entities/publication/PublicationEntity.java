@@ -23,8 +23,8 @@ public class PublicationEntity {
     public void setRaiting(FilmEntity filmEntity) { this.film = filmEntity;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user")
-    private UserEntity user;
-    public void setUser(UserEntity user) { this.user = user;
-    }
+//    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user")
+//    private UserEntity user;
+//    public void setUser(UserEntity user) { this.user = user;
+//    }
 }

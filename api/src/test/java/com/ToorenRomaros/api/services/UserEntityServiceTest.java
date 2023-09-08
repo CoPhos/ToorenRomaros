@@ -1,8 +1,10 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.entities.UserEntity;
+import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.entities.publication.PublicationEntity;
 import com.ToorenRomaros.api.entities.publication.RatingEntity;
+import com.ToorenRomaros.api.repositories.UserFollowerRepository;
 import com.ToorenRomaros.api.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,32 +26,52 @@ class UserEntityServiceTest {
     UserService userService;
     @Mock
     UserRepository userRepository;
+    @Mock
+    UserFollowerRepository userFollowerRepository;
 
     @BeforeEach
     void setUp() {
-        this.userService = new UserService(userRepository);
+        this.userService = new UserService(userRepository, userFollowerRepository);
     }
 
     @Test
-    void getFollowersShouldReturnAllFollowers(){
-        //TODO: FIRST I SHOULD IMPLEMET THE ADDFOLLOWER METHOD
+    void addFollowerShouldWork(){
         //given
-       /* UserEntity follower1 = new UserEntity("patrick", LocalDate.of(1990,05,15),LocalDate.of(2010,01,10),"I love Coding", 15, 0,null,null, null);
-
-        UserEntity follower2 = new UserEntity("Ivan", LocalDate.of(1990,05,15),LocalDate.of(2010,01,10),"I love Coding", 15, 0,null,null, null);
-
-        List<UserEntity> users = new ArrayList();
-        users.add(follower1);
-        users.add(follower2);
-
-        UserEntity user1 = new UserEntity("alice", LocalDate.of(1990,05,15),LocalDate.of(2010,01,10),"I love Coding", 15, 0,users,null, null);
-        when(userRepository.findAllFollowersOf("alice")).thenReturn(List.of(user1));
+        UserEntity user1 = new UserEntity("alice", LocalDate.of(1990,05,15),LocalDate.of(2010,01,10),"I love Coding", 15, 0,null,null, null);
+        UserEntity follower1 = new UserEntity("patrick", LocalDate.of(1990,05,15),LocalDate.of(2010,01,10),"I love Coding", 15, 0,null,null, null);
+        UserFollowerEntity userFollowerEntity= new UserFollowerEntity();
+        userFollowerEntity.setFollower(follower1);
+        userFollowerEntity.setUser(user1);
 
         //when
-        List<UserEntity> followersResult = userService.findAllFollowersOf("alice");
+        userService.addFollower(userFollowerEntity);
 
         //then
-        assertThat(followersResult).containsExactly(follower1, follower2);*/
+        verify(userFollowerRepository).save(userFollowerEntity);
+    }
+
+    @Test
+    void getFollowersShouldReturnAllFollowersOfAUser(){
+        //given
+        UserEntity user1 = new UserEntity("alice", LocalDate.of(1990,05,15),LocalDate.of(2010,01,10),"I love Coding", 15, 0,null,null, null);
+        UserEntity follower1 = new UserEntity("patrick", LocalDate.of(1990,05,15),LocalDate.of(2010,01,10),"I love Coding", 15, 0,null,null, null);
+        UserFollowerEntity userFollowerEntity= new UserFollowerEntity();
+        userFollowerEntity.setFollower(follower1);
+        userFollowerEntity.setUser(user1);
+        userService.addFollower(userFollowerEntity);
+
+        //when
+        List<UserFollowerEntity> followersResult = userService.findAllFollowersOf("alice");
+        System.out.println("###########################################################");
+        System.out.println("###########################################################");
+        System.out.println("###########################################################");
+        System.out.println(followersResult.toString());
+        System.out.println("###########################################################");
+        System.out.println("###########################################################");
+        System.out.println("###########################################################");
+
+        //then
+        assertThat(followersResult).isNotEmpty();
     }
 
     @Test

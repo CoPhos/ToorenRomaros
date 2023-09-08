@@ -14,23 +14,15 @@ public class UserFollowerEntity {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "user_id")
     UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "username_follower")
+    @JoinColumn(name = "follower_id")
     UserEntity followers;
-
-    public UserEntity getUser() {
-        return user;
-    }
 
     public void setUser(UserEntity user) {
         this.user = user;
-    }
-
-    public UserEntity getFollower() {
-        return followers;
     }
 
     public void setFollower(UserEntity follower) {
