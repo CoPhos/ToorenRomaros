@@ -1,39 +1,66 @@
 package com.ToorenRomaros.api.entities;
 
-import com.ToorenRomaros.api.entities.publication.PublicationEntity;
-import com.ToorenRomaros.api.entities.publication.RatingEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Entity
+@Table(name = "user")
 public class UserEntity {
     @Id
+    @Column(name = "ID", updatable = false, nullable = false, unique = true)
+    @NotNull(message = "User name is required.")
+    @Basic(optional = false)
     private String username;
+
+    @Past
+    @Column(name = "BIRTHDAY")
     private LocalDate birthday;
+    @FutureOrPresent
+    @Column(name = "CREATED_DATE")
     private LocalDate createdDate;
     /*@Lob
     @Column(name = "photo", columnDefinition="BLOB")
     private byte[] photo;*/
+    @Column(name = "ABOUT")
     private String about;
-    private Integer followingCount, followmeCount;
+    @PositiveOrZero
+    @Column(name = "FOLLOWING_COUNT")
+    private Integer followingCount;
+    @PositiveOrZero
+    @Column(name = "FOLLOWING_ME_COUNT")
+    private Integer followmeCount;
 
-    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, Set<UserEntity> followers, List<PublicationEntity> publicationEntities, List<RatingEntity> ratings) {
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "USER_FOLLOWER",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "FOLLOWER_ID")
+    )
+    private List<UserEntity> followers = Collections.emptyList();
+
+    @ManyToMany(mappedBy = "followers", fetch = FetchType.LAZY)
+    private List<UserEntity> user;
+
+    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
         this.username = username;
         this.birthday = birthday;
         this.createdDate = createdDate;
         this.about = about;
         this.followingCount = followingCount;
         this.followmeCount = followmeCount;
-        this.followers = followers;
-//        this.publicationEntities = publicationEntities;
-//        this.ratings = ratings;
     }
-    public UserEntity(){}
+
+    public UserEntity() {
+    }
 
     public String getUsername() {
         return username;
@@ -83,44 +110,20 @@ public class UserEntity {
         this.followmeCount = followmeCount;
     }
 
-    public Set<UserEntity> getFollowers() {
+    public List<UserEntity> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Set<UserEntity> followers) {
+    public void setFollowers(List<UserEntity> followers) {
         this.followers = followers;
     }
-//    public List<PublicationEntity> getPublications() {
-//        return publicationEntities;
-//    }
-//
-//    public List<PublicationEntity> getPublicationEntities() {
-//        return publicationEntities;
-//    }
-//
-//    public void setPublicationEntities(List<PublicationEntity> publicationEntities) {
-//        this.publicationEntities = publicationEntities;
-//    }
-//
-//    public void setPublications(List<PublicationEntity> publicationEntities) {
-//        this.publicationEntities = publicationEntities;
-//    }
-    @JsonIgnore
-    @OneToMany(mappedBy = "followers")
-    private Set<UserEntity> followers  = new HashSet<>();
 
-    //later
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-//    private List<PublicationEntity> publicationEntities;
-//    public List<PublicationEntity> getPublication() { return publicationEntities;
-//    }
-//    public void setPublication(List<PublicationEntity> publicationEntities) { this.publicationEntities = publicationEntities;
-//    }
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-//    private List<RatingEntity> ratings;
-//    public List<RatingEntity> getRatings() { return ratings;
-//    }
-//    public void setRatings(List<RatingEntity> ratings) { this.ratings = ratings;
-//    }
+    public List<UserEntity> getUser() {
+        return user;
+    }
+
+    public void setUser(List<UserEntity> user) {
+        this.user = user;
+    }
+
 }
