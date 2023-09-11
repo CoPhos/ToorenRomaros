@@ -1,8 +1,9 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.models.User;
-import com.ToorenRomaros.api.repositories.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ToorenRomaros.api.services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,13 +12,15 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class UserController {
 
-    @Autowired
-    private UserServiceImpl userServiceImpl;
 
+    private final UserService userService;
 
-    @GetMapping("/users/{username}")
-    public List<User> findById(@PathVariable String username){
-        return userServiceImpl.getUserFollowersByUserId(username);
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
+    @GetMapping("/users/{username}")
+    ResponseEntity<List<User>> findById(@PathVariable String username){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserFollowersByUserId(username));
+    }
 }

@@ -7,9 +7,9 @@ VALUES
     ('chris_martin', '1992-07-01', '2023-04-02', 'Music enthusiast.', 250, 350);
 
 
-INSERT INTO user_follower (user_id, follower_id)
+INSERT INTO user_follower (ID, USER_ID, FOLLOWER_ID, FOLLOW_SINCE)
 VALUES
-    ('john_doe', 'jane_smith'),
-    ('john_doe', 'mike_jackson'),
-    ('john_doe', 'sara_wilson'),
-    ('john_doe', 'chris_martin');
+    ('b7a61937-6f59-4bbb-80a7-08d65d1ad640','john_doe', 'jane_smith', '1990-05-15'),
+    ('1e61da98-e8d9-4e82-b2a0-bc53b124aef1','john_doe', 'mike_jackson', '1980-12-10'),
+    ('b5d35e6e-7404-4fc0-9bc5-a265e9fca71b','john_doe', 'sara_wilson', '1980-12-10'),
+    ('2ae12264-977d-419d-aa19-ce9658041fe4','john_doe', 'chris_martin', '1985-08-20');

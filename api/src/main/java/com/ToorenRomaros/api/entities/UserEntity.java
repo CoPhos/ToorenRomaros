@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -37,17 +36,10 @@ public class UserEntity {
     @Column(name = "FOLLOWING_ME_COUNT")
     private Integer followmeCount;
 
-    @ManyToMany(
-            cascade = CascadeType.ALL
-    )
-    @JoinTable(
-            name = "USER_FOLLOWER",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "FOLLOWER_ID")
-    )
-    private List<UserEntity> followers = Collections.emptyList();
+    @OneToMany(mappedBy = "follower")
+    private List<UserEntity> follower;
 
-    @ManyToMany(mappedBy = "followers", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<UserEntity> user;
 
     public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
@@ -110,12 +102,12 @@ public class UserEntity {
         this.followmeCount = followmeCount;
     }
 
-    public List<UserEntity> getFollowers() {
-        return followers;
+    public List<UserEntity> getFollower() {
+        return follower;
     }
 
-    public void setFollowers(List<UserEntity> followers) {
-        this.followers = followers;
+    public void setFollower(List<UserEntity> follower) {
+        this.follower = follower;
     }
 
     public List<UserEntity> getUser() {
