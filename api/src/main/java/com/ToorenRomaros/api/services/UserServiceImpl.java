@@ -5,6 +5,9 @@ import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.repositories.UserFollowerRepository;
 import com.ToorenRomaros.api.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -41,8 +44,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUserFollowersByUserId(String username) {
-        List<UserFollowerEntity> entities = userFollowerRepository.findAllFollowersByUser(username);
-        return toModelList(entities);
+    public Page<User> getUserFollowersByUserId(String username, Pageable pageRequest) {
+        List<UserFollowerEntity> entities = userFollowerRepository.findAllFollowersByUser(username, pageRequest);
+        List<User> allFollowers = toModelList(entities);
+
+        int start = (int) pageRequest.getOffset();
+        int end = Math.min((start + pageRequest.getPageSize()), allFollowers.size());
+        List<User> pageContent = allFollowers.subList(start, end);
+
+        return new PageImpl<>(pageContent, pageRequest, allFollowers.size());
     }
 }
