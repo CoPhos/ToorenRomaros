@@ -1,21 +1,40 @@
 package com.ToorenRomaros.api.exeptions;
 
+import java.time.Instant;
+import org.apache.logging.log4j.util.Strings;
+
 public class Error {
+
     private static final long serialVersionUID = 1L;
-    /** App error code, which is different from HTTP error code. */
+    /**
+     * Application error code, which is different from HTTP error code.
+     */
     private String errorCode;
 
-    /** Short, human-readeable summary of the problem. */
+    /**
+     * Short, human-readable summary of the problem.
+     */
     private String message;
 
-    /** HTTP status code.*/
+    /**
+     * HTTP status code for this occurrence of the problem, set by the origin server.
+     */
     private Integer status;
 
-    /** URL of request that produced the error. */
+    /**
+     * Url of request that produced the error.
+     */
     private String url = "Not available";
 
-    /** Method of  the request that produced the error. */
-    private String requestMethod = "Not available";
+    /**
+     * Method of request that produced the error.
+     */
+    private String reqMethod = "Not available";
+
+    /**
+     * Timestamp
+     */
+    private Instant timestamp;
 
     public String getErrorCode() {
         return errorCode;
@@ -45,15 +64,30 @@ public class Error {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public Error setUrl(String url) {
+        if (Strings.isNotBlank(url)) {
+            this.url = url;
+        }
+        return this;
     }
 
-    public String getRequestMethod() {
-        return requestMethod;
+    public String getReqMethod() {
+        return reqMethod;
     }
 
-    public void setRequestMethod(String requestMethod) {
-        this.requestMethod = requestMethod;
+    public Error setReqMethod(String method) {
+        if (Strings.isNotBlank(method)) {
+            this.reqMethod = method;
+        }
+        return this;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public Error setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
+        return this;
     }
 }

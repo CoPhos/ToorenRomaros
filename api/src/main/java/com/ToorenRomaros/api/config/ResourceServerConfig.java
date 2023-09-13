@@ -25,6 +25,11 @@ public class ResourceServerConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
+				.httpBasic()
+				.disable()
+				.formLogin()
+				.disable();
+		http
 				.csrf()
 				.disable()
 				.authorizeHttpRequests()
