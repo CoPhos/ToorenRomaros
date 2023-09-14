@@ -56,4 +56,13 @@ public class UserFollowerEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
 }

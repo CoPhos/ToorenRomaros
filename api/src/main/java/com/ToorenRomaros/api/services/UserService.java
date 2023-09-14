@@ -13,5 +13,5 @@ public interface UserService {
 
     User toModel(UserFollowerEntity e);
     List<User> toModelList(List<UserFollowerEntity> items);
-    public Page<User> getUserFollowersByUserId(String username, Pageable pageRequest);
+    public Page<User> getAllFollowersByUserId(String username, Pageable pageRequest);
 }

@@ -42,15 +42,6 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private List<UserEntity> user;
 
-    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
-        this.username = username;
-        this.birthday = birthday;
-        this.createdDate = createdDate;
-        this.about = about;
-        this.followingCount = followingCount;
-        this.followmeCount = followmeCount;
-    }
-
     public UserEntity() {
     }
 

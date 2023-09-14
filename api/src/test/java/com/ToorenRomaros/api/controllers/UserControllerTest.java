@@ -1,0 +1,139 @@
+package com.ToorenRomaros.api.controllers;
+
+import com.ToorenRomaros.api.config.AppConfig;
+import com.ToorenRomaros.api.entities.UserEntity;
+import com.ToorenRomaros.api.entities.UserFollowerEntity;
+import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
+import com.ToorenRomaros.api.models.User;
+import com.ToorenRomaros.api.services.UserService;
+import com.ToorenRomaros.api.services.UserServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
+@ExtendWith(MockitoExtension.class)
+class UserControllerTest {
+    private MockMvc mockMvc;
+    @Mock
+    private UserService userService;
+    @Mock
+    private MessageSource messageSource;
+    @Mock
+    private Page<User> userPage;
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    @InjectMocks
+    private UserController userController;
+    private final User model = new User();
+    private Pageable pageRequest;
+
+    private JacksonTester<List<User>> UserTester;
+    private final List<User> userList = new ArrayList<>();
+
+    @BeforeEach
+    public void setup() {
+        ObjectMapper mapper = new AppConfig().objectMapper();
+        JacksonTester.initFields(this, mapper);
+        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new
+                MappingJackson2HttpMessageConverter();
+        mappingJackson2HttpMessageConverter.setObjectMapper(mapper);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(userController)
+                .setControllerAdvice(new RestApiErrorHandler(messageSource))
+                .setMessageConverters(mappingJackson2HttpMessageConverter)
+                .build();
+
+        final Instant now = Instant.now();
+
+        UserEntity follower1 = new UserEntity();
+        follower1.setUsername("David");
+        UserEntity follower2 = new UserEntity();
+        follower2.setUsername("Michael");
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("alice");
+
+        UserFollowerEntity userFollowerEntity = new UserFollowerEntity();
+        userFollowerEntity.setId(UUID.randomUUID());
+        userFollowerEntity.setFollower(follower1);
+        userFollowerEntity.setFollowDate(LocalDate.now());
+        userFollowerEntity.setUser(userEntity);
+        BeanUtils.copyProperties(userFollowerEntity, model);
+        model.setUsername(userFollowerEntity.getFollower().getUsername());
+        model.setFollowDate(userFollowerEntity.getFollowDate());
+
+        userList.add(model);
+
+        userFollowerEntity.setId(UUID.randomUUID());
+        userFollowerEntity.setFollower(follower2);
+        userFollowerEntity.setFollowDate(LocalDate.now());
+        userFollowerEntity.setUser(userEntity);
+        BeanUtils.copyProperties(userFollowerEntity, model);
+        model.setUsername(userFollowerEntity.getFollower().getUsername());
+        model.setFollowDate(userFollowerEntity.getFollowDate());
+        userList.add(model);
+
+        pageRequest = PageRequest.of(0,2);
+        userPage = new PageImpl<>(userList, pageRequest, userList.size());
+    }
+
+    @Test
+    @DisplayName("returns followers by given user ID")
+    void getAllUserFollowersByUserIdShouldWork() throws Exception {
+        //given
+        given(userService.getAllFollowersByUserId("alice", pageRequest)).willReturn(userPage);
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                get("/api/v1/users/alice")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+        assertThat(jsonObject.get("totalPages")).isEqualTo(1);
+        assertThat(jsonObject.get("totalItems")).isEqualTo(2);
+        assertThat(jsonObject.get("currentPage")).isEqualTo(0);
+        assertThat(jsonObject.get("followers")).isNotNull();
+
+        String expected = jsonObject.get("followers").toString();
+        JSONArray jsonData = new JSONArray(UserTester.write(userList).getJson());
+        JSONAssert.assertEquals(expected,jsonData, false);
+    }
+}

@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getUserFollowersByUserId(String username, Pageable pageRequest) {
+    public Page<User> getAllFollowersByUserId(String username, Pageable pageRequest) {
         log.info("username: " + username);
         if (Strings.isBlank(username)) {
             throw new UserNotFoundException("Invalid user.");
