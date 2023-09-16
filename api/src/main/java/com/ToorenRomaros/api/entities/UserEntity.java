@@ -8,20 +8,22 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user")
 public class UserEntity {
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true)
-    @NotNull(message = "User name is required.")
+    @NotNull(message = "Username is required.")
     @Basic(optional = false)
     private String username;
 
     @Past
     @Column(name = "BIRTHDAY")
+    @Past(message = "birthday must be past")
     private LocalDate birthday;
-    @FutureOrPresent
+    @FutureOrPresent(message = "created date must be future or present")
     @Column(name = "CREATED_DATE")
     private LocalDate createdDate;
     /*@Lob
@@ -29,10 +31,10 @@ public class UserEntity {
     private byte[] photo;*/
     @Column(name = "ABOUT")
     private String about;
-    @PositiveOrZero
+    @PositiveOrZero(message = "following count can not be negative")
     @Column(name = "FOLLOWING_COUNT")
     private Integer followingCount;
-    @PositiveOrZero
+    @PositiveOrZero(message = "following me count can not be negative")
     @Column(name = "FOLLOWING_ME_COUNT")
     private Integer followmeCount;
 
@@ -41,6 +43,17 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<UserEntity> user;
+
+    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> follower, List<UserEntity> user) {
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+        this.about = about;
+        this.followingCount = followingCount;
+        this.followmeCount = followmeCount;
+        this.follower = follower;
+        this.user = user;
+    }
 
     public UserEntity() {
     }
@@ -109,4 +122,16 @@ public class UserEntity {
         this.user = user;
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername());
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity book = (UserEntity) o;
+        return Objects.equals(getUsername(), book.getUsername());
+    }
 }

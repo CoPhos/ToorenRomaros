@@ -5,6 +5,7 @@ import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
 import com.ToorenRomaros.api.models.User;
+import com.ToorenRomaros.api.repositories.UserRepository;
 import com.ToorenRomaros.api.services.UserService;
 import com.ToorenRomaros.api.services.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +43,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -61,7 +63,7 @@ class UserControllerTest {
     private Pageable pageRequest;
 
     private JacksonTester<List<User>> UserTester;
-    private final List<User> userList = new ArrayList<>();
+    private JacksonTester<UserEntity> UserEntityTester;
 
     @BeforeEach
     public void setup() {
@@ -80,8 +82,6 @@ class UserControllerTest {
 
         UserEntity follower1 = new UserEntity();
         follower1.setUsername("David");
-        UserEntity follower2 = new UserEntity();
-        follower2.setUsername("Michael");
 
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("alice");
@@ -95,21 +95,45 @@ class UserControllerTest {
         model.setUsername(userFollowerEntity.getFollower().getUsername());
         model.setFollowDate(userFollowerEntity.getFollowDate());
 
-        userList.add(model);
-
-        userFollowerEntity.setId(UUID.randomUUID());
-        userFollowerEntity.setFollower(follower2);
-        userFollowerEntity.setFollowDate(LocalDate.now());
-        userFollowerEntity.setUser(userEntity);
-        BeanUtils.copyProperties(userFollowerEntity, model);
-        model.setUsername(userFollowerEntity.getFollower().getUsername());
-        model.setFollowDate(userFollowerEntity.getFollowDate());
-        userList.add(model);
-
         pageRequest = PageRequest.of(0,2);
-        userPage = new PageImpl<>(userList, pageRequest, userList.size());
+        userPage = new PageImpl<>(List.of(model), pageRequest, List.of(model).size());
     }
 
+    @Test
+    @DisplayName("Create user by given user")
+    void createUserShouldWork() throws Exception{
+        //given
+        UserEntity user = new UserEntity(
+                "montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, null,null);
+        given(userService.createUser(user)).willReturn(user);
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                        post("/api/v1/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{   \n" +
+                                        "    \"username\": \"montelukas\",\n" +
+                                        "    \"birthday\":  \"1992-08-12\",\n" +
+                                        "    \"createdDate\": \"2023-09-16\",\n" +
+                                        "    \"about\": \"I love coding\",\n" +
+                                        "    \"followingCount\":0,\n" +
+                                        "    \"followmeCount\": 0,\n" +
+                                        "    \"follower\": null,\n" +
+                                        "    \"user\": null\n" +
+                                        "}")
+                                .characterEncoding("utf-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
+        String expected = jsonObject.get("created").toString();
+        JSONObject jsonData = new JSONObject(UserEntityTester.write(user).getJson());
+        JSONAssert.assertEquals(expected,jsonData, false);
+    }
     @Test
     @DisplayName("returns followers by given user ID")
     void getAllUserFollowersByUserIdShouldWork() throws Exception {
@@ -118,7 +142,7 @@ class UserControllerTest {
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
-                get("/api/v1/users/alice")
+                get("/api/v1/users/alice/followers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -128,12 +152,12 @@ class UserControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         JSONObject jsonObject = new JSONObject(response.getContentAsString());
         assertThat(jsonObject.get("totalPages")).isEqualTo(1);
-        assertThat(jsonObject.get("totalItems")).isEqualTo(2);
+        assertThat(jsonObject.get("totalItems")).isEqualTo(1);
         assertThat(jsonObject.get("currentPage")).isEqualTo(0);
         assertThat(jsonObject.get("followers")).isNotNull();
 
         String expected = jsonObject.get("followers").toString();
-        JSONArray jsonData = new JSONArray(UserTester.write(userList).getJson());
+        JSONArray jsonData = new JSONArray(UserTester.write(List.of(model)).getJson());
         JSONAssert.assertEquals(expected,jsonData, false);
     }
 }

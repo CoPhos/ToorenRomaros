@@ -9,6 +9,10 @@ public enum ErrorCode {
     JSON_PARSE_ERROR("API-0005", "Make sure request payload should be a valid JSON object."),
     ACCESS_DENIED("API-0014", "Access Denied."),
     HTTP_MESSAGE_NOT_READABLE("API-0006", "Make sure request payload should be a valid JSON or XML object according to 'Content-Type'."),
+    METHOD_ARGUMENT_NOT_VALUD("API-0010","Please verify data contraints"),
+
+    /*
+    * custom exceptions*/
     USER_NOT_FOUND("API-011", "Requested user not found.");
 
     private String errCode;

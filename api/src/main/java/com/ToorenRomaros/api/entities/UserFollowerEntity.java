@@ -33,6 +33,10 @@ public class UserFollowerEntity {
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
+    public UserFollowerEntity() {
+
+    }
+
     public LocalDate getFollowDate() {
         return followDate;
     }

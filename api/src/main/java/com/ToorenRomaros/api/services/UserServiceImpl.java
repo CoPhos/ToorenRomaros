@@ -15,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -48,6 +45,15 @@ public class UserServiceImpl implements UserService {
             return Collections.emptyList();
         }
         return followers.stream().map(this::toModel).collect(toList());
+    }
+
+    @Override
+    public UserEntity createUser(UserEntity user) {
+        try{
+            return userRepository.save(user);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
