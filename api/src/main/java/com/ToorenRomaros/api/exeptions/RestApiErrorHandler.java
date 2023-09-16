@@ -130,7 +130,7 @@ public class RestApiErrorHandler {
                         HttpStatus.BAD_REQUEST.value());
 
         errorResponse.put("errors", errors);
-        errorResponse.put("", List.of(error.getErrorCode(), error.getMessage(), error.getStatus().toString()));
+        errorResponse.put("info", List.of(error.getErrorCode(), error.getMessage(), error.getStatus().toString()));
         return errorResponse;
     }
     /**

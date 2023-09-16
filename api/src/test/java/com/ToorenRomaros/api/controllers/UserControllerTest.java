@@ -34,6 +34,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -43,6 +44,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -61,7 +64,6 @@ class UserControllerTest {
     private UserController userController;
     private final User model = new User();
     private Pageable pageRequest;
-
     private JacksonTester<List<User>> UserTester;
     private JacksonTester<UserEntity> UserEntityTester;
 
@@ -79,24 +81,6 @@ class UserControllerTest {
                 .build();
 
         final Instant now = Instant.now();
-
-        UserEntity follower1 = new UserEntity();
-        follower1.setUsername("David");
-
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsername("alice");
-
-        UserFollowerEntity userFollowerEntity = new UserFollowerEntity();
-        userFollowerEntity.setId(UUID.randomUUID());
-        userFollowerEntity.setFollower(follower1);
-        userFollowerEntity.setFollowDate(LocalDate.now());
-        userFollowerEntity.setUser(userEntity);
-        BeanUtils.copyProperties(userFollowerEntity, model);
-        model.setUsername(userFollowerEntity.getFollower().getUsername());
-        model.setFollowDate(userFollowerEntity.getFollowDate());
-
-        pageRequest = PageRequest.of(0,2);
-        userPage = new PageImpl<>(List.of(model), pageRequest, List.of(model).size());
     }
 
     @Test
@@ -134,9 +118,56 @@ class UserControllerTest {
         JSONObject jsonData = new JSONObject(UserEntityTester.write(user).getJson());
         JSONAssert.assertEquals(expected,jsonData, false);
     }
+
+    @Test
+    @DisplayName("Create user by invalid entity, should throw MethodArgumentNotValidException")
+    public void createUserWithInvalidEntity() throws Exception{
+        //when
+        try{
+            mockMvc.perform(
+                            post("/api/v1/users")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content("{   \n" +
+                                            "    \"username\": \"montelukas\",\n" +
+                                            "    \"birthday\":  \"1992-08-12\",\n" +
+                                            "    \"createdDate\": \"2023-09-16\",\n" +
+                                            "    \"about\": \"I love coding\",\n" +
+                                            "    \"followingCount\":0,\n" +
+                                            "    \"followmeCount\": -5,\n" +
+                                            "    \"follower\": null,\n" +
+                                            "    \"user\": null\n" +
+                                            "}")
+                                    .characterEncoding("utf-8")
+                                    .accept(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andReturn().getResponse();
+        }catch (Exception ex){
+            //then
+            assertThat(ex.getMessage()).contains("following me count can not be negative");
+            assertThat(ex).isInstanceOf(MethodArgumentNotValidException.class);
+        }
+    }
+
     @Test
     @DisplayName("returns followers by given user ID")
     void getAllUserFollowersByUserIdShouldWork() throws Exception {
+        UserEntity follower1 = new UserEntity();
+        follower1.setUsername("David");
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("alice");
+
+        UserFollowerEntity userFollowerEntity = new UserFollowerEntity();
+        userFollowerEntity.setId(UUID.randomUUID());
+        userFollowerEntity.setFollower(follower1);
+        userFollowerEntity.setFollowDate(LocalDate.now());
+        userFollowerEntity.setUser(userEntity);
+        BeanUtils.copyProperties(userFollowerEntity, model);
+        model.setUsername(userFollowerEntity.getFollower().getUsername());
+        model.setFollowDate(userFollowerEntity.getFollowDate());
+
+        pageRequest = PageRequest.of(0,2);
+        userPage = new PageImpl<>(List.of(model), pageRequest, List.of(model).size());
         //given
         given(userService.getAllFollowersByUserId("alice", pageRequest)).willReturn(userPage);
 

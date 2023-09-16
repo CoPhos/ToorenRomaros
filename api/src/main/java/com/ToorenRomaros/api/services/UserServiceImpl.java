@@ -49,11 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(UserEntity user) {
-        try{
-            return userRepository.save(user);
-        }catch (Exception e){
-            return null;
-        }
+        return userRepository.save(user);
     }
 
     @Override
