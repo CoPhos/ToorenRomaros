@@ -1,5 +1,8 @@
 package com.ToorenRomaros.api.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 
@@ -9,13 +12,19 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user")
 public class UserEntity {
     @Id
-    @Column(name = "ID", updatable = false, nullable = false, unique = true)
-    @NotNull(message = "Username is required.")
+    @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
+    @Type(type="uuid-char")
+    @GeneratedValue(generator = "uuid4")
+    @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
+    private UUID id;
+
+    @Column(name = "USERNAME")
     @Basic(optional = false)
     private String username;
 
@@ -23,7 +32,6 @@ public class UserEntity {
     @Column(name = "BIRTHDAY")
     @Past(message = "birthday must be past")
     private LocalDate birthday;
-    @FutureOrPresent(message = "created date must be future or present")
     @Column(name = "CREATED_DATE")
     private LocalDate createdDate;
     /*@Lob
@@ -38,10 +46,10 @@ public class UserEntity {
     @Column(name = "FOLLOWING_ME_COUNT")
     private Integer followmeCount;
 
-    @OneToMany(mappedBy = "follower")
+    @OneToMany(mappedBy = "follower",fetch = FetchType.EAGER)
     private List<UserEntity> follower;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<UserEntity> user;
 
     public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> follower, List<UserEntity> user) {
@@ -122,16 +130,23 @@ public class UserEntity {
         this.user = user;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername());
+        return Objects.hash(getId());
     }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserEntity)) return false;
-        UserEntity book = (UserEntity) o;
-        return Objects.equals(getUsername(), book.getUsername());
+        UserEntity user = (UserEntity) o;
+        return Objects.equals(getId(), user.getId());
     }
 }

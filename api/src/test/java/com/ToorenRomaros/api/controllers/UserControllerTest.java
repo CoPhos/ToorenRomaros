@@ -90,21 +90,20 @@ class UserControllerTest {
         UserEntity user = new UserEntity(
                 "montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, null,null);
         given(userService.createUser(user)).willReturn(user);
-
         //when
         MockHttpServletResponse response = mockMvc.perform(
                         post("/api/v1/users")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{   \n" +
+                                .content(String.format("{   \n" +
                                         "    \"username\": \"montelukas\",\n" +
                                         "    \"birthday\":  \"1992-08-12\",\n" +
-                                        "    \"createdDate\": \"2023-09-16\",\n" +
+                                        "    \"createdDate\": \"%s\",\n" +
                                         "    \"about\": \"I love coding\",\n" +
                                         "    \"followingCount\":0,\n" +
                                         "    \"followmeCount\": 0,\n" +
                                         "    \"follower\": null,\n" +
                                         "    \"user\": null\n" +
-                                        "}")
+                                        "}", LocalDate.now()))
                                 .characterEncoding("utf-8")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -150,11 +149,13 @@ class UserControllerTest {
 
     @Test
     @DisplayName("returns followers by given user ID")
-    void getAllUserFollowersByUserIdShouldWork() throws Exception {
+    void getAllUserFollowersByUserShouldWork() throws Exception {
         UserEntity follower1 = new UserEntity();
+        follower1.setId(UUID.randomUUID());
         follower1.setUsername("David");
 
         UserEntity userEntity = new UserEntity();
+        userEntity.setId(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"));
         userEntity.setUsername("alice");
 
         UserFollowerEntity userFollowerEntity = new UserFollowerEntity();
@@ -163,17 +164,17 @@ class UserControllerTest {
         userFollowerEntity.setFollowDate(LocalDate.now());
         userFollowerEntity.setUser(userEntity);
         BeanUtils.copyProperties(userFollowerEntity, model);
-        model.setUsername(userFollowerEntity.getFollower().getUsername());
-        model.setFollowDate(userFollowerEntity.getFollowDate());
+//        model.setUsername(userFollowerEntity.getFollower().getUsername());
+//        model.setFollowDate(userFollowerEntity.getFollowDate());
 
         pageRequest = PageRequest.of(0,2);
         userPage = new PageImpl<>(List.of(model), pageRequest, List.of(model).size());
         //given
-        given(userService.getAllFollowersByUserId("alice", pageRequest)).willReturn(userPage);
+        given(userService.getAllFollowersByUserId(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"), pageRequest)).willReturn(userPage);
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
-                get("/api/v1/users/alice/followers")
+                get("/api/v1/users/b7a61937-6f59-4bbb-80a7-08d65d1ad640/followers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())

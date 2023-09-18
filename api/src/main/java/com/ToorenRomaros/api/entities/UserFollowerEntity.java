@@ -1,6 +1,7 @@
 package com.ToorenRomaros.api.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
@@ -15,9 +16,10 @@ import java.util.UUID;
 public class UserFollowerEntity {
 
     @Id
+    @Column(name = "ID", columnDefinition = "VARCHAR(36)",updatable = false, nullable = false)
+    @Type(type="uuid-char")
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", columnDefinition = "VARCHAR(255)",updatable = false, nullable = false)
     private UUID id;
 
 
@@ -26,11 +28,13 @@ public class UserFollowerEntity {
     private LocalDate followDate;
 
     @ManyToOne
-    @JoinColumn(name = "FOLLOWER_ID")
+    @Type(type="uuid-char")
+    @JoinColumn(name = "FOLLOWER_ID", columnDefinition = "VARCHAR(36)", nullable = false)
     private UserEntity follower;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @Type(type="uuid-char")
+    @JoinColumn(name = "USER_ID", columnDefinition = "VARCHAR(36)", nullable = false)
     private UserEntity user;
 
     public UserFollowerEntity() {
