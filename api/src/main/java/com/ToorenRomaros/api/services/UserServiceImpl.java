@@ -1,5 +1,6 @@
 package com.ToorenRomaros.api.services;
 
+import com.ToorenRomaros.api.dto.UserDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
@@ -7,8 +8,8 @@ import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.repositories.UserFollowerRepository;
 import com.ToorenRomaros.api.repositories.UserRepository;
 import com.ToorenRomaros.api.utils.Utils;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.apache.logging.log4j.util.Strings;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -26,12 +27,13 @@ import static java.util.stream.Collectors.toList;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserFollowerRepository userFollowerRepository;
-
+    private final ModelMapper modelMapper;
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    public UserServiceImpl(UserRepository userRepository, UserFollowerRepository userFollowerRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserFollowerRepository userFollowerRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.userFollowerRepository = userFollowerRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -51,12 +53,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity updateUser(UUID id, UserEntity user) {
+    public UserDto updateUser(UUID id, UserEntity user) {
         UserEntity newUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "'"));
         try {
-            log.info(Arrays.toString(Utils.getNullPropertyNames(user)));
             BeanUtils.copyProperties(user, newUser, Utils.getNullPropertyNames(user));
-            return userRepository.saveAndFlush(newUser);
+            return modelMapper.map(userRepository.save(newUser), UserDto.class);
         }catch (Exception e){
             log.info(e.getMessage());
             return null;
@@ -64,8 +65,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity createUser(UserEntity user) {
-        return userRepository.save(user);
+    public UserDto getUser(UUID id) {
+        return modelMapper.map(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists")), UserDto.class);
+    }
+
+    @Override
+    public UserDto createUser(UserEntity user) {
+        return modelMapper.map(userRepository.save(user), UserDto.class);
     }
 
     @Override

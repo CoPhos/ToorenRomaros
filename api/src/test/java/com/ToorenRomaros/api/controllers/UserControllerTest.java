@@ -1,11 +1,11 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.config.AppConfig;
+import com.ToorenRomaros.api.dto.UserDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
 import com.ToorenRomaros.api.models.User;
-import com.ToorenRomaros.api.repositories.UserRepository;
 import com.ToorenRomaros.api.services.UserService;
 import com.ToorenRomaros.api.services.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +39,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -59,6 +58,8 @@ class UserControllerTest {
     private MessageSource messageSource;
     @Mock
     private Page<User> userPage;
+    @Mock
+    private ModelMapper modelMapper;
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     @InjectMocks
     private UserController userController;
@@ -89,7 +90,7 @@ class UserControllerTest {
         //given
         UserEntity user = new UserEntity(
                 "montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, null,null);
-        given(userService.createUser(user)).willReturn(user);
+        given(userService.createUser(user)).willReturn(modelMapper.map(user, UserDto.class));
         //when
         MockHttpServletResponse response = mockMvc.perform(
                         post("/api/v1/users")
@@ -102,7 +103,7 @@ class UserControllerTest {
                                         "    \"followingCount\":0,\n" +
                                         "    \"followmeCount\": 0,\n" +
                                         "    \"follower\": null,\n" +
-                                        "    \"user\": null\n" +
+                                        "    \"following\": null\n" +
                                         "}", LocalDate.now()))
                                 .characterEncoding("utf-8")
                                 .accept(MediaType.APPLICATION_JSON))
@@ -134,7 +135,7 @@ class UserControllerTest {
                                             "    \"followingCount\":0,\n" +
                                             "    \"followmeCount\": -5,\n" +
                                             "    \"follower\": null,\n" +
-                                            "    \"user\": null\n" +
+                                            "    \"following\": null\n" +
                                             "}")
                                     .characterEncoding("utf-8")
                                     .accept(MediaType.APPLICATION_JSON))
@@ -162,7 +163,7 @@ class UserControllerTest {
         userFollowerEntity.setId(UUID.randomUUID());
         userFollowerEntity.setFollower(follower1);
         userFollowerEntity.setFollowDate(LocalDate.now());
-        userFollowerEntity.setUser(userEntity);
+        userFollowerEntity.setFollowing(userEntity);
         BeanUtils.copyProperties(userFollowerEntity, model);
 //        model.setUsername(userFollowerEntity.getFollower().getUsername());
 //        model.setFollowDate(userFollowerEntity.getFollowDate());

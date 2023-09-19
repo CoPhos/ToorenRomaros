@@ -1,14 +1,13 @@
 package com.ToorenRomaros.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -35,7 +34,7 @@ public class UserFollowerEntity {
     @ManyToOne
     @Type(type="uuid-char")
     @JoinColumn(name = "USER_ID", columnDefinition = "VARCHAR(36)", nullable = false)
-    private UserEntity user;
+    private UserEntity following;
 
     public UserFollowerEntity() {
 
@@ -57,12 +56,12 @@ public class UserFollowerEntity {
         this.follower = follower;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public UserEntity getFollowing() {
+        return following;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setFollowing(UserEntity following) {
+        this.following = following;
     }
 
     public UUID getId() {

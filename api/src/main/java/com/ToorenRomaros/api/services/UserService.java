@@ -1,5 +1,6 @@
 package com.ToorenRomaros.api.services;
 
+import com.ToorenRomaros.api.dto.UserDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.models.User;
@@ -15,8 +16,7 @@ public interface UserService {
     User toModel(UserFollowerEntity e);
     List<User> toModelList(List<UserFollowerEntity> items);
     public Page<User> getAllFollowersByUserId(UUID id, Pageable pageRequest);
-
-    public UserEntity createUser(UserEntity user);
-
-    public UserEntity updateUser(UUID id, UserEntity user);
+    public UserDto createUser(UserEntity user);
+    public UserDto updateUser(UUID id, UserEntity user);
+    public UserDto getUser(UUID id);
 }

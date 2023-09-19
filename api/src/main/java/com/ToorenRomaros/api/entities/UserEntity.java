@@ -1,10 +1,10 @@
 package com.ToorenRomaros.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Past;
@@ -16,6 +16,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class UserEntity {
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
@@ -46,13 +49,13 @@ public class UserEntity {
     @Column(name = "FOLLOWING_ME_COUNT")
     private Integer followmeCount;
 
-    @OneToMany(mappedBy = "follower",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "follower",fetch = FetchType.LAZY)
     private List<UserEntity> follower;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<UserEntity> user;
+    @OneToMany(mappedBy = "following",fetch = FetchType.LAZY)
+    private List<UserEntity> following;
 
-    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> follower, List<UserEntity> user) {
+    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> follower, List<UserEntity> following) {
         this.username = username;
         this.birthday = birthday;
         this.createdDate = createdDate;
@@ -60,7 +63,7 @@ public class UserEntity {
         this.followingCount = followingCount;
         this.followmeCount = followmeCount;
         this.follower = follower;
-        this.user = user;
+        this.following = following;
     }
 
     public UserEntity() {
@@ -122,12 +125,12 @@ public class UserEntity {
         this.follower = follower;
     }
 
-    public List<UserEntity> getUser() {
-        return user;
+    public List<UserEntity> getFollowing() {
+        return following;
     }
 
-    public void setUser(List<UserEntity> user) {
-        this.user = user;
+    public void setFollowing(List<UserEntity> following) {
+        this.following = following;
     }
 
     public UUID getId() {

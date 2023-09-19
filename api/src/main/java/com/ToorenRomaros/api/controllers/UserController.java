@@ -1,12 +1,16 @@
 package com.ToorenRomaros.api.controllers;
 
+import com.ToorenRomaros.api.dto.UserDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
 import com.ToorenRomaros.api.services.UserServiceImpl;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -35,7 +39,7 @@ public class UserController {
     @PutMapping("/users/{id}")
     ResponseEntity<Map<String, Object>> updateUser(@PathVariable UUID id, @RequestBody @Valid UserEntity user) throws Exception {
         try{
-            UserEntity updatedUser = userService.updateUser(id, user);
+            UserDto updatedUser = userService.updateUser(id, user);
             Map<String, Object> response = new HashMap<>();
             response.put("updated", updatedUser);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -48,7 +52,7 @@ public class UserController {
     @PostMapping("/users")
     ResponseEntity<Map<String, Object>> createUser(@RequestBody @Valid UserEntity user) throws Exception {
         try {
-            UserEntity newUser = userService.createUser(user);
+            UserDto newUser = userService.createUser(user);
             Map<String, Object> response = new HashMap<>();
             response.put("created", newUser);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -74,5 +78,17 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/users/{id}")
+    ResponseEntity<Map<String, Object>> getUser(@PathVariable @NotNull UUID id) throws Exception {
+        try{
+            Map<String, Object> response = new HashMap<>();
+            response.put("response", userService.getUser(id));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
 
