@@ -45,6 +45,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -58,8 +59,6 @@ class UserControllerTest {
     private MessageSource messageSource;
     @Mock
     private Page<User> userPage;
-    @Mock
-    private ModelMapper modelMapper;
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     @InjectMocks
     private UserController userController;
@@ -71,6 +70,7 @@ class UserControllerTest {
     @BeforeEach
     public void setup() {
         ObjectMapper mapper = new AppConfig().objectMapper();
+        ModelMapper modelMapper = new AppConfig().modelMapper();
         JacksonTester.initFields(this, mapper);
         MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new
                 MappingJackson2HttpMessageConverter();
@@ -90,7 +90,8 @@ class UserControllerTest {
         //given
         UserEntity user = new UserEntity(
                 "montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, null,null);
-        given(userService.createUser(user)).willReturn(modelMapper.map(user, UserDto.class));
+        given(userService.createUser(user)).willReturn(new UserDto("montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, null,null));
+
         //when
         MockHttpServletResponse response = mockMvc.perform(
                         post("/api/v1/users")
@@ -102,8 +103,8 @@ class UserControllerTest {
                                         "    \"about\": \"I love coding\",\n" +
                                         "    \"followingCount\":0,\n" +
                                         "    \"followmeCount\": 0,\n" +
-                                        "    \"follower\": null,\n" +
-                                        "    \"following\": null\n" +
+                                        "    \"followers\": null,\n" +
+                                        "    \"followings\": null\n" +
                                         "}", LocalDate.now()))
                                 .characterEncoding("utf-8")
                                 .accept(MediaType.APPLICATION_JSON))

@@ -27,6 +27,20 @@ public class UserDto {
     private List<UserFollowerDto> followers;
     private List<UserFollowerDto> followings;
 
+    public UserDto(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserFollowerDto> followers, List<UserFollowerDto> followings) {
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+        this.about = about;
+        this.followingCount = followingCount;
+        this.followmeCount = followmeCount;
+        this.followers = followers;
+        this.followings = followings;
+    }
+
+    public UserDto() {
+    }
+
     public UUID getId() {
         return id;
     }

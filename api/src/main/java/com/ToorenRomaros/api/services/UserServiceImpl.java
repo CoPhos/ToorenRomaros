@@ -67,7 +67,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(UUID id) {
-       return modelMapper.map(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists")), UserDto.class);
+       try {
+           UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
+           return modelMapper.map(user, UserDto.class);
+       }catch (Exception e){
+           log.info(e.getMessage());
+           return null;
+       }
     }
 
     @Override

@@ -59,6 +59,7 @@ public class ApiApplication {
 			userFollowerRepository.save(userFollowerEntity3);
 
 			user1.setFollowers(List.of(userFollowerEntity, userFollowerEntity2));
+			user1.setFollowings(List.of(userFollowerEntity3));
 			userRepository.save(user1);
 
 		};

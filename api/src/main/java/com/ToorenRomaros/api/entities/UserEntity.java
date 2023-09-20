@@ -49,9 +49,11 @@ public class UserEntity {
     private Integer followmeCount;
 
     @OneToMany(mappedBy = "follower",fetch = FetchType.LAZY)
+    @Column(name = "FOLLOWER_ID")
     private List<UserFollowerEntity> followers;
 
     @OneToMany(mappedBy = "following",fetch = FetchType.LAZY)
+    @Column(name = "USER_ID")
     private List<UserFollowerEntity> followings;
 
     public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserFollowerEntity> followers, List<UserFollowerEntity> followings) {

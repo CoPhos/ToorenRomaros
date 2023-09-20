@@ -7,8 +7,7 @@ import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
+import org.modelmapper.*;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,14 +31,35 @@ public class AppConfig {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        modelMapper.createTypeMap(UserEntity.class, UserDto.class)
-                .addMapping(UserEntity::getFollowings,UserDto::setFollowings)
-                .addMapping(UserEntity::getFollowers, UserDto::setFollowers);
+        Converter<List<UserFollowerEntity>, List<UserFollowerDto>> converterFollowers = new AbstractConverter<List<UserFollowerEntity>, List<UserFollowerDto>>() {
+            @Override
+            protected List<UserFollowerDto> convert(List<UserFollowerEntity> source) {
+                return source.stream().map(value -> {
+                    UserFollowerDto nestedIdentity = new UserFollowerDto();
+                    nestedIdentity.setFollower(value.getFollowing().getUsername());
+                    nestedIdentity.setCreatedDate(value.getFollowDate());
+                    return nestedIdentity;
+                }).collect(Collectors.toList());
+            }
+        };
 
-        modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowerDto.class)
-                .addMapping(UserFollowerEntity::getFollowing, UserFollowerDto::setFollowing)
-                .addMapping(UserFollowerEntity::getFollower, UserFollowerDto::setFollower);
+        Converter<List<UserFollowerEntity>, List<UserFollowerDto>> converterFollowings = new AbstractConverter<List<UserFollowerEntity>, List<UserFollowerDto>>() {
+            @Override
+            protected List<UserFollowerDto> convert(List<UserFollowerEntity> source) {
+                return source.stream().map(value -> {
+                    UserFollowerDto nestedIdentity = new UserFollowerDto();
+                    nestedIdentity.setFollower(value.getFollower().getUsername());
+                    nestedIdentity.setCreatedDate(value.getFollowDate());
+                    return nestedIdentity;
+                }).collect(Collectors.toList());
+            }
+        };
 
+        modelMapper.typeMap(UserEntity.class, UserDto.class).
+                addMappings(mapper -> mapper.using(converterFollowers)
+                        .map(UserEntity::getFollowers, UserDto::setFollowers))
+                .addMappings(mapper -> mapper.using(converterFollowings)
+                        .map(UserEntity::getFollowings, UserDto::setFollowings));;
 
         return modelMapper;
     }
