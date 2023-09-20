@@ -8,10 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 public class AppConfig {
@@ -30,12 +33,14 @@ public class AppConfig {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         modelMapper.createTypeMap(UserEntity.class, UserDto.class)
-                .addMapping(UserEntity::getFollowing,UserDto::setFollowing)
-                .addMapping(UserEntity::getFollower, UserDto::setFollowers);
+                .addMapping(UserEntity::getFollowings,UserDto::setFollowings)
+                .addMapping(UserEntity::getFollowers, UserDto::setFollowers);
 
         modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowerDto.class)
                 .addMapping(UserFollowerEntity::getFollowing, UserFollowerDto::setFollowing)
                 .addMapping(UserFollowerEntity::getFollower, UserFollowerDto::setFollower);
+
+
         return modelMapper;
     }
 }

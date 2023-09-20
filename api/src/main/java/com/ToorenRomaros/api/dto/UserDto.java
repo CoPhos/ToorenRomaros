@@ -24,8 +24,8 @@ public class UserDto {
     private String about;
     private Integer followingCount;
     private Integer followmeCount;
-    private List<UserDto> followers;
-    private List<UserDto> following;
+    private List<UserFollowerDto> followers;
+    private List<UserFollowerDto> followings;
 
     public UUID getId() {
         return id;
@@ -83,19 +83,19 @@ public class UserDto {
         this.followmeCount = followmeCount;
     }
 
-    public List<UserDto> getFollowers() {
+    public List<UserFollowerDto> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<UserDto> followers) {
+    public void setFollowers(List<UserFollowerDto> followers) {
         this.followers = followers;
     }
 
-    public List<UserDto> getFollowing() {
-        return following;
+    public List<UserFollowerDto> getFollowings() {
+        return followings;
     }
 
-    public void setFollowing(List<UserDto> following) {
-        this.following = following;
+    public void setFollowings(List<UserFollowerDto> followings) {
+        this.followings = followings;
     }
 }

@@ -1,7 +1,9 @@
 package com.ToorenRomaros.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -11,6 +13,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Table(name = "user_follower")
 public class UserFollowerEntity {
 
@@ -20,7 +25,6 @@ public class UserFollowerEntity {
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-
 
     @PastOrPresent
     @Column(name = "FOLLOW_SINCE")
@@ -35,6 +39,12 @@ public class UserFollowerEntity {
     @Type(type="uuid-char")
     @JoinColumn(name = "USER_ID", columnDefinition = "VARCHAR(36)", nullable = false)
     private UserEntity following;
+
+    public UserFollowerEntity(LocalDate followDate, UserEntity follower, UserEntity following) {
+        this.followDate = followDate;
+        this.follower = follower;
+        this.following = following;
+    }
 
     public UserFollowerEntity() {
 

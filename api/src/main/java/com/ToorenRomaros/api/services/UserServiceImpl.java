@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(UUID id) {
-        return modelMapper.map(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists")), UserDto.class);
+       return modelMapper.map(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists")), UserDto.class);
     }
 
     @Override

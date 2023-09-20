@@ -2,7 +2,6 @@ package com.ToorenRomaros.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -50,25 +49,40 @@ public class UserEntity {
     private Integer followmeCount;
 
     @OneToMany(mappedBy = "follower",fetch = FetchType.LAZY)
-    private List<UserEntity> follower;
+    private List<UserFollowerEntity> followers;
 
     @OneToMany(mappedBy = "following",fetch = FetchType.LAZY)
-    private List<UserEntity> following;
+    private List<UserFollowerEntity> followings;
 
-    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserEntity> follower, List<UserEntity> following) {
+    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserFollowerEntity> followers, List<UserFollowerEntity> followings) {
         this.username = username;
         this.birthday = birthday;
         this.createdDate = createdDate;
         this.about = about;
         this.followingCount = followingCount;
         this.followmeCount = followmeCount;
-        this.follower = follower;
-        this.following = following;
+        this.followers = followers;
+        this.followings = followings;
     }
 
     public UserEntity() {
     }
 
+//    public void addFollower(UserEntity userEntity) {
+//        this.followers.add(userEntity);
+//
+//        if (!userEntity.getFollowers().contains(this)) {
+//            followers.add(this);
+//        }
+//    }
+//
+//    public void addFollowing(UserEntity userEntity) {
+//        this.followings.add(userEntity);
+//
+//        if (!userEntity.getFollowings().contains(this)) {
+//            followings.add(this);
+//        }
+//    }
     public String getUsername() {
         return username;
     }
@@ -117,20 +131,20 @@ public class UserEntity {
         this.followmeCount = followmeCount;
     }
 
-    public List<UserEntity> getFollower() {
-        return follower;
+    public List<UserFollowerEntity> getFollowers() {
+        return followers;
     }
 
-    public void setFollower(List<UserEntity> follower) {
-        this.follower = follower;
+    public void setFollowers(List<UserFollowerEntity> followers) {
+        this.followers = followers;
     }
 
-    public List<UserEntity> getFollowing() {
-        return following;
+    public List<UserFollowerEntity> getFollowings() {
+        return followings;
     }
 
-    public void setFollowing(List<UserEntity> following) {
-        this.following = following;
+    public void setFollowings(List<UserFollowerEntity> followings) {
+        this.followings = followings;
     }
 
     public UUID getId() {

@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 
@@ -86,6 +86,7 @@ public class UserController {
             response.put("response", userService.getUser(id));
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e){
+            log.info(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
