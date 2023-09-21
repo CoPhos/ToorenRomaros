@@ -36,7 +36,7 @@ public class AppConfig {
             protected List<UserFollowerDto> convert(List<UserFollowerEntity> source) {
                 return source.stream().map(value -> {
                     UserFollowerDto nestedIdentity = new UserFollowerDto();
-                    nestedIdentity.setFollower(value.getFollowing().getUsername());
+                    nestedIdentity.setFollower(value.getUser().getUsername());
                     nestedIdentity.setCreatedDate(value.getFollowDate());
                     return nestedIdentity;
                 }).collect(Collectors.toList());

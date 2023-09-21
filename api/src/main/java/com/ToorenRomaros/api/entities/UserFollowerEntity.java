@@ -1,8 +1,6 @@
 package com.ToorenRomaros.api.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -38,12 +36,12 @@ public class UserFollowerEntity {
     @ManyToOne
     @Type(type="uuid-char")
     @JoinColumn(name = "USER_ID", columnDefinition = "VARCHAR(36)", nullable = false)
-    private UserEntity following;
+    private UserEntity user;
 
-    public UserFollowerEntity(LocalDate followDate, UserEntity follower, UserEntity following) {
+    public UserFollowerEntity(LocalDate followDate, UserEntity follower, UserEntity user) {
         this.followDate = followDate;
         this.follower = follower;
-        this.following = following;
+        this.user = user;
     }
 
     public UserFollowerEntity() {
@@ -66,12 +64,12 @@ public class UserFollowerEntity {
         this.follower = follower;
     }
 
-    public UserEntity getFollowing() {
-        return following;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setFollowing(UserEntity following) {
-        this.following = following;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public UUID getId() {

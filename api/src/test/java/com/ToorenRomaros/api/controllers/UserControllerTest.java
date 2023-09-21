@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.config.AppConfig;
 import com.ToorenRomaros.api.dto.UserDto;
+import com.ToorenRomaros.api.dto.UserFollowerDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
@@ -39,13 +40,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -66,11 +67,13 @@ class UserControllerTest {
     private Pageable pageRequest;
     private JacksonTester<List<User>> UserTester;
     private JacksonTester<UserEntity> UserEntityTester;
+    private JacksonTester<UserDto> UserDtoTester;
+    private ModelMapper modelMapper;
 
     @BeforeEach
     public void setup() {
         ObjectMapper mapper = new AppConfig().objectMapper();
-        ModelMapper modelMapper = new AppConfig().modelMapper();
+        this.modelMapper = new AppConfig().modelMapper();
         JacksonTester.initFields(this, mapper);
         MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new
                 MappingJackson2HttpMessageConverter();
@@ -121,8 +124,50 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Get user by id")
+    void getUserByIdShouldWork() throws Exception{
+        //given
+        UserEntity user1 = new UserEntity(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"),
+                "montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, new ArrayList<>(),new ArrayList<>());
+        UserEntity user2 = new UserEntity(
+                "Enapril",
+                LocalDate.of(1990, 5, 8),
+                LocalDate.of(2023, 9, 16),
+                "I love pot", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
+        UserEntity user3 = new UserEntity(
+                "Benzafibrato",
+                LocalDate.of(1990, 5, 8),
+                LocalDate.of(2023, 9, 16),
+                "I love EDM Music", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
+
+        UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now() ,user1, user3);
+        UserFollowerEntity userFollowerEntity2 = new UserFollowerEntity(LocalDate.now() ,user1, user2);
+        UserFollowerEntity userFollowerEntity3 = new UserFollowerEntity(LocalDate.now() ,user3, user1);
+        user1.setFollowers(List.of(userFollowerEntity, userFollowerEntity2));
+        user1.setFollowings(List.of(userFollowerEntity3));
+
+        given(userService.getUser(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"))).willReturn(modelMapper.map(user1, UserDto.class));
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                        get("/api/v1/users/b7a61937-6f59-4bbb-80a7-08d65d1ad640")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+
+        String expected = jsonObject.get("response").toString();
+        JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user1, UserDto.class)).getJson());
+        JSONAssert.assertEquals(expected, jsonData, false);
+    }
+
+    @Test
     @DisplayName("Create user by invalid entity, should throw MethodArgumentNotValidException")
-    public void createUserWithInvalidEntity() throws Exception{
+    public void createUserWithInvalidEntityShouldThrowException() throws Exception{
         //when
         try{
             mockMvc.perform(
@@ -164,7 +209,7 @@ class UserControllerTest {
         userFollowerEntity.setId(UUID.randomUUID());
         userFollowerEntity.setFollower(follower1);
         userFollowerEntity.setFollowDate(LocalDate.now());
-        userFollowerEntity.setFollowing(userEntity);
+        userFollowerEntity.setUser(userEntity);
         BeanUtils.copyProperties(userFollowerEntity, model);
 //        model.setUsername(userFollowerEntity.getFollower().getUsername());
 //        model.setFollowDate(userFollowerEntity.getFollowDate());

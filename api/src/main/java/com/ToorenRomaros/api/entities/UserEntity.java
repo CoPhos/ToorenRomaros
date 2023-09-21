@@ -52,7 +52,7 @@ public class UserEntity {
     @Column(name = "FOLLOWER_ID")
     private List<UserFollowerEntity> followers;
 
-    @OneToMany(mappedBy = "following",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @Column(name = "USER_ID")
     private List<UserFollowerEntity> followings;
 
@@ -67,24 +67,21 @@ public class UserEntity {
         this.followings = followings;
     }
 
+    public UserEntity(UUID id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserFollowerEntity> followers, List<UserFollowerEntity> followings) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+        this.about = about;
+        this.followingCount = followingCount;
+        this.followmeCount = followmeCount;
+        this.followers = followers;
+        this.followings = followings;
+    }
+
     public UserEntity() {
     }
 
-//    public void addFollower(UserEntity userEntity) {
-//        this.followers.add(userEntity);
-//
-//        if (!userEntity.getFollowers().contains(this)) {
-//            followers.add(this);
-//        }
-//    }
-//
-//    public void addFollowing(UserEntity userEntity) {
-//        this.followings.add(userEntity);
-//
-//        if (!userEntity.getFollowings().contains(this)) {
-//            followings.add(this);
-//        }
-//    }
     public String getUsername() {
         return username;
     }
