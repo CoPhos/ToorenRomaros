@@ -37,7 +37,7 @@ public class AppConfig {
                 return source.stream().map(value -> {
                     UserFollowerDto nestedIdentity = new UserFollowerDto();
                     nestedIdentity.setFollower(value.getUser().getUsername());
-                    nestedIdentity.setCreatedDate(value.getFollowDate());
+                    nestedIdentity.setFollowDate(value.getFollowDate());
                     return nestedIdentity;
                 }).collect(Collectors.toList());
             }
@@ -49,7 +49,7 @@ public class AppConfig {
                 return source.stream().map(value -> {
                     UserFollowerDto nestedIdentity = new UserFollowerDto();
                     nestedIdentity.setFollower(value.getFollower().getUsername());
-                    nestedIdentity.setCreatedDate(value.getFollowDate());
+                    nestedIdentity.setFollowDate(value.getFollowDate());
                     return nestedIdentity;
                 }).collect(Collectors.toList());
             }
@@ -59,7 +59,12 @@ public class AppConfig {
                 addMappings(mapper -> mapper.using(converterFollowers)
                         .map(UserEntity::getFollowers, UserDto::setFollowers))
                 .addMappings(mapper -> mapper.using(converterFollowings)
-                        .map(UserEntity::getFollowings, UserDto::setFollowings));;
+                        .map(UserEntity::getFollowings, UserDto::setFollowings));
+
+        TypeMap<UserFollowerEntity, UserFollowerDto> propertyMapper = modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowerDto.class);
+        propertyMapper.addMappings(
+                mapper -> mapper.map(src -> src.getFollower().getUsername(), UserFollowerDto::setFollower)
+        );
 
         return modelMapper;
     }

@@ -1,6 +1,8 @@
 package com.ToorenRomaros.api.controllers;
 
+import com.ToorenRomaros.api.dto.UserAddFollowerOrFollowingRequestDto;
 import com.ToorenRomaros.api.dto.UserDto;
+import com.ToorenRomaros.api.dto.UserFollowerDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
@@ -79,6 +81,30 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+    @PostMapping("/users/follower")
+    ResponseEntity<Map<String, Object>> createFollower(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        try {
+            UserFollowerDto newFollow = userService.addFollowerByIds(UUID.fromString(requestDto.getUserId()),UUID.fromString(requestDto.getToFollowId()));
+            Map<String, Object> response = new HashMap<>();
+            response.put("created", newFollow);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch(Exception e ){
+            log.info(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PostMapping("/users/following")
+    ResponseEntity<Map<String, Object>> createFollowing(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        try {
+            UserFollowerDto newFollow = userService.addFollowingsByIds(UUID.fromString(requestDto.getUserId()),UUID.fromString(requestDto.getToFollowId()));
+            Map<String, Object> response = new HashMap<>();
+            response.put("created", newFollow);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch(Exception e ){
+            log.info(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/users/{id}/followers")
     ResponseEntity<Map<String, Object>> getAllUserFollowersByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
@@ -92,7 +118,22 @@ public class UserController {
         response.put("totalPages", pageFollowers.getTotalPages());
         return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e){
-            log.info(e.getCause().toString());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/users/{id}/following")
+    ResponseEntity<Map<String, Object>> getAllUserFollowingsByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
+        try{
+            Pageable pageRequest = PageRequest.of(page,size);
+            Page<User> pageFollowers = userService.getAllFollowingsByUserId(UUID.fromString(id), pageRequest);
+            Map<String, Object> response = new HashMap<>();
+            response.put("following", pageFollowers.getContent());
+            response.put("currentPage", pageFollowers.getNumber());
+            response.put("totalItems", pageFollowers.getNumberOfElements());
+            response.put("totalPages", pageFollowers.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }

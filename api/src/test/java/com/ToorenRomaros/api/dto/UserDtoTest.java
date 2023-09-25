@@ -5,12 +5,10 @@ import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.CollectionUtils;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,11 +60,11 @@ class UserDtoTest {
 
         for (int i = 0; i < user1.getFollowings().size(); i++) {
             assertEquals(user1.getFollowers().get(i).getUser().getUsername(), user1Dto.getFollowers().get(i).getFollower());
-            assertEquals(user1.getFollowers().get(i).getFollowDate(), user1Dto.getFollowers().get(i).getCreatedDate());
+            assertEquals(user1.getFollowers().get(i).getFollowDate(), user1Dto.getFollowers().get(i).getFollowDate());
         }
         for (int i = 0; i < user1.getFollowings().size(); i++) {
             assertEquals(user1.getFollowings().get(i).getUser().getUsername(), user1Dto.getFollowers().get(i).getFollower());
-            assertEquals(user1.getFollowings().get(i).getFollowDate(), user1Dto.getFollowers().get(i).getCreatedDate());
+            assertEquals(user1.getFollowings().get(i).getFollowDate(), user1Dto.getFollowers().get(i).getFollowDate());
         }
     }
 

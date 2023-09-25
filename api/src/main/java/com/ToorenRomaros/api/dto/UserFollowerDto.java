@@ -1,18 +1,14 @@
 package com.ToorenRomaros.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
+
 public class UserFollowerDto {
     private String follower;
-    private LocalDate createdDate;
+    private LocalDate followDate;
 
-    public UserFollowerDto(String follower, LocalDate createdDate) {
+    public UserFollowerDto(String follower, LocalDate followDate) {
         this.follower = follower;
-        this.createdDate = createdDate;
+        this.followDate = followDate;
     }
 
     public UserFollowerDto() {
@@ -26,11 +22,11 @@ public class UserFollowerDto {
         this.follower = follower;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public LocalDate getFollowDate() {
+        return followDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
+    public void setFollowDate(LocalDate followDate) {
+        this.followDate = followDate;
     }
 }

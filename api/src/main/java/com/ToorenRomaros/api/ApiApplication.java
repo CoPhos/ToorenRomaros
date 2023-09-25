@@ -54,13 +54,13 @@ public class ApiApplication {
 			userRepository.save(user1);
 			userRepository.save(user2);
 			userRepository.save(user3);
-			userFollowerRepository.save(userFollowerEntity);
-			userFollowerRepository.save(userFollowerEntity2);
-			userFollowerRepository.save(userFollowerEntity3);
-
-			user1.setFollowers(List.of(userFollowerEntity, userFollowerEntity2));
-			user1.setFollowings(List.of(userFollowerEntity3));
-			userRepository.save(user1);
+//			userFollowerRepository.save(userFollowerEntity);
+//			userFollowerRepository.save(userFollowerEntity2);
+//			userFollowerRepository.save(userFollowerEntity3);
+//
+//			user1.setFollowers(List.of(userFollowerEntity, userFollowerEntity2));
+//			user1.setFollowings(List.of(userFollowerEntity3));
+//			userRepository.save(user1);
 
 		};
 	}
