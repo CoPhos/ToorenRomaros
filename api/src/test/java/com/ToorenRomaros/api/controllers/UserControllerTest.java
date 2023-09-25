@@ -2,7 +2,6 @@ package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.config.AppConfig;
 import com.ToorenRomaros.api.dto.UserDto;
-import com.ToorenRomaros.api.dto.UserFollowerDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
@@ -35,6 +34,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -45,11 +45,10 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest {
@@ -69,7 +68,7 @@ class UserControllerTest {
     private JacksonTester<UserEntity> UserEntityTester;
     private JacksonTester<UserDto> UserDtoTester;
     private ModelMapper modelMapper;
-
+    private static final String id = "a1b9b31d-e73c-4112-af7c-b68530f38222";
     @BeforeEach
     public void setup() {
         ObjectMapper mapper = new AppConfig().objectMapper();
@@ -83,17 +82,19 @@ class UserControllerTest {
                 .setControllerAdvice(new RestApiErrorHandler(messageSource))
                 .setMessageConverters(mappingJackson2HttpMessageConverter)
                 .build();
-
-        final Instant now = Instant.now();
     }
 
     @Test
-    @DisplayName("Create user by given user")
+    @DisplayName("Create user by given user entity")
     void createUserShouldWork() throws Exception{
         //given
         UserEntity user = new UserEntity(
-                "montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, null,null);
-        given(userService.createUser(user)).willReturn(new UserDto("montelukas",LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),"I love coding",0,0, null,null));
+                "montelukas",LocalDate.of(1990,5,8),
+                LocalDate.of(2023,9,16),"I love coding",
+                0,0, new ArrayList<>(),new ArrayList<>());
+        given(userService.createUser(user)).willReturn(new UserDto("montelukas",
+                LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),
+                "I love coding",0,0, new ArrayList<>(),new ArrayList<>()));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
@@ -119,7 +120,7 @@ class UserControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
         String expected = jsonObject.get("created").toString();
-        JSONObject jsonData = new JSONObject(UserEntityTester.write(user).getJson());
+        JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user, UserDto.class)).getJson());
         JSONAssert.assertEquals(expected,jsonData, false);
     }
 
@@ -146,7 +147,7 @@ class UserControllerTest {
         user1.setFollowers(List.of(userFollowerEntity, userFollowerEntity2));
         user1.setFollowings(List.of(userFollowerEntity3));
 
-        given(userService.getUser(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"))).willReturn(modelMapper.map(user1, UserDto.class));
+        given(userService.getUserById(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"))).willReturn(modelMapper.map(user1, UserDto.class));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
@@ -164,7 +165,76 @@ class UserControllerTest {
         JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user1, UserDto.class)).getJson());
         JSONAssert.assertEquals(expected, jsonData, false);
     }
+    @Test
+    @DisplayName("Update user by given id and valid entity")
+    void updateUserByIdShouldWork() throws Exception {
+        UserEntity user = new UserEntity("montelukas",
+                LocalDate.of(1992,8,12),LocalDate.now(),
+                "I love coding",0,0, new ArrayList<>(),new ArrayList<>());
+        given(userService.updateUser(UUID.fromString(id), user)).willReturn(new UserDto("montelukas",LocalDate.of(1992,8,12),LocalDate.now(),"I love coding",0,0, new ArrayList<>(),new ArrayList<>()));
 
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                        put("/api/v1/users/{id}", id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.format("{   \n" +
+                                        "    \"username\": \"montelukas\",\n" +
+                                        "    \"birthday\":  \"1992-08-12\",\n" +
+                                        "    \"createdDate\": \"%s\"\n" +
+                                        "}", LocalDate.now()))
+                                .characterEncoding("utf-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
+        String expected = jsonObject.get("updated").toString();
+        JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user, UserDto.class)).getJson());
+        JSONAssert.assertEquals(expected,jsonData, false);
+    }
+
+    @Test
+    @DisplayName("Update user by given id and invalid entity, should throw MethodArgumentNotValidException")
+    public void updateUserByWithInvalidEntityShouldThrowException() throws Exception{
+        //when
+        try{
+            MockHttpServletResponse response = mockMvc.perform(
+                            put("/api/v1/users/{id}", id)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(String.format("{   \n" +
+                                            "    \"username\": \"montelukas\",\n" +
+                                            "    \"birthday\":  \"2050-08-12\",\n" +
+                                            "    \"createdDate\": \"%s\"\n" +
+                                            "}", LocalDate.now()))
+                                    .characterEncoding("utf-8")
+                                    .accept(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andReturn().getResponse();
+        }catch (Exception ex){
+            //then
+            assertThat(ex.getMessage()).contains("birthday must be past");
+            assertThat(ex).isInstanceOf(MethodArgumentNotValidException.class);
+        }
+    }
+    @Test
+    @DisplayName("Delete user by id")
+    void deleteUserByIdWhenIdExists() throws Exception {
+        //given
+        willDoNothing().given(userService).deleteUserById(UUID.fromString(id));
+
+        //when
+        ResultActions result = mockMvc.perform(
+                delete("/api/v1/users/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        //then
+        verify(userService, times(1)).deleteUserById(UUID.fromString(id));
+        result.andExpect(status().isAccepted());
+    }
     @Test
     @DisplayName("Create user by invalid entity, should throw MethodArgumentNotValidException")
     public void createUserWithInvalidEntityShouldThrowException() throws Exception{
@@ -173,16 +243,16 @@ class UserControllerTest {
             mockMvc.perform(
                             post("/api/v1/users")
                                     .contentType(MediaType.APPLICATION_JSON)
-                                    .content("{   \n" +
+                                    .content(String.format("{   \n" +
                                             "    \"username\": \"montelukas\",\n" +
                                             "    \"birthday\":  \"1992-08-12\",\n" +
-                                            "    \"createdDate\": \"2023-09-16\",\n" +
+                                            "    \"createdDate\": \"%s\",\n" +
                                             "    \"about\": \"I love coding\",\n" +
                                             "    \"followingCount\":0,\n" +
                                             "    \"followmeCount\": -5,\n" +
-                                            "    \"follower\": null,\n" +
-                                            "    \"following\": null\n" +
-                                            "}")
+                                            "    \"followers\": null,\n" +
+                                            "    \"followings\": null\n" +
+                                            "}", LocalDate.now()))
                                     .characterEncoding("utf-8")
                                     .accept(MediaType.APPLICATION_JSON))
                     .andDo(print())

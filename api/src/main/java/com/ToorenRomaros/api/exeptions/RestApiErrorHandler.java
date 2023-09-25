@@ -97,7 +97,9 @@ public class RestApiErrorHandler {
         Error error = ErrorUtils
                 .createError(ErrorCode.HTTP_MESSAGE_NOT_READABLE.getErrMsgKey(),
                         ErrorCode.HTTP_MESSAGE_NOT_READABLE.getErrCode(),
-                        HttpStatus.NOT_ACCEPTABLE.value());
+                        HttpStatus.NOT_ACCEPTABLE.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

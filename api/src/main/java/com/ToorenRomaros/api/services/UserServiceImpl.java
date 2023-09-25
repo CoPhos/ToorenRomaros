@@ -16,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -54,6 +55,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto createUser(UserEntity user) {
+        try{
+            return modelMapper.map(userRepository.save(user), UserDto.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public UserDto getUserById(UUID id) {
+        try {
+            UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
+            return modelMapper.map(user, UserDto.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @PreAuthorize("#user.username == authentication.name || authentication.name == admin || authentication.name == mod")
+    @Override
     public UserDto updateUser(UUID id, UserEntity user) {
         UserEntity newUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "'"));
         try {
@@ -66,26 +87,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUser(UUID id) {
-       try {
-           UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
-           return modelMapper.map(user, UserDto.class);
-       }catch (Exception e){
-           log.info(e.getMessage());
-           return null;
-       }
-    }
-
-    @Override
-    public UserDto createUser(UserEntity user) {
-        return modelMapper.map(userRepository.save(user), UserDto.class);
+    public void deleteUserById(UUID id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "'"));
+        userRepository.delete(user);
     }
 
     @Override
     public Page<User> getAllFollowersByUserId(UUID id, Pageable pageRequest) {
-        if (Strings.isBlank(id.toString())) {
-            throw new UserNotFoundException("Invalid user.");
-        }
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
 
         List<UserFollowerEntity> entities = userFollowerRepository.findAllFollowersByUser(id.toString(), pageRequest);

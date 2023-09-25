@@ -2,51 +2,35 @@ package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.dto.UserDto;
 import com.ToorenRomaros.api.entities.UserEntity;
-import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
-import com.ToorenRomaros.api.services.UserServiceImpl;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
+    private static final String uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
     private final UserService userService;
+
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @PutMapping("/users/{id}")
-    ResponseEntity<Map<String, Object>> updateUser(@PathVariable UUID id, @RequestBody @Valid UserEntity user) throws Exception {
-        try{
-            UserDto updatedUser = userService.updateUser(id, user);
-            Map<String, Object> response = new HashMap<>();
-            response.put("updated", updatedUser);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch(Exception e ){
-            log.info("error" + e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @PostMapping("/users")
@@ -57,16 +41,50 @@ public class UserController {
             response.put("created", newUser);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch(Exception e ){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/users/{id}")
+    ResponseEntity<Map<String, Object>> getUserById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        try{
+            Map<String, Object> response = new HashMap<>();
+            response.put("response", userService.getUserById(UUID.fromString(id)));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PutMapping("/users/{id}")
+    ResponseEntity<Map<String, Object>> updateUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UserEntity user) throws Exception {
+        try{
+            UserDto updatedUser = userService.updateUser(UUID.fromString(id), user);
+            Map<String, Object> response = new HashMap<>();
+            response.put("updated", updatedUser);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch(Exception e ){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
 
+    @DeleteMapping("/users/{id}")
+    @PreAuthorize("hasRole('adminrole')")
+    ResponseEntity<String> deleteUserById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        try{
+            userService.deleteUserById(UUID.fromString(id));
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body("User: " + id + " deleted successfully");
+        }catch(Exception e ){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/users/{id}/followers")
-    ResponseEntity<Map<String, Object>> getAllUserFollowersByUserId(@PathVariable @NotNull UUID id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
+    ResponseEntity<Map<String, Object>> getAllUserFollowersByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
         try{
         Pageable pageRequest = PageRequest.of(page,size);
-        Page<User> pageFollowers = userService.getAllFollowersByUserId(id, pageRequest);
+        Page<User> pageFollowers = userService.getAllFollowersByUserId(UUID.fromString(id), pageRequest);
         Map<String, Object> response = new HashMap<>();
         response.put("followers", pageFollowers.getContent());
         response.put("currentPage", pageFollowers.getNumber());
@@ -75,21 +93,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e){
             log.info(e.getCause().toString());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
-
-    @GetMapping("/users/{id}")
-    ResponseEntity<Map<String, Object>> getUser(@PathVariable @NotNull UUID id) throws Exception {
-        try{
-            Map<String, Object> response = new HashMap<>();
-            response.put("response", userService.getUser(id));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            log.info(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 }
-
