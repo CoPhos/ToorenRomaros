@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.config.AppConfig;
 import com.ToorenRomaros.api.dto.UserDto;
+import com.ToorenRomaros.api.dto.UserFollowerDto;
 import com.ToorenRomaros.api.entities.UserEntity;
 import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
@@ -67,8 +68,11 @@ class UserControllerTest {
     private JacksonTester<List<User>> UserTester;
     private JacksonTester<UserEntity> UserEntityTester;
     private JacksonTester<UserDto> UserDtoTester;
+
+    private JacksonTester<UserFollowerDto> userFollowerDtoTester;
     private ModelMapper modelMapper;
     private static final String id = "a1b9b31d-e73c-4112-af7c-b68530f38222";
+    private static final String id2 = "6f95b5af-4d6f-448c-8f3d-ca54521f4653";
     @BeforeEach
     public void setup() {
         ObjectMapper mapper = new AppConfig().objectMapper();
@@ -308,5 +312,173 @@ class UserControllerTest {
         String expected = jsonObject.get("followers").toString();
         JSONArray jsonData = new JSONArray(UserTester.write(List.of(model)).getJson());
         JSONAssert.assertEquals(expected,jsonData, false);
+    }
+
+    @Test
+    @DisplayName("returns followings by given user ID")
+    void getAllUserFollowingsByUserShouldWork() throws Exception {
+        UserEntity follower1 = new UserEntity();
+        follower1.setId(UUID.randomUUID());
+        follower1.setUsername("David");
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"));
+        userEntity.setUsername("alice");
+
+        UserFollowerEntity userFollowerEntity = new UserFollowerEntity();
+        userFollowerEntity.setId(UUID.randomUUID());
+        userFollowerEntity.setFollower(userEntity);
+        userFollowerEntity.setFollowDate(LocalDate.now());
+        userFollowerEntity.setUser(follower1);
+        BeanUtils.copyProperties(userFollowerEntity, model);
+//        model.setUsername(userFollowerEntity.getFollower().getUsername());
+//        model.setFollowDate(userFollowerEntity.getFollowDate());
+
+        pageRequest = PageRequest.of(0,2);
+        userPage = new PageImpl<>(List.of(model), pageRequest, List.of(model).size());
+        //given
+        given(userService.getAllFollowingsByUserId(UUID.fromString("b7a61937-6f59-4bbb-80a7-08d65d1ad640"), pageRequest)).willReturn(userPage);
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                        get("/api/v1/users/b7a61937-6f59-4bbb-80a7-08d65d1ad640/followings")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+        assertThat(jsonObject.get("totalPages")).isEqualTo(1);
+        assertThat(jsonObject.get("totalItems")).isEqualTo(1);
+        assertThat(jsonObject.get("currentPage")).isEqualTo(0);
+        assertThat(jsonObject.get("followings")).isNotNull();
+
+        String expected = jsonObject.get("followings").toString();
+        JSONArray jsonData = new JSONArray(UserTester.write(List.of(model)).getJson());
+        JSONAssert.assertEquals(expected,jsonData, false);
+    }
+
+    @Test
+    @DisplayName("create and add follower to user")
+    void createFollowerShouldWork() throws Exception {
+        //given
+        UserEntity follower1 = new UserEntity();
+        follower1.setId(UUID.fromString("a1b9b31d-e73c-4112-af7c-b68530f38222"));
+        follower1.setUsername("sara_wilson");
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(UUID.fromString("6f95b5af-4d6f-448c-8f3d-ca54521f4653"));
+        userEntity.setUsername("chris_martin");
+        UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now(), userEntity,follower1 );
+
+        given(userService.addFollowerByIds(UUID.fromString(id), UUID.fromString(id2))).willReturn(new UserFollowerDto("chris_martin", LocalDate.now()));
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                        post("/api/v1/users/followers")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{   \n" +
+                                        "    \"userId\": \"a1b9b31d-e73c-4112-af7c-b68530f38222\",\n" +
+                                        "    \"toFollowId\": \"6f95b5af-4d6f-448c-8f3d-ca54521f4653\"\n" +
+                                        "}")
+                                .characterEncoding("utf-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
+        String expected = jsonObject.get("created").toString();
+        JSONObject jsonData = new JSONObject(userFollowerDtoTester.write(modelMapper.map(userFollowerEntity, UserFollowerDto.class)).getJson());
+        JSONAssert.assertEquals(expected,jsonData, false);
+    }
+
+    @Test
+    @DisplayName("create and add following to user")
+    void createFollowingShouldWork() throws Exception {
+        //given
+        UserEntity follower1 = new UserEntity();
+        follower1.setId(UUID.fromString("a1b9b31d-e73c-4112-af7c-b68530f38222"));
+        follower1.setUsername("sara_wilson");
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(UUID.fromString("6f95b5af-4d6f-448c-8f3d-ca54521f4653"));
+        userEntity.setUsername("chris_martin");
+        UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now(),follower1,userEntity);
+
+        given(userService.addFollowingsByIds(UUID.fromString(id), UUID.fromString(id2))).willReturn(new UserFollowerDto("sara_wilson", LocalDate.now()));
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                        post("/api/v1/users/followings")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{   \n" +
+                                        "    \"userId\": \"a1b9b31d-e73c-4112-af7c-b68530f38222\",\n" +
+                                        "    \"toFollowId\": \"6f95b5af-4d6f-448c-8f3d-ca54521f4653\"\n" +
+                                        "}")
+                                .characterEncoding("utf-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
+        String expected = jsonObject.get("created").toString();
+        JSONObject jsonData = new JSONObject(userFollowerDtoTester.write(modelMapper.map(userFollowerEntity, UserFollowerDto.class)).getJson());
+        JSONAssert.assertEquals(expected,jsonData, false);
+    }
+
+    @Test
+    @DisplayName("delete a follower from user")
+    void deleteFollowerShouldWork() throws Exception {
+        //given
+        willDoNothing().given(userService).deleteFollowerByids(UUID.fromString(id), UUID.fromString(id2));
+
+        //when
+        MockHttpServletResponse result = mockMvc.perform(
+                        delete("/api/v1/users/followers")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{   \n" +
+                                        "    \"userId\": \"6f95b5af-4d6f-448c-8f3d-ca54521f4653\",\n" +
+                                        "    \"toFollowId\": \"a1b9b31d-e73c-4112-af7c-b68530f38222\"\n" +
+                                        "}")
+                                .characterEncoding("utf-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        verify(userService, times(1)).deleteFollowerByids(UUID.fromString(id), UUID.fromString(id2));
+        assertThat(result.getStatus()).isEqualTo(HttpStatus.ACCEPTED.value());
+    }
+
+    @Test
+    @DisplayName("delete a following from user")
+    void deleteFollowingShouldWork() throws Exception {
+        //given
+        willDoNothing().given(userService).deleteFollowingsByids(UUID.fromString(id), UUID.fromString(id2));
+
+        //when
+        MockHttpServletResponse result = mockMvc.perform(
+                        delete("/api/v1/users/followings")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("{   \n" +
+                                        "    \"userId\": \"6f95b5af-4d6f-448c-8f3d-ca54521f4653\",\n" +
+                                        "    \"toFollowId\": \"a1b9b31d-e73c-4112-af7c-b68530f38222\"\n" +
+                                        "}")
+                                .characterEncoding("utf-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        verify(userService, times(1)).deleteFollowingsByids(UUID.fromString(id), UUID.fromString(id2));
+        assertThat(result.getStatus()).isEqualTo(HttpStatus.ACCEPTED.value());
     }
 }

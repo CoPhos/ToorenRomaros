@@ -117,13 +117,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteFollowingsByids(UUID idUser, UUID toFollow) {
-
+    public void deleteFollowerByids(UUID idUser, UUID toFollow) {
+        UserFollowerEntity entity = userFollowerRepository.findByFollowerIdAndUserId(toFollow.toString(), idUser.toString()).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
+        userFollowerRepository.deleteById(entity.getId());
+        UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
+        user.getFollowers().remove(entity);
     }
 
     @Override
-    public void deleteFollowerByids(UUID idUser, UUID toFollow) {
-
+    public void deleteFollowingsByids (UUID idUser, UUID toFollow) {
+        UserFollowerEntity entity = userFollowerRepository.findByFollowerIdAndUserId(idUser.toString(), toFollow.toString()).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
+        userFollowerRepository.deleteById(entity.getId());
+        UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
+        user.getFollowings().remove(entity);
     }
 
     @Override

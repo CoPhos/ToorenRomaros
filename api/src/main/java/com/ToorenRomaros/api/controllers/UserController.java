@@ -81,7 +81,7 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("/users/follower")
+    @PostMapping("/users/followers")
     ResponseEntity<Map<String, Object>> createFollower(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
         try {
             UserFollowerDto newFollow = userService.addFollowerByIds(UUID.fromString(requestDto.getUserId()),UUID.fromString(requestDto.getToFollowId()));
@@ -93,7 +93,7 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
-    @PostMapping("/users/following")
+    @PostMapping("/users/followings")
     ResponseEntity<Map<String, Object>> createFollowing(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
         try {
             UserFollowerDto newFollow = userService.addFollowingsByIds(UUID.fromString(requestDto.getUserId()),UUID.fromString(requestDto.getToFollowId()));
@@ -102,6 +102,28 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch(Exception e ){
             log.info(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/users/followers")
+    ResponseEntity<String> deleteFollower(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        try{
+            userService.deleteFollowerByids(UUID.fromString(requestDto.getToFollowId()), UUID.fromString(requestDto.getUserId()));
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body("Unfollow: " + requestDto.getToFollowId());
+        }catch(Exception e ){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/users/followings")
+    ResponseEntity<String> deleteFollowing(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        try{
+            userService.deleteFollowingsByids(UUID.fromString(requestDto.getToFollowId()), UUID.fromString(requestDto.getUserId()));
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body("Unfollow: " + requestDto.getUserId());
+        }catch(Exception e ){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -122,13 +144,13 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/{id}/following")
+    @GetMapping("/users/{id}/followings")
     ResponseEntity<Map<String, Object>> getAllUserFollowingsByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
         try{
             Pageable pageRequest = PageRequest.of(page,size);
             Page<User> pageFollowers = userService.getAllFollowingsByUserId(UUID.fromString(id), pageRequest);
             Map<String, Object> response = new HashMap<>();
-            response.put("following", pageFollowers.getContent());
+            response.put("followings", pageFollowers.getContent());
             response.put("currentPage", pageFollowers.getNumber());
             response.put("totalItems", pageFollowers.getNumberOfElements());
             response.put("totalPages", pageFollowers.getTotalPages());
