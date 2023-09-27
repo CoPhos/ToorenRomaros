@@ -31,7 +31,7 @@ import org.springframework.web.server.MethodNotAllowedException;
 @ControllerAdvice
 public class RestApiErrorHandler {
     @Value("${keycloak.tokenurl}")
-    private static String TOKEN_URL;
+    private String TOKEN_URL;
     private final MessageSource messageSource;
     @Autowired
     public RestApiErrorHandler(MessageSource messageSource) {

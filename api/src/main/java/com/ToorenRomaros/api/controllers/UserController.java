@@ -1,9 +1,9 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.UserAddFollowerOrFollowingRequestDto;
-import com.ToorenRomaros.api.dto.UserDto;
-import com.ToorenRomaros.api.dto.UserFollowerDto;
-import com.ToorenRomaros.api.entities.UserEntity;
+import com.ToorenRomaros.api.dto.user.UserAddFollowerOrFollowingRequestDto;
+import com.ToorenRomaros.api.dto.user.UserDto;
+import com.ToorenRomaros.api.dto.user.UserFollowerDto;
+import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
 import org.slf4j.Logger;

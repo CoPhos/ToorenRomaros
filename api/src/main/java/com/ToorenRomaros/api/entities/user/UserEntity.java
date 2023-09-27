@@ -1,4 +1,4 @@
-package com.ToorenRomaros.api.entities;
+package com.ToorenRomaros.api.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -29,27 +29,18 @@ public class UserEntity {
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-
-    @Column(name = "USERNAME", unique = true)
-    @Basic(optional = false)
+    @Column(name = "USERNAME", unique = true, nullable = false, columnDefinition = "VARCHAR(32)")
+    //@Basic(optional = false)
     @Size(max = 32, message = "username max size is 32 characters")
     private String username;
-
     @Past(message = "birthday must be past")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy/dd/mm")
-    @Column(name = "BIRTHDAY")
+    @Column(name = "BIRTHDAY", columnDefinition = "DATE")
     private LocalDate birthday;
-    @Column(name = "CREATED_DATE")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy/dd/mm")
     @FutureOrPresent
+    @Column(name = "CREATED_DATE", columnDefinition = "DATE")
     private LocalDate createdDate;
-    /*@Lob
-    @Column(name = "photo", columnDefinition="BLOB")
-    private byte[] photo;*/
-    @Column(name = "ABOUT")
-    @Size(max = 255, message = "username max size is 255 characters")
+    @Column(name = "ABOUT", columnDefinition = "VARCHAR(255)")
+    @Size(max = 255, message = "max size is 255 characters")
     private String about;
     @PositiveOrZero(message = "following count can not be negative")
     @Column(name = "FOLLOWING_COUNT")
@@ -58,11 +49,11 @@ public class UserEntity {
     @Column(name = "FOLLOWING_ME_COUNT")
     private Integer followmeCount;
 
-    @OneToMany(mappedBy = "follower",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "follower",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Column(name = "FOLLOWER_ID")
     private List<UserFollowerEntity> followers;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @Column(name = "USER_ID")
     private List<UserFollowerEntity> followings;
 
@@ -165,14 +156,15 @@ public class UserEntity {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserEntity)) return false;
-        UserEntity user = (UserEntity) o;
-        return Objects.equals(getId(), user.getId());
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

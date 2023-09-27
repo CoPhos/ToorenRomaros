@@ -1,8 +1,9 @@
 package com.ToorenRomaros.api.dto;
 
 import com.ToorenRomaros.api.config.AppConfig;
-import com.ToorenRomaros.api.entities.UserEntity;
-import com.ToorenRomaros.api.entities.UserFollowerEntity;
+import com.ToorenRomaros.api.dto.user.UserDto;
+import com.ToorenRomaros.api.entities.user.UserEntity;
+import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -55,17 +56,6 @@ class UserDtoTest {
         assertEquals(user1.getFollowmeCount(), user1Dto.getFollowmeCount());
         assertEquals(user1.getAbout(), user1Dto.getAbout());
         assertEquals(user1.getCreatedDate(), user1Dto.getCreatedDate());
-        assertEquals(user1.getFollowings().size(), user1Dto.getFollowings().size());
-        assertEquals(user1.getFollowers().size(), user1Dto.getFollowers().size());
-
-        for (int i = 0; i < user1.getFollowings().size(); i++) {
-            assertEquals(user1.getFollowers().get(i).getUser().getUsername(), user1Dto.getFollowers().get(i).getFollower());
-            assertEquals(user1.getFollowers().get(i).getFollowDate(), user1Dto.getFollowers().get(i).getFollowDate());
-        }
-        for (int i = 0; i < user1.getFollowings().size(); i++) {
-            assertEquals(user1.getFollowings().get(i).getUser().getUsername(), user1Dto.getFollowers().get(i).getFollower());
-            assertEquals(user1.getFollowings().get(i).getFollowDate(), user1Dto.getFollowers().get(i).getFollowDate());
-        }
     }
 
 }

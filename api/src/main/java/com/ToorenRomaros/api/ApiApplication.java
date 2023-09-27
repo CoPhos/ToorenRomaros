@@ -1,9 +1,9 @@
 package com.ToorenRomaros.api;
 
-import com.ToorenRomaros.api.entities.UserEntity;
-import com.ToorenRomaros.api.entities.UserFollowerEntity;
-import com.ToorenRomaros.api.repositories.UserFollowerRepository;
-import com.ToorenRomaros.api.repositories.UserRepository;
+import com.ToorenRomaros.api.entities.user.UserEntity;
+import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
+import com.ToorenRomaros.api.repositories.user.UserFollowerRepository;
+import com.ToorenRomaros.api.repositories.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class ApiApplication {
@@ -34,17 +33,17 @@ public class ApiApplication {
 			UserEntity user1 = new UserEntity(
 					"montelukas",
 					LocalDate.of(1990, 5, 8),
-					LocalDate.of(2023, 9, 16),
+					LocalDate.of(2050, 9, 16),
 					"I love coding", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
 			UserEntity user2 = new UserEntity(
 					"Enapril",
 					LocalDate.of(1990, 5, 8),
-					LocalDate.of(2023, 9, 16),
+					LocalDate.of(2050, 9, 16),
 					"I love pot", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
 			UserEntity user3 = new UserEntity(
 					"Benzafibrato",
 					LocalDate.of(1990, 5, 8),
-					LocalDate.of(2023, 9, 16),
+					LocalDate.of(2050, 9, 16),
 					"I love EDM Music", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
 
 			UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now() ,user1, user3);

@@ -1,14 +1,14 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.UserDto;
-import com.ToorenRomaros.api.dto.UserFollowerDto;
-import com.ToorenRomaros.api.entities.UserEntity;
-import com.ToorenRomaros.api.entities.UserFollowerEntity;
+import com.ToorenRomaros.api.dto.user.UserDto;
+import com.ToorenRomaros.api.dto.user.UserFollowerDto;
+import com.ToorenRomaros.api.entities.user.UserEntity;
+import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.models.User;
-import com.ToorenRomaros.api.repositories.UserFollowerRepository;
-import com.ToorenRomaros.api.repositories.UserRepository;
+import com.ToorenRomaros.api.repositories.user.UserFollowerRepository;
+import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -57,9 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserEntity user) {
-
         return modelMapper.map(userRepository.save(user), UserDto.class);
-
     }
 
     @Override
@@ -70,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @PreAuthorize("#user.username == authentication.name || authentication.name == admin || authentication.name == mod")
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
     public UserDto updateUser(UUID id, UserEntity user) {
         UserEntity newUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "'"));
@@ -87,7 +85,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    @PreAuthorize("#username == authentication.name || authentication.name == admin || authentication.name == mod")
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
     public UserFollowerDto addFollowerByIds(UUID idUser, UUID toFollow, String username) {
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
@@ -100,7 +98,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(userFollowerRepository.save(newFollow), UserFollowerDto.class);
     }
 
-    @PreAuthorize("#username == authentication.name || authentication.name == admin || authentication.name == mod")
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
     public UserFollowerDto addFollowingsByIds(UUID idUser, UUID toFollow, String username) {
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
@@ -112,7 +110,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(userFollowerRepository.save(newFollow), UserFollowerDto.class);
     }
 
-    @PreAuthorize("#username == authentication.name || authentication.name == admin || authentication.name == mod")
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
     public void deleteFollowerByids(UUID idUser, UUID toFollow, String username) {
         UserFollowerEntity entity = userFollowerRepository.findByFollowerIdAndUserId(toFollow.toString(), idUser.toString()).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
@@ -121,7 +119,7 @@ public class UserServiceImpl implements UserService {
         user.getFollowers().remove(entity);
     }
 
-    @PreAuthorize("#username == authentication.name || authentication.name == admin || authentication.name == mod")
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
     public void deleteFollowingsByids(UUID idUser, UUID toFollow, String username) {
         UserFollowerEntity entity = userFollowerRepository.findByFollowerIdAndUserId(idUser.toString(), toFollow.toString()).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));

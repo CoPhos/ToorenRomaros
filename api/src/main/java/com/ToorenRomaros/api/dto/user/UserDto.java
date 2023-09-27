@@ -1,51 +1,54 @@
-package com.ToorenRomaros.api.dto;
+package com.ToorenRomaros.api.dto.user;
 
-import com.ToorenRomaros.api.entities.UserEntity;
-import com.ToorenRomaros.api.entities.UserFollowerEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.modelmapper.PropertyMap;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import static org.springframework.data.projection.EntityProjection.ProjectionType.DTO;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class UserDto {
-    private UUID id;
+    private String id;
     private String username;
     private LocalDate birthday;
     private LocalDate createdDate;
-    /*private byte[] photo;*/
     private String about;
     private Integer followingCount;
     private Integer followmeCount;
-    private List<UserFollowerDto> followers;
-    private List<UserFollowerDto> followings;
+//    private List<UserFollowerDto> followers;
+//    private List<UserFollowerDto> followings;
 
-    public UserDto(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserFollowerDto> followers, List<UserFollowerDto> followings) {
+
+    public UserDto(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
         this.username = username;
         this.birthday = birthday;
         this.createdDate = createdDate;
         this.about = about;
         this.followingCount = followingCount;
         this.followmeCount = followmeCount;
-        this.followers = followers;
-        this.followings = followings;
+    }
+
+    public UserDto(String id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+        this.about = about;
+        this.followingCount = followingCount;
+        this.followmeCount = followmeCount;
     }
 
     public UserDto() {
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -97,19 +100,4 @@ public class UserDto {
         this.followmeCount = followmeCount;
     }
 
-    public List<UserFollowerDto> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<UserFollowerDto> followers) {
-        this.followers = followers;
-    }
-
-    public List<UserFollowerDto> getFollowings() {
-        return followings;
-    }
-
-    public void setFollowings(List<UserFollowerDto> followings) {
-        this.followings = followings;
-    }
 }

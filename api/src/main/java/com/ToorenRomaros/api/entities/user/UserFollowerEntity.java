@@ -1,9 +1,11 @@
-package com.ToorenRomaros.api.entities;
+package com.ToorenRomaros.api.entities.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
@@ -25,7 +27,9 @@ public class UserFollowerEntity {
     private UUID id;
 
     @PastOrPresent
-    @Column(name = "FOLLOW_SINCE")
+    @Column(name = "FOLLOW_SINCE", columnDefinition = "DATE")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy/dd/mm")
     private LocalDate followDate;
 
     @ManyToOne

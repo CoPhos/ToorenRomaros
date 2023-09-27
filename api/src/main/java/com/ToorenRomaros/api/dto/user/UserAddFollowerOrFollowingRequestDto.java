@@ -1,4 +1,4 @@
-package com.ToorenRomaros.api.dto;
+package com.ToorenRomaros.api.dto.user;
 
 import java.util.UUID;
 

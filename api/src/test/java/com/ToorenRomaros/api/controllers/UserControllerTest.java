@@ -1,10 +1,10 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.config.AppConfig;
-import com.ToorenRomaros.api.dto.UserDto;
-import com.ToorenRomaros.api.dto.UserFollowerDto;
-import com.ToorenRomaros.api.entities.UserEntity;
-import com.ToorenRomaros.api.entities.UserFollowerEntity;
+import com.ToorenRomaros.api.dto.user.UserDto;
+import com.ToorenRomaros.api.dto.user.UserFollowerDto;
+import com.ToorenRomaros.api.entities.user.UserEntity;
+import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
 import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
@@ -95,9 +95,10 @@ class UserControllerTest {
                 "montelukas",LocalDate.of(1990,5,8),
                 LocalDate.of(2023,9,16),"I love coding",
                 0,0, new ArrayList<>(),new ArrayList<>());
+
         given(userService.createUser(user)).willReturn(new UserDto("montelukas",
                 LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),
-                "I love coding",0,0, new ArrayList<>(),new ArrayList<>()));
+                "I love coding",0,0));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
@@ -174,7 +175,7 @@ class UserControllerTest {
         UserEntity user = new UserEntity("montelukas",
                 LocalDate.of(1992,8,12),LocalDate.now(),
                 "I love coding",0,0, new ArrayList<>(),new ArrayList<>());
-        given(userService.updateUser(UUID.fromString(id), user)).willReturn(new UserDto("montelukas",LocalDate.of(1992,8,12),LocalDate.now(),"I love coding",0,0, new ArrayList<>(),new ArrayList<>()));
+        given(userService.updateUser(UUID.fromString(id), user)).willReturn(new UserDto("montelukas",LocalDate.of(1992,8,12),LocalDate.now(),"I love coding",0,0));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
@@ -241,6 +242,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Create user by invalid entity, should throw MethodArgumentNotValidException")
     public void createUserWithInvalidEntityShouldThrowException() throws Exception{
+        //TODO given().willthrow
         //when
         try{
             mockMvc.perform(
