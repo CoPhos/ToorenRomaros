@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,101 +36,70 @@ public class UserController {
 
     @PostMapping("/users")
     ResponseEntity<Map<String, Object>> createUser(@RequestBody @Valid UserEntity user) throws Exception {
-        try {
-            UserDto newUser = userService.createUser(user);
-            Map<String, Object> response = new HashMap<>();
-            response.put("created", newUser);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch(Exception e ){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        UserDto newUser = userService.createUser(user);
+        Map<String, Object> response = new HashMap<>();
+        response.put("created", newUser);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     @GetMapping("/users/{id}")
     ResponseEntity<Map<String, Object>> getUserById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        try{
-            Map<String, Object> response = new HashMap<>();
-            response.put("response", userService.getUserById(UUID.fromString(id)));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", userService.getUserById(UUID.fromString(id)));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
+
     @PutMapping("/users/{id}")
     ResponseEntity<Map<String, Object>> updateUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UserEntity user) throws Exception {
-        try{
-            UserDto updatedUser = userService.updateUser(UUID.fromString(id), user);
-            Map<String, Object> response = new HashMap<>();
-            response.put("updated", updatedUser);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch(Exception e ){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        UserDto updatedUser = userService.updateUser(UUID.fromString(id), user);
+        Map<String, Object> response = new HashMap<>();
+        response.put("updated", updatedUser);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
     @DeleteMapping("/users/{id}")
-    @PreAuthorize("hasRole('adminrole')")
     ResponseEntity<String> deleteUserById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        try{
-            userService.deleteUserById(UUID.fromString(id));
-            return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body("User: " + id + " deleted successfully");
-        }catch(Exception e ){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
-    @PostMapping("/users/followers")
-    ResponseEntity<Map<String, Object>> createFollower(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
-        try {
-            UserFollowerDto newFollow = userService.addFollowerByIds(UUID.fromString(requestDto.getUserId()),UUID.fromString(requestDto.getToFollowId()));
-            Map<String, Object> response = new HashMap<>();
-            response.put("created", newFollow);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch(Exception e ){
-            log.info(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
-    @PostMapping("/users/followings")
-    ResponseEntity<Map<String, Object>> createFollowing(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
-        try {
-            UserFollowerDto newFollow = userService.addFollowingsByIds(UUID.fromString(requestDto.getUserId()),UUID.fromString(requestDto.getToFollowId()));
-            Map<String, Object> response = new HashMap<>();
-            response.put("created", newFollow);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch(Exception e ){
-            log.info(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        userService.deleteUserById(UUID.fromString(id));
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("User: " + id + " deleted successfully");
     }
 
-    @DeleteMapping("/users/followers")
-    ResponseEntity<String> deleteFollower(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
-        try{
-            userService.deleteFollowerByids(UUID.fromString(requestDto.getToFollowId()), UUID.fromString(requestDto.getUserId()));
-            return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body("Unfollow: " + requestDto.getToFollowId());
-        }catch(Exception e ){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/users/{username}/followers")
+    ResponseEntity<Map<String, Object>> createFollower(@PathVariable @NotNull String username, @RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        UserFollowerDto newFollow = userService.addFollowerByIds(UUID.fromString(requestDto.getUserId()), UUID.fromString(requestDto.getToFollowId()), username);
+        Map<String, Object> response = new HashMap<>();
+        response.put("created", newFollow);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/followings")
-    ResponseEntity<String> deleteFollowing(@RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
-        try{
-            userService.deleteFollowingsByids(UUID.fromString(requestDto.getToFollowId()), UUID.fromString(requestDto.getUserId()));
-            return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body("Unfollow: " + requestDto.getUserId());
-        }catch(Exception e ){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/users/{username}/followings")
+    ResponseEntity<Map<String, Object>> createFollowing(@PathVariable @NotNull String username, @RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        UserFollowerDto newFollow = userService.addFollowingsByIds(UUID.fromString(requestDto.getUserId()), UUID.fromString(requestDto.getToFollowId()), username);
+        Map<String, Object> response = new HashMap<>();
+        response.put("created", newFollow);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users/{username}/followers")
+    ResponseEntity<String> deleteFollower(@PathVariable @NotNull String username, @RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        userService.deleteFollowerByids(UUID.fromString(requestDto.getToFollowId()), UUID.fromString(requestDto.getUserId()), username);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Unfollow: " + requestDto.getToFollowId());
+    }
+
+    @DeleteMapping("/users/{username}/followings")
+    ResponseEntity<String> deleteFollowing(@PathVariable @NotNull String username, @RequestBody @NotNull UserAddFollowerOrFollowingRequestDto requestDto) throws Exception {
+        userService.deleteFollowingsByids(UUID.fromString(requestDto.getToFollowId()), UUID.fromString(requestDto.getUserId()), username);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Unfollow: " + requestDto.getUserId());
     }
 
     @GetMapping("/users/{id}/followers")
     ResponseEntity<Map<String, Object>> getAllUserFollowersByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
-        try{
-        Pageable pageRequest = PageRequest.of(page,size);
+        Pageable pageRequest = PageRequest.of(page, size);
         Page<User> pageFollowers = userService.getAllFollowersByUserId(UUID.fromString(id), pageRequest);
         Map<String, Object> response = new HashMap<>();
         response.put("followers", pageFollowers.getContent());
@@ -139,24 +107,17 @@ public class UserController {
         response.put("totalItems", pageFollowers.getNumberOfElements());
         response.put("totalPages", pageFollowers.getTotalPages());
         return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
     }
 
     @GetMapping("/users/{id}/followings")
     ResponseEntity<Map<String, Object>> getAllUserFollowingsByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
-        try{
-            Pageable pageRequest = PageRequest.of(page,size);
-            Page<User> pageFollowers = userService.getAllFollowingsByUserId(UUID.fromString(id), pageRequest);
-            Map<String, Object> response = new HashMap<>();
-            response.put("followings", pageFollowers.getContent());
-            response.put("currentPage", pageFollowers.getNumber());
-            response.put("totalItems", pageFollowers.getNumberOfElements());
-            response.put("totalPages", pageFollowers.getTotalPages());
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        Pageable pageRequest = PageRequest.of(page, size);
+        Page<User> pageFollowers = userService.getAllFollowingsByUserId(UUID.fromString(id), pageRequest);
+        Map<String, Object> response = new HashMap<>();
+        response.put("followings", pageFollowers.getContent());
+        response.put("currentPage", pageFollowers.getNumber());
+        response.put("totalItems", pageFollowers.getNumberOfElements());
+        response.put("totalPages", pageFollowers.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

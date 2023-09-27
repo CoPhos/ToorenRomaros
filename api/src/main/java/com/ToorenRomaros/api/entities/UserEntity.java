@@ -1,13 +1,17 @@
 package com.ToorenRomaros.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -26,20 +30,26 @@ public class UserEntity {
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", unique = true)
     @Basic(optional = false)
+    @Size(max = 32, message = "username max size is 32 characters")
     private String username;
 
-    @Past
-    @Column(name = "BIRTHDAY")
     @Past(message = "birthday must be past")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy/dd/mm")
+    @Column(name = "BIRTHDAY")
     private LocalDate birthday;
     @Column(name = "CREATED_DATE")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy/dd/mm")
+    @FutureOrPresent
     private LocalDate createdDate;
     /*@Lob
     @Column(name = "photo", columnDefinition="BLOB")
     private byte[] photo;*/
     @Column(name = "ABOUT")
+    @Size(max = 255, message = "username max size is 255 characters")
     private String about;
     @PositiveOrZero(message = "following count can not be negative")
     @Column(name = "FOLLOWING_COUNT")

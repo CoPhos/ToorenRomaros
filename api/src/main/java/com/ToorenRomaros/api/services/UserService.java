@@ -17,10 +17,10 @@ public interface UserService {
     List<User> toModelList(List<UserFollowerEntity> items);
     public Page<User> getAllFollowersByUserId(UUID id, Pageable pageRequest);
     public Page<User> getAllFollowingsByUserId(UUID id, Pageable pageRequest);
-    public UserFollowerDto addFollowerByIds(UUID idUser, UUID toFollow);
-    public UserFollowerDto addFollowingsByIds(UUID idUser, UUID toFollow);
-    public void deleteFollowerByids(UUID idUser, UUID toFollow);
-    public void deleteFollowingsByids(UUID idUser, UUID toFollow);
+    public UserFollowerDto addFollowerByIds(UUID idUser, UUID toFollow, String username);
+    public UserFollowerDto addFollowingsByIds(UUID idUser, UUID toFollow, String username);
+    public void deleteFollowerByids(UUID idUser, UUID toFollow, String username);
+    public void deleteFollowingsByids(UUID idUser, UUID toFollow, String username);
     public UserDto createUser(UserEntity user);
     public UserDto updateUser(UUID id, UserEntity user);
     public UserDto getUserById(UUID id);

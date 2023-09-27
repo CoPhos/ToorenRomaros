@@ -39,7 +39,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -373,11 +372,11 @@ class UserControllerTest {
         userEntity.setUsername("chris_martin");
         UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now(), userEntity,follower1 );
 
-        given(userService.addFollowerByIds(UUID.fromString(id), UUID.fromString(id2))).willReturn(new UserFollowerDto("chris_martin", LocalDate.now()));
+        given(userService.addFollowerByIds(UUID.fromString(id), UUID.fromString(id2), "sara_wilson")).willReturn(new UserFollowerDto("chris_martin", LocalDate.now()));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
-                        post("/api/v1/users/followers")
+                        post("/api/v1/users/sara_wilson/followers")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{   \n" +
                                         "    \"userId\": \"a1b9b31d-e73c-4112-af7c-b68530f38222\",\n" +
@@ -410,11 +409,11 @@ class UserControllerTest {
         userEntity.setUsername("chris_martin");
         UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now(),follower1,userEntity);
 
-        given(userService.addFollowingsByIds(UUID.fromString(id), UUID.fromString(id2))).willReturn(new UserFollowerDto("sara_wilson", LocalDate.now()));
+        given(userService.addFollowingsByIds(UUID.fromString(id), UUID.fromString(id2),"chris_martin")).willReturn(new UserFollowerDto("sara_wilson", LocalDate.now()));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
-                        post("/api/v1/users/followings")
+                        post("/api/v1/users/chris_martin/followings")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{   \n" +
                                         "    \"userId\": \"a1b9b31d-e73c-4112-af7c-b68530f38222\",\n" +
@@ -438,11 +437,11 @@ class UserControllerTest {
     @DisplayName("delete a follower from user")
     void deleteFollowerShouldWork() throws Exception {
         //given
-        willDoNothing().given(userService).deleteFollowerByids(UUID.fromString(id), UUID.fromString(id2));
+        willDoNothing().given(userService).deleteFollowerByids(UUID.fromString(id), UUID.fromString(id2),"sara_wilson");
 
         //when
         MockHttpServletResponse result = mockMvc.perform(
-                        delete("/api/v1/users/followers")
+                        delete("/api/v1/users/sara_wilson/followers")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{   \n" +
                                         "    \"userId\": \"6f95b5af-4d6f-448c-8f3d-ca54521f4653\",\n" +
@@ -454,7 +453,7 @@ class UserControllerTest {
                 .andReturn().getResponse();
 
         //then
-        verify(userService, times(1)).deleteFollowerByids(UUID.fromString(id), UUID.fromString(id2));
+        verify(userService, times(1)).deleteFollowerByids(UUID.fromString(id), UUID.fromString(id2),"sara_wilson");
         assertThat(result.getStatus()).isEqualTo(HttpStatus.ACCEPTED.value());
     }
 
@@ -462,11 +461,11 @@ class UserControllerTest {
     @DisplayName("delete a following from user")
     void deleteFollowingShouldWork() throws Exception {
         //given
-        willDoNothing().given(userService).deleteFollowingsByids(UUID.fromString(id), UUID.fromString(id2));
+        willDoNothing().given(userService).deleteFollowingsByids(UUID.fromString(id), UUID.fromString(id2),"chris_martin");
 
         //when
         MockHttpServletResponse result = mockMvc.perform(
-                        delete("/api/v1/users/followings")
+                        delete("/api/v1/users/chris_martin/followings")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{   \n" +
                                         "    \"userId\": \"6f95b5af-4d6f-448c-8f3d-ca54521f4653\",\n" +
@@ -478,7 +477,7 @@ class UserControllerTest {
                 .andReturn().getResponse();
 
         //then
-        verify(userService, times(1)).deleteFollowingsByids(UUID.fromString(id), UUID.fromString(id2));
+        verify(userService, times(1)).deleteFollowingsByids(UUID.fromString(id), UUID.fromString(id2),"chris_martin");
         assertThat(result.getStatus()).isEqualTo(HttpStatus.ACCEPTED.value());
     }
 }
