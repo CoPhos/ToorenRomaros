@@ -43,11 +43,11 @@ public class FilmEntity {
     private LocalDate streamingReleaseDate;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "FILM_PREQUEL_ID", referencedColumnName = "id")
+    @JoinColumn(name = "PREQUEL_ID", referencedColumnName = "id")
     private FilmEntity prequel;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "FILM_SEQUEL_ID", referencedColumnName = "id")
+    @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
     private FilmEntity sequel;
 
     @OneToMany(mappedBy="film",fetch = FetchType.LAZY , cascade = CascadeType.ALL)

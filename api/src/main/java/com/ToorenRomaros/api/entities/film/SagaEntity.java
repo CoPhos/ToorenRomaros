@@ -20,6 +20,11 @@ public class SagaEntity {
     @Size(max = 255, message = "max size is 255 characters")
     private String name;
 
+    public SagaEntity(String name, FilmEntity film) {
+        this.name = name;
+        this.film = film;
+    }
+
     @ManyToOne
     @JoinColumn(name="FILM_ID", nullable=false)
     private FilmEntity film;

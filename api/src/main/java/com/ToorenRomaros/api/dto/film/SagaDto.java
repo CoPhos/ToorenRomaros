@@ -1,23 +1,15 @@
 package com.ToorenRomaros.api.dto.film;
 
-import com.ToorenRomaros.api.entities.film.FilmEntity;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.util.UUID;
-
 public class SagaDto {
-    private String name;
+    private String sagaName;
     private String film;
 
-    public String getName() {
-        return name;
+    public String getSagaName() {
+        return sagaName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSagaName(String sagaName) {
+        this.sagaName = sagaName;
     }
 
     public String getFilm() {

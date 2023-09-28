@@ -4,6 +4,7 @@ import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SagaDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +33,7 @@ public class AppConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 
 //        Converter<List<UserFollowerEntity>, List<UserFollowerDto>> converterFollowers = new AbstractConverter<List<UserFollowerEntity>, List<UserFollowerDto>>() {
 //            @Override
@@ -56,24 +58,23 @@ public class AppConfig {
 //                }).collect(Collectors.toList());
 //            }
 //        };
-
 //        modelMapper.typeMap(UserEntity.class, UserDto.class).
 //                addMappings(mapper -> mapper.using(converterFollowers)
 //                        .map(UserEntity::getFollowers, UserDto::setFollowers))
 //                .addMappings(mapper -> mapper.using(converterFollowings)
 //                        .map(UserEntity::getFollowings, UserDto::setFollowings));
-
-
         Converter<List<SagaEntity>, List<SagaDto>> converterSaga = new AbstractConverter<List<SagaEntity>, List<SagaDto>>() {
             @Override
             protected List<SagaDto> convert(List<SagaEntity> source) {
                 return source.stream().map(value -> {
                     SagaDto nestedIdentity = new SagaDto();
                     nestedIdentity.setFilm(value.getFilm().getTittle());
+                    nestedIdentity.setSagaName(value.getName());
                     return nestedIdentity;
                 }).collect(Collectors.toList());
             }
         };
+
 
 //        modelMapper.typeMap(FilmEntity.class, FilmDto.class).
 //                addMappings(mapper -> mapper.using(converterSaga)
@@ -86,13 +87,13 @@ public class AppConfig {
         );
 
         //Film
-        TypeMap<FilmEntity, MovieDto> propertyMapperPrequelSequel = modelMapper.createTypeMap(FilmEntity.class, MovieDto.class);
+        TypeMap<Movie, MovieDto> propertyMapperPrequelSequel = modelMapper.createTypeMap(Movie.class, MovieDto.class);
         propertyMapperPrequelSequel.addMappings(
                 mapper -> {
                     mapper.map(src -> src.getPrequel().getTittle(), MovieDto::setPrequel);
                     mapper.map(src -> src.getSequel().getTittle(), MovieDto::setSequel);
                     mapper.using(converterSaga)
-                            .map(FilmEntity::getSaga, MovieDto::setSaga);
+                            .map(Movie::getSaga, MovieDto::setSaga);
                 }
         );
 

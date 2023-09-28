@@ -1,25 +1,27 @@
 package com.ToorenRomaros.api.dto.film;
 
-import com.ToorenRomaros.api.entities.film.FilmEntity;
-
-import javax.persistence.Column;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.List;
 
-public class MovieDto {
-
+public class MovieRequestDto {
     private String id;
+    @Size(max = 255, message = "Tittle max size is 255 characters.")
     private String tittle;
+    @Size(max = 255, message = "Synopsis max size is 255 characters.")
     private String synopsis;
+    @Size(max = 3, message = "Original language max size is 3 characters.")
     private String originalLanguage;
+    @Size(max = 50, message = "Distributor max size is 50 characters.")
     private String distributor;
+    @Size(max = 5, message = "Suitable for max size is 5 characters")
     private String suitableFor;
     private LocalDate streamingReleaseDate;
     private String prequel;
     private String sequel;
-    private List<SagaDto> Saga;
+    private String sagaName;
+    @Size(max = 15, message = "Box office max size is 15 characters")
     private String boxOffice;
+    @Size(max = 5, message = "Run time max size is 5 characters")
     private String runTime;
     private LocalDate theatersReleaseDate;
     private Boolean atTheaters;
@@ -79,6 +81,7 @@ public class MovieDto {
     public void setStreamingReleaseDate(LocalDate streamingReleaseDate) {
         this.streamingReleaseDate = streamingReleaseDate;
     }
+
     public String getPrequel() {
         return prequel;
     }
@@ -95,12 +98,12 @@ public class MovieDto {
         this.sequel = sequel;
     }
 
-    public List<SagaDto> getSaga() {
-        return Saga;
+    public String getSagaName() {
+        return sagaName;
     }
 
-    public void setSaga(List<SagaDto> saga) {
-        Saga = saga;
+    public void setSagaName(String sagaName) {
+        this.sagaName = sagaName;
     }
 
     public String getBoxOffice() {
