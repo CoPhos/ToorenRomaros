@@ -3,6 +3,7 @@ package com.ToorenRomaros.api.config;
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SagaDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
+import com.ToorenRomaros.api.dto.user.UserFollowingDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
@@ -83,7 +84,18 @@ public class AppConfig {
         //User
         TypeMap<UserFollowerEntity, UserFollowerDto> propertyMapperFollower = modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowerDto.class);
         propertyMapperFollower.addMappings(
-                mapper -> mapper.map(src -> src.getFollower().getUsername(), UserFollowerDto::setFollower)
+                mapper -> {
+                    mapper.map(src -> src.getFollower().getUsername(), UserFollowerDto::setFollower);
+                    mapper.map(UserFollowerEntity::getFollowDate, UserFollowerDto::setFollowDate);
+                }
+        );
+
+        TypeMap<UserFollowerEntity, UserFollowingDto> propertyMapperFollowing = modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowingDto.class);
+        propertyMapperFollowing.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getUser().getUsername(), UserFollowingDto::setFollowing);
+                    mapper.map(UserFollowerEntity::getFollowDate, UserFollowingDto::setFollowDate);
+                }
         );
 
         //Film

@@ -34,12 +34,12 @@ public class UserFollowerEntity {
 
     @ManyToOne
     @Type(type="uuid-char")
-    @JoinColumn(name = "FOLLOWER_ID", columnDefinition = "VARCHAR(36)", nullable = false)
+    @JoinColumn(name = "FOLLOWER_ID", nullable = false)
     private UserEntity follower;
 
     @ManyToOne
     @Type(type="uuid-char")
-    @JoinColumn(name = "USER_ID", columnDefinition = "VARCHAR(36)", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private UserEntity user;
 
     public UserFollowerEntity(LocalDate followDate, UserEntity follower, UserEntity user) {

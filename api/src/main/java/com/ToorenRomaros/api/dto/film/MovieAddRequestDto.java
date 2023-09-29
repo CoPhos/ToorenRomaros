@@ -3,7 +3,7 @@ package com.ToorenRomaros.api.dto.film;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-public class MovieRequestDto {
+public class MovieAddRequestDto {
     private String id;
     @Size(max = 255, message = "Tittle max size is 255 characters.")
     private String tittle;

@@ -1,8 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.user.UserAddFollowerOrFollowingRequestDto;
-import com.ToorenRomaros.api.dto.user.UserDto;
-import com.ToorenRomaros.api.dto.user.UserFollowerDto;
+import com.ToorenRomaros.api.dto.user.*;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
@@ -35,8 +33,8 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    ResponseEntity<Map<String, Object>> createUser(@RequestBody @Valid UserEntity user) throws Exception {
-        UserDto newUser = userService.createUser(user);
+    ResponseEntity<Map<String, Object>> createUser(@RequestBody @Valid UserAddRequestDto userAddRequestDto) throws Exception {
+        UserDto newUser = userService.createUser(userAddRequestDto);
         Map<String, Object> response = new HashMap<>();
         response.put("created", newUser);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -100,7 +98,7 @@ public class UserController {
     @GetMapping("/users/{id}/followers")
     ResponseEntity<Map<String, Object>> getAllUserFollowersByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
         Pageable pageRequest = PageRequest.of(page, size);
-        Page<User> pageFollowers = userService.getAllFollowersByUserId(UUID.fromString(id), pageRequest);
+        Page<UserFollowerDto> pageFollowers = userService.getAllFollowersByUserId(UUID.fromString(id), pageRequest);
         Map<String, Object> response = new HashMap<>();
         response.put("followers", pageFollowers.getContent());
         response.put("currentPage", pageFollowers.getNumber());
@@ -112,7 +110,7 @@ public class UserController {
     @GetMapping("/users/{id}/followings")
     ResponseEntity<Map<String, Object>> getAllUserFollowingsByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size) throws Exception {
         Pageable pageRequest = PageRequest.of(page, size);
-        Page<User> pageFollowers = userService.getAllFollowingsByUserId(UUID.fromString(id), pageRequest);
+        Page<UserFollowingDto> pageFollowers = userService.getAllFollowingsByUserId(UUID.fromString(id), pageRequest);
         Map<String, Object> response = new HashMap<>();
         response.put("followings", pageFollowers.getContent());
         response.put("currentPage", pageFollowers.getNumber());

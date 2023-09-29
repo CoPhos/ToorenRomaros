@@ -1,9 +1,8 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.MovieDto;
-import com.ToorenRomaros.api.dto.film.MovieRequestDto;
-import com.ToorenRomaros.api.entities.film.Movie;
+import com.ToorenRomaros.api.dto.film.MovieAddRequestDto;
 
 public interface FilmService {
-     MovieDto createFilm(MovieRequestDto movieRequestDto);
+     MovieDto createFilm(MovieAddRequestDto movieAddRequestDto);
 }

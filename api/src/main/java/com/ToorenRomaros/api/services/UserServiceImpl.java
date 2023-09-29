@@ -1,7 +1,9 @@
 package com.ToorenRomaros.api.services;
 
+import com.ToorenRomaros.api.dto.user.UserAddRequestDto;
 import com.ToorenRomaros.api.dto.user.UserDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
+import com.ToorenRomaros.api.dto.user.UserFollowingDto;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -40,24 +43,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User toModel(UserFollowerEntity e) {
-        User m = new User();
-        m.setUsername(e.getFollower().getUsername());
-        m.setFollowDate(e.getFollowDate());
-        return m;
-    }
+    public UserDto createUser(UserAddRequestDto userAddRequestDto) {
+      try{
+          UserEntity user = modelMapper.map(userAddRequestDto, UserEntity.class);
+          user.setFollowers(new ArrayList<>());
+          user.setFollowings(new ArrayList<>());
 
-    @Override
-    public List<User> toModelList(List<UserFollowerEntity> followers) {
-        if (Objects.isNull(followers)) {
-            return Collections.emptyList();
+          userRepository.save(user);
+          if (userAddRequestDto.getFollowers() != null) {
+              for (String value : userAddRequestDto.getFollowers()) {
+                  UserEntity newFollower = userRepository.findById(UUID.fromString(value)).orElseThrow(() -> new UserNotFoundException("'" + value + "' does not exists"));
+                UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now(), newFollower, user);
+                user.getFollowers().add(userFollowerEntity);
+                  userFollowerRepository.save(userFollowerEntity);
+              }
+          }
+        if (userAddRequestDto.getFollowings() != null) {
+            for (String value : userAddRequestDto.getFollowings()) {
+                UserEntity newFollowing = userRepository.findById(UUID.fromString(value)).orElseThrow(() -> new UserNotFoundException("'" + value + "' does not exists"));
+                UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now(), user, newFollowing);
+                user.getFollowings().add(userFollowerEntity);
+                userFollowerRepository.save(userFollowerEntity);
+            }
         }
-        return followers.stream().map(this::toModel).collect(toList());
-    }
 
-    @Override
-    public UserDto createUser(UserEntity user) {
-        return modelMapper.map(userRepository.save(user), UserDto.class);
+          UserEntity savedUser = userRepository.save(user);
+          return modelMapper.map(savedUser, UserDto.class);
+      }catch (Exception e ){
+          log.info(e.getMessage());
+          return null;
+      }
+
     }
 
     @Override
@@ -129,24 +145,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> getAllFollowersByUserId(UUID id, Pageable pageRequest) {
+    public Page<UserFollowerDto> getAllFollowersByUserId(UUID id, Pageable pageRequest) {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
 
         List<UserFollowerEntity> entities = userFollowerRepository.findAllFollowersByUser(id.toString(), pageRequest);
         if (entities == null) {
             throw new ResourceNotFoundException("");
         }
-        List<User> allFollowers = toModelList(entities);
+        List<UserFollowerDto> allFollowers = entities.stream().map( value -> modelMapper.map(value, UserFollowerDto.class)).collect(Collectors.toList());
 
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), allFollowers.size());
-        List<User> pageContent = allFollowers.subList(start, end);
+        List<UserFollowerDto> pageContent = allFollowers.subList(start, end);
 
         return new PageImpl<>(pageContent, pageRequest, allFollowers.size());
     }
 
     @Override
-    public Page<User> getAllFollowingsByUserId(UUID id, Pageable pageRequest) {
+    public Page<UserFollowingDto> getAllFollowingsByUserId(UUID id, Pageable pageRequest) {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
 
         List<UserFollowerEntity> entities = userFollowerRepository.findAllFollowingsByUser(id.toString(), pageRequest);
@@ -154,11 +170,11 @@ public class UserServiceImpl implements UserService {
         if (entities == null) {
             throw new ResourceNotFoundException("");
         }
-        List<User> allFollowers = toModelList(entities);
+        List<UserFollowingDto> allFollowers = entities.stream().map( value -> modelMapper.map(value, UserFollowingDto.class)).collect(Collectors.toList());
 
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), allFollowers.size());
-        List<User> pageContent = allFollowers.subList(start, end);
+        List<UserFollowingDto> pageContent = allFollowers.subList(start, end);
 
         return new PageImpl<>(pageContent, pageRequest, allFollowers.size());
     }

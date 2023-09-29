@@ -40,7 +40,7 @@ public class UserEntity {
     @Column(name = "CREATED_DATE", columnDefinition = "DATE")
     private LocalDate createdDate;
     @Column(name = "ABOUT", columnDefinition = "VARCHAR(255)")
-    @Size(max = 255, message = "max size is 255 characters")
+    @Size(max = 255, message = "About max size is 255 characters")
     private String about;
     @PositiveOrZero(message = "following count can not be negative")
     @Column(name = "FOLLOWING_COUNT")

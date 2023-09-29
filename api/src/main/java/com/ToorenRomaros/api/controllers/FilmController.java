@@ -1,8 +1,7 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.dto.film.MovieDto;
-import com.ToorenRomaros.api.dto.film.MovieRequestDto;
-import com.ToorenRomaros.api.entities.film.Movie;
+import com.ToorenRomaros.api.dto.film.MovieAddRequestDto;
 import com.ToorenRomaros.api.services.FilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +26,8 @@ public class FilmController {
     }
 
     @PostMapping("/films")
-    ResponseEntity<Map<String, Object>> createFilm(@RequestBody @Valid MovieRequestDto movieRequestDto) throws Exception {
-        MovieDto newFilm = filmService.createFilm(movieRequestDto);
+    ResponseEntity<Map<String, Object>> createFilm(@RequestBody @Valid MovieAddRequestDto movieAddRequestDto) throws Exception {
+        MovieDto newFilm = filmService.createFilm(movieAddRequestDto);
         Map<String, Object> response = new HashMap<>();
         response.put("created", newFilm);
         return new ResponseEntity<>(response, HttpStatus.OK);

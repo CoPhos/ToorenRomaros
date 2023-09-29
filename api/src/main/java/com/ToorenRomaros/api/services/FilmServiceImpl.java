@@ -1,7 +1,7 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.MovieDto;
-import com.ToorenRomaros.api.dto.film.MovieRequestDto;
+import com.ToorenRomaros.api.dto.film.MovieAddRequestDto;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
@@ -32,16 +32,16 @@ public class FilmServiceImpl implements FilmService {
 
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public MovieDto createFilm(MovieRequestDto movieRequestDto) {
-        Movie movie = modelMapper.map(movieRequestDto, Movie.class);
-        if (movieRequestDto.getPrequel() != null) {
-            UUID prequelId = UUID.fromString(movieRequestDto.getPrequel());
+    public MovieDto createFilm(MovieAddRequestDto movieAddRequestDto) {
+        Movie movie = modelMapper.map(movieAddRequestDto, Movie.class);
+        if (movieAddRequestDto.getPrequel() != null) {
+            UUID prequelId = UUID.fromString(movieAddRequestDto.getPrequel());
             Movie prequel = movieRepository.findById(prequelId)
                     .orElseThrow(() -> new ResourceNotFoundException("Prequel not found"));
             movie.setPrequel(prequel);
         }
-        if (movieRequestDto.getSequel() != null) {
-            UUID sequelId = UUID.fromString(movieRequestDto.getSequel());
+        if (movieAddRequestDto.getSequel() != null) {
+            UUID sequelId = UUID.fromString(movieAddRequestDto.getSequel());
             Movie sequel = movieRepository.findById(sequelId)
                     .orElseThrow(() -> new ResourceNotFoundException("Sequel not found"));
             movie.setSequel(sequel);
@@ -51,8 +51,8 @@ public class FilmServiceImpl implements FilmService {
         }
         movieRepository.save(movie);
 
-        if (movieRequestDto.getSagaName() != null) {
-            SagaEntity saga = new SagaEntity(movieRequestDto.getSagaName(), movie);
+        if (movieAddRequestDto.getSagaName() != null) {
+            SagaEntity saga = new SagaEntity(movieAddRequestDto.getSagaName(), movie);
             movie.getSaga().add(saga);
             sagaRepository.save(saga);
         }
