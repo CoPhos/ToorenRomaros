@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.dto.user;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,10 +21,28 @@ public class UserAddRequestDto {
     private Integer followingCount;
     @PositiveOrZero(message = "following count can not be negative")
     private Integer followmeCount;
-    @NotNull(message = "followers can not be null")
     private List<String> followers;
-    @NotNull(message = "followings can not be null")
     private List<String> followings;
+
+    public UserAddRequestDto() {
+    }
+
+    public UserAddRequestDto(UUID id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+        this.about = about;
+        this.followingCount = followingCount;
+        this.followmeCount = followmeCount;
+    }
+
+    public UserAddRequestDto(UUID id, String username, LocalDate birthday, LocalDate createdDate) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+    }
 
     public UUID getId() {
         return id;

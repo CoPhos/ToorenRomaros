@@ -80,8 +80,16 @@ public class UserEntity {
         this.followings = followings;
     }
 
+    public UserEntity(UUID id, String username, LocalDate birthday, LocalDate createdDate) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+    }
+
     public UserEntity() {
     }
+
 
     public String getUsername() {
         return username;

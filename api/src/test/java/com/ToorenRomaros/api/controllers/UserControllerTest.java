@@ -1,13 +1,13 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.config.AppConfig;
+import com.ToorenRomaros.api.dto.user.UserAddRequestDto;
 import com.ToorenRomaros.api.dto.user.UserDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.dto.user.UserFollowingDto;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
-import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
 import com.ToorenRomaros.api.services.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
@@ -56,6 +57,7 @@ class UserControllerTest {
     private MockMvc mockMvc;
     @Mock
     private UserService userService;
+
     @Mock
     private MessageSource messageSource;
     @Mock
@@ -95,46 +97,46 @@ class UserControllerTest {
                 .build();
     }
 
-//    @Test
-//    @DisplayName("Create user by given user entity")
-//    void createUserShouldWork() throws Exception{
-//        //given
-//        UserEntity user = new UserEntity(
-//                "montelukas",LocalDate.of(1990,5,8),
-//                LocalDate.of(2023,9,16),"I love coding",
-//                0,0, new ArrayList<>(),new ArrayList<>());
-//
-//        given(userService.createUser(user)).willReturn(new UserDto("montelukas",
-//                LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),
-//                "I love coding",0,0));
-//
-//        //when
-//        MockHttpServletResponse response = mockMvc.perform(
-//                        post("/api/v1/users")
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(String.format("{   \n" +
-//                                        "    \"username\": \"montelukas\",\n" +
-//                                        "    \"birthday\":  \"1992-08-12\",\n" +
-//                                        "    \"createdDate\": \"%s\",\n" +
-//                                        "    \"about\": \"I love coding\",\n" +
-//                                        "    \"followingCount\":0,\n" +
-//                                        "    \"followmeCount\": 0,\n" +
-//                                        "    \"followers\": null,\n" +
-//                                        "    \"followings\": null\n" +
-//                                        "}", LocalDate.now()))
-//                                .characterEncoding("utf-8")
-//                                .accept(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andReturn().getResponse();
-//
-//        //then
-//        JSONObject jsonObject = new JSONObject(response.getContentAsString());
-//        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-//
-//        String expected = jsonObject.get("created").toString();
-//        JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user, UserDto.class)).getJson());
-//        JSONAssert.assertEquals(expected,jsonData, false);
-//    }
+    @Test
+    @DisplayName("Create user by given user entity")
+    void createUserShouldWork() throws Exception{
+        //given
+        UserEntity user = new UserEntity(
+                "montelukas",LocalDate.of(1990,5,8),
+                LocalDate.of(2023,9,16),"I love coding",
+                0,0, new ArrayList<>(),new ArrayList<>());
+
+        given(userService.createUser(any(UserAddRequestDto.class))).willReturn(new UserDto("montelukas",
+                LocalDate.of(1990,5,8),LocalDate.of(2023,9,16),
+                "I love coding",0,0));
+
+        //when
+        MockHttpServletResponse response = mockMvc.perform(
+                        post("/api/v1/users")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.format("{   \n" +
+                                        "    \"username\": \"montelukas\",\n" +
+                                        "    \"birthday\":  \"1992-08-12\",\n" +
+                                        "    \"createdDate\": \"%s\",\n" +
+                                        "    \"about\": \"I love coding\",\n" +
+                                        "    \"followingCount\":0,\n" +
+                                        "    \"followmeCount\": 0,\n" +
+                                        "    \"followers\": [\"b7a61937-6f59-4bbb-80a7-08d65d1ad640\"],\n" +
+                                        "    \"followings\": [\"b7a61937-6f59-4bbb-80a7-08d65d1ad640\"]\n" +
+                                        "}", LocalDate.now()))
+                                .characterEncoding("utf-8")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn().getResponse();
+
+        //then
+        JSONObject jsonObject = new JSONObject(response.getContentAsString());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
+        String expected = jsonObject.get("created").toString();
+        JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user, UserDto.class)).getJson());
+        JSONAssert.assertEquals(expected,jsonData, false);
+    }
 
     @Test
     @DisplayName("Get user by id")
@@ -181,20 +183,21 @@ class UserControllerTest {
     @Test
     @DisplayName("Update user by given id and valid entity")
     void updateUserByIdShouldWork() throws Exception {
-        UserEntity user = new UserEntity("montelukas",
-                LocalDate.of(1992, 8, 12), LocalDate.now(),
-                "I love coding", 0, 0, new ArrayList<>(), new ArrayList<>());
-        given(userService.updateUser(UUID.fromString(id), user)).willReturn(new UserDto("montelukas", LocalDate.of(1992, 8, 12), LocalDate.now(), "I love coding", 0, 0));
+        UserEntity user1 = new UserEntity(UUID.fromString(id),
+                "hahahaha", LocalDate.of(1992,   8, 12), LocalDate.of(2050, 12, 12));
+
+        given(userService.updateUser(any(UUID.class),  any(UserAddRequestDto.class))).willReturn(new UserDto(id, "hahahaha",
+                LocalDate.of(1992, 8, 12), LocalDate.of(2050, 12, 12)));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
                         put("/api/v1/users/{id}", id)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(String.format("{   \n" +
-                                        "    \"username\": \"montelukas\",\n" +
+                                .content("{   \n" +
+                                        "    \"username\": \"hahahaha\",\n" +
                                         "    \"birthday\":  \"1992-08-12\",\n" +
-                                        "    \"createdDate\": \"%s\"\n" +
-                                        "}", LocalDate.now()))
+                                        "    \"createdDate\": \"2050-12-12\"\n" +
+                                        "}")
                                 .characterEncoding("utf-8")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -205,7 +208,7 @@ class UserControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
         String expected = jsonObject.get("updated").toString();
-        JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user, UserDto.class)).getJson());
+        JSONObject jsonData = new JSONObject(UserDtoTester.write(modelMapper.map(user1, UserDto.class)).getJson());
         JSONAssert.assertEquals(expected, jsonData, false);
     }
 

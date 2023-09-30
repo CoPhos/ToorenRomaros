@@ -41,6 +41,13 @@ public class UserDto {
         this.followmeCount = followmeCount;
     }
 
+    public UserDto(String id, String username, LocalDate birthday, LocalDate createdDate) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.createdDate = createdDate;
+    }
+
     public UserDto() {
     }
 

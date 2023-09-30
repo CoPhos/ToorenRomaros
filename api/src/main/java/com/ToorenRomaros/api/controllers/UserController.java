@@ -1,8 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.dto.user.*;
-import com.ToorenRomaros.api.entities.user.UserEntity;
-import com.ToorenRomaros.api.models.User;
 import com.ToorenRomaros.api.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +48,8 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    ResponseEntity<Map<String, Object>> updateUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UserEntity user) throws Exception {
-        UserDto updatedUser = userService.updateUser(UUID.fromString(id), user);
+    ResponseEntity<Map<String, Object>> updateUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UserAddRequestDto userAddRequestDto) throws Exception {
+        UserDto updatedUser = userService.updateUser(UUID.fromString(id), userAddRequestDto);
         Map<String, Object> response = new HashMap<>();
         response.put("updated", updatedUser);
         return new ResponseEntity<>(response, HttpStatus.OK);

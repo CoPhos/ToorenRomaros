@@ -5,8 +5,6 @@ import com.ToorenRomaros.api.dto.user.UserDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.dto.user.UserFollowingDto;
 import com.ToorenRomaros.api.entities.user.UserEntity;
-import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
-import com.ToorenRomaros.api.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,7 +19,7 @@ public interface UserService {
     public void deleteFollowerByids(UUID idUser, UUID toFollow, String username);
     public void deleteFollowingsByids(UUID idUser, UUID toFollow, String username);
     public UserDto createUser(UserAddRequestDto userAddRequestDto);
-    public UserDto updateUser(UUID id, UserEntity user);
+    public UserDto updateUser(UUID id, UserAddRequestDto user);
     public UserDto getUserById(UUID id);
     public void deleteUserById(UUID id);
 
