@@ -1,15 +1,16 @@
 package com.ToorenRomaros.api.entities.film;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +18,9 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="film_type",
         discriminatorType = DiscriminatorType.INTEGER)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class FilmEntity {
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
@@ -42,94 +46,98 @@ public class FilmEntity {
     @Column(name = "STREAMING_RELEASE_DATE", columnDefinition = "DATE")
     private LocalDate streamingReleaseDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "PREQUEL_ID", referencedColumnName = "id")
     private FilmEntity prequel;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
     private FilmEntity sequel;
 
-    @OneToMany(mappedBy="film",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="film", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<SagaEntity> Saga;
+
+    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    List<StaffFilmEntity> staffFilm;
+
+    public FilmEntity() {
+    }
 
     public UUID getId() {
         return id;
     }
-
     public void setId(UUID id) {
         this.id = id;
     }
-
     public String getTittle() {
         return tittle;
     }
-
     public void setTittle(String tittle) {
         this.tittle = tittle;
     }
-
     public String getSynopsis() {
         return synopsis;
     }
-
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
-
     public String getOriginalLanguage() {
         return originalLanguage;
     }
-
     public void setOriginalLanguage(String originalLanguage) {
         this.originalLanguage = originalLanguage;
     }
-
     public String getDistributor() {
         return distributor;
     }
-
     public void setDistributor(String distributor) {
         this.distributor = distributor;
     }
-
     public String getSuitableFor() {
         return suitableFor;
     }
-
     public void setSuitableFor(String suitableFor) {
         this.suitableFor = suitableFor;
     }
-
     public LocalDate getStreamingReleaseDate() {
         return streamingReleaseDate;
     }
-
     public List<SagaEntity> getSaga() {
         return Saga;
     }
-
     public void setSaga(List<SagaEntity> saga) {
         Saga = saga;
     }
-
     public FilmEntity getPrequel() {
         return prequel;
     }
-
     public void setPrequel(FilmEntity prequel) {
         this.prequel = prequel;
     }
-
     public FilmEntity getSequel() {
         return sequel;
     }
-
     public void setSequel(FilmEntity sequel) {
         this.sequel = sequel;
     }
-
     public void setStreamingReleaseDate(LocalDate streamingReleaseDate) {
         this.streamingReleaseDate = streamingReleaseDate;
+    }
+    public List<StaffFilmEntity> getStaffFilm() {
+        return staffFilm;
+    }
+    public void setStaffFilm(List<StaffFilmEntity> staffFilm) {
+        this.staffFilm = staffFilm;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FilmEntity that = (FilmEntity) o;
+        return Objects.equals(id, that.id);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

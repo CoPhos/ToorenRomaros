@@ -46,4 +46,6 @@ public class Movie extends FilmEntity {
     public void setAtTheaters(Boolean atTheaters) {
         this.atTheaters = atTheaters;
     }
+
+
 }

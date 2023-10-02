@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.config;
 
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SagaDto;
+import com.ToorenRomaros.api.dto.film.SerieDto;
 import com.ToorenRomaros.api.dto.user.UserAddRequestDto;
 import com.ToorenRomaros.api.dto.user.UserDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
@@ -9,6 +10,7 @@ import com.ToorenRomaros.api.dto.user.UserFollowingDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
+import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
@@ -106,13 +108,23 @@ public class AppConfig {
         );
 
         //Film
-        TypeMap<Movie, MovieDto> propertyMapperPrequelSequel = modelMapper.createTypeMap(Movie.class, MovieDto.class);
-        propertyMapperPrequelSequel.addMappings(
+        TypeMap<Movie, MovieDto> propertyMapperMoviePrequelSequel = modelMapper.createTypeMap(Movie.class, MovieDto.class);
+        propertyMapperMoviePrequelSequel.addMappings(
                 mapper -> {
                     mapper.map(src -> src.getPrequel().getTittle(), MovieDto::setPrequel);
                     mapper.map(src -> src.getSequel().getTittle(), MovieDto::setSequel);
                     mapper.using(converterSaga)
                             .map(Movie::getSaga, MovieDto::setSaga);
+                }
+        );
+
+        TypeMap<Serie, SerieDto> propertyMapperSeriePrequelSequel = modelMapper.createTypeMap(Serie.class, SerieDto.class);
+        propertyMapperSeriePrequelSequel.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getPrequel().getTittle(), SerieDto::setPrequel);
+                    mapper.map(src -> src.getSequel().getTittle(), SerieDto::setSequel);
+                    mapper.using(converterSaga)
+                            .map(Serie::getSaga, SerieDto::setSaga);
                 }
         );
 
