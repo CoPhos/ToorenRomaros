@@ -1,9 +1,9 @@
 package com.ToorenRomaros.api.services;
 
+import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.film.MovieDto;
-import com.ToorenRomaros.api.dto.film.MovieAddRequestDto;
-import com.ToorenRomaros.api.dto.film.SerieAddRequestDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
 import com.ToorenRomaros.api.entities.film.Serie;
@@ -39,185 +39,134 @@ public class FilmServiceImpl implements FilmService {
 
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public MovieDto createMovie(MovieAddRequestDto movieAddRequestDto) {
-        Movie movie = modelMapper.map(movieAddRequestDto, Movie.class);
-        if (movieAddRequestDto.getPrequel() != null) {
-            UUID prequelId = UUID.fromString(movieAddRequestDto.getPrequel());
-            Movie moviePrequel = movieRepository.findById(prequelId).orElse(null);
+    public MovieDto createMovie(MovieDto movieDto) {
+        Movie newMovie = modelMapper.map(movieDto, Movie.class);
+        movieRepository.save(newMovie);
 
-            if (moviePrequel == null) {
-                Serie seriePrequel = serieRepository.findById(prequelId).orElseThrow(() -> new ResourceNotFoundException(prequelId.toString() + " not found"));
-                movie.setPrequel(seriePrequel);
-            } else {
-                movie.setPrequel(moviePrequel);
-            }
+        if (movieDto.getSagaName() != null) {
+            sagaRepository.save(createSaga(movieDto, newMovie));
         }
-        if (movieAddRequestDto.getSequel() != null) {
-            UUID sequelId = UUID.fromString(movieAddRequestDto.getSequel());
-            Movie movieSequel = movieRepository.findById(sequelId).orElse(null);
-            if (movieSequel == null) {
-                Serie serieSequel = serieRepository.findById(sequelId).orElseThrow(() -> new ResourceNotFoundException(sequelId.toString() + " not found"));
-                movie.setSequel(serieSequel);
-            } else {
-                movie.setSequel(movieSequel);
-            }
+        if (movieDto.getSequel() != null) {
+            newMovie.setSequel(addSequel(movieDto));
         }
-        if (movie.getSaga() == null) {
-            movie.setSaga(new ArrayList<>());
+        if (movieDto.getPrequel() != null) {
+            newMovie.setPrequel(addPrequel(movieDto));
         }
-        movieRepository.save(movie);
-        if (movieAddRequestDto.getSagaName() != null) {
-            SagaEntity saga = new SagaEntity(movieAddRequestDto.getSagaName(), movie);
-            movie.getSaga().add(saga);
-            sagaRepository.save(saga);
-        }
-        Movie savedMovie = movieRepository.save(movie);
+
+        Movie savedMovie = movieRepository.save(newMovie);
         return modelMapper.map(savedMovie, MovieDto.class);
     }
+
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public SerieDto createSerie(SerieAddRequestDto serieAddRequestDto) {
-        Serie serie = modelMapper.map(serieAddRequestDto, Serie.class);
-        if (serieAddRequestDto.getPrequel() != null) {
-            UUID prequelId = UUID.fromString(serieAddRequestDto.getPrequel());
-            Serie seriePrequel = serieRepository.findById(prequelId).orElse(null);
-            if (seriePrequel == null) {
-                Movie moviePrequel = movieRepository.findById(prequelId).orElseThrow(() -> new ResourceNotFoundException(prequelId.toString() + " not found"));
-                serie.setPrequel(moviePrequel);
-            } else {
-                serie.setPrequel(seriePrequel);
-            }
-        }
-        if (serieAddRequestDto.getSequel() != null) {
-            UUID sequelId = UUID.fromString(serieAddRequestDto.getSequel());
-            Serie serieSequel = serieRepository.findById(sequelId).orElse(null);
-            if (serieSequel == null) {
-                Movie movieSequel = movieRepository.findById(sequelId).orElseThrow(() -> new ResourceNotFoundException(sequelId.toString() + " not found"));
-                serie.setSequel(movieSequel);
-            } else {
-                serie.setSequel(serieSequel);
-            }
-        }
-        if (serie.getSaga() == null) {
-            serie.setSaga(new ArrayList<>());
-        }
-        serieRepository.save(serie);
+    public SerieDto createSerie(SerieDto serieDto) {
+        Serie newSerie = modelMapper.map(serieDto, Serie.class);
+        serieRepository.save(newSerie);
 
-        if (serieAddRequestDto.getSagaName() != null) {
-            SagaEntity saga = new SagaEntity(serieAddRequestDto.getSagaName(), serie);
-            serie.getSaga().add(saga);
-            sagaRepository.save(saga);
+        if (serieDto.getSagaName() != null) {
+            sagaRepository.save(createSaga(serieDto, newSerie));
         }
-        Serie savedSerie = serieRepository.save(serie);
+        if (serieDto.getSequel() != null) {
+            newSerie.setSequel(addSequel(serieDto));
+        }
+        if (serieDto.getPrequel() != null) {
+            newSerie.setPrequel(addPrequel(serieDto));
+        }
+        Serie savedSerie = serieRepository.save(newSerie);
         return modelMapper.map(savedSerie, SerieDto.class);
     }
+
     @Override
     public MovieDto findMovieById(UUID id) {
         Movie movie = movieRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
         return modelMapper.map(movie, MovieDto.class);
     }
+
     @Override
     public SerieDto findSerieById(UUID id) {
         Serie serie = serieRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tv Serie not found"));
         return modelMapper.map(serie, SerieDto.class);
     }
+
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public MovieDto updateMovie(UUID id, MovieAddRequestDto movieAddRequestDto) {
+    public MovieDto updateMovie(UUID id, MovieDto movieDto) {
         Movie newMovie = movieRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
-        Movie movie = modelMapper.map(movieAddRequestDto, Movie.class);
+        Movie movie = modelMapper.map(movieDto, Movie.class);
 
-        movie.setSaga(null);
         movie.setSequel(null);
         movie.setPrequel(null);
 
         BeanUtils.copyProperties(movie, newMovie, Utils.getNullPropertyNames(movie));
         movieRepository.save(newMovie);
 
-        if (movieAddRequestDto.getSagaName() != null) {
-            SagaEntity newSaga = sagaRepository.findSagaByFilmId(newMovie.getId().toString()).orElse(null);
-            if (newSaga == null) {
-                newSaga = new SagaEntity(movieAddRequestDto.getSagaName(), newMovie);
-            } else {
-                newSaga.setName(movieAddRequestDto.getSagaName());
-            }
-            newMovie.getSaga().add(newSaga);
-            sagaRepository.save(newSaga);
+        if (movieDto.getSagaName() != null) {
+            sagaRepository.save(createSaga(movieDto, newMovie));
         }
-        if (movieAddRequestDto.getSequel() != null) {
-            String newSequelId = movieAddRequestDto.getSequel();
-            Movie newSequelSerie = movieRepository.findById(UUID.fromString(newSequelId)).orElse(null);
-
-            if (newSequelSerie == null) {
-                Serie newSequelMovie = serieRepository.findById(UUID.fromString(newSequelId)).orElseThrow(() -> new ResourceNotFoundException(newSequelId + " not found"));
-                newMovie.setSequel(newSequelMovie);
-            } else {
-                newMovie.setSequel(newSequelSerie);
-            }
+        if (movieDto.getSequel() != null) {
+            newMovie.setSequel(addSequel(movieDto));
         }
-        if (movieAddRequestDto.getPrequel() != null) {
-            String newPrequelId = movieAddRequestDto.getPrequel();
-            Movie newPrequelSerie = movieRepository.findById(UUID.fromString(newPrequelId)).orElse(null);
-
-            if (newPrequelSerie == null) {
-                Serie newPrequelMovie = serieRepository.findById(UUID.fromString(newPrequelId)).orElseThrow(() -> new ResourceNotFoundException(newPrequelId + " not found"));
-                newMovie.setPrequel(newPrequelMovie);
-            } else {
-                newMovie.setPrequel(newPrequelSerie);
-            }
+        if (movieDto.getPrequel() != null) {
+            newMovie.setPrequel(addPrequel(movieDto));
         }
 
         Movie savedMovie = movieRepository.save(newMovie);
         return modelMapper.map(savedMovie, MovieDto.class);
     }
+
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public SerieDto updateSerie(UUID id, SerieAddRequestDto serieAddRequestDto) {
+    public SerieDto updateSerie(UUID id, SerieDto serieDto) {
         Serie newSerie = serieRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tv Serie not found"));
-        Serie serie = modelMapper.map(serieAddRequestDto, Serie.class);
+        Serie serie = modelMapper.map(serieDto, Serie.class);
 
-        serie.setSaga(null);
         serie.setSequel(null);
         serie.setPrequel(null);
 
         BeanUtils.copyProperties(serie, newSerie, Utils.getNullPropertyNames(serie));
         serieRepository.save(newSerie);
 
-        if (serieAddRequestDto.getSagaName() != null) {
-            SagaEntity newSaga = sagaRepository.findSagaByFilmId(newSerie.getId().toString()).orElse(null);
-            if (newSaga == null) {
-                newSaga = new SagaEntity(serieAddRequestDto.getSagaName(), newSerie);
-            } else {
-                newSaga.setName(serieAddRequestDto.getSagaName());
-            }
-            newSerie.getSaga().add(newSaga);
-            sagaRepository.save(newSaga);
+        if (serieDto.getSagaName() != null) {
+            sagaRepository.save(createSaga(serieDto, newSerie));
         }
-        if (serieAddRequestDto.getSequel() != null) {
-            String newSequelId = serieAddRequestDto.getSequel();
-            Serie newSequelSerie = serieRepository.findById(UUID.fromString(newSequelId)).orElse(null);
-
-            if (newSequelSerie == null) {
-                Movie newSequelMovie = movieRepository.findById(UUID.fromString(newSequelId)).orElseThrow(() -> new ResourceNotFoundException(newSequelId + " not found"));
-                newSerie.setSequel(newSequelMovie);
-            } else {
-                newSerie.setSequel(newSequelSerie);
-            }
+        if (serieDto.getSequel() != null) {
+            newSerie.setSequel(addSequel(serieDto));
         }
-        if (serieAddRequestDto.getPrequel() != null) {
-            String newPrequelId = serieAddRequestDto.getPrequel();
-            Serie newPrequelSerie = serieRepository.findById(UUID.fromString(newPrequelId)).orElse(null);
-
-            if (newPrequelSerie == null) {
-                Movie newPrequelMovie = movieRepository.findById(UUID.fromString(newPrequelId)).orElseThrow(() -> new ResourceNotFoundException(newPrequelId + " not found"));
-                newSerie.setPrequel(newPrequelMovie);
-            } else {
-                newSerie.setPrequel(newPrequelSerie);
-            }
+        if (serieDto.getPrequel() != null) {
+            newSerie.setPrequel(addPrequel(serieDto));
         }
 
         Serie savedSerie = serieRepository.save(newSerie);
         return modelMapper.map(savedSerie, SerieDto.class);
+    }
+
+    private FilmEntity addSequel(FilmDto filmDto) {
+        String newSequelId = filmDto.getSequel();
+        FilmEntity newSequel = serieRepository.findById(UUID.fromString(newSequelId)).orElse(null);
+        if (newSequel == null) {
+            newSequel = movieRepository.findById(UUID.fromString(newSequelId)).orElseThrow(() -> new ResourceNotFoundException(newSequelId + " not found"));
+        }
+        return newSequel;
+    }
+
+    private FilmEntity addPrequel(FilmDto filmDto) {
+        String newPrequelId = filmDto.getPrequel();
+        FilmEntity newPrequel = serieRepository.findById(UUID.fromString(newPrequelId)).orElse(null);
+
+        if (newPrequel == null) {
+            newPrequel = movieRepository.findById(UUID.fromString(newPrequelId)).orElseThrow(() -> new ResourceNotFoundException(newPrequelId + " not found"));
+        }
+        return newPrequel;
+    }
+
+    private SagaEntity createSaga(FilmDto filmDto, FilmEntity film) {
+        SagaEntity newSaga = sagaRepository.findSagaByFilmId(film.getId().toString()).orElse(null);
+        if (newSaga == null) {
+            newSaga = new SagaEntity(filmDto.getSagaName(), film);
+        } else {
+            newSaga.setName(filmDto.getSagaName());
+        }
+        return newSaga;
     }
 }
 

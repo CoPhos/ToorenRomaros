@@ -113,8 +113,6 @@ public class AppConfig {
                 mapper -> {
                     mapper.map(src -> src.getPrequel().getTittle(), MovieDto::setPrequel);
                     mapper.map(src -> src.getSequel().getTittle(), MovieDto::setSequel);
-                    mapper.using(converterSaga)
-                            .map(Movie::getSaga, MovieDto::setSaga);
                 }
         );
 
@@ -123,8 +121,6 @@ public class AppConfig {
                 mapper -> {
                     mapper.map(src -> src.getPrequel().getTittle(), SerieDto::setPrequel);
                     mapper.map(src -> src.getSequel().getTittle(), SerieDto::setSequel);
-                    mapper.using(converterSaga)
-                            .map(Serie::getSaga, SerieDto::setSaga);
                 }
         );
 

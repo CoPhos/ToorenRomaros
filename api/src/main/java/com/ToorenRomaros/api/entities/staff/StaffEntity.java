@@ -1,6 +1,6 @@
 package com.ToorenRomaros.api.entities.staff;
 
-import com.ToorenRomaros.api.entities.socials.SocialStaffUserEntity;
+import com.ToorenRomaros.api.entities.socials.SocialGenericEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -26,7 +26,7 @@ public class StaffEntity {
     @Column(name = "LAST_NAME", columnDefinition = "VARCHAR(50)")
     @NotNull(message = "Lastname can not be null")
     private String lastName;
-    @Column(name = "FIRST_NAME", columnDefinition = "TEXT")
+    @Column(name = "BIOGRAPHY", columnDefinition = "TEXT")
     @NotNull(message = "Biography can not be null")
     private String biography;
     @Column(name = "BIRTHDAY", columnDefinition = "DATE")
@@ -36,12 +36,6 @@ public class StaffEntity {
     @Column(name = "BIRTH_PLACE", columnDefinition = "DATE")
     @NotNull(message = "Birthplace can not be null")
     private String birthplace;
-
-    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    List<StaffFilmEntity> staffFilm;
-
-    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    List<SocialStaffUserEntity> socialStaff;
 
     public UUID getId() {
         return id;
@@ -78,17 +72,5 @@ public class StaffEntity {
     }
     public void setBirthplace(String birthplace) {
         this.birthplace = birthplace;
-    }
-    public List<StaffFilmEntity> getStaffFilm() {
-        return staffFilm;
-    }
-    public void setStaffFilm(List<StaffFilmEntity> staffFilm) {
-        this.staffFilm = staffFilm;
-    }
-    public List<SocialStaffUserEntity> getSocialStaff() {
-        return socialStaff;
-    }
-    public void setSocialStaff(List<SocialStaffUserEntity> socialStaff) {
-        this.socialStaff = socialStaff;
     }
 }

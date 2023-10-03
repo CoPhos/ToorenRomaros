@@ -54,11 +54,6 @@ public class FilmEntity {
     @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
     private FilmEntity sequel;
 
-    @OneToMany(mappedBy="film", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    private List<SagaEntity> Saga;
-
-    @OneToMany(mappedBy = "film", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    List<StaffFilmEntity> staffFilm;
 
     public FilmEntity() {
     }
@@ -102,12 +97,7 @@ public class FilmEntity {
     public LocalDate getStreamingReleaseDate() {
         return streamingReleaseDate;
     }
-    public List<SagaEntity> getSaga() {
-        return Saga;
-    }
-    public void setSaga(List<SagaEntity> saga) {
-        Saga = saga;
-    }
+
     public FilmEntity getPrequel() {
         return prequel;
     }
@@ -123,12 +113,7 @@ public class FilmEntity {
     public void setStreamingReleaseDate(LocalDate streamingReleaseDate) {
         this.streamingReleaseDate = streamingReleaseDate;
     }
-    public List<StaffFilmEntity> getStaffFilm() {
-        return staffFilm;
-    }
-    public void setStaffFilm(List<StaffFilmEntity> staffFilm) {
-        this.staffFilm = staffFilm;
-    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

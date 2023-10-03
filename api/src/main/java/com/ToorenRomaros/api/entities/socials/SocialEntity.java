@@ -22,8 +22,6 @@ public class SocialEntity {
     @NotNull(message = "Social network name can not be null")
     private String name;
 
-    @OneToMany(mappedBy = "social", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    List<SocialStaffUserEntity> socialStaff;
 
     public UUID getId() {
         return id;
@@ -37,10 +35,5 @@ public class SocialEntity {
     public void setName(String name) {
         this.name = name;
     }
-    public List<SocialStaffUserEntity> getSocialStaff() {
-        return socialStaff;
-    }
-    public void setSocialStaff(List<SocialStaffUserEntity> socialStaff) {
-        this.socialStaff = socialStaff;
-    }
+
 }
