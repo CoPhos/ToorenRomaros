@@ -44,7 +44,6 @@ public class FilmServiceImpl implements FilmService {
         FilmEntity savedMovie = filmRepository.save(newMovie);
         return filmMapper.mapToFilmDto(savedMovie);
     }
-
     @Override
     public FilmDto findFilmById(UUID id) {
         FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
@@ -68,6 +67,11 @@ public class FilmServiceImpl implements FilmService {
         }
         FilmEntity savedFilm = filmRepository.save(newFilm);
         return filmMapper.mapToFilmDto(savedFilm);
+    }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
+    @Override
+    public void deleteFilm(UUID id) {
+        filmRepository.deleteById(id);
     }
 
     private FilmEntity addSequel(FilmDto filmDto) {

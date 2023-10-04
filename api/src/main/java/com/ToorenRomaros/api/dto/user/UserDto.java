@@ -18,9 +18,6 @@ public class UserDto {
     private String about;
     private Integer followingCount;
     private Integer followmeCount;
-//    private List<UserFollowerDto> followers;
-//    private List<UserFollowerDto> followings;
-
 
     public UserDto(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
         this.username = username;

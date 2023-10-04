@@ -10,4 +10,5 @@ public interface FilmService {
      FilmDto createFilm(FilmDto filmDto);
      FilmDto findFilmById(UUID id);
      FilmDto updateFilm(UUID id, FilmDto filmDto);
+     void deleteFilm(UUID id);
 }

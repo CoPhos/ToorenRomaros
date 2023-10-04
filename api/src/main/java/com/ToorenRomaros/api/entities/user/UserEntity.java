@@ -49,26 +49,17 @@ public class UserEntity {
     @Column(name = "FOLLOWING_ME_COUNT")
     private Integer followmeCount;
 
-    @OneToMany(mappedBy = "follower",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name = "FOLLOWER_ID")
-    private List<UserFollowerEntity> followers;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    @Column(name = "USER_ID")
-    private List<UserFollowerEntity> followings;
-
-    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserFollowerEntity> followers, List<UserFollowerEntity> followings) {
+    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
         this.username = username;
         this.birthday = birthday;
         this.createdDate = createdDate;
         this.about = about;
         this.followingCount = followingCount;
         this.followmeCount = followmeCount;
-        this.followers = followers;
-        this.followings = followings;
     }
 
-    public UserEntity(UUID id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount, List<UserFollowerEntity> followers, List<UserFollowerEntity> followings) {
+    public UserEntity(UUID id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
         this.id = id;
         this.username = username;
         this.birthday = birthday;
@@ -76,8 +67,6 @@ public class UserEntity {
         this.about = about;
         this.followingCount = followingCount;
         this.followmeCount = followmeCount;
-        this.followers = followers;
-        this.followings = followings;
     }
 
     public UserEntity(UUID id, String username, LocalDate birthday, LocalDate createdDate) {
@@ -86,79 +75,48 @@ public class UserEntity {
         this.birthday = birthday;
         this.createdDate = createdDate;
     }
-
     public UserEntity() {
     }
-
 
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public LocalDate getBirthday() {
         return birthday;
     }
-
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
-
     public LocalDate getCreatedDate() {
         return createdDate;
     }
-
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
-
     public String getAbout() {
         return about;
     }
-
     public void setAbout(String about) {
         this.about = about;
     }
-
     public Integer getFollowingCount() {
         return followingCount;
     }
-
     public void setFollowingCount(Integer followingCount) {
         this.followingCount = followingCount;
     }
-
     public Integer getFollowmeCount() {
         return followmeCount;
     }
-
     public void setFollowmeCount(Integer followmeCount) {
         this.followmeCount = followmeCount;
     }
-
-    public List<UserFollowerEntity> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<UserFollowerEntity> followers) {
-        this.followers = followers;
-    }
-
-    public List<UserFollowerEntity> getFollowings() {
-        return followings;
-    }
-
-    public void setFollowings(List<UserFollowerEntity> followings) {
-        this.followings = followings;
-    }
-
     public UUID getId() {
         return id;
     }
-
     public void setId(UUID id) {
         this.id = id;
     }

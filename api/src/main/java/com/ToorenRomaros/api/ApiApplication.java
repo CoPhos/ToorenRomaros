@@ -30,29 +30,29 @@ public class ApiApplication {
 	InitializingBean sendDatabase() {
 		return () -> {
 			// save a couple of customers
-			UserEntity user1 = new UserEntity(
-					"montelukas",
-					LocalDate.of(1990, 5, 8),
-					LocalDate.of(2050, 9, 16),
-					"I love coding", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
-			UserEntity user2 = new UserEntity(
-					"Enapril",
-					LocalDate.of(1990, 5, 8),
-					LocalDate.of(2050, 9, 16),
-					"I love pot", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
-			UserEntity user3 = new UserEntity(
-					"Benzafibrato",
-					LocalDate.of(1990, 5, 8),
-					LocalDate.of(2050, 9, 16),
-					"I love EDM Music", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
-
-			UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now() ,user1, user3);
-			UserFollowerEntity userFollowerEntity2 = new UserFollowerEntity(LocalDate.now() ,user1, user2);
-			UserFollowerEntity userFollowerEntity3 = new UserFollowerEntity(LocalDate.now() ,user3, user1);
-
-			userRepository.save(user1);
-			userRepository.save(user2);
-			userRepository.save(user3);
+//			UserEntity user1 = new UserEntity(
+//					"montelukas",
+//					LocalDate.of(1990, 5, 8),
+//					LocalDate.of(2050, 9, 16),
+//					"I love coding", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
+//			UserEntity user2 = new UserEntity(
+//					"Enapril",
+//					LocalDate.of(1990, 5, 8),
+//					LocalDate.of(2050, 9, 16),
+//					"I love pot", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
+//			UserEntity user3 = new UserEntity(
+//					"Benzafibrato",
+//					LocalDate.of(1990, 5, 8),
+//					LocalDate.of(2050, 9, 16),
+//					"I love EDM Music", 0, 0, new ArrayList<UserFollowerEntity>(), new ArrayList<UserFollowerEntity>());
+//
+//			UserFollowerEntity userFollowerEntity = new UserFollowerEntity(LocalDate.now() ,user1, user3);
+//			UserFollowerEntity userFollowerEntity2 = new UserFollowerEntity(LocalDate.now() ,user1, user2);
+//			UserFollowerEntity userFollowerEntity3 = new UserFollowerEntity(LocalDate.now() ,user3, user1);
+//
+//			userRepository.save(user1);
+//			userRepository.save(user2);
+//			userRepository.save(user3);
 //			userFollowerRepository.save(userFollowerEntity);
 //			userFollowerRepository.save(userFollowerEntity2);
 //			userFollowerRepository.save(userFollowerEntity3);
