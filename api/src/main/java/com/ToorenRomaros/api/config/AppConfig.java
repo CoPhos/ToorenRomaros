@@ -1,5 +1,6 @@
 package com.ToorenRomaros.api.config;
 
+import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SagaDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
@@ -45,51 +46,6 @@ public class AppConfig {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 
-//        Converter<List<UserFollowerEntity>, List<UserFollowerDto>> converterFollowers = new AbstractConverter<List<UserFollowerEntity>, List<UserFollowerDto>>() {
-//            @Override
-//            protected List<UserFollowerDto> convert(List<UserFollowerEntity> source) {
-//                return source.stream().map(value -> {
-//                    UserFollowerDto nestedIdentity = new UserFollowerDto();
-//                    nestedIdentity.setFollower(value.getUser().getUsername());
-//                    nestedIdentity.setFollowDate(value.getFollowDate());
-//                    return nestedIdentity;
-//                }).collect(Collectors.toList());
-//            }
-//        };
-//
-//        Converter<List<UserFollowerEntity>, List<UserFollowerDto>> converterFollowings = new AbstractConverter<List<UserFollowerEntity>, List<UserFollowerDto>>() {
-//            @Override
-//            protected List<UserFollowerDto> convert(List<UserFollowerEntity> source) {
-//                return source.stream().map(value -> {
-//                    UserFollowerDto nestedIdentity = new UserFollowerDto();
-//                    nestedIdentity.setFollower(value.getUser().getUsername());
-//                    nestedIdentity.setFollowDate(value.getFollowDate());
-//                    return nestedIdentity;
-//                }).collect(Collectors.toList());
-//            }
-//        };
-//        modelMapper.typeMap(UserEntity.class, UserDto.class).
-//                addMappings(mapper -> mapper.using(converterFollowers)
-//                        .map(UserEntity::getFollowers, UserDto::setFollowers))
-//                .addMappings(mapper -> mapper.using(converterFollowings)
-//                        .map(UserEntity::getFollowings, UserDto::setFollowings));
-        Converter<List<SagaEntity>, List<SagaDto>> converterSaga = new AbstractConverter<List<SagaEntity>, List<SagaDto>>() {
-            @Override
-            protected List<SagaDto> convert(List<SagaEntity> source) {
-                return source.stream().map(value -> {
-                    SagaDto nestedIdentity = new SagaDto();
-                    nestedIdentity.setFilm(value.getFilm().getTittle());
-                    nestedIdentity.setSagaName(value.getName());
-                    return nestedIdentity;
-                }).collect(Collectors.toList());
-            }
-        };
-
-
-//        modelMapper.typeMap(FilmEntity.class, FilmDto.class).
-//                addMappings(mapper -> mapper.using(converterSaga)
-//                        .map(FilmEntity::getSaga, FilmDto::setSaga));
-
         //User
         TypeMap<UserFollowerEntity, UserFollowerDto> propertyMapperFollower = modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowerDto.class);
         propertyMapperFollower.addMappings(
@@ -98,7 +54,6 @@ public class AppConfig {
                     mapper.map(UserFollowerEntity::getFollowDate, UserFollowerDto::setFollowDate);
                 }
         );
-
         TypeMap<UserFollowerEntity, UserFollowingDto> propertyMapperFollowing = modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowingDto.class);
         propertyMapperFollowing.addMappings(
                 mapper -> {
@@ -115,7 +70,6 @@ public class AppConfig {
                     mapper.map(src -> src.getSequel().getTittle(), MovieDto::setSequel);
                 }
         );
-
         TypeMap<Serie, SerieDto> propertyMapperSeriePrequelSequel = modelMapper.createTypeMap(Serie.class, SerieDto.class);
         propertyMapperSeriePrequelSequel.addMappings(
                 mapper -> {

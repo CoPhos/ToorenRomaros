@@ -54,7 +54,6 @@ public class FilmEntity {
     @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
     private FilmEntity sequel;
 
-
     public FilmEntity() {
     }
 

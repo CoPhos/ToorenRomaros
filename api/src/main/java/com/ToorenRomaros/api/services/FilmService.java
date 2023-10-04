@@ -7,11 +7,7 @@ import com.ToorenRomaros.api.dto.film.SerieDto;
 import java.util.UUID;
 
 public interface FilmService {
-     MovieDto createMovie(MovieDto movieDto);
-     SerieDto createSerie(SerieDto serieDto);
-     MovieDto findMovieById(UUID id);
-     SerieDto findSerieById(UUID id);
-     MovieDto updateMovie(UUID id, MovieDto movieDto);
-     SerieDto updateSerie(UUID id, SerieDto serieDto);
-
+     FilmDto createFilm(FilmDto filmDto);
+     FilmDto findFilmById(UUID id);
+     FilmDto updateFilm(UUID id, FilmDto filmDto);
 }

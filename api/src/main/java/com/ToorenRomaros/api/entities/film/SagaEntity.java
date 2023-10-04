@@ -49,5 +49,4 @@ public class SagaEntity {
     public void setFilm(FilmEntity film) {
         this.film = film;
     }
-
 }

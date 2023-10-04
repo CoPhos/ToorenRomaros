@@ -3,6 +3,7 @@ package com.ToorenRomaros.api.controllers;
 import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.services.FilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,51 +27,74 @@ public class FilmController {
         this.filmService = filmService;
     }
 
-    @PostMapping("/movies")
-    ResponseEntity<Map<String, Object>> createMovie(@RequestBody @Valid MovieDto movieDto) throws Exception {
-        MovieDto newFilm = filmService.createMovie(movieDto);
+    @PostMapping("/films")
+    ResponseEntity<Map<String, Object>> createFilm(@RequestBody @Valid FilmDto filmDto) throws Exception {
+        FilmDto newFilm = filmService.createFilm(filmDto);
         Map<String, Object> response = new HashMap<>();
         response.put("created", newFilm);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/series")
-    ResponseEntity<Map<String, Object>> createSerie(@RequestBody @Valid SerieDto serieDto) throws Exception {
-        SerieDto newSerie = filmService.createSerie(serieDto);
+    @GetMapping("/films/{id}")
+    ResponseEntity<Map<String, Object>> getFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        FilmDto film = filmService.findFilmById(UUID.fromString(id));
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newSerie);
+        response.put("response", film);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PutMapping("/films/{id}")
+    ResponseEntity<Map<String, Object>> updateSerie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid FilmDto filmDto) throws Exception {
+        FilmDto updatedFilm = filmService.updateFilm(UUID.fromString(id), filmDto);
+        Map<String, Object> response = new HashMap<>();
+        response.put("updated", updatedFilm);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/movies/{id}")
-    ResponseEntity<Map<String, Object>> getMovie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        MovieDto movie = filmService.findMovieById(UUID.fromString(id));
-        Map<String, Object> response = new HashMap<>();
-        response.put("response", movie);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/series/{id}")
-    ResponseEntity<Map<String, Object>> getSerie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        SerieDto serie = filmService.findSerieById(UUID.fromString(id));
-        Map<String, Object> response = new HashMap<>();
-        response.put("response", serie);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @PutMapping("/movies/{id}")
-    ResponseEntity<Map<String, Object>> updateMovie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid MovieDto movieDto) throws Exception {
-        MovieDto updataedMovie = filmService.updateMovie(UUID.fromString(id), movieDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("updated", updataedMovie);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @PutMapping("/series/{id}")
-    ResponseEntity<Map<String, Object>> updateSerie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid SerieDto serieDto) throws Exception {
-        SerieDto updatedSerie = filmService.updateSerie(UUID.fromString(id), serieDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedSerie);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @PostMapping("/movies")
+//    ResponseEntity<Map<String, Object>> createMovie(@RequestBody @Valid MovieDto movieDto) throws Exception {
+//        MovieDto newFilm = filmService.createMovie(movieDto);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("created", newFilm);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/series")
+//    ResponseEntity<Map<String, Object>> createSerie(@RequestBody @Valid SerieDto serieDto) throws Exception {
+//        SerieDto newSerie = filmService.createSerie(serieDto);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("created", newSerie);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/movies/{id}")
+//    ResponseEntity<Map<String, Object>> getMovie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+//        MovieDto movie = filmService.findMovieById(UUID.fromString(id));
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("response", movie);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/series/{id}")
+//    ResponseEntity<Map<String, Object>> getSerie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+//        SerieDto serie = filmService.findSerieById(UUID.fromString(id));
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("response", serie);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/movies/{id}")
+//    ResponseEntity<Map<String, Object>> updateMovie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid MovieDto movieDto) throws Exception {
+//        MovieDto updataedMovie = filmService.updateMovie(UUID.fromString(id), movieDto);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("updated", updataedMovie);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/series/{id}")
+//    ResponseEntity<Map<String, Object>> updateSerie(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid SerieDto serieDto) throws Exception {
+//        SerieDto updatedSerie = filmService.updateSerie(UUID.fromString(id), serieDto);
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("updated", updatedSerie);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 }

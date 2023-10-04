@@ -1,9 +1,19 @@
 package com.ToorenRomaros.api.dto.film;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "filmType",
+        visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MovieDto.class, name = "1"),
+        @JsonSubTypes.Type(value = SerieDto.class, name = "2"),
+})
 public class FilmDto {
     private String id;
     @Size(max = 255, message = "Tittle max size is 255 characters.")
@@ -19,8 +29,14 @@ public class FilmDto {
     private LocalDate streamingReleaseDate;
     private String prequel;
     private String sequel;
-    private String sagaName;
+    private Integer filmType;
 
+    public Integer getFilmType() {
+        return filmType;
+    }
+    public void setFilmType(Integer filmType) {
+        this.filmType = filmType;
+    }
     public String getId() {
         return id;
     }
@@ -74,11 +90,5 @@ public class FilmDto {
     }
     public void setSequel(String sequel) {
         this.sequel = sequel;
-    }
-    public String getSagaName() {
-        return sagaName;
-    }
-    public void setSagaName(String sagaName) {
-        this.sagaName = sagaName;
     }
 }
