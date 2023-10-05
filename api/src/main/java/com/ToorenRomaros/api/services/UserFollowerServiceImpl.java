@@ -50,8 +50,8 @@ public class UserFollowerServiceImpl implements UserFollowerService{
     @Override
     public Page<?> getAllFollowsByUserIds(UUID id, Pageable pageRequest, String type) {
         List<?> allFollow = getAllFollows(id, pageRequest, type);
-        int start = (int) pageRequest.getOffset();
         assert allFollow != null;
+        int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), allFollow.size());
         List<?> pageContent = allFollow.subList(start, end);
 

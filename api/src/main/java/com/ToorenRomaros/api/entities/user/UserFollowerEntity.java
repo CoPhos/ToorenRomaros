@@ -42,10 +42,10 @@ public class UserFollowerEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private UserEntity user;
 
-    public UserFollowerEntity(LocalDate followDate, UserEntity follower, UserEntity user) {
+    public UserFollowerEntity(LocalDate followDate, UserEntity user,UserEntity follower) {
         this.followDate = followDate;
-        this.follower = follower;
         this.user = user;
+        this.follower = follower;
     }
 
     public UserFollowerEntity() {

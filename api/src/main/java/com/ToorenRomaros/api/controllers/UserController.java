@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "${api.baseUri}")
+@RequestMapping("api/v1")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private static final String uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
