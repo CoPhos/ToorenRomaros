@@ -2,31 +2,18 @@ package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.user.UserAddRequestDto;
 import com.ToorenRomaros.api.dto.user.UserDto;
-import com.ToorenRomaros.api.dto.user.UserFollowerDto;
-import com.ToorenRomaros.api.dto.user.UserFollowingDto;
 import com.ToorenRomaros.api.entities.user.UserEntity;
-import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
-import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
-import com.ToorenRomaros.api.repositories.user.UserFollowerRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class UserServiceImpl implements UserService {

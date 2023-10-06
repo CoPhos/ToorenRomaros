@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
-import com.ToorenRomaros.api.dto.user.UserFollowingDto;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
@@ -34,45 +33,33 @@ public class UserFollowerServiceImpl implements UserFollowerService{
 
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public UserFollowerDto addFollow(UUID idUser, UUID toFollow, String type, String username) {
-        UserFollowerEntity newFollow = newFollow(idUser, toFollow, type);
-        assert newFollow != null;
+    public UserFollowerDto addFollow(UUID idUser, UUID toFollow, String username) {
+        UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
+        UserEntity follower = userRepository.findById(toFollow).orElseThrow(() -> new UserNotFoundException("'" + toFollow + "'"));
+        UserFollowerEntity newFollow = new UserFollowerEntity(LocalDate.now(), user, follower);
         return modelMapper.map(userFollowerRepository.save(newFollow), UserFollowerDto.class);
     }
 
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public void deleteFollowByIds(UUID idUser, UUID toFollow, String type, String username) {
-        UserFollowerEntity entity = deleteFollow(idUser, toFollow, type);
-        assert entity != null;
+    public void deleteFollowByIds(UUID idUser, UUID follow, String username) {
+        UserFollowerEntity entity = userFollowerRepository.findByUserIdAndFollowId(idUser.toString(), follow.toString()).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
         userFollowerRepository.deleteById(entity.getId());
     }
     @Override
-    public Page<?> getAllFollowsByUserIds(UUID id, Pageable pageRequest, String type) {
-        List<?> allFollow = getAllFollows(id, pageRequest, type);
+    public Page<UserFollowerDto> getAllFollowsByUserIds(UUID id, Pageable pageRequest, String type) {
+        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
+        List<UserFollowerDto> allFollow = getAllFollows(id, pageRequest, type);
         assert allFollow != null;
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), allFollow.size());
-        List<?> pageContent = allFollow.subList(start, end);
+        List<UserFollowerDto> pageContent = allFollow.subList(start, end);
 
         return new PageImpl<>(pageContent, pageRequest, allFollow.size());
     }
-    private UserFollowerEntity newFollow(UUID idUser, UUID toFollow, String type){
-        UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
-        UserEntity follower = userRepository.findById(toFollow).orElseThrow(() -> new UserNotFoundException("'" + toFollow + "'"));
 
+    private List<UserFollowerDto> getAllFollows(UUID id, Pageable pageRequest, String type){
         if(Objects.equals(type, "follower")){
-            return new UserFollowerEntity(LocalDate.now(), follower, user);
-        }else if(Objects.equals(type, "following")){
-            return new UserFollowerEntity(LocalDate.now(), user, follower);
-
-        }
-        return null;
-    }
-    private List<?> getAllFollows(UUID id, Pageable pageRequest, String type){
-        if(Objects.equals(type, "follower")){
-            userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
-
             List<UserFollowerEntity> entities = userFollowerRepository.findAllFollowersByUser(id.toString(), pageRequest);
             if (entities == null) {
                 throw new ResourceNotFoundException("");
@@ -80,21 +67,12 @@ public class UserFollowerServiceImpl implements UserFollowerService{
             return entities.stream().map(value -> modelMapper.map(value, UserFollowerDto.class)).collect(Collectors.toList());
 
         }else if(Objects.equals(type, "following")){
-            userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
-
             List<UserFollowerEntity> entities = userFollowerRepository.findAllFollowingsByUser(id.toString(), pageRequest);
             if (entities == null) {
                 throw new ResourceNotFoundException("");
             }
-            return entities.stream().map(value -> modelMapper.map(value, UserFollowingDto.class)).collect(Collectors.toList());
-        }
-        return null;
-    }
-    private UserFollowerEntity deleteFollow(UUID idUser, UUID toFollow, String type){
-        if(Objects.equals(type, "follower")){
-            return userFollowerRepository.findByFollowerIdAndUserId(toFollow.toString(), idUser.toString()).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
-        }else if(Objects.equals(type, "following")){
-            return userFollowerRepository.findByFollowerIdAndUserId(idUser.toString(), toFollow.toString()).orElseThrow(() -> new UserNotFoundException("'" + idUser + "'"));
+
+            return entities.stream().map(value -> modelMapper.map(value, UserFollowerDto.class)).collect(Collectors.toList());
         }
         return null;
     }

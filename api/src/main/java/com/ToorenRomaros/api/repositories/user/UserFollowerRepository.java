@@ -12,11 +12,9 @@ import java.util.UUID;
 public interface UserFollowerRepository extends JpaRepository<UserFollowerEntity, UUID> {
     @Query(nativeQuery = true, value = "select * from user_follower u where u.user_id = ?1 ORDER BY ?#{#pageable}", countQuery = "select count(*) from user_follower")
     List<UserFollowerEntity> findAllFollowersByUser(String id, Pageable pageable);
-
     @Query(nativeQuery = true, value = "select * from user_follower u where u.follower_id = ?1 ORDER BY ?#{#pageable}", countQuery = "select count(*) from user_follower")
     List<UserFollowerEntity> findAllFollowingsByUser(String id, Pageable pageable);
-
-    @Query(nativeQuery = true, value = "select * from user_follower u where u.follower_id = ?1 and u.user_id = ?2")
-    Optional<UserFollowerEntity> findByFollowerIdAndUserId(String followerId, String userId);
+    @Query(nativeQuery = true, value = "select * from user_follower u where u.user_id = ?1 and u.follower_id = ?2")
+    Optional<UserFollowerEntity> findByUserIdAndFollowId(String userId, String followId);
 
 }

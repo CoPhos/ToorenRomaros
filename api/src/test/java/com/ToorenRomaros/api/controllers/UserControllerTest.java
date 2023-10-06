@@ -65,7 +65,7 @@ class UserControllerTest {
                 .build();
     }
 
-
+    @Test
     @DisplayName("Create user by given user entity")
     void createUserShouldWork() throws Exception{
         //given
@@ -190,9 +190,7 @@ class UserControllerTest {
                                             "    \"createdDate\": \"%s\",\n" +
                                             "    \"about\": \"I love coding\",\n" +
                                             "    \"followingCount\":0,\n" +
-                                            "    \"followmeCount\": -5,\n" +
-                                            "    \"followers\": null,\n" +
-                                            "    \"followings\": null\n" +
+                                            "    \"followmeCount\": -5\n" +
                                             "}", LocalDate.now()))
                                     .characterEncoding("utf-8")
                                     .accept(MediaType.APPLICATION_JSON))
