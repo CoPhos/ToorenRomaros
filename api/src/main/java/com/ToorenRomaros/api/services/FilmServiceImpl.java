@@ -59,6 +59,7 @@ public class FilmServiceImpl implements FilmService {
         film.setPrequel(null);
 
         BeanUtils.copyProperties(film, newFilm, Utils.getNullPropertyNames(film));
+
         if (filmDto.getSequel() != null) {
             newFilm.setSequel(addSequel(filmDto));
         }

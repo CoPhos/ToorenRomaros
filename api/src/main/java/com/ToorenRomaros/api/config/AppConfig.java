@@ -2,9 +2,13 @@ package com.ToorenRomaros.api.config;
 
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
+import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
+import com.ToorenRomaros.api.entities.socials.SocialEntity;
+import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
+import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -53,6 +57,23 @@ public class AppConfig {
                 mapper -> {
                     mapper.map(src -> src.getPrequel().getTittle(), SerieDto::setPrequel);
                     mapper.map(src -> src.getSequel().getTittle(), SerieDto::setSequel);
+                }
+        );
+
+        //Social
+        TypeMap<SocialStaffEntity, SocialGenericDto> propertyMapperSocialStaffToDto = modelMapper.createTypeMap(SocialStaffEntity.class, SocialGenericDto.class);
+        propertyMapperSocialStaffToDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getStaff().getFirstName(), SocialGenericDto::setGenericName);
+                    mapper.map(src -> src.getSocial().getName(), SocialGenericDto::setSocialName);
+                }
+        );
+
+        TypeMap<SocialUserEntity, SocialGenericDto> propertyMapperSocialUseroDto = modelMapper.createTypeMap(SocialUserEntity.class, SocialGenericDto.class);
+        propertyMapperSocialUseroDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getUser().getUsername(), SocialGenericDto::setGenericName);
+                    mapper.map(src -> src.getSocial().getName(), SocialGenericDto::setSocialName);
                 }
         );
 

@@ -14,7 +14,7 @@ import java.util.UUID;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
-public class SocialGenericEntity {
+public class SocialStaffEntity {
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
     @Type(type="uuid-char")
@@ -28,11 +28,18 @@ public class SocialGenericEntity {
     @ManyToOne
     @JoinColumn(name = "entity_id")
     StaffEntity staff;
-
     @ManyToOne
     @JoinColumn(name = "social_id")
     SocialEntity social;
 
+    public SocialStaffEntity(String url, StaffEntity staff, SocialEntity social) {
+        this.url = url;
+        this.staff = staff;
+        this.social = social;
+    }
+
+    public SocialStaffEntity() {
+    }
 
     public UUID getId() {
         return id;

@@ -1,6 +1,5 @@
 package com.ToorenRomaros.api.entities.staff;
 
-import com.ToorenRomaros.api.entities.socials.SocialGenericEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -33,7 +31,7 @@ public class StaffEntity {
     @NotNull(message = "Birthday can not be null")
     @PastOrPresent(message = "Birthday can not be future")
     private LocalDate birthday;
-    @Column(name = "BIRTH_PLACE", columnDefinition = "DATE")
+    @Column(name = "BIRTH_PLACE", columnDefinition = "VARCHAR(50)")
     @NotNull(message = "Birthplace can not be null")
     private String birthplace;
 

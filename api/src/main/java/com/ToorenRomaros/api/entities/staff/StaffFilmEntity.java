@@ -31,7 +31,6 @@ public class StaffFilmEntity {
     @ManyToOne
     @JoinColumn(name = "film_id")
     FilmEntity film;
-
     @ManyToOne
     @JoinColumn(name = "staff_id")
     StaffEntity staff;

@@ -40,12 +40,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UUID id, UserAddRequestDto userAddRequestDto) {
         UserEntity newUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "'"));
-        UserEntity user = modelMapper.map(userAddRequestDto, UserEntity.class);
+        UserEntity newData = modelMapper.map(userAddRequestDto, UserEntity.class);
 
-        BeanUtils.copyProperties(user, newUser, Utils.getNullPropertyNames(user));
+        BeanUtils.copyProperties(newData, newUser, Utils.getNullPropertyNames(newData));
 
         UserEntity savedUser = userRepository.save(newUser);
         return modelMapper.map(savedUser, UserDto.class);
+
     }
     @Override
     @PreAuthorize("hasRole('adminrole')")
