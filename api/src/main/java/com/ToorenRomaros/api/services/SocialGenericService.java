@@ -4,9 +4,12 @@ import com.ToorenRomaros.api.dto.socials.SocialDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericAddRequestDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 
+import java.util.List;
+import java.util.UUID;
+
 public interface SocialGenericService {
     public SocialGenericDto createSocialGeneric(SocialGenericAddRequestDto socialGenericAddRequestDto);
-    public SocialGenericDto getSocialGenericbyGenericName(String genericName);
-    public SocialGenericDto updateSocialGeneric(SocialDto socialDto);
-    public void deleteSocialGenericByNames(String genericName, String socialName);
+    public List<SocialGenericDto> getSocialGenericById(UUID id);
+    public SocialGenericDto updateSocialGeneric(UUID id, SocialGenericAddRequestDto socialGenericAddRequestDto);
+    public void deleteSocialGenericById(UUID id);
 }

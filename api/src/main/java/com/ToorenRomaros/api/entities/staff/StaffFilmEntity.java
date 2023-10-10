@@ -1,8 +1,6 @@
 package com.ToorenRomaros.api.entities.staff;
 
 import com.ToorenRomaros.api.entities.film.FilmEntity;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -11,10 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
-@Table(name = "staff_film")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+@Table(name = "film_staff")
 public class StaffFilmEntity {
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
@@ -25,15 +20,24 @@ public class StaffFilmEntity {
     @NotNull(message = "Role can not be null")
     @Column(name = "ROLE", columnDefinition = "VARCHAR(50)")
     private String role;
-    @Column(name = "AS", columnDefinition = "VARCHAR(50)")
-    private String as;
-
+    @Column(name = "APPEAR_AS", columnDefinition = "VARCHAR(50)")
+    private String appearAs;
     @ManyToOne
     @JoinColumn(name = "film_id")
     FilmEntity film;
     @ManyToOne
     @JoinColumn(name = "staff_id")
     StaffEntity staff;
+
+    public StaffFilmEntity(String role, String appearAs, FilmEntity film, StaffEntity staff) {
+        this.role = role;
+        this.appearAs = appearAs;
+        this.film = film;
+        this.staff = staff;
+    }
+
+    public StaffFilmEntity() {
+    }
 
     public UUID getId() {
         return id;
@@ -47,11 +51,11 @@ public class StaffFilmEntity {
     public void setRole(String role) {
         this.role = role;
     }
-    public String getAs() {
-        return as;
+    public String getappearAs() {
+        return appearAs;
     }
-    public void setAs(String as) {
-        this.as = as;
+    public void setappearAs(String as) {
+        this.appearAs = as;
     }
     public FilmEntity getFilm() {
         return film;

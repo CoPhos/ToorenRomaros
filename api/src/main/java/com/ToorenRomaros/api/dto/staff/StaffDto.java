@@ -7,9 +7,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class StaffDto {
-    @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
     private UUID id;
-
     @NotNull(message = "Firstname can not be null")
     private String firstName;
     @NotNull(message = "Lastname can not be null")

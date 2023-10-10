@@ -71,4 +71,7 @@ public class StaffEntity {
     public void setBirthplace(String birthplace) {
         this.birthplace = birthplace;
     }
+    public String getFullName(){
+        return this.firstName + " " +this.lastName;
+    }
 }

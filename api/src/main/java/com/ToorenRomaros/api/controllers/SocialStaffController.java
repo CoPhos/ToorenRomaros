@@ -1,5 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
+import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.socials.SocialDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericAddRequestDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
@@ -8,14 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1")
@@ -33,5 +35,25 @@ public class SocialStaffController {
         Map<String, Object> response = new HashMap<>();
         response.put("created", newSocial);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/socials/staffs/{id}")
+    ResponseEntity<Map<String, Object>> getSocialById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        List<SocialGenericDto> social = socialGenericService.getSocialGenericById(UUID.fromString(id));
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", social);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PutMapping("/socials/staffs/{id}")
+    ResponseEntity<Map<String, Object>> updateSocialStaff(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody SocialGenericAddRequestDto socialGenericAddRequestDto) throws Exception {
+        SocialGenericDto updateSocialGeneric = socialGenericService.updateSocialGeneric(UUID.fromString(id), socialGenericAddRequestDto);
+        Map<String, Object> response = new HashMap<>();
+        response.put("updated", updateSocialGeneric);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @DeleteMapping("/socials/staffs/{id}")
+    ResponseEntity<String> deleteSocialStaff(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        socialGenericService.deleteSocialGenericById(UUID.fromString(id));
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Social: " + id + " deleted successfully");
     }
 }

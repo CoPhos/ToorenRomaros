@@ -3,12 +3,14 @@ package com.ToorenRomaros.api.config;
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
+import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.socials.SocialEntity;
 import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
 import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
+import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -74,6 +76,15 @@ public class AppConfig {
                 mapper -> {
                     mapper.map(src -> src.getUser().getUsername(), SocialGenericDto::setGenericName);
                     mapper.map(src -> src.getSocial().getName(), SocialGenericDto::setSocialName);
+                }
+        );
+
+        //StaffFilm
+        TypeMap<StaffFilmEntity, StaffFilmDto> propertyMapperStaffFilmmDto = modelMapper.createTypeMap(StaffFilmEntity.class, StaffFilmDto.class);
+        propertyMapperStaffFilmmDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getFilm().getTittle(), StaffFilmDto::setFilmName);
+                    mapper.map(src -> src.getStaff().getFullName(), StaffFilmDto::setStaffName);
                 }
         );
 
