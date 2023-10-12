@@ -7,6 +7,7 @@ import com.ToorenRomaros.api.repositories.staff.StaffRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -20,7 +21,7 @@ public class StaffServiceImpl implements StaffService{
         this.staffRepository = staffRepository;
         this.modelMapper = modelMapper;
     }
-
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public StaffDto createStaff(StaffDto staffAddRequestDto) {
         StaffEntity newStaff = modelMapper.map(staffAddRequestDto, StaffEntity.class);
@@ -32,6 +33,7 @@ public class StaffServiceImpl implements StaffService{
         StaffEntity staffEntity = staffRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
         return modelMapper.map(staffEntity, StaffDto.class);
     }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public StaffDto updateStaff(UUID id, StaffDto staffAddRequestDto) {
         StaffEntity newStaff = staffRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
@@ -42,6 +44,7 @@ public class StaffServiceImpl implements StaffService{
         StaffEntity savedStaff = staffRepository.save(newStaff);
         return modelMapper.map(savedStaff, StaffDto.class);
     }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public void deleteStaffByid(UUID id) {
         StaffEntity staffEntity = staffRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));

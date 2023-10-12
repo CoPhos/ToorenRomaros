@@ -15,6 +15,7 @@ import com.ToorenRomaros.api.repositories.user.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,9 +37,9 @@ public class SocialGenericUserServiceImpl implements SocialGenericService {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
-
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public SocialGenericDto createSocialGeneric(SocialGenericAddRequestDto socialGenericAddRequestDto) {
+    public SocialGenericDto createSocialGeneric(SocialGenericAddRequestDto socialGenericAddRequestDto, String username) {
         UUID socialId = UUID.fromString(socialGenericAddRequestDto.getSocialId());
         UUID userId = UUID.fromString(socialGenericAddRequestDto.getGenericId());
         String url = socialGenericAddRequestDto.getUrl();
@@ -51,21 +52,18 @@ public class SocialGenericUserServiceImpl implements SocialGenericService {
 
         return modelMapper.map(savedSocialUserEntity, SocialGenericDto.class);
     }
+
     @Override
     public List<SocialGenericDto> getSocialGenericById(UUID id) {
-        try {
-            UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-            List<SocialUserEntity> socialUserEntities = socialUserRepository.findSocialByUserId(userEntity.getId().toString());
-            return socialUserEntities.stream().map(socialUserEntity -> {
-                return modelMapper.map(socialUserEntity, SocialGenericDto.class);
-            }).collect(Collectors.toList());
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            return null;
-        }
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
+        List<SocialUserEntity> socialUserEntities = socialUserRepository.findSocialByUserId(userEntity.getId().toString());
+        return socialUserEntities.stream().map(socialUserEntity -> {
+            return modelMapper.map(socialUserEntity, SocialGenericDto.class);
+        }).collect(Collectors.toList());
     }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public SocialGenericDto updateSocialGeneric(UUID id, SocialGenericAddRequestDto socialGenericAddRequestDto) {
+    public SocialGenericDto updateSocialGeneric(UUID id, SocialGenericAddRequestDto socialGenericAddRequestDto, String username) {
         SocialUserEntity socialUserEntity = socialUserRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
 
         if (socialGenericAddRequestDto.getGenericId() != null) {
@@ -86,8 +84,9 @@ public class SocialGenericUserServiceImpl implements SocialGenericService {
         SocialUserEntity savedSocialUserEntity = socialUserRepository.save(socialUserEntity);
         return modelMapper.map(savedSocialUserEntity, SocialGenericDto.class);
     }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public void deleteSocialGenericById(UUID id) {
+    public void deleteSocialGenericById(UUID id, String username) {
         socialUserRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
         socialUserRepository.deleteById(id);
     }

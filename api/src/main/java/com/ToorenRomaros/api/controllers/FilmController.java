@@ -30,7 +30,6 @@ public class FilmController {
         response.put("created", newFilm);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     @GetMapping("/films/{id}")
     ResponseEntity<Map<String, Object>> getFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         FilmDto film = filmService.findFilmById(UUID.fromString(id));
@@ -51,5 +50,4 @@ public class FilmController {
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body("Film: " + id + " deleted successfully");
     }
-
 }

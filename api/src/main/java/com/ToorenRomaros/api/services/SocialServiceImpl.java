@@ -9,6 +9,7 @@ import com.ToorenRomaros.api.repositories.socials.SocialRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class SocialServiceImpl implements SocialService{
         this.socialRepository = socialRepository;
         this.modelMapper = modelMapper;
     }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public SocialDto createSocial(SocialDto socialDto) {
         SocialEntity newSocial = modelMapper.map(socialDto, SocialEntity.class);
@@ -34,6 +36,7 @@ public class SocialServiceImpl implements SocialService{
         SocialEntity socialEntity = socialRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
         return modelMapper.map(socialEntity, SocialDto.class);
     }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public SocialDto updateSocial(UUID id, SocialDto socialDto) {
         SocialEntity newSocial = socialRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
@@ -44,6 +47,7 @@ public class SocialServiceImpl implements SocialService{
         SocialEntity savedSocial = socialRepository.save(newSocial);
         return modelMapper.map(savedSocial, SocialDto.class);
     }
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public void deleteSocialByid(UUID id) {
         SocialEntity socialEntity = socialRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));

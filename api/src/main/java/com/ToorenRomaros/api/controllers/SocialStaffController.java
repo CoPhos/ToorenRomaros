@@ -31,7 +31,7 @@ public class SocialStaffController {
 
     @PostMapping("/socials/staffs")
     ResponseEntity<Map<String, Object>> createSocialsStaff(@RequestBody @Valid SocialGenericAddRequestDto socialGenericAddRequestDto) throws Exception {
-        SocialGenericDto newSocial = socialGenericService.createSocialGeneric(socialGenericAddRequestDto);
+        SocialGenericDto newSocial = socialGenericService.createSocialGeneric(socialGenericAddRequestDto, null);
         Map<String, Object> response = new HashMap<>();
         response.put("created", newSocial);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -45,14 +45,14 @@ public class SocialStaffController {
     }
     @PutMapping("/socials/staffs/{id}")
     ResponseEntity<Map<String, Object>> updateSocialStaff(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody SocialGenericAddRequestDto socialGenericAddRequestDto) throws Exception {
-        SocialGenericDto updateSocialGeneric = socialGenericService.updateSocialGeneric(UUID.fromString(id), socialGenericAddRequestDto);
+        SocialGenericDto updateSocialGeneric = socialGenericService.updateSocialGeneric(UUID.fromString(id), socialGenericAddRequestDto, null);
         Map<String, Object> response = new HashMap<>();
         response.put("updated", updateSocialGeneric);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/socials/staffs/{id}")
     ResponseEntity<String> deleteSocialStaff(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        socialGenericService.deleteSocialGenericById(UUID.fromString(id));
+        socialGenericService.deleteSocialGenericById(UUID.fromString(id), null);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body("Social: " + id + " deleted successfully");
     }

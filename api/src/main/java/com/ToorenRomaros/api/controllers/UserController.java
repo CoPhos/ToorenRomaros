@@ -44,9 +44,9 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
-    @PutMapping("/users/{id}")
-    ResponseEntity<Map<String, Object>> updateUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UserAddRequestDto userAddRequestDto) throws Exception {
-        UserDto updatedUser = userService.updateUser(UUID.fromString(id), userAddRequestDto);
+    @PutMapping("/users/{username}/{id}")
+    ResponseEntity<Map<String, Object>> updateUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,@PathVariable String username, @RequestBody @Valid UserAddRequestDto userAddRequestDto) throws Exception {
+        UserDto updatedUser = userService.updateUser(UUID.fromString(id), userAddRequestDto, username);
         Map<String, Object> response = new HashMap<>();
         response.put("updated", updatedUser);
         return new ResponseEntity<>(response, HttpStatus.OK);

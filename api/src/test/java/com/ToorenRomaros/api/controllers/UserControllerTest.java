@@ -135,11 +135,11 @@ class UserControllerTest {
                 "montelukas alter", LocalDate.of(1990, 5, 8),
                 LocalDate.now(), "I hate coding", 0, 0);
 
-        given(userService.updateUser(any(UUID.class),  any(UserAddRequestDto.class))).willReturn(modelMapper.map(user1, UserDto.class));
+        given(userService.updateUser(any(UUID.class),  any(UserAddRequestDto.class), any(String.class))).willReturn(modelMapper.map(user1, UserDto.class));
 
         //when
         MockHttpServletResponse response = mockMvc.perform(
-                        put("/api/v1/users/{id}", id)
+                        put("/api/v1/users/montelukas/{id}", id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{   \n" +
                                         "    \"username\": \"montelukas alter\",\n" +

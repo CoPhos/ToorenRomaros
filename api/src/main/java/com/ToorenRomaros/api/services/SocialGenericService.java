@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SocialGenericService {
-    public SocialGenericDto createSocialGeneric(SocialGenericAddRequestDto socialGenericAddRequestDto);
+    public SocialGenericDto createSocialGeneric(SocialGenericAddRequestDto socialGenericAddRequestDto, String username);
     public List<SocialGenericDto> getSocialGenericById(UUID id);
-    public SocialGenericDto updateSocialGeneric(UUID id, SocialGenericAddRequestDto socialGenericAddRequestDto);
-    public void deleteSocialGenericById(UUID id);
+    public SocialGenericDto updateSocialGeneric(UUID id, SocialGenericAddRequestDto socialGenericAddRequestDto, String username);
+    public void deleteSocialGenericById(UUID id, String username);
 }

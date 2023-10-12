@@ -2,11 +2,13 @@ package com.ToorenRomaros.api.config;
 
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
+import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
+import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
 import com.ToorenRomaros.api.entities.socials.SocialEntity;
 import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
 import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
@@ -80,11 +82,20 @@ public class AppConfig {
         );
 
         //StaffFilm
-        TypeMap<StaffFilmEntity, StaffFilmDto> propertyMapperStaffFilmmDto = modelMapper.createTypeMap(StaffFilmEntity.class, StaffFilmDto.class);
-        propertyMapperStaffFilmmDto.addMappings(
+        TypeMap<StaffFilmEntity, StaffFilmDto> propertyMapperStaffFilmDto = modelMapper.createTypeMap(StaffFilmEntity.class, StaffFilmDto.class);
+        propertyMapperStaffFilmDto.addMappings(
                 mapper -> {
                     mapper.map(src -> src.getFilm().getTittle(), StaffFilmDto::setFilmName);
                     mapper.map(src -> src.getStaff().getFullName(), StaffFilmDto::setStaffName);
+                }
+        );
+
+        //GenreFilm
+        TypeMap<GenreFilmEntity, GenreFilmDto> propertyMapperGenreFilmDto = modelMapper.createTypeMap(GenreFilmEntity.class, GenreFilmDto.class);
+        propertyMapperGenreFilmDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getFilm().getTittle(), GenreFilmDto::setFilm);
+                    mapper.map(src -> src.getGenre().getGenre(), GenreFilmDto::setGenre);
                 }
         );
 

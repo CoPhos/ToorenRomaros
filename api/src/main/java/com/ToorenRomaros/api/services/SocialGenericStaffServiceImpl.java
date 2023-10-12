@@ -13,6 +13,7 @@ import com.ToorenRomaros.api.repositories.staff.StaffRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -33,9 +34,9 @@ public class SocialGenericStaffServiceImpl implements SocialGenericService {
         this.socialRepository = socialRepository;
         this.modelMapper = modelMapper;
     }
-
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public SocialGenericDto createSocialGeneric(SocialGenericAddRequestDto socialGenericAddRequestDto) {
+    public SocialGenericDto createSocialGeneric(SocialGenericAddRequestDto socialGenericAddRequestDto, String username) {
         UUID socialId = UUID.fromString(socialGenericAddRequestDto.getSocialId());
         UUID staffId = UUID.fromString(socialGenericAddRequestDto.getGenericId());
         String url = socialGenericAddRequestDto.getUrl();
@@ -57,9 +58,9 @@ public class SocialGenericStaffServiceImpl implements SocialGenericService {
             return modelMapper.map(socialStaffEntity, SocialGenericDto.class);
         }).collect(Collectors.toList());
     }
-
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public SocialGenericDto updateSocialGeneric(UUID id, SocialGenericAddRequestDto socialGenericAddRequestDto) {
+    public SocialGenericDto updateSocialGeneric(UUID id, SocialGenericAddRequestDto socialGenericAddRequestDto, String username) {
         SocialStaffEntity socialStaffEntity = socialStaffRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
 
         if (socialGenericAddRequestDto.getGenericId() != null) {
@@ -80,9 +81,9 @@ public class SocialGenericStaffServiceImpl implements SocialGenericService {
         SocialStaffEntity savedSocialStaffEntity = socialStaffRepository.save(socialStaffEntity);
         return modelMapper.map(savedSocialStaffEntity, SocialGenericDto.class);
     }
-
+    @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
-    public void deleteSocialGenericById(UUID id) {
+    public void deleteSocialGenericById(UUID id, String username) {
         socialStaffRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
         socialStaffRepository.deleteById(id);
     }

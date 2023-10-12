@@ -26,30 +26,30 @@ public class SocialUserController {
         this.socialGenericService = socialGenericService;
     }
 
-    @PostMapping("/socials/users")
-    ResponseEntity<Map<String, Object>> createSocialsUser(@RequestBody @Valid SocialGenericAddRequestDto socialGenericAddRequestDto) throws Exception {
-        SocialGenericDto newSocial = socialGenericService.createSocialGeneric(socialGenericAddRequestDto);
+    @PostMapping("/socials/users/{username}")
+    ResponseEntity<Map<String, Object>> createSocialsUser(@RequestBody @Valid SocialGenericAddRequestDto socialGenericAddRequestDto, @PathVariable String username) throws Exception {
+        SocialGenericDto newSocial = socialGenericService.createSocialGeneric(socialGenericAddRequestDto, username);
         Map<String, Object> response = new HashMap<>();
         response.put("created", newSocial);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/socials/users/{id}")
+    @GetMapping("/socials/users/{username}/{id}")
     ResponseEntity<Map<String, Object>> getSocialById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         List<SocialGenericDto> social = socialGenericService.getSocialGenericById(UUID.fromString(id));
         Map<String, Object> response = new HashMap<>();
         response.put("response", social);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PutMapping("/socials/users/{id}")
-    ResponseEntity<Map<String, Object>> updateSocialUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody SocialGenericAddRequestDto socialGenericAddRequestDto) throws Exception {
-        SocialGenericDto updateSocialGeneric = socialGenericService.updateSocialGeneric(UUID.fromString(id), socialGenericAddRequestDto);
+    @PutMapping("/socials/users/{username}/{id}")
+    ResponseEntity<Map<String, Object>> updateSocialUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id , @PathVariable String username, @RequestBody SocialGenericAddRequestDto socialGenericAddRequestDto) throws Exception {
+        SocialGenericDto updateSocialGeneric = socialGenericService.updateSocialGeneric(UUID.fromString(id), socialGenericAddRequestDto, username);
         Map<String, Object> response = new HashMap<>();
         response.put("updated", updateSocialGeneric);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @DeleteMapping("/socials/users/{id}")
-    ResponseEntity<String> deleteSocialUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        socialGenericService.deleteSocialGenericById(UUID.fromString(id));
+    @DeleteMapping("/socials/users/{username}/{id}")
+    ResponseEntity<String> deleteSocialUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @PathVariable String username) throws Exception {
+        socialGenericService.deleteSocialGenericById(UUID.fromString(id), username);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body("Social: " + id + " deleted successfully");
     }

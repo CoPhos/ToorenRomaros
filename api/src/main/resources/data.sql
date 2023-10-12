@@ -66,4 +66,10 @@ INSERT INTO social_user(id, url, social_id, entity_id) VALUES
     ('48061921-4c04-424a-a239-3e37164285d5','https://www.twitch.tv/tiktok','56445d2a-c493-4e0a-9bdc-571b9960d54f','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
     ('96806207-8ed7-4767-baaf-efe50eaead7a','https://www.twitch.tv/snapchat','49631bb2-bcd4-4de7-8c42-bdc8eda69170','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
     ('a4122962-5306-436d-833d-7c57f77bb348','https://www.twitch.tv/facebook','f6e264e3-d1fd-49eb-b0b1-d032b648749f','b7a61937-6f59-4bbb-80a7-08d65d1ad656');
+
+INSERT INTO film_staff(id, appear_as, role, film_id, staff_id) VALUES
+    ('432d5b2e-dfb4-481c-8c02-3249f7537940','extra 1','extra','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','8c137b7c-f69e-4b4e-8308-e8b787720b6e'),
+    ('8d55aeba-aef8-4426-be61-fc6de9030193','','director','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','3a05a600-416c-4b10-b050-e408f10e1c93'),
+    ('72a81c30-9766-4234-968c-efc194526b13','main character','actor','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','3a0b5202-c980-41cd-b20e-deadf8ba3229');
+
 set foreign_key_checks=1;
