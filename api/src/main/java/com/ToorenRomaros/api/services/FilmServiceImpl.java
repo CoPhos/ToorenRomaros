@@ -1,13 +1,9 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.FilmDto;
-import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
-import com.ToorenRomaros.api.entities.film.Movie;
-import com.ToorenRomaros.api.entities.film.SagaEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
-import com.ToorenRomaros.api.repositories.film.SagaRepository;
 import com.ToorenRomaros.api.utils.FilmMapper;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
@@ -22,13 +18,11 @@ import java.util.UUID;
 @Service
 public class FilmServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
-    private final ModelMapper modelMapper;
     private final FilmMapper filmMapper;
     private static final Logger log = LoggerFactory.getLogger(FilmServiceImpl.class);
 
-    public FilmServiceImpl(FilmRepository filmRepository, ModelMapper modelMapper, FilmMapper filmMapper) {
+    public FilmServiceImpl(FilmRepository filmRepository, FilmMapper filmMapper) {
         this.filmRepository = filmRepository;
-        this.modelMapper = modelMapper;
         this.filmMapper = filmMapper;
     }
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")

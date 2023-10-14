@@ -54,6 +54,8 @@ public class FilmEntity {
     @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
     private FilmEntity sequel;
 
+    //TODO: add saga relationship
+
     public FilmEntity() {
     }
 
