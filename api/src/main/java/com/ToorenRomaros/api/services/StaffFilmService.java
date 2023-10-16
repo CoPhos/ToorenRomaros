@@ -7,9 +7,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface StaffFilmService {
+    StaffFilmDto addStaffFilm(StaffFilmDto staffFilmDto);
 
-    public StaffFilmDto addStaffFilm(StaffFilmDto staffFilmDto);
-    public List<StaffFilmDto> getAllStaffFromFilm(UUID id);
-    public StaffFilmDto updateStaffFilm(UUID id, StaffFilmDto staffFilmDto);
-    public void deleteStaffFilm(UUID id);
+    List<StaffFilmDto> getAllStaffFromFilm(UUID id);
+
+    StaffFilmDto updateStaffFilm(UUID id, StaffFilmDto staffFilmDto);
+
+    void deleteStaffFilm(UUID id);
 }

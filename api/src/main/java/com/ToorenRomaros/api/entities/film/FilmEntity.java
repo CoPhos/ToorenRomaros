@@ -3,6 +3,7 @@ package com.ToorenRomaros.api.entities.film;
 import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -45,6 +46,10 @@ public class FilmEntity {
     private String suitableFor;
     @Column(name = "STREAMING_RELEASE_DATE", columnDefinition = "DATE")
     private LocalDate streamingReleaseDate;
+    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = true)")
+    private Float averageSuperRating;
+    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = false)")
+    private Float averageUserRating;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "PREQUEL_ID", referencedColumnName = "id")
@@ -53,8 +58,9 @@ public class FilmEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
     private FilmEntity sequel;
-
-    //TODO: add saga relationship
+    @ManyToOne
+    @JoinColumn(name = "saga_id")
+    SagaEntity saga;
 
     public FilmEntity() {
     }
@@ -98,7 +104,6 @@ public class FilmEntity {
     public LocalDate getStreamingReleaseDate() {
         return streamingReleaseDate;
     }
-
     public FilmEntity getPrequel() {
         return prequel;
     }
@@ -113,6 +118,24 @@ public class FilmEntity {
     }
     public void setStreamingReleaseDate(LocalDate streamingReleaseDate) {
         this.streamingReleaseDate = streamingReleaseDate;
+    }
+    public SagaEntity getSaga() {
+        return saga;
+    }
+    public void setSaga(SagaEntity saga) {
+        this.saga = saga;
+    }
+    public Float getAverageSuperRating() {
+        return averageSuperRating;
+    }
+    public void setAverageSuperRating(Float averageSuperRating) {
+        this.averageSuperRating = averageSuperRating;
+    }
+    public Float getAverageUserRating() {
+        return averageUserRating;
+    }
+    public void setAverageUserRating(Float averageUserRating) {
+        this.averageUserRating = averageUserRating;
     }
 
     @Override

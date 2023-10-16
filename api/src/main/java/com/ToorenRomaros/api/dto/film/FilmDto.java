@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.dto.film;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.hibernate.annotations.Formula;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +31,9 @@ public class FilmDto {
     private String prequel;
     private String sequel;
     private Integer filmType;
+    private String sagaId;
+    private Float averageSuperRating;
+    private Float averageUserRating;
 
     public Integer getFilmType() {
         return filmType;
@@ -90,5 +94,23 @@ public class FilmDto {
     }
     public void setSequel(String sequel) {
         this.sequel = sequel;
+    }
+    public String getSagaId() {
+        return sagaId;
+    }
+    public void setSagaId(String sagaId) {
+        this.sagaId = sagaId;
+    }
+    public Float getAverageSuperRating() {
+        return averageSuperRating;
+    }
+    public void setAverageSuperRating(Float averageSuperRating) {
+        this.averageSuperRating = averageSuperRating;
+    }
+    public Float getAverageUserRating() {
+        return averageUserRating;
+    }
+    public void setAverageUserRating(Float averageUserRating) {
+        this.averageUserRating = averageUserRating;
     }
 }

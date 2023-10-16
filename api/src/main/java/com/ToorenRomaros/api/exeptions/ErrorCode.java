@@ -13,6 +13,7 @@ public enum ErrorCode {
     METHOD_ARGUMENT_NOT_VALUD("API-009","Please verify data contraints"),
     HTTP_REQUEST_METHOD_NOT_SUPPORTED("API-0010", "Request method not supported."),
     ILLEGAL_ARGUMENT_EXCEPTION("API-0011", "Invalid data passed."),
+    CONSTRAINT_VIOLATION_EXCEPTION("API-0012", "Invalid data passed."),
     /*
     * custom exceptions*/
     USER_NOT_FOUND("API-012", "Requested user not found."),

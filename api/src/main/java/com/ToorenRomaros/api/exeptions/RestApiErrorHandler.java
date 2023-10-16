@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -187,7 +188,7 @@ public class RestApiErrorHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Error> handleHIllegalArgumentException(
+    public ResponseEntity<Error> handleIllegalArgumentException(
             HttpServletRequest request,
             IllegalArgumentException ex,
             Locale locale) {
@@ -195,6 +196,20 @@ public class RestApiErrorHandler {
                 .createError(String
                                 .format("%s %s", ErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getErrMsgKey(), ex.getMessage()),
                         ErrorCode.ILLEGAL_ARGUMENT_EXCEPTION.getErrCode(),
+                        HttpStatus.BAD_REQUEST.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Error> handleDataIntegrityViolationException(
+            HttpServletRequest request,
+            DataIntegrityViolationException ex,
+            Locale locale) {
+        Error error = ErrorUtils
+                .createError(String
+                                .format("%s %s", ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrMsgKey(), ex.getRootCause()),
+                        ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrCode(),
                         HttpStatus.BAD_REQUEST.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());

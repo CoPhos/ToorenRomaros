@@ -32,9 +32,15 @@ public class FilmController {
     }
     @GetMapping("/films/{id}")
     ResponseEntity<Map<String, Object>> getFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        FilmDto film = filmService.findFilmById(UUID.fromString(id));
+        FilmDto film = filmService.getFilmById(UUID.fromString(id));
         Map<String, Object> response = new HashMap<>();
         response.put("response", film);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("sagas/{id}/films")
+    ResponseEntity<Map<String, Object>> getAllFilmBySagaId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", filmService.getAllFilmsBySagaId(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PutMapping("/films/{id}")

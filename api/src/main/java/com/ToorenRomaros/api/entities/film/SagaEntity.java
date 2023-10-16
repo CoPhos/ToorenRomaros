@@ -20,16 +20,12 @@ public class SagaEntity {
     @Column(name = "NAME", columnDefinition = "VARCHAR(255)")
     @Size(max = 255, message = "max size is 255 characters")
     private String name;
-    public SagaEntity(String name, FilmEntity film) {
+
+    public SagaEntity(String name) {
         this.name = name;
-        this.film = film;
     }
     public SagaEntity() {
     }
-
-    @ManyToOne
-    @JoinColumn(name="FILM_ID", nullable=false, unique = true)
-    private FilmEntity film;
 
     public UUID getId() {
         return id;
@@ -42,11 +38,5 @@ public class SagaEntity {
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public FilmEntity getFilm() {
-        return film;
-    }
-    public void setFilm(FilmEntity film) {
-        this.film = film;
     }
 }

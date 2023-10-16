@@ -50,5 +50,4 @@ public class GenreFilmController {
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body("Film genre: " + id + " deleted successfully");
     }
-
 }

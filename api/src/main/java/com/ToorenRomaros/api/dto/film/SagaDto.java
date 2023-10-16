@@ -1,22 +1,22 @@
 package com.ToorenRomaros.api.dto.film;
 
 public class SagaDto {
-    private String sagaName;
-    private String film;
+    private String id;
+    private String name;
 
-    public String getSagaName() {
-        return sagaName;
+    public String getName() {
+        return name;
     }
 
-    public void setSagaName(String sagaName) {
-        this.sagaName = sagaName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFilm() {
-        return film;
+    public String getId() {
+        return id;
     }
 
-    public void setFilm(String film) {
-        this.film = film;
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -1,5 +1,5 @@
 set foreign_key_checks=0;
-INSERT INTO user (ID,USERNAME, BIRTHDAY, CREATED_DATE, ABOUT, FOLLOWING_COUNT, FOLLOWING_ME_COUNT)
+INSERT INTO user (ID, USERNAME, BIRTHDAY, CREATED_DATE, ABOUT, FOLLOWING_COUNT, FOLLOWING_ME_COUNT)
 VALUES
     ('b7a61937-6f59-4bbb-80a7-08d65d1ad656','john_doe', '1990-05-15', '2050-01-10', 'I love coding.', 300, 500),
     ('1e61da98-e8d9-4e82-b2a0-bc53b124aef1','jane_smith', '1985-08-20', '2050-11-22', 'Passionate about travel.', 200, 400),
@@ -71,5 +71,13 @@ INSERT INTO film_staff(id, appear_as, role, film_id, staff_id) VALUES
     ('432d5b2e-dfb4-481c-8c02-3249f7537940','extra 1','extra','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','8c137b7c-f69e-4b4e-8308-e8b787720b6e'),
     ('8d55aeba-aef8-4426-be61-fc6de9030193','','director','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','3a05a600-416c-4b10-b050-e408f10e1c93'),
     ('72a81c30-9766-4234-968c-efc194526b13','main character','actor','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','3a0b5202-c980-41cd-b20e-deadf8ba3229');
+
+INSERT INTO rating(id, rating, super_rating, film_id, user_id) VALUES
+    ('79302784-2f46-4aad-abba-43ad49bd3d1a','98',TRUE,'1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
+    ('413b6ea7-2ae3-41e8-b26f-010bef1809ee','90',TRUE,'423e4567-e89b-12d3-a456-556642440004','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
+    ('19a67d4e-cfc5-4e37-b395-978745859128','60',TRUE,'9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
+    ('092217a2-7559-4933-b8c1-35b9ba1de95d','100',FALSE,'1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','1e61da98-e8d9-4e82-b2a0-bc53b124aef1'),
+    ('052533f4-d50d-4dc8-901b-7426698b0859','72',FALSE,'1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','2ae12264-977d-419d-aa19-ce9658041fe4'),
+    ('661548dc-1cfe-48e9-a19e-8df315e10189','35',FALSE,'9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09','2ae12264-977d-419d-aa19-ce9658041fe4');
 
 set foreign_key_checks=1;

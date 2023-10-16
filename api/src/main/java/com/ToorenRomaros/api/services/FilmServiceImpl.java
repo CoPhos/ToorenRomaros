@@ -1,28 +1,35 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.FilmDto;
+import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.film.SagaEntity;
+import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
+import com.ToorenRomaros.api.repositories.film.SagaRepository;
 import com.ToorenRomaros.api.utils.FilmMapper;
 import com.ToorenRomaros.api.utils.Utils;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
+    private final SagaRepository sagaRepository;
     private final FilmMapper filmMapper;
     private static final Logger log = LoggerFactory.getLogger(FilmServiceImpl.class);
 
-    public FilmServiceImpl(FilmRepository filmRepository, FilmMapper filmMapper) {
+    public FilmServiceImpl(FilmRepository filmRepository, SagaRepository sagaRepository, FilmMapper filmMapper) {
         this.filmRepository = filmRepository;
+        this.sagaRepository = sagaRepository;
         this.filmMapper = filmMapper;
     }
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
@@ -35,14 +42,28 @@ public class FilmServiceImpl implements FilmService {
         if (filmDto.getPrequel() != null) {
             newMovie.setPrequel(addPrequel(filmDto));
         }
+        if(filmDto.getSagaId() != null){
+            SagaEntity sagaEntity = sagaRepository.findById(UUID.fromString(filmDto.getSagaId())).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+            newMovie.setSaga(sagaEntity);
+        }
         FilmEntity savedMovie = filmRepository.save(newMovie);
         return filmMapper.mapToFilmDto(savedMovie);
     }
     @Override
-    public FilmDto findFilmById(UUID id) {
+    public FilmDto getFilmById(UUID id) {
         FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
         return filmMapper.mapToFilmDto(film);
     }
+    @Override
+    public List<FilmDto> getAllFilmsBySagaId(UUID id) {
+        List<FilmEntity> filmEntities = filmRepository.getAllFilmbySagaId(id.toString());
+        if(filmEntities == null){
+            throw new ResourceNotFoundException("Resource not found");
+        }
+        return filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList());
+    }
+    
+
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public FilmDto updateFilm(UUID id, FilmDto filmDto) {
@@ -51,6 +72,7 @@ public class FilmServiceImpl implements FilmService {
 
         film.setSequel(null);
         film.setPrequel(null);
+        film.setSaga(null);
 
         BeanUtils.copyProperties(film, newFilm, Utils.getNullPropertyNames(film));
 
@@ -59,6 +81,10 @@ public class FilmServiceImpl implements FilmService {
         }
         if (filmDto.getPrequel() != null) {
             newFilm.setPrequel(addPrequel(filmDto));
+        }
+        if(filmDto.getSagaId() != null){
+            SagaEntity sagaEntity = sagaRepository.findById(UUID.fromString(filmDto.getSagaId())).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+            newFilm.setSaga(sagaEntity);
         }
         FilmEntity savedFilm = filmRepository.save(newFilm);
         return filmMapper.mapToFilmDto(savedFilm);
