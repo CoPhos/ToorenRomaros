@@ -1,7 +1,10 @@
 package com.ToorenRomaros.api.controllers;
 
+import com.ToorenRomaros.api.dao.FilmRepositoryCustomImpl;
 import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.services.FilmService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,7 @@ import java.util.UUID;
 public class FilmController {
     private static final String uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
     private final FilmService filmService;
+    private static final Logger log = LoggerFactory.getLogger(FilmController.class);
 
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
@@ -36,6 +40,17 @@ public class FilmController {
         Map<String, Object> response = new HashMap<>();
         response.put("response", film);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/films/test")
+    ResponseEntity<Map<String, Object>> getFilmTest(@RequestParam String name, @RequestParam String duration) throws Exception {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            response.put("response", filmService.testRepositoryCustom(name, duration));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping("sagas/{id}/films")
     ResponseEntity<Map<String, Object>> getAllFilmBySagaId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {

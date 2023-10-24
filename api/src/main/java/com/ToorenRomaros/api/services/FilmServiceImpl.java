@@ -3,6 +3,7 @@ package com.ToorenRomaros.api.services;
 import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
@@ -49,6 +50,21 @@ public class FilmServiceImpl implements FilmService {
         FilmEntity savedMovie = filmRepository.save(newMovie);
         return filmMapper.mapToFilmDto(savedMovie);
     }
+
+    @Override
+    public List<FilmDto> testRepositoryCustom(String name, String duration) {
+        try{
+            List<FilmEntity> filmEntities = filmRepository.findFilmByNameAndDuration(name, duration);
+            if(filmEntities == null){
+                throw new ResourceNotFoundException("Resource not found");
+            }
+            return filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList());
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return null;
+        }
+    }
+
     @Override
     public FilmDto getFilmById(UUID id) {
         FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));

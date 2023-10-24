@@ -22,6 +22,7 @@ public class Movie extends FilmEntity {
     private LocalDate theatersReleaseDate;
     @Column(name = "AT_THEATERS", columnDefinition = "Boolean")
     private Boolean atTheaters;
+
     public String getBoxOffice() {
         return boxOffice;
     }

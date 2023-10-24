@@ -18,28 +18,28 @@ VALUES
 
 INSERT INTO film (id, FILM_TYPE, TITTLE, SYNOPSIS, ORIGINAL_LANGUAGE, DISTRIBUTOR, SUITABLE_FOR, STREAMING_RELEASE_DATE, PREQUEL_ID, SEQUEL_ID, BOX_OFFICE, RUNTIME, THEATERS_RELEASE_DATE, AT_THEATERS)
 VALUES
-    ('123e4567-e89b-12d3-a456-556642440001', '2', 'Movie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL, '223e4567-e89b-12d3-a456-556642440002',NULL,NULL,NULL,NULL),
-    ('223e4567-e89b-12d3-a456-556642440002', '2', 'Movie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '123e4567-e89b-12d3-a456-556642440001', NULL,NULL,NULL,NULL,NULL),
-    ('323e4567-e89b-12d3-a456-556642440003', '2', 'Movie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2023-11-15', NULL, NULL,NULL,NULL,NULL,NULL),
-    ('423e4567-e89b-12d3-a456-556642440004', '2', 'Movie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '323e4567-e89b-12d3-a456-556642440003', NULL,NULL,NULL,NULL,NULL),
-    ('523e4567-e89b-12d3-a456-556642440005', '2','Movie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '623e4567-e89b-12d3-a456-556642440006',NULL,NULL,NULL,NULL),
-    ('623e4567-e89b-12d3-a456-556642440006', '2', 'Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '523e4567-e89b-12d3-a456-556642440005',NULL,NULL,NULL,NULL),
-    ('723e4567-e89b-12d3-a456-556642440007', '2', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '623e4567-e89b-12d3-a456-556642440006', '823e4567-e89b-12d3-a456-556642440008',NULL,NULL,NULL,NULL),
-    ('823e4567-e89b-12d3-a456-556642440008', '2', 'Movie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '723e4567-e89b-12d3-a456-556642440007', NULL,NULL,NULL,NULL,NULL),
-    ('923e4567-e89b-12d3-a456-556642440009', '2','Movie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '055b9e94-3e71-4c33-ba92-3d5afc9e353f',NULL,NULL,NULL,NULL),
-    ('055b9e94-3e71-4c33-ba92-3d5afc9e353f', '2','Movie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '923e4567-e89b-12d3-a456-556642440009', NULL,NULL,NULL,NULL,NULL);
+    ('123e4567-e89b-12d3-a456-556642440001', '2', 'Serie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL, '223e4567-e89b-12d3-a456-556642440002',NULL,NULL,NULL,NULL),
+    ('223e4567-e89b-12d3-a456-556642440002', '2', 'Serie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '123e4567-e89b-12d3-a456-556642440001', NULL,NULL,NULL,NULL,NULL),
+    ('323e4567-e89b-12d3-a456-556642440003', '2', 'Serie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2023-11-15', NULL, NULL,NULL,NULL,NULL,NULL),
+    ('423e4567-e89b-12d3-a456-556642440004', '2', 'Serie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '323e4567-e89b-12d3-a456-556642440003', NULL,NULL,NULL,NULL,NULL),
+    ('523e4567-e89b-12d3-a456-556642440005', '2', 'Serie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '623e4567-e89b-12d3-a456-556642440006',NULL,NULL,NULL,NULL),
+    ('623e4567-e89b-12d3-a456-556642440006', '2', 'Serie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '523e4567-e89b-12d3-a456-556642440005',NULL,NULL,NULL,NULL),
+    ('723e4567-e89b-12d3-a456-556642440007', '2', 'Serie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '623e4567-e89b-12d3-a456-556642440006', '823e4567-e89b-12d3-a456-556642440008',NULL,NULL,NULL,NULL),
+    ('823e4567-e89b-12d3-a456-556642440008', '2', 'Serie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '723e4567-e89b-12d3-a456-556642440007', NULL,NULL,NULL,NULL,NULL),
+    ('923e4567-e89b-12d3-a456-556642440009', '2', 'Serie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '055b9e94-3e71-4c33-ba92-3d5afc9e353f',NULL,NULL,NULL,NULL),
+    ('055b9e94-3e71-4c33-ba92-3d5afc9e353f', '2', 'Serie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '923e4567-e89b-12d3-a456-556642440009', NULL,NULL,NULL,NULL,NULL);
 
 INSERT INTO film (id, FILM_TYPE,TITTLE, SYNOPSIS, ORIGINAL_LANGUAGE, DISTRIBUTOR, SUITABLE_FOR, STREAMING_RELEASE_DATE, PREQUEL_ID, SEQUEL_ID, BOX_OFFICE, RUNTIME, THEATERS_RELEASE_DATE, AT_THEATERS) VALUES
-    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1','Movie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '1000000', '120', '2023-10-05', TRUE),
-    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '1','Movie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', NULL, '750000', '90', '2023-11-15', FALSE),
-    ('3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '1','Movie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2023-11-15', NULL, NULL, '500000', '105', '2023-12-20', TRUE),
-    ('4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04', '1','Movie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', NULL, '850000', '135', '2024-01-10', TRUE),
-    ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '1','Movie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1200000', '180', '2024-02-18', FALSE),
-    ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1','Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '650000', '95', '2024-03-25', TRUE),
-    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1','Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '900000', '140', '2024-04-30', TRUE),
-    ('8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '1','Movie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', NULL, '550000', '105', '2024-05-10', FALSE),
-    ('9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', '1','Movie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1100000', '115', '2024-06-05', TRUE),
-    ('863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1','Movie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', NULL, '800000', '160', '2024-07-15', TRUE);
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1', 'Movie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '1000000', '120', '2023-10-05', TRUE),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '1', 'Movie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', NULL, '750000', '90', '2023-11-15', FALSE),
+    ('3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '1', 'Movie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2023-11-15', NULL, NULL, '500000', '105', '2023-12-20', TRUE),
+    ('4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04', '1', 'Movie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', NULL, '850000', '135', '2024-01-10', TRUE),
+    ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '1', 'Movie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1200000', '180', '2024-02-18', FALSE),
+    ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1', 'Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '650000', '95', '2024-03-25', TRUE),
+    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '900000', '140', '2024-04-30', TRUE),
+    ('8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '1', 'Movie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', NULL, '550000', '105', '2024-05-10', FALSE),
+    ('9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', '1', 'Movie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1100000', '115', '2024-06-05', TRUE),
+    ('863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1', 'Movie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', NULL, '800000', '160', '2024-07-15', TRUE);
 
 INSERT INTO staff(id, biography, birthday, birth_place, first_name, last_name)
 VALUES
@@ -80,4 +80,21 @@ INSERT INTO rating(id, rating, super_rating, film_id, user_id) VALUES
     ('052533f4-d50d-4dc8-901b-7426698b0859','72',FALSE,'1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','2ae12264-977d-419d-aa19-ce9658041fe4'),
     ('661548dc-1cfe-48e9-a19e-8df315e10189','35',FALSE,'9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09','2ae12264-977d-419d-aa19-ce9658041fe4');
 
+INSERT INTO stream(id, name, price) VALUES
+    ('7b0c02cc-efaa-4d9b-8619-8babb56e7b40','Netflix','99'),
+    ('888360fc-ea1f-42cd-b51e-16ad39bc47bb','Hulu','50'),
+    ('a7c2b80f-8bfa-43ee-89d9-d781f281d14b','Amazon Prime Vide','100'),
+    ('58090783-9f69-46b2-b931-f91b11973121','Disney+','120');
+
+INSERT INTO stream_film(id, buy, rent, url, film_id, stream_id) VALUES
+    ('4bc0eb01-fa0f-4768-b9d2-9777ba8415b5', FALSE,FALSE ,'http://netflix.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
+    ('5b344dbe-082c-47bf-8dd4-4bb6415e22f8',TRUE ,FALSE ,'http://netflix.com/movie2','2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
+    ('9463d673-4cf6-487f-80f8-ed882afbb3fc',FALSE , TRUE,'http://hulu.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','888360fc-ea1f-42cd-b51e-16ad39bc47bb'),
+    ('c73658b2-f09c-46b3-b81d-da4b4ca2c570', TRUE, TRUE,'http://primeVideo.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','a7c2b80f-8bfa-43ee-89d9-d781f281d14b');
+
 set foreign_key_checks=1;
+
+--select stream_film.stream_id, film.tittle from stream_film inner join film on stream_film.film_id=film.id where stream_film.stream_id="7b0c02cc-efaa-4d9b-8619-8babb56e7b40";
+--select film.tittle, stream.name from film join stream_film on film.id=stream_film.film_id join stream on stream_film.stream_id=stream.id where stream_film.stream_id = "7b0c02cc-efaa-4d9b-8619-8babb56e7b40";
+
+

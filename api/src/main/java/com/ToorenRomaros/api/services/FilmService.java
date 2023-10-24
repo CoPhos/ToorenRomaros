@@ -11,4 +11,6 @@ public interface FilmService {
      List<FilmDto>  getAllFilmsBySagaId(UUID id);
      FilmDto updateFilm(UUID id, FilmDto filmDto);
      void deleteFilm(UUID id);
+
+     List<FilmDto> testRepositoryCustom(String name, String duration);
 }

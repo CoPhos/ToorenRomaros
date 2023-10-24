@@ -31,7 +31,7 @@ public class StreamSiteFilmEntity {
     @JoinColumn(name = "film_id")
     FilmEntity film;
     @ManyToOne
-    @JoinColumn(name = "staff_id")
+    @JoinColumn(name = "stream_id")
     StreamSiteEntity streamSite;
 
     public StreamSiteFilmEntity(String url, Boolean rent, Boolean buy, FilmEntity film, StreamSiteEntity streamSite) {
