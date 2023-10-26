@@ -19,9 +19,6 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="film_type",
         discriminatorType = DiscriminatorType.INTEGER)
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class FilmEntity {
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
@@ -46,6 +43,8 @@ public class FilmEntity {
     private String suitableFor;
     @Column(name = "STREAMING_RELEASE_DATE", columnDefinition = "DATE")
     private LocalDate streamingReleaseDate;
+    @Column(name = "COOMING_SOON", columnDefinition = "DATE")
+    private LocalDate coomingSoon;
     @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = true)")
     private Float averageSuperRating;
     @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = false)")
@@ -136,6 +135,12 @@ public class FilmEntity {
     }
     public void setAverageUserRating(Float averageUserRating) {
         this.averageUserRating = averageUserRating;
+    }
+    public LocalDate getCoomingSoon() {
+        return coomingSoon;
+    }
+    public void setCoomingSoon(LocalDate coomingSoon) {
+        this.coomingSoon = coomingSoon;
     }
 
     @Override

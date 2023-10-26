@@ -7,6 +7,8 @@ import org.hibernate.annotations.Formula;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Objects;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "filmType",
@@ -27,6 +29,7 @@ public class FilmDto {
     private String distributor;
     @Size(max = 5, message = "Suitable for max size is 5 characters")
     private String suitableFor;
+    private LocalDate coomingSoon;
     private LocalDate streamingReleaseDate;
     private String prequel;
     private String sequel;
@@ -112,5 +115,24 @@ public class FilmDto {
     }
     public void setAverageUserRating(Float averageUserRating) {
         this.averageUserRating = averageUserRating;
+    }
+    public LocalDate getCoomingSoon() {
+        return coomingSoon;
+    }
+    public void setCoomingSoon(LocalDate coomingSoon) {
+        this.coomingSoon = coomingSoon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FilmDto filmDto = (FilmDto) o;
+        return Objects.equals(id, filmDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

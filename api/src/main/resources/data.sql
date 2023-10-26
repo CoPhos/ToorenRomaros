@@ -30,13 +30,13 @@ VALUES
     ('055b9e94-3e71-4c33-ba92-3d5afc9e353f', '2', 'Serie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '923e4567-e89b-12d3-a456-556642440009', NULL,NULL,NULL,NULL,NULL);
 
 INSERT INTO film (id, FILM_TYPE,TITTLE, SYNOPSIS, ORIGINAL_LANGUAGE, DISTRIBUTOR, SUITABLE_FOR, STREAMING_RELEASE_DATE, PREQUEL_ID, SEQUEL_ID, BOX_OFFICE, RUNTIME, THEATERS_RELEASE_DATE, AT_THEATERS) VALUES
-    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1', 'Movie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '1000000', '120', '2023-10-05', TRUE),
-    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '1', 'Movie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', NULL, '750000', '90', '2023-11-15', FALSE),
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1', 'Movie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL,'7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1000000', '120', '2023-10-05', TRUE),
+    ('10431aac-d368-4df8-addb-be5c0b8812fb', '1', 'Movie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', NULL, '750000', '90', '2023-11-15', FALSE),
     ('3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '1', 'Movie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2023-11-15', NULL, NULL, '500000', '105', '2023-12-20', TRUE),
     ('4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04', '1', 'Movie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', NULL, '850000', '135', '2024-01-10', TRUE),
     ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '1', 'Movie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1200000', '180', '2024-02-18', FALSE),
-    ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1', 'Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '650000', '95', '2024-03-25', TRUE),
-    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '900000', '140', '2024-04-30', TRUE),
+    ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1', 'Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '650000', '95', '2024-03-25', TRUE),
+    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', NULL, '900000', '140', '2024-04-30', TRUE),
     ('8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '1', 'Movie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', NULL, '550000', '105', '2024-05-10', FALSE),
     ('9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', '1', 'Movie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1100000', '115', '2024-06-05', TRUE),
     ('863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1', 'Movie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', NULL, '800000', '160', '2024-07-15', TRUE);
@@ -87,14 +87,59 @@ INSERT INTO stream(id, name, price) VALUES
     ('58090783-9f69-46b2-b931-f91b11973121','Disney+','120');
 
 INSERT INTO stream_film(id, buy, rent, url, film_id, stream_id) VALUES
-    ('4bc0eb01-fa0f-4768-b9d2-9777ba8415b5', FALSE,FALSE ,'http://netflix.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
-    ('5b344dbe-082c-47bf-8dd4-4bb6415e22f8',TRUE ,FALSE ,'http://netflix.com/movie2','2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
-    ('9463d673-4cf6-487f-80f8-ed882afbb3fc',FALSE , TRUE,'http://hulu.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','888360fc-ea1f-42cd-b51e-16ad39bc47bb'),
-    ('c73658b2-f09c-46b3-b81d-da4b4ca2c570', TRUE, TRUE,'http://primeVideo.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','a7c2b80f-8bfa-43ee-89d9-d781f281d14b');
+    ('5b344dbe-082c-47bf-8dd4-4bb6415e22f8', TRUE, FALSE, 'http://netflix.com/movie5','5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
+    ('143bf786-f1be-40ff-9b55-77f747abc920', TRUE, FALSE, 'http://netflix.com/movie6','7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
+    ('9463d673-4cf6-487f-80f8-ed882afbb3fc', FALSE, TRUE, 'http://hulu.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','888360fc-ea1f-42cd-b51e-16ad39bc47bb'),
+    ('4bc0eb01-fa0f-4768-b9d2-9777ba8415b5', FALSE, FALSE, 'http://netflix.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
+    ('c73658b2-f09c-46b3-b81d-da4b4ca2c570', TRUE, TRUE, 'http://primeVideo.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','a7c2b80f-8bfa-43ee-89d9-d781f281d14b');
 
+INSERT INTO genre(id, genre) VALUES
+    ('4ba05e0c-43d7-45b1-943f-d3a8b863dec1', 'Action'),
+    ('dbe4b00f-7817-44aa-9942-bf05da8fb84f', 'Adventure'),
+    ('655ce3a7-2c2a-4bd0-8b0a-002119422b82', 'Animation'),
+    ('acbcd5e3-3ee0-490b-8bb3-aa324d342ed5', 'Anime'),
+    ('9b243158-2f21-428f-aab1-2c3e83fd086d', 'Comedy'),
+    ('991a8129-4c2d-4afa-8bb9-104fd745b8c6', 'Crime'),
+    ('036ace82-a0e5-44ff-9a66-5b68b1027062', 'Documentary'),
+    ('8538728a-c957-4435-91d0-8ccaf6223ca6', 'Drama'),
+    ('fc7b3614-270d-49e1-af3e-b5e08779f4a0', 'Entretainment'),
+    ('98e8983f-63fc-4c5e-b1fb-138d635c7f8b', 'Fantasy'),
+    ('1a37e291-cae8-4cc6-8532-548ae92f2ad3', 'Horror'),
+    ('60dce741-c75a-4f02-a36a-a1ba1d2d370c', 'History'),
+    ('48faa47e-2765-4a30-b1d8-bc847c78fd56', 'News'),
+    ('66a64410-6c10-4fb5-9d5c-58f70ff367a9', 'Sci-fi'),
+    ('0753869f-56a3-4cfc-a541-3ba07a443166', 'Romance'),
+    ('a3dfd418-26d1-4ff2-ac86-614c90e99ba7', 'Sports'),
+    ('bf6d309b-6340-4179-b04e-9231ca9020e9', 'Stand up'),
+    ('6b5604cc-f9a8-4183-90c1-d10b46e2f9a4', 'War');
+
+INSERT INTO genre_film(id, film_id, genre_id) VALUES
+    ('f7be3075-d09e-4588-a67c-113dddfa4785', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '4ba05e0c-43d7-45b1-943f-d3a8b863dec1'),
+    ('6edc4050-2d82-44c8-b4b0-d0369a9022ca', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', 'dbe4b00f-7817-44aa-9942-bf05da8fb84f'),
+    ('0ca978c0-e819-4ddd-8a3f-66c2792a3f87', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '991a8129-4c2d-4afa-8bb9-104fd745b8c6'),
+    ('4634f045-9451-489a-b2e0-db03b78d378a', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '66a64410-6c10-4fb5-9d5c-58f70ff367a9'),
+    ('1347e498-052d-462f-ad75-8cc74d4ed7a3', '10431aac-d368-4df8-addb-be5c0b8812fb', 'fc7b3614-270d-49e1-af3e-b5e08779f4a0'),
+    ('e1e97375-4a61-4b5c-b82f-acb2cef1c3fb', '10431aac-d368-4df8-addb-be5c0b8812fb', 'bf6d309b-6340-4179-b04e-9231ca9020e9'),
+    ('f8f5ee6e-8294-4a74-9319-9386c1dcb11a', '10431aac-d368-4df8-addb-be5c0b8812fb', '9b243158-2f21-428f-aab1-2c3e83fd086d'),
+    ('fc1d98c2-cb0f-46c2-9cb8-708f30c0f430', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '0753869f-56a3-4cfc-a541-3ba07a443166'),
+    ('3deada4e-2d85-4d4b-a2e8-211cf2d6cbdb', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '60dce741-c75a-4f02-a36a-a1ba1d2d370c'),
+    ('a30b66ac-2446-4604-a374-3aabccfc0f00', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '036ace82-a0e5-44ff-9a66-5b68b1027062'),
+    ('ddfc6e50-79a8-4537-87b9-b7fea45a9c7e', '123e4567-e89b-12d3-a456-556642440001', 'acbcd5e3-3ee0-490b-8bb3-aa324d342ed5'),
+    ('3227b5c5-8d06-4980-b575-436e11148f17', '123e4567-e89b-12d3-a456-556642440001', '655ce3a7-2c2a-4bd0-8b0a-002119422b82'),
+    ('ab5adde6-b0bb-41fe-a97b-49f1a1d0e862', '123e4567-e89b-12d3-a456-556642440001', '98e8983f-63fc-4c5e-b1fb-138d635c7f8b'),
+    ('94cc00b5-2071-4f49-9041-a51be180fdbb', '123e4567-e89b-12d3-a456-556642440001', 'dbe4b00f-7817-44aa-9942-bf05da8fb84f');
 set foreign_key_checks=1;
 
---select stream_film.stream_id, film.tittle from stream_film inner join film on stream_film.film_id=film.id where stream_film.stream_id="7b0c02cc-efaa-4d9b-8619-8babb56e7b40";
---select film.tittle, stream.name from film join stream_film on film.id=stream_film.film_id join stream on stream_film.stream_id=stream.id where stream_film.stream_id = "7b0c02cc-efaa-4d9b-8619-8babb56e7b40";
-
-
+--select distinct film.id, film.tittle
+--from film
+--inner join stream_film
+--on stream_film.film_id=film.id
+--inner join genre_film
+--on genre_film.film_id=film.id
+--where stream_film.stream_id="7b0c02cc-efaa-4d9b-8619-8babb56e7b40"
+--and genre_film.genre_id in ("4ba05e0c-43d7-45b1-943f-d3a8b863dec1", "dbe4b00f-7817-44aa-9942-bf05da8fb84f")
+--and film.suitable_for = "PG-13"
+--and film.film_type = '1'
+--and film.at_theaters = TRUE
+--and film.cooming_soon is not null
+--and film.streaming_release_date is not null;

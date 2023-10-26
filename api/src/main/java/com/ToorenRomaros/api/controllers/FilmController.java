@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/v1")
@@ -42,15 +40,24 @@ public class FilmController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/films/test")
-    ResponseEntity<Map<String, Object>> getFilmTest(@RequestParam String name, @RequestParam String duration) throws Exception {
+    ResponseEntity<Map<String, Object>> getFilmTest(@RequestParam(required = false) String streamId,
+                                                    @RequestParam(required = false) List<UUID> genres,
+                                                    @RequestParam(required = false) String suitableFor,
+                                                    @RequestParam(required = false) String filmType,
+                                                    @RequestParam(required = false) boolean atTheaters,
+                                                    @RequestParam(required = false) boolean coomingSoon,
+                                                    @RequestParam(required = false) boolean atStreaming) throws Exception {
         try {
             Map<String, Object> response = new HashMap<>();
-            response.put("response", filmService.testRepositoryCustom(name, duration));
+            log.info(streamId);
+            response.put("response", filmService.testRepositoryCustom(streamId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming));
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             log.info(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+
+//        http://localhost:9090/api/v1/films/test?streamId=7b0c02cc-efaa-4d9b-8619-8babb56e7b40&genres=4ba05e0c-43d7-45b1-943f-d3a8b863dec1,dbe4b00f-7817-44aa-9942-bf05da8fb84f&suitableFor=PG-13&filmType=1&atTheaters=TRUE&coomingSoon=TRUE&atStreaming=TRUE
     }
     @GetMapping("sagas/{id}/films")
     ResponseEntity<Map<String, Object>> getAllFilmBySagaId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
