@@ -1,6 +1,8 @@
 package com.ToorenRomaros.api.entities.film;
 
+import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
 import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
+import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Formula;
@@ -53,11 +55,10 @@ public class FilmEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "PREQUEL_ID", referencedColumnName = "id")
     private FilmEntity prequel;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
     private FilmEntity sequel;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "saga_id")
     SagaEntity saga;
 
@@ -142,7 +143,6 @@ public class FilmEntity {
     public void setCoomingSoon(LocalDate coomingSoon) {
         this.coomingSoon = coomingSoon;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

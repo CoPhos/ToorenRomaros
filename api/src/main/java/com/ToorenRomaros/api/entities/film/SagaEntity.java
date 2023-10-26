@@ -26,7 +26,6 @@ public class SagaEntity {
     }
     public SagaEntity() {
     }
-
     public UUID getId() {
         return id;
     }

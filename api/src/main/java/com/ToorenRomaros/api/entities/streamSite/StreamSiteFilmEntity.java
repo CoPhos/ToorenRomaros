@@ -29,10 +29,10 @@ public class StreamSiteFilmEntity {
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    FilmEntity film;
+    private FilmEntity film;
     @ManyToOne
     @JoinColumn(name = "stream_id")
-    StreamSiteEntity streamSite;
+    private StreamSiteEntity streamSite;
 
     public StreamSiteFilmEntity(String url, Boolean rent, Boolean buy, FilmEntity film, StreamSiteEntity streamSite) {
         this.url = url;
@@ -40,6 +40,10 @@ public class StreamSiteFilmEntity {
         this.buy = buy;
         this.film = film;
         this.streamSite = streamSite;
+    }
+
+    public StreamSiteFilmEntity(FilmEntity film) {
+        this.film = film;
     }
 
     public StreamSiteFilmEntity() {
