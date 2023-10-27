@@ -1,13 +1,8 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.FilmDto;
-import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
-import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
-import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
-import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
-import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.film.SagaRepository;
@@ -19,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -55,15 +49,15 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<FilmDto> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming) {
-            List<StreamSiteFilmEntity> filmEntities = filmRepository.findFilmByNameAndDuration(streamSiteId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming);
-            if(filmEntities == null){
-                throw new ResourceNotFoundException("Resource not found");
-            }
-            return filmEntities.stream().map(entity -> {
-                log.info(entity.getFilm().getTittle());
-                return filmMapper.mapToFilmDto(entity.getFilm());
-            }).collect(Collectors.toList());
+    public List<?> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming) {
+//            List<FilmEntity> filmEntities = filmRepository.findFilmByNameAndDuration(streamSiteId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming);
+//            if(filmEntities == null){
+//                throw new ResourceNotFoundException("Resource not found");
+//            }
+//            return filmEntities.stream().map(entity -> {
+//                return filmMapper.mapToFilmDto(entity);
+//            }).collect(Collectors.toList());
+return filmRepository.findFilmByNameAndDuration(streamSiteId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming);
     }
 
     @Override

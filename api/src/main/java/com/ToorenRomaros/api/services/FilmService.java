@@ -12,5 +12,5 @@ public interface FilmService {
      FilmDto updateFilm(UUID id, FilmDto filmDto);
      void deleteFilm(UUID id);
 
-     List<FilmDto> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming);
+     List<?> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming);
 }

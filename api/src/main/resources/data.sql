@@ -36,7 +36,7 @@ INSERT INTO film (id, FILM_TYPE,TITTLE, SYNOPSIS, ORIGINAL_LANGUAGE, DISTRIBUTOR
     ('4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04', '1', 'Movie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', NULL, '850000', '135', '2024-01-10', TRUE),
     ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '1', 'Movie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1200000', '180', '2024-02-18', FALSE),
     ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1', 'Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '650000', '95', '2024-03-25', TRUE),
-    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', NULL, '900000', '140', '2024-04-30', TRUE),
+    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'PG-13', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', NULL, '900000', '140', '2024-04-30', TRUE),
     ('8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '1', 'Movie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', NULL, '550000', '105', '2024-05-10', FALSE),
     ('9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', '1', 'Movie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1100000', '115', '2024-06-05', TRUE),
     ('863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1', 'Movie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', NULL, '800000', '160', '2024-07-15', TRUE);
@@ -127,7 +127,7 @@ INSERT INTO genre_film(id, film_id, genre_id) VALUES
     ('ddfc6e50-79a8-4537-87b9-b7fea45a9c7e', '123e4567-e89b-12d3-a456-556642440001', 'acbcd5e3-3ee0-490b-8bb3-aa324d342ed5'),
     ('3227b5c5-8d06-4980-b575-436e11148f17', '123e4567-e89b-12d3-a456-556642440001', '655ce3a7-2c2a-4bd0-8b0a-002119422b82'),
     ('ab5adde6-b0bb-41fe-a97b-49f1a1d0e862', '123e4567-e89b-12d3-a456-556642440001', '98e8983f-63fc-4c5e-b1fb-138d635c7f8b'),
-    ('94cc00b5-2071-4f49-9041-a51be180fdbb', '123e4567-e89b-12d3-a456-556642440001', 'dbe4b00f-7817-44aa-9942-bf05da8fb84f');
+    ('94cc00b5-2071-4f49-9041-a51be180fdbb', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', 'dbe4b00f-7817-44aa-9942-bf05da8fb84f');
 set foreign_key_checks=1;
 
 --select distinct film.id, film.tittle
@@ -143,3 +143,18 @@ set foreign_key_checks=1;
 --and film.at_theaters = TRUE
 --and film.cooming_soon is not null
 --and film.streaming_release_date is not null;
+
+
+--select distinct film.*
+--    from stream_film
+--        inner join (select distinct genre_film.film_id
+--                        from genre_film
+--                            where genre_film.genre_id in
+--                             ("4ba05e0c-43d7-45b1-943f-d3a8b863dec1",
+--                             "dbe4b00f-7817-44aa-9942-bf05da8fb84f"))
+--                             as t1 on t1.film_id= stream_film.film_id
+--        inner join film
+--            on film.id = t1.film_id
+--        where stream_film.stream_id = "7b0c02cc-efaa-4d9b-8619-8babb56e7b40"
+--        and film.suitable_for = "PG-13";
+
