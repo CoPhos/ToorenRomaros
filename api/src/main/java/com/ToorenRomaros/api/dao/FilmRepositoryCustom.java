@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface FilmRepositoryCustom {
-    List<?> findFilmByNameAndDuration(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean commingSoon, boolean atStreaming);
+    List<FilmEntity> findFilmByNameAndDuration(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean commingSoon, boolean atStreaming);
 }

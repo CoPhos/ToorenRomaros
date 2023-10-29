@@ -22,6 +22,8 @@ import java.util.UUID;
 @DiscriminatorColumn(name="film_type",
         discriminatorType = DiscriminatorType.INTEGER)
 public class FilmEntity {
+    @Column(name="film_type", insertable = false, updatable = false)
+    protected int filmType;
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
     @Type(type="uuid-char")
@@ -47,11 +49,12 @@ public class FilmEntity {
     private LocalDate streamingReleaseDate;
     @Column(name = "COOMING_SOON", columnDefinition = "DATE")
     private LocalDate coomingSoon;
-    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = true)")
+//    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = true)")
+    @Column(name = "AVERAGE_SUPER_RATING", columnDefinition = "FLOAT")
     private Float averageSuperRating;
-    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = false)")
+//    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = false)")
+    @Column(name = "AVERAGE_USER_RATING", columnDefinition = "FLOAT")
     private Float averageUserRating;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "PREQUEL_ID", referencedColumnName = "id")
     private FilmEntity prequel;
@@ -64,6 +67,21 @@ public class FilmEntity {
 
     public FilmEntity() {
     }
+    public FilmEntity(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, FilmEntity prequel, FilmEntity sequel, SagaEntity saga) {
+        this.filmType = filmType;
+        this.id = id;
+        this.tittle = tittle;
+        this.synopsis = synopsis;
+        this.originalLanguage = originalLanguage;
+        this.distributor = distributor;
+        this.suitableFor = suitableFor;
+        this.streamingReleaseDate = streamingReleaseDate;
+        this.coomingSoon = coomingSoon;
+        this.prequel = prequel;
+        this.sequel = sequel;
+        this.saga = saga;
+    }
+
 
     public UUID getId() {
         return id;
@@ -125,6 +143,18 @@ public class FilmEntity {
     public void setSaga(SagaEntity saga) {
         this.saga = saga;
     }
+    public LocalDate getCoomingSoon() {
+        return coomingSoon;
+    }
+    public void setCoomingSoon(LocalDate coomingSoon) {
+        this.coomingSoon = coomingSoon;
+    }
+    public int getFilmType() {
+        return filmType;
+    }
+    public void setFilmType(int filmType) {
+        this.filmType = filmType;
+    }
     public Float getAverageSuperRating() {
         return averageSuperRating;
     }
@@ -137,12 +167,7 @@ public class FilmEntity {
     public void setAverageUserRating(Float averageUserRating) {
         this.averageUserRating = averageUserRating;
     }
-    public LocalDate getCoomingSoon() {
-        return coomingSoon;
-    }
-    public void setCoomingSoon(LocalDate coomingSoon) {
-        this.coomingSoon = coomingSoon;
-    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

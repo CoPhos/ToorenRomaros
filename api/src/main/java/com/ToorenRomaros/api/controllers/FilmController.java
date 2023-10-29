@@ -54,6 +54,7 @@ public class FilmController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             log.info(e.getMessage());
+            log.info(e.getCause().toString());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 

@@ -1,5 +1,6 @@
 package com.ToorenRomaros.api.dao;
 
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -18,9 +19,9 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
     }
     private static final Logger log = LoggerFactory.getLogger(FilmRepositoryCustomImpl.class);
     @Override
-    public List findFilmByNameAndDuration(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean commingSoon, boolean atStreaming) {
+    public List<FilmEntity> findFilmByNameAndDuration(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean commingSoon, boolean atStreaming) {
         try {
-            StringBuilder queryText = new StringBuilder("SELECT DISTINCT film.tittle FROM film" +
+            StringBuilder queryText = new StringBuilder("SELECT film.* FROM film" +
                     " INNER JOIN stream_film ON stream_film.film_id=film.id" +
                     " INNER JOIN genre_film ON genre_film.film_id=film.id" +
                     " WHERE");
@@ -46,14 +47,15 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                 }
                 queryText.append(") ");
             }
-
-            Query query = em.createNativeQuery(queryText.toString());
+            queryText.append(" GROUP BY film.id");
+            Query query = em.createNativeQuery(queryText.toString(), FilmEntity.class);
             argumentCounter = 1;
             for (String providedParameter : providedParameters) {
                 log.info(String.valueOf(argumentCounter));
                 query.setParameter(argumentCounter, providedParameter);
                 argumentCounter++;
             }
+
             return query.getResultList();
         }catch (Exception e){
             log.info(e.getMessage());

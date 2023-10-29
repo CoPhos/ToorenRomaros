@@ -49,15 +49,19 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<?> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming) {
-//            List<FilmEntity> filmEntities = filmRepository.findFilmByNameAndDuration(streamSiteId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming);
-//            if(filmEntities == null){
-//                throw new ResourceNotFoundException("Resource not found");
-//            }
-//            return filmEntities.stream().map(entity -> {
-//                return filmMapper.mapToFilmDto(entity);
-//            }).collect(Collectors.toList());
-return filmRepository.findFilmByNameAndDuration(streamSiteId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming);
+    public List<FilmDto> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming) {
+           try {
+               List<FilmEntity> filmEntities = filmRepository.findFilmByNameAndDuration(streamSiteId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming);
+               if(filmEntities == null){
+                   throw new ResourceNotFoundException("Resource not found");
+               }
+
+             return filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList());
+           }catch (Exception e){
+               log.info(e.getMessage());
+               log.info(e.getCause().toString());
+               return null;
+           }
     }
 
     @Override
