@@ -27,9 +27,14 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                     " WHERE");
             int argumentCounter = 1;
             List<String> providedParameters = new ArrayList<String>();
-
+            if(filmType != null){
+                queryText.append(" film.film_type = ?");
+                queryText.append(filmType);
+                argumentCounter++;
+                providedParameters.add(filmType);
+            }
             if(streamSiteId != null || !streamSiteId.isBlank()){
-                queryText.append(" stream_film.stream_id = ?");
+                queryText.append(" and stream_film.stream_id = ?");
                 queryText.append(argumentCounter);
                 argumentCounter++;
                 providedParameters.add(streamSiteId);
@@ -47,6 +52,26 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                 }
                 queryText.append(") ");
             }
+            if(suitableFor != null){
+                queryText.append(" and film.suitable_for = ?");
+                queryText.append(argumentCounter);
+                argumentCounter++;
+                providedParameters.add(suitableFor);
+            }
+            if(atTheaters){
+                queryText.append(" and film.at_theaters = ?");
+                queryText.append(argumentCounter);
+                argumentCounter++;
+                providedParameters.add("true");
+            }
+            if(commingSoon){
+                queryText.append(" and film.cooming_soon = ?");
+                queryText.append(argumentCounter);
+                providedParameters.add("true");
+            }if(commingSoon){
+                queryText.append(" and film.streaming_release_date = is not null");
+            }
+
             queryText.append(" GROUP BY film.id");
             Query query = em.createNativeQuery(queryText.toString(), FilmEntity.class);
             argumentCounter = 1;
@@ -56,7 +81,7 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                 argumentCounter++;
             }
 
-            return query.getResultList();
+            return (List<FilmEntity>) query.getResultList();
         }catch (Exception e){
             log.info(e.getMessage());
             log.info(e.getCause().toString());
