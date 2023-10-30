@@ -3,6 +3,7 @@ package com.ToorenRomaros.api.services;
 import com.ToorenRomaros.api.dto.film.FilmDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface FilmService {
@@ -11,6 +12,5 @@ public interface FilmService {
      List<FilmDto>  getAllFilmsBySagaId(UUID id);
      FilmDto updateFilm(UUID id, FilmDto filmDto);
      void deleteFilm(UUID id);
-
-     List<FilmDto> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming);
+     Map<String, Object> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming, String orderBy, String userRating, String superRating, int page, int size);
 }

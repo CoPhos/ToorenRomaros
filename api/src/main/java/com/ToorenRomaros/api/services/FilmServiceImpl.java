@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -49,14 +50,16 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<FilmDto> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming) {
+    public Map<String, Object> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming, String orderBy,String userRating, String superRating, int page, int size) {
            try {
-               List<FilmEntity> filmEntities = filmRepository.findFilmByNameAndDuration(streamSiteId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming);
-               if(filmEntities == null){
+               Map<String, Object> result = filmRepository.findDinamicQuery(streamSiteId, genres, suitableFor,
+                       filmType, atTheaters, coomingSoon, atStreaming, orderBy, userRating,  superRating, page, size);
+               List<FilmEntity> filmEntities = (List<FilmEntity>) result.get("queryResult");
+               if(filmEntities == null) {
                    throw new ResourceNotFoundException("Resource not found");
                }
-
-             return filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList());
+               result.replace("queryResult", filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList()));
+             return result;
            }catch (Exception e){
                log.info(e.getMessage());
                log.info(e.getCause().toString());

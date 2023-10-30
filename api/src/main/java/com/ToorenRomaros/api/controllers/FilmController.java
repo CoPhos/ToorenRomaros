@@ -43,14 +43,25 @@ public class FilmController {
     ResponseEntity<Map<String, Object>> getFilmTest(@RequestParam(required = false) String streamId,
                                                     @RequestParam(required = false) List<UUID> genres,
                                                     @RequestParam(required = false) String suitableFor,
-                                                    @RequestParam(required = false) String filmType,
+                                                    @RequestParam(defaultValue = "1") String filmType,
                                                     @RequestParam(required = false) boolean atTheaters,
                                                     @RequestParam(required = false) boolean coomingSoon,
-                                                    @RequestParam(required = false) boolean atStreaming) throws Exception {
+                                                    @RequestParam(required = false) boolean atStreaming,
+                                                    @RequestParam(defaultValue = "tittle-asc") String orderBy,
+                                                    @RequestParam(required = false) String userRating,
+                                                    @RequestParam(required = false) String superRating,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "6") int size) throws Exception {
         try {
             Map<String, Object> response = new HashMap<>();
             log.info(streamId);
-            response.put("response", filmService.testRepositoryCustom(streamId, genres, suitableFor,filmType,atTheaters,coomingSoon,atStreaming));
+            Map<String, Object> films = filmService.testRepositoryCustom(streamId, genres, suitableFor, filmType,
+                    atTheaters, coomingSoon, atStreaming, orderBy, userRating, superRating, page, size);
+            response.put("response", films.get("queryResult"));
+            response.put("currentPage", films.get("pageNumber"));
+            response.put("pageSize", films.get("pageSize"));
+            response.put("maxResults", films.get("maxResults"));
+            response.put("totalPages",films.get("totalPages"));
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             log.info(e.getMessage());

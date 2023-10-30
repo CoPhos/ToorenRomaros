@@ -87,7 +87,7 @@ INSERT INTO stream(id, name, price) VALUES
     ('58090783-9f69-46b2-b931-f91b11973121','Disney+','120');
 
 INSERT INTO stream_film(id, buy, rent, url, film_id, stream_id) VALUES
-    ('5b344dbe-082c-47bf-8dd4-4bb6415e22f8', TRUE, FALSE, 'http://netflix.com/movie5','5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
+    ('5b344dbe-082c-47bf-8dd4-4bb6415e22f8', TRUE, FALSE, 'http://netflix.com/movie5','10431aac-d368-4df8-addb-be5c0b8812fb','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
     ('143bf786-f1be-40ff-9b55-77f747abc920', TRUE, FALSE, 'http://netflix.com/movie6','7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
     ('9463d673-4cf6-487f-80f8-ed882afbb3fc', FALSE, TRUE, 'http://hulu.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','888360fc-ea1f-42cd-b51e-16ad39bc47bb'),
     ('4bc0eb01-fa0f-4768-b9d2-9777ba8415b5', FALSE, FALSE, 'http://netflix.com/movie1','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','7b0c02cc-efaa-4d9b-8619-8babb56e7b40'),
