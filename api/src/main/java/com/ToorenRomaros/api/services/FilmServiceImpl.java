@@ -41,32 +41,24 @@ public class FilmServiceImpl implements FilmService {
         if (filmDto.getPrequel() != null) {
             newMovie.setPrequel(addPrequel(filmDto));
         }
-        if(filmDto.getSagaId() != null){
+        if (filmDto.getSagaId() != null) {
             SagaEntity sagaEntity = sagaRepository.findById(UUID.fromString(filmDto.getSagaId())).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
             newMovie.setSaga(sagaEntity);
         }
         FilmEntity savedMovie = filmRepository.save(newMovie);
         return filmMapper.mapToFilmDto(savedMovie);
     }
-
     @Override
-    public Map<String, Object> testRepositoryCustom(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming, String orderBy,String userRating, String superRating, int page, int size) {
-           try {
-               Map<String, Object> result = filmRepository.findDinamicQuery(streamSiteId, genres, suitableFor,
-                       filmType, atTheaters, coomingSoon, atStreaming, orderBy, userRating,  superRating, page, size);
-               List<FilmEntity> filmEntities = (List<FilmEntity>) result.get("queryResult");
-               if(filmEntities == null) {
-                   throw new ResourceNotFoundException("Resource not found");
-               }
-               result.replace("queryResult", filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList()));
-             return result;
-           }catch (Exception e){
-               log.info(e.getMessage());
-               log.info(e.getCause().toString());
-               return null;
-           }
+    public Map<String, Object> getFilmByDynamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming, String orderBy, String userRating, String superRating, int page, int size) {
+        Map<String, Object> result = filmRepository.findDinamicQuery(streamSiteId, genres, suitableFor,
+                filmType, atTheaters, coomingSoon, atStreaming, orderBy, userRating, superRating, page, size);
+        List<FilmEntity> filmEntities = (List<FilmEntity>) result.get("queryResult");
+        if (filmEntities == null) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
+            result.replace("queryResult", filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList()));
+            return result;
     }
-
     @Override
     public FilmDto getFilmById(UUID id) {
         FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
@@ -75,13 +67,11 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public List<FilmDto> getAllFilmsBySagaId(UUID id) {
         List<FilmEntity> filmEntities = filmRepository.getAllFilmbySagaId(id.toString());
-        if(filmEntities == null){
+        if (filmEntities == null) {
             throw new ResourceNotFoundException("Resource not found");
         }
         return filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList());
     }
-    
-
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public FilmDto updateFilm(UUID id, FilmDto filmDto) {
@@ -100,7 +90,7 @@ public class FilmServiceImpl implements FilmService {
         if (filmDto.getPrequel() != null) {
             newFilm.setPrequel(addPrequel(filmDto));
         }
-        if(filmDto.getSagaId() != null){
+        if (filmDto.getSagaId() != null) {
             SagaEntity sagaEntity = sagaRepository.findById(UUID.fromString(filmDto.getSagaId())).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
             newFilm.setSaga(sagaEntity);
         }
@@ -112,7 +102,6 @@ public class FilmServiceImpl implements FilmService {
     public void deleteFilm(UUID id) {
         filmRepository.deleteById(id);
     }
-
     private FilmEntity addSequel(FilmDto filmDto) {
         String newSequelId = filmDto.getSequel();
         return filmRepository.findById(UUID.fromString(newSequelId)).orElseThrow(() -> new ResourceNotFoundException(newSequelId + " not found"));
@@ -121,6 +110,5 @@ public class FilmServiceImpl implements FilmService {
         String newPrequelId = filmDto.getPrequel();
         return filmRepository.findById(UUID.fromString(newPrequelId)).orElseThrow(() -> new ResourceNotFoundException(newPrequelId + " not found"));
     }
-
 }
 

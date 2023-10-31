@@ -1,6 +1,5 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dao.FilmRepositoryCustomImpl;
 import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.services.FilmService;
 import org.slf4j.Logger;
@@ -12,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1")
@@ -20,7 +22,6 @@ public class FilmController {
     private static final String uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
     private final FilmService filmService;
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
-
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
@@ -39,8 +40,8 @@ public class FilmController {
         response.put("response", film);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/films/test")
-    ResponseEntity<Map<String, Object>> getFilmTest(@RequestParam(required = false) String streamId,
+    @GetMapping("/films")
+    ResponseEntity<Map<String, Object>> getFilmByDynamicQuery(@RequestParam(required = false) String streamId,
                                                     @RequestParam(required = false) List<UUID> genres,
                                                     @RequestParam(required = false) String suitableFor,
                                                     @RequestParam(defaultValue = "1") String filmType,
@@ -52,24 +53,16 @@ public class FilmController {
                                                     @RequestParam(required = false) String superRating,
                                                     @RequestParam(defaultValue = "0") int page,
                                                     @RequestParam(defaultValue = "6") int size) throws Exception {
-        try {
-            Map<String, Object> response = new HashMap<>();
-            log.info(streamId);
-            Map<String, Object> films = filmService.testRepositoryCustom(streamId, genres, suitableFor, filmType,
-                    atTheaters, coomingSoon, atStreaming, orderBy, userRating, superRating, page, size);
-            response.put("response", films.get("queryResult"));
-            response.put("currentPage", films.get("pageNumber"));
-            response.put("pageSize", films.get("pageSize"));
-            response.put("maxResults", films.get("maxResults"));
-            response.put("totalPages",films.get("totalPages"));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }catch (Exception e){
-            log.info(e.getMessage());
-            log.info(e.getCause().toString());
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
 
-//        http://localhost:9090/api/v1/films/test?streamId=7b0c02cc-efaa-4d9b-8619-8babb56e7b40&genres=4ba05e0c-43d7-45b1-943f-d3a8b863dec1,dbe4b00f-7817-44aa-9942-bf05da8fb84f&suitableFor=PG-13&filmType=1&atTheaters=TRUE&coomingSoon=TRUE&atStreaming=TRUE
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> films = filmService.getFilmByDynamicQuery(streamId, genres, suitableFor, filmType,
+                atTheaters, coomingSoon, atStreaming, orderBy, userRating, superRating, page, size);
+        response.put("response", films.get("queryResult"));
+        response.put("currentPage", films.get("pageNumber"));
+        response.put("pageSize", films.get("pageSize"));
+        response.put("maxResults", films.get("maxResults"));
+        response.put("totalPages", films.get("totalPages"));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("sagas/{id}/films")
     ResponseEntity<Map<String, Object>> getAllFilmBySagaId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {

@@ -33,8 +33,6 @@ public class PostEntity {
     @NotNull(message = "Synthesis can not be null")
     private String synthesis;
 
-//    private @blob body;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
