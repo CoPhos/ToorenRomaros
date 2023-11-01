@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.exeptions;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
@@ -211,6 +212,20 @@ public class RestApiErrorHandler {
                                 .format("%s %s", ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrMsgKey(), ex.getRootCause()),
                         ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrCode(),
                         HttpStatus.BAD_REQUEST.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<Error> handleIOException(
+            HttpServletRequest request,
+            IOException ex,
+            Locale locale) {
+        Error error = ErrorUtils
+                .createError(String
+                                .format("%s %s", ErrorCode.IO_EXCEPTION.getErrMsgKey(), ex.getMessage()),
+                        ErrorCode.IO_EXCEPTION.getErrCode(),
+                        HttpStatus.INTERNAL_SERVER_ERROR.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);

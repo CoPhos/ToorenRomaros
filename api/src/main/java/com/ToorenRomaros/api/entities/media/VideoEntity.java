@@ -16,8 +16,11 @@ public class VideoEntity {
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(name = "FILE_PATH")
+    @Column(name = "FILE_PATH", columnDefinition = "VARCHAR(255)")
     private String filePath;
+
+    @Column(name = "NAME", columnDefinition = "VARCHAR(64)")
+    private String name;
 
     public UUID getId() {
         return id;

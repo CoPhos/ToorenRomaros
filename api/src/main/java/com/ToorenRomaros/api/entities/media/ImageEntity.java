@@ -1,14 +1,24 @@
-package com.ToorenRomaros.api.entities.media;
 
+package com.ToorenRomaros.api.entities.media;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.film.Movie;
+import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.UUID;
-
+@AnyMetaDef(name = "OwnerMetaDef", idType = "uuid-char", metaType = "string",
+        metaValues = {
+                @MetaValue(targetEntity = Movie.class, value = "F"),
+                @MetaValue(targetEntity = Serie.class, value = "F"),
+                @MetaValue(targetEntity = UserEntity.class, value = "U"),
+                @MetaValue(targetEntity = RichTextEntity.class, value = "RT"),
+                @MetaValue(targetEntity = VideoEntity.class, value = "V")
+        })
 @Entity
 @Table(name = "image")
 public class ImageEntity {
@@ -18,22 +28,28 @@ public class ImageEntity {
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-
-    @Column(name = "FILE_PATH")
+    @Column(name = "FILE_PATH", columnDefinition = "VARCHAR(255)")
     private String filePath;
-    @Column(name = "SIZE")
+    @Column(name = "SIZE", columnDefinition = "VARCHAR(8)")
     private String imageSize;
-
-    @Any(metaColumn = @Column(name = "OWNER_TYPE"))
-    @AnyMetaDef(idType = "string", metaType = "string",
-            metaValues = {
-                    @MetaValue(targetEntity = FilmEntity.class, value = "F"),
-                    @MetaValue(targetEntity = UserEntity.class, value = "U"),
-                    @MetaValue(targetEntity = RichTextEntity.class, value = "RT"),
-                    @MetaValue(targetEntity = VideoEntity.class, value = "V")
-            })
+    @Column(name = "CREATED_AT", columnDefinition = "DATETIME")
+    private LocalDateTime createdAt;
+    @Column(name = "IMAGE_TYPE", columnDefinition = "VARCHAR(16)")
+    private String imageType;
+    @Any(metaDef = "OwnerMetaDef", metaColumn = @Column(name = "OWNER_TYPE"))
     @JoinColumn(name="OWNER_ID")
     private Object owner;
+
+    public ImageEntity(String filePath, String imageSize, LocalDateTime createdAt, String imageType, Object owner) {
+        this.filePath = filePath;
+        this.imageSize = imageSize;
+        this.createdAt = createdAt;
+        this.imageType = imageType;
+        this.owner = owner;
+    }
+
+    public ImageEntity() {
+    }
 
     public UUID getId() {
         return id;
@@ -59,4 +75,27 @@ public class ImageEntity {
         this.imageSize = imageSize;
     }
 
+    public Object getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Object owner) {
+        this.owner = owner;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
 }

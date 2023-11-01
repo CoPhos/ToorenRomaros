@@ -15,7 +15,7 @@ public class RichTextEntity {
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition = "MEDIUMTEXT")
     private String content;
 
     public UUID getId() {
