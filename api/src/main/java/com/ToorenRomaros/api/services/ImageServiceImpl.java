@@ -1,6 +1,5 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
@@ -15,12 +14,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -29,22 +29,20 @@ public class ImageServiceImpl implements ImageService {
     private final RichTextRepository richTextRepository;
     private final FilmRepository filmRepository;
     private final VideoRepository videoRepository;
-    private final ModelMapper modelMapper;
     @Value("${images.folderPath}")
     private String FOLDER_PATH;
     private static final Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
 
-    public ImageServiceImpl(ImageRepostiroy imageRepostiroy, UserRepository userRepository, RichTextRepository richTextRepository, FilmRepository filmRepository, VideoRepository videoRepository, ModelMapper modelMapper) {
+    public ImageServiceImpl(ImageRepostiroy imageRepostiroy, UserRepository userRepository, RichTextRepository richTextRepository, FilmRepository filmRepository, VideoRepository videoRepository) {
         this.imageRepostiroy = imageRepostiroy;
         this.userRepository = userRepository;
         this.richTextRepository = richTextRepository;
         this.filmRepository = filmRepository;
         this.videoRepository = videoRepository;
-        this.modelMapper = modelMapper;
-    }
 
+    }
     @Override
-    public String uploadImageToFileSystem(MultipartFile file, String imageSize, String ownerId, String ownerType, String imageType) throws IOException {
+    public String uploadImage(MultipartFile file, String imageSize, String ownerId, String ownerType, String imageType) throws IOException {
         String filePath = FOLDER_PATH + file.getOriginalFilename();
         Object ownerEntity;
 
@@ -71,11 +69,26 @@ public class ImageServiceImpl implements ImageService {
         file.transferTo(new File(filePath));
         return "file uploaded successfully : " + filePath;
     }
+    @Override
+    public byte[] getImageById(String imageId) throws IOException {
+        ImageEntity fileData = imageRepostiroy.findById(UUID.fromString(imageId)).orElseThrow(() -> new ResourceNotFoundException("'" + imageId + "'"));
+        String filePath = fileData.getFilePath();
+        return Files.readAllBytes(new File(filePath).toPath());
+    }
 
     @Override
-    public byte[] getProfileImageFromFileSystem(String userId, String imageSize) throws IOException {
-        ImageEntity fileData = imageRepostiroy.findProfilePhotoByUserId(userId, imageSize).orElseThrow(() -> new ResourceNotFoundException("'" + userId + "'"));
-        String filePath=fileData.getFilePath();
+    public byte[] getImageByOwnerIdTypeSizeOwnerType(String ownerId, String type, String size, String ownerType) throws IOException {
+        ImageEntity fileData = imageRepostiroy.findLatestImageFromImageByOwnerIdTypeSizeOwnerType(ownerId, type, size, ownerType).orElseThrow(() -> new ResourceNotFoundException("File doesn't exists"));
+        String filePath = fileData.getFilePath();
         return Files.readAllBytes(new File(filePath).toPath());
+    }
+
+    @Override
+    public List<UUID> getAllImagesByOwnerIdTypeSizeOwnerType(String ownerId, String type, String size, String ownerType) {
+        List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromImageByOwnerIdTypeSizeOwnerType(ownerId, type, size, ownerType);
+        if(imageEntities.isEmpty()){
+            throw new ResourceNotFoundException("Not files found");
+        }
+        return imageEntities.stream().map(ImageEntity::getId).collect(Collectors.toList());
     }
 }

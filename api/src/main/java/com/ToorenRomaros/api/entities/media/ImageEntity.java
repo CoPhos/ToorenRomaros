@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 @AnyMetaDef(name = "OwnerMetaDef", idType = "uuid-char", metaType = "string",
         metaValues = {
-                @MetaValue(targetEntity = Movie.class, value = "F"),
-                @MetaValue(targetEntity = Serie.class, value = "F"),
+                @MetaValue(targetEntity = Movie.class, value = "M"),
+                @MetaValue(targetEntity = Serie.class, value = "S"),
                 @MetaValue(targetEntity = UserEntity.class, value = "U"),
                 @MetaValue(targetEntity = RichTextEntity.class, value = "RT"),
                 @MetaValue(targetEntity = VideoEntity.class, value = "V")
@@ -34,7 +34,7 @@ public class ImageEntity {
     private String imageSize;
     @Column(name = "CREATED_AT", columnDefinition = "DATETIME")
     private LocalDateTime createdAt;
-    @Column(name = "IMAGE_TYPE", columnDefinition = "VARCHAR(16)")
+    @Column(name = "IMAGE_TYPE", columnDefinition = "VARCHAR(24)")
     private String imageType;
     @Any(metaDef = "OwnerMetaDef", metaColumn = @Column(name = "OWNER_TYPE"))
     @JoinColumn(name="OWNER_ID")

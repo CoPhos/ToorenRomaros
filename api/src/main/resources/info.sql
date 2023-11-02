@@ -128,6 +128,22 @@ INSERT INTO genre_film(id, film_id, genre_id) VALUES
     ('3227b5c5-8d06-4980-b575-436e11148f17', '123e4567-e89b-12d3-a456-556642440001', '655ce3a7-2c2a-4bd0-8b0a-002119422b82'),
     ('ab5adde6-b0bb-41fe-a97b-49f1a1d0e862', '123e4567-e89b-12d3-a456-556642440001', '98e8983f-63fc-4c5e-b1fb-138d635c7f8b'),
     ('94cc00b5-2071-4f49-9041-a51be180fdbb', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', 'dbe4b00f-7817-44aa-9942-bf05da8fb84f');
+
+INSERT INTO video(id, file_path, name) VALUES
+    ('3a662730-eb02-4d41-be85-9b46ae6613c4','/path/to/video','video1');
+
+INSERT INTO rich_text(id, content) VALUES
+    ('35019f7b-db70-403f-a1cc-ac2f4bb8aae4','Rich Text Content');
+
+INSERT INTO image(id, created_at, file_path, size, image_type, owner_type, owner_id) VALUES
+    ('4894c62c-0f28-40d9-a886-f828953d7c44','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftMainImag.jpg','desktop','filmMainImage','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
+    ('b3d3d65a-12b6-4ea7-8deb-d073ef1a0396','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextImage1.jpg','desktop','richText','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
+    ('76e9e54c-1ef3-4380-b5eb-63acb7a85883','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextImage2.jpg','desktop','richText','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
+    ('92c1c7a0-bd83-4646-acf0-afa0d4231d2f','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextMain.jpg','desktop','richTextMainImage','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
+    ('0669bb03-c882-48cf-baec-2cc83c1eb221','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/thumbail.jpg','desktop','videoThumbail','V','3a662730-eb02-4d41-be85-9b46ae6613c4'),
+    ('69528eb9-1eab-4c18-822c-de216b77759a','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage1.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
+    ('dc887fa6-113d-4590-8376-4b7dddc8216b','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage2.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c');
+
 set foreign_key_checks=1;
 
 --select distinct film.id, film.tittle

@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.services.ImageService;
-import com.ToorenRomaros.api.services.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,22 +26,40 @@ public class ImageController {
     }
 
     @PostMapping("/{ownerType}/{id}/image")
-    ResponseEntity<Map<String, Object>> createImage(@RequestParam("image") MultipartFile file,
-                                                    @RequestParam("imageSize") String imageSize,
-                                                    @RequestParam("imageType") String imageType,
-                                                    @PathVariable String ownerType,
-                                                    @PathVariable String id) throws Exception {
+    ResponseEntity<Map<String, Object>> createImage(@RequestParam("image") @NotNull MultipartFile file,
+                                                    @RequestParam("imageSize") @NotNull String imageSize,
+                                                    @RequestParam("imageType") @NotNull String imageType,
+                                                    @PathVariable @NotNull @Pattern(regexp = uuidRegExp) String ownerType,
+                                                    @PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
             Map<String, Object> response = new HashMap<>();
-            response.put("created", imageService.uploadImageToFileSystem(file, imageSize, id, ownerType, imageType));
+            response.put("created", imageService.uploadImage(file, imageSize, id, ownerType, imageType));
             return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    @GetMapping("/users/{id}/profileImage")
-    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String id, @RequestParam(defaultValue = "small") String size) throws Exception {
-        byte[] imageBytes = imageService.getProfileImageFromFileSystem(id, size);
+    @GetMapping("/images/{id}")
+    ResponseEntity<?> getImageFromFileSystem(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        byte[] imageBytes = imageService.getImageById(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+    @GetMapping("/{ownerType}/images")
+    ResponseEntity<Map<String, Object>> getAllImagesFromOwnerByIdSizeOwnertype(@RequestParam @NotNull @Pattern(regexp = uuidRegExp) String ownerId,
+                                                                       @RequestParam @NotNull String type,
+                                                                       @RequestParam(defaultValue = "desktop") String size,
+                                                                       @PathVariable @NotNull String ownerType) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", imageService.getAllImagesByOwnerIdTypeSizeOwnerType(ownerId, type, size, ownerType));
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
+    }
+    @GetMapping(value = "/{ownerType}/mainImage")
+    ResponseEntity<?> getImageFromFileSystemByOwnerIdTypeSizeOwnerType(@RequestParam @NotNull @Pattern(regexp = uuidRegExp) String ownerId,
+                                                                               @RequestParam @NotNull String type,
+                                                                               @RequestParam(defaultValue = "desktop") String size,
+                                                                               @PathVariable @NotNull String ownerType) throws Exception {
+        byte[] imageBytes = imageService.getImageByOwnerIdTypeSizeOwnerType(ownerId, type, size, ownerType);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
 }
