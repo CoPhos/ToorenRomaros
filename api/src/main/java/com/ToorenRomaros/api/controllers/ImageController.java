@@ -27,12 +27,11 @@ public class ImageController {
 
     @PostMapping("/{ownerType}/{id}/image")
     ResponseEntity<Map<String, Object>> createImage(@RequestParam("image") @NotNull MultipartFile file,
-                                                    @RequestParam("imageSize") @NotNull String imageSize,
                                                     @RequestParam("imageType") @NotNull String imageType,
                                                     @PathVariable @NotNull @Pattern(regexp = uuidRegExp) String ownerType,
                                                     @PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
             Map<String, Object> response = new HashMap<>();
-            response.put("created", imageService.uploadImage(file, imageSize, id, ownerType, imageType));
+            response.put("created", imageService.uploadImage(file, id, ownerType, imageType));
             return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/images/{id}")

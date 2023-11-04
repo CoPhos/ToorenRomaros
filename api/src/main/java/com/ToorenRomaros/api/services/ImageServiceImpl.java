@@ -7,19 +7,21 @@ import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.media.RichTextRepository;
 import com.ToorenRomaros.api.repositories.media.VideoRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
-import org.modelmapper.ModelMapper;
+import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +31,7 @@ public class ImageServiceImpl implements ImageService {
     private final RichTextRepository richTextRepository;
     private final FilmRepository filmRepository;
     private final VideoRepository videoRepository;
+
     @Value("${images.folderPath}")
     private String FOLDER_PATH;
     private static final Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
@@ -41,9 +44,11 @@ public class ImageServiceImpl implements ImageService {
         this.videoRepository = videoRepository;
 
     }
+
     @Override
-    public String uploadImage(MultipartFile file, String imageSize, String ownerId, String ownerType, String imageType) throws IOException {
-        String filePath = FOLDER_PATH + file.getOriginalFilename();
+    public String uploadImage(MultipartFile originalImage, String ownerId, String ownerType, String imageType) throws IOException {
+        List<ImageEntity> newImagesEntities = new ArrayList<>();
+        HashMap<String, BufferedImage> resizedImages = resizeImages(originalImage);
         Object ownerEntity;
 
         switch (ownerType) {
@@ -63,12 +68,16 @@ public class ImageServiceImpl implements ImageService {
                 throw new IllegalArgumentException("Unknown owner type: " + ownerType);
         }
 
-        ImageEntity imageEntity = new ImageEntity(filePath, imageSize, LocalDateTime.now(), imageType, ownerEntity);
-        imageRepostiroy.save(imageEntity);
+        for (Map.Entry<String, BufferedImage> entry : resizedImages.entrySet()) {
+            String filePath = FOLDER_PATH + entry.getValue().getWidth() + "x" + entry.getValue().getHeight() + originalImage.getOriginalFilename();
+            newImagesEntities.add(new ImageEntity(filePath, entry.getKey(), LocalDateTime.now(), imageType, ownerEntity));
+            ImageIO.write(entry.getValue(), "jpg", new File(filePath));
+        }
+        imageRepostiroy.saveAll(newImagesEntities);
 
-        file.transferTo(new File(filePath));
-        return "file uploaded successfully : " + filePath;
+        return "Image uploaded successfully";
     }
+
     @Override
     public byte[] getImageById(String imageId) throws IOException {
         ImageEntity fileData = imageRepostiroy.findById(UUID.fromString(imageId)).orElseThrow(() -> new ResourceNotFoundException("'" + imageId + "'"));
@@ -86,9 +95,26 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public List<UUID> getAllImagesByOwnerIdTypeSizeOwnerType(String ownerId, String type, String size, String ownerType) {
         List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromImageByOwnerIdTypeSizeOwnerType(ownerId, type, size, ownerType);
-        if(imageEntities.isEmpty()){
+        if (imageEntities.isEmpty()) {
             throw new ResourceNotFoundException("Not files found");
         }
         return imageEntities.stream().map(ImageEntity::getId).collect(Collectors.toList());
     }
+
+    public HashMap<String, BufferedImage> resizeImages(MultipartFile originalImage) throws IOException {
+        HashMap<String, BufferedImage> resizedImages = new HashMap<>();
+
+        byte[] bytes = originalImage.getBytes();
+        BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
+        resizedImages.put("Desktop", bufferedImage);
+
+        BufferedImage resizedImage1 = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 1024, 768, Scalr.OP_ANTIALIAS);
+        resizedImages.put("Tablet", resizedImage1);
+
+        BufferedImage resizedImage2 = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 667, 375, Scalr.OP_ANTIALIAS);
+        resizedImages.put("Mobile", resizedImage2);
+
+        return resizedImages;
+    }
+
 }
