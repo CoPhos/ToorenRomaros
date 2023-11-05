@@ -4,8 +4,8 @@ import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
-import com.ToorenRomaros.api.repositories.media.RichTextRepository;
 import com.ToorenRomaros.api.repositories.media.VideoRepository;
+import com.ToorenRomaros.api.repositories.publication.PostRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class ImageServiceImpl implements ImageService {
     private final ImageRepostiroy imageRepostiroy;
     private final UserRepository userRepository;
-    private final RichTextRepository richTextRepository;
+    private final PostRepository postRepository;
     private final FilmRepository filmRepository;
     private final VideoRepository videoRepository;
 
@@ -36,10 +36,10 @@ public class ImageServiceImpl implements ImageService {
     private String FOLDER_PATH;
     private static final Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
 
-    public ImageServiceImpl(ImageRepostiroy imageRepostiroy, UserRepository userRepository, RichTextRepository richTextRepository, FilmRepository filmRepository, VideoRepository videoRepository) {
+    public ImageServiceImpl(ImageRepostiroy imageRepostiroy, UserRepository userRepository, PostRepository postRepository, FilmRepository filmRepository, VideoRepository videoRepository) {
         this.imageRepostiroy = imageRepostiroy;
         this.userRepository = userRepository;
-        this.richTextRepository = richTextRepository;
+        this.postRepository = postRepository;
         this.filmRepository = filmRepository;
         this.videoRepository = videoRepository;
 
@@ -59,7 +59,7 @@ public class ImageServiceImpl implements ImageService {
                 ownerEntity = userRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new ResourceNotFoundException("'" + ownerId + "'"));
                 break;
             case "RT":
-                ownerEntity = richTextRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new ResourceNotFoundException("'" + ownerId + "'"));
+                ownerEntity = postRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new ResourceNotFoundException("'" + ownerId + "'"));
                 break;
             case "V":
                 ownerEntity = videoRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new ResourceNotFoundException("'" + ownerId + "'"));

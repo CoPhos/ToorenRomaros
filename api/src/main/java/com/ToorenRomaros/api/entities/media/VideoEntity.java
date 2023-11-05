@@ -29,11 +29,9 @@ public class VideoEntity {
     public void setId(UUID id) {
         this.id = id;
     }
-
     public String getFilePath() {
         return filePath;
     }
-
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }

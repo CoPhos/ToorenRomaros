@@ -3,6 +3,7 @@ package com.ToorenRomaros.api.entities.media;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
+import com.ToorenRomaros.api.entities.publication.PostEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import org.hibernate.annotations.*;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
                 @MetaValue(targetEntity = Movie.class, value = "M"),
                 @MetaValue(targetEntity = Serie.class, value = "S"),
                 @MetaValue(targetEntity = UserEntity.class, value = "U"),
-                @MetaValue(targetEntity = RichTextEntity.class, value = "RT"),
+                @MetaValue(targetEntity = PostEntity.class, value = "RT"),
                 @MetaValue(targetEntity = VideoEntity.class, value = "V")
         })
 @Entity

@@ -16,7 +16,6 @@ public class PostDto {
     private String tittle;
     @NotNull(message = "Synthesis can not be null")
     private String synthesis;
-//    private @blob body;
-    private String userId;
-    private String postId;
+    private String user;
+    private String content;
 }

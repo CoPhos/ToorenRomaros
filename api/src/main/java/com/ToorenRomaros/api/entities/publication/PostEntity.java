@@ -33,13 +33,11 @@ public class PostEntity {
     @NotNull(message = "Synthesis can not be null")
     private String synthesis;
 
+    @Column(name = "CONTENT", columnDefinition = "MEDIUMTEXT")
+    private String content;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private PostEntity post;
 
     //    @Formula("()")
 //    private String discussCount;
