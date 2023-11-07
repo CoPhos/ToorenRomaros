@@ -4,6 +4,7 @@ import com.ToorenRomaros.api.dto.film.EpisodeDto;
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
 import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
+import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.dto.publication.RatingDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
@@ -13,6 +14,7 @@ import com.ToorenRomaros.api.entities.film.EpisodeEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
+import com.ToorenRomaros.api.entities.publication.CommentEntity;
 import com.ToorenRomaros.api.entities.publication.RatingEntity;
 import com.ToorenRomaros.api.entities.socials.SocialEntity;
 import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
@@ -132,6 +134,16 @@ public class AppConfig {
                     mapper.map(src -> src.getUser().getId(), RatingDto::setUserId);
                 }
         );
+
+//        //Comment
+//        TypeMap<CommentEntity, CommentDto> propertyMapperCommentDto = modelMapper.createTypeMap(CommentEntity.class, CommentDto.class);
+//        propertyMapperCommentDto.addMappings(
+//                mapper -> {
+//                    mapper.map(src -> src.getFilm().getId(), CommentDto::setFilmId);
+//                    mapper.map(src -> src.getUser().getId(), CommentDto::setUserId);
+//                }
+//        );
+
 
         return modelMapper;
     }

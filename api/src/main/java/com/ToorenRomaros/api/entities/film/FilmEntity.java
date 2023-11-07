@@ -49,10 +49,8 @@ public class FilmEntity {
     private LocalDate streamingReleaseDate;
     @Column(name = "COOMING_SOON", columnDefinition = "DATE")
     private LocalDate coomingSoon;
-//    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = true)")
     @Column(name = "AVERAGE_SUPER_RATING", columnDefinition = "FLOAT")
     private Float averageSuperRating;
-//    @Formula("(SELECT AVG(r.rating) FROM rating r WHERE r.film_id = id and r.super_rating = false)")
     @Column(name = "AVERAGE_USER_RATING", columnDefinition = "FLOAT")
     private Float averageUserRating;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

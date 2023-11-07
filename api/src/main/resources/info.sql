@@ -132,9 +132,6 @@ INSERT INTO genre_film(id, film_id, genre_id) VALUES
 INSERT INTO video(id, file_path, name) VALUES
     ('3a662730-eb02-4d41-be85-9b46ae6613c4','/path/to/video','video1');
 
-INSERT INTO rich_text(id, content) VALUES
-    ('35019f7b-db70-403f-a1cc-ac2f4bb8aae4','Rich Text Content');
-
 INSERT INTO image(id, created_at, file_path, size, image_type, owner_type, owner_id) VALUES
     ('4894c62c-0f28-40d9-a886-f828953d7c44','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftMainImag.jpg','desktop','filmMainImage','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
     ('b3d3d65a-12b6-4ea7-8deb-d073ef1a0396','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextImage1.jpg','desktop','richText','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
@@ -144,6 +141,13 @@ INSERT INTO image(id, created_at, file_path, size, image_type, owner_type, owner
     ('69528eb9-1eab-4c18-822c-de216b77759a','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage1.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
     ('dc887fa6-113d-4590-8376-4b7dddc8216b','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage2.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c');
 
+INSERT INTO comment(id, body, like_count, publication_datetime, reported, film_id, user_id) VALUES
+    ('f4b6c133-03f5-494a-ac43-7bb8fecd9fa4','Body 1','0','2028-11-07T23:44:42.452775','0','10431aac-d368-4df8-addb-be5c0b8812fb','6f95b5af-4d6f-448c-8f3d-ca54521f4653'),
+    ('cd310ab9-a08f-40b3-8fc4-7c74ca4589af','Body 2','8','2028-11-07T23:44:42.452775','0','10431aac-d368-4df8-addb-be5c0b8812fb','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
+    ('52d9d29f-842c-4cbd-a2eb-44ffc7604b81','Body 3','2','2028-11-07T23:44:42.452775','0','1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
+    ('11a5978c-85c9-4508-86e3-b3290873023e','Body 4','4','2028-11-07T23:44:42.452775','0','423e4567-e89b-12d3-a456-556642440004','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
+    ('6ded2312-edeb-4740-ac87-5425f40e12ab','Body 5','5','2028-11-07T23:44:42.452775','0','423e4567-e89b-12d3-a456-556642440004','b5d35e6e-7404-4fc0-9bc5-a265e9fca71b'),
+    ('9d588869-25eb-466b-b5fd-e5e480523ab8','Body 6','3','2028-11-07T23:44:42.452775','1','10431aac-d368-4df8-addb-be5c0b8812fb','2ae12264-977d-419d-aa19-ce9658041fe4');
 set foreign_key_checks=1;
 
 --select distinct film.id, film.tittle

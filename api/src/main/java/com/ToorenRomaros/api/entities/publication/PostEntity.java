@@ -32,13 +32,11 @@ public class PostEntity {
     @Column(name = "SYNTHESIS", columnDefinition = "VARCHAR(255)")
     @NotNull(message = "Synthesis can not be null")
     private String synthesis;
-
     @Column(name = "CONTENT", columnDefinition = "MEDIUMTEXT")
     private String content;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-
-    //    @Formula("()")
-//    private String discussCount;
+    //@Formula("()")
+    //private String discussCount;
 }
