@@ -49,7 +49,7 @@ public class CommentController {
     ResponseEntity<Map<String, Object>> getAllCommentByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
                                                               @RequestParam(defaultValue = "false") Boolean reported) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", commentService.getAllCommentByFilmId(UUID.fromString(id), reported));
+        response.put("response", commentService.getAllCommentByFilmId(UUID.fromString(id), reported));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/comments/{id}")
@@ -57,7 +57,7 @@ public class CommentController {
                                                       @RequestBody CommentDto commentDto) throws Exception {
         CommentDto updatedComment = commentService.updateComment(UUID.fromString(id),commentDto);
         Map<String, Object> response = new HashMap<>();
-        response.put("created", updatedComment);
+        response.put("updated", updatedComment);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/comments/{id}")

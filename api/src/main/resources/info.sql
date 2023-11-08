@@ -7,7 +7,6 @@ VALUES
     ('2ae12264-977d-419d-aa19-ce9658041fe4','sara_wilson', '1980-12-10', '2050-09-28', 'Nature lover.', 400, 700),
     ('6f95b5af-4d6f-448c-8f3d-ca54521f4653','chris_martin', '1992-07-01', '2052-04-02', 'Music enthusiast.', 250, 350);
 
-
 INSERT INTO user_follower (ID, USER_ID, FOLLOWER_ID, FOLLOW_SINCE)
 VALUES
     ('2159ecc3-4778-4b42-add2-72228311c05b','b7a61937-6f59-4bbb-80a7-08d65d1ad656', '1e61da98-e8d9-4e82-b2a0-bc53b124aef1', '1990-05-15'),
@@ -18,10 +17,10 @@ VALUES
 
 INSERT INTO film (id, FILM_TYPE, TITTLE, SYNOPSIS, ORIGINAL_LANGUAGE, DISTRIBUTOR, SUITABLE_FOR, STREAMING_RELEASE_DATE, PREQUEL_ID, SEQUEL_ID, BOX_OFFICE, RUNTIME, THEATERS_RELEASE_DATE, AT_THEATERS)
 VALUES
-    ('123e4567-e89b-12d3-a456-556642440001', '2', 'Serie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL, '223e4567-e89b-12d3-a456-556642440002',NULL,NULL,NULL,NULL),
-    ('223e4567-e89b-12d3-a456-556642440002', '2', 'Serie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '123e4567-e89b-12d3-a456-556642440001', NULL,NULL,NULL,NULL,NULL),
-    ('323e4567-e89b-12d3-a456-556642440003', '2', 'Serie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2023-11-15', NULL, NULL,NULL,NULL,NULL,NULL),
-    ('423e4567-e89b-12d3-a456-556642440004', '2', 'Serie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '323e4567-e89b-12d3-a456-556642440003', NULL,NULL,NULL,NULL,NULL),
+    ('123e4567-e89b-12d3-a456-556642440001', '2', 'Serie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2028-09-27', NULL, '223e4567-e89b-12d3-a456-556642440002',NULL,NULL,NULL,NULL),
+    ('223e4567-e89b-12d3-a456-556642440002', '2', 'Serie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2028-10-05', '123e4567-e89b-12d3-a456-556642440001', NULL,NULL,NULL,NULL,NULL),
+    ('323e4567-e89b-12d3-a456-556642440003', '2', 'Serie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2028-11-15', NULL, NULL,NULL,NULL,NULL,NULL),
+    ('423e4567-e89b-12d3-a456-556642440004', '2', 'Serie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2028-12-20', '323e4567-e89b-12d3-a456-556642440003', NULL,NULL,NULL,NULL,NULL),
     ('523e4567-e89b-12d3-a456-556642440005', '2', 'Serie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '623e4567-e89b-12d3-a456-556642440006',NULL,NULL,NULL,NULL),
     ('623e4567-e89b-12d3-a456-556642440006', '2', 'Serie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '523e4567-e89b-12d3-a456-556642440005',NULL,NULL,NULL,NULL),
     ('723e4567-e89b-12d3-a456-556642440007', '2', 'Serie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'G', '2024-03-25', '623e4567-e89b-12d3-a456-556642440006', '823e4567-e89b-12d3-a456-556642440008',NULL,NULL,NULL,NULL),
@@ -29,17 +28,17 @@ VALUES
     ('923e4567-e89b-12d3-a456-556642440009', '2', 'Serie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '055b9e94-3e71-4c33-ba92-3d5afc9e353f',NULL,NULL,NULL,NULL),
     ('055b9e94-3e71-4c33-ba92-3d5afc9e353f', '2', 'Serie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '923e4567-e89b-12d3-a456-556642440009', NULL,NULL,NULL,NULL,NULL);
 
-INSERT INTO film (id, FILM_TYPE,TITTLE, SYNOPSIS, ORIGINAL_LANGUAGE, DISTRIBUTOR, SUITABLE_FOR, STREAMING_RELEASE_DATE, PREQUEL_ID, SEQUEL_ID, BOX_OFFICE, RUNTIME, THEATERS_RELEASE_DATE, AT_THEATERS) VALUES
-    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1', 'Movie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2023-09-27', NULL,'7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1000000', '120', '2023-10-05', TRUE),
-    ('10431aac-d368-4df8-addb-be5c0b8812fb', '1', 'Movie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2023-10-05', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', NULL, '750000', '90', '2023-11-15', FALSE),
-    ('3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '1', 'Movie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2023-11-15', NULL, NULL, '500000', '105', '2023-12-20', TRUE),
-    ('4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04', '1', 'Movie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2023-12-20', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', NULL, '850000', '135', '2024-01-10', TRUE),
-    ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '1', 'Movie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1200000', '180', '2024-02-18', FALSE),
-    ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1', 'Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '650000', '95', '2024-03-25', TRUE),
-    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'PG-13', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', NULL, '900000', '140', '2024-04-30', TRUE),
-    ('8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '1', 'Movie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', NULL, '550000', '105', '2024-05-10', FALSE),
-    ('9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', '1', 'Movie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1100000', '115', '2024-06-05', TRUE),
-    ('863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1', 'Movie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', NULL, '800000', '160', '2024-07-15', TRUE);
+INSERT INTO film (id, FILM_TYPE,TITTLE, SYNOPSIS, ORIGINAL_LANGUAGE, DISTRIBUTOR, SUITABLE_FOR, STREAMING_RELEASE_DATE, PREQUEL_ID, SEQUEL_ID, BOX_OFFICE, RUNTIME, THEATERS_RELEASE_DATE, AT_THEATERS, SAGA_ID) VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1', 'Movie 1', 'Synopsis 1', 'ENG', 'Distributor 1', 'PG-13', '2028-09-27', NULL,'7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1000000', '120', '2028-10-05', TRUE, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01'),
+    ('10431aac-d368-4df8-addb-be5c0b8812fb', '1', 'Movie 2', 'Synopsis 2', 'FRE', 'Distributor 2', 'R', '2028-10-05', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', NULL, '750000', '90', '2028-11-15', FALSE, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01'),
+    ('3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '1', 'Movie 3', 'Synopsis 3', 'ESP', 'Distributor 3', 'G', '2028-11-15', NULL, NULL, '500000', '105', '2028-12-20', TRUE, null),
+    ('4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04', '1', 'Movie 4', 'Synopsis 4', 'GER', 'Distributor 4', 'PG', '2028-12-20', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', NULL, '850000', '135', '2024-01-10', TRUE, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01'),
+    ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '1', 'Movie 5', 'Synopsis 5', 'ITA', 'Distributor 5', 'PG-13', '2024-01-10', NULL, '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1200000', '180', '2024-02-18', FALSE, null),
+    ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '1', 'Movie 6', 'Synopsis 6', 'JPN', 'Distributor 6', 'R', '2024-02-18', NULL, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '650000', '95', '2024-03-25', TRUE, null),
+    ('7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', '1', 'Movie 7', 'Synopsis 7', 'CHN', 'Distributor 7', 'PG-13', '2024-03-25', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', NULL, '900000', '140', '2024-04-30', TRUE, null),
+    ('8a7b4a82-4823-4d79-8c7c-5b7ea9cd9d08', '1', 'Movie 8', 'Synopsis 8', 'KOR', 'Distributor 8', 'PG', '2024-04-30', '7a7b4a82-4823-4d79-8c7c-5b7ea9cd9d07', NULL, '550000', '105', '2024-05-10', FALSE, null),
+    ('9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', '1', 'Movie 9', 'Synopsis 9', 'RUS', 'Distributor 9', 'PG-13', '2024-05-10', NULL, '863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1100000', '115', '2024-06-05', TRUE, null),
+    ('863b6d8b-f19a-4bd2-99e2-67a473189e3c', '1', 'Movie 10', 'Synopsis 10', 'BRA', 'Distributor 10', 'R', '2024-06-05', '9a7b4a82-4823-4d79-8c7c-5b7ea9cd9d09', NULL, '800000', '160', '2024-07-15', TRUE, null);
 
 INSERT INTO staff(id, biography, birthday, birth_place, first_name, last_name)
 VALUES
@@ -133,13 +132,13 @@ INSERT INTO video(id, file_path, name) VALUES
     ('3a662730-eb02-4d41-be85-9b46ae6613c4','/path/to/video','video1');
 
 INSERT INTO image(id, created_at, file_path, size, image_type, owner_type, owner_id) VALUES
-    ('4894c62c-0f28-40d9-a886-f828953d7c44','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftMainImag.jpg','desktop','filmMainImage','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
-    ('b3d3d65a-12b6-4ea7-8deb-d073ef1a0396','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextImage1.jpg','desktop','richText','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
-    ('76e9e54c-1ef3-4380-b5eb-63acb7a85883','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextImage2.jpg','desktop','richText','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
-    ('92c1c7a0-bd83-4646-acf0-afa0d4231d2f','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextMain.jpg','desktop','richTextMainImage','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
-    ('0669bb03-c882-48cf-baec-2cc83c1eb221','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/thumbail.jpg','desktop','videoThumbail','V','3a662730-eb02-4d41-be85-9b46ae6613c4'),
-    ('69528eb9-1eab-4c18-822c-de216b77759a','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage1.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
-    ('dc887fa6-113d-4590-8376-4b7dddc8216b','2023-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage2.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c');
+    ('4894c62c-0f28-40d9-a886-f828953d7c44','2028-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftMainImag.jpg','desktop','filmMainImage','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
+    ('b3d3d65a-12b6-4ea7-8deb-d073ef1a0396','2028-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextImage1.jpg','desktop','richText','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
+    ('76e9e54c-1ef3-4380-b5eb-63acb7a85883','2028-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextImage2.jpg','desktop','richText','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
+    ('92c1c7a0-bd83-4646-acf0-afa0d4231d2f','2028-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/richTextMain.jpg','desktop','richTextMainImage','RT','35019f7b-db70-403f-a1cc-ac2f4bb8aae4'),
+    ('0669bb03-c882-48cf-baec-2cc83c1eb221','2028-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/thumbail.jpg','desktop','videoThumbail','V','3a662730-eb02-4d41-be85-9b46ae6613c4'),
+    ('69528eb9-1eab-4c18-822c-de216b77759a','2028-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage1.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c'),
+    ('dc887fa6-113d-4590-8376-4b7dddc8216b','2028-11-02 13:48:22','/home/cophos/spring-workspace/tooren_romaros/api/src/main/resources/media/tokyoDriftImage2.jpg','desktop','film','M','863b6d8b-f19a-4bd2-99e2-67a473189e3c');
 
 INSERT INTO comment(id, body, like_count, publication_datetime, reported, film_id, user_id) VALUES
     ('f4b6c133-03f5-494a-ac43-7bb8fecd9fa4','Body 1','0','2028-11-07T23:44:42.452775','0','10431aac-d368-4df8-addb-be5c0b8812fb','6f95b5af-4d6f-448c-8f3d-ca54521f4653'),
@@ -148,33 +147,77 @@ INSERT INTO comment(id, body, like_count, publication_datetime, reported, film_i
     ('11a5978c-85c9-4508-86e3-b3290873023e','Body 4','4','2028-11-07T23:44:42.452775','0','423e4567-e89b-12d3-a456-556642440004','b7a61937-6f59-4bbb-80a7-08d65d1ad656'),
     ('6ded2312-edeb-4740-ac87-5425f40e12ab','Body 5','5','2028-11-07T23:44:42.452775','0','423e4567-e89b-12d3-a456-556642440004','b5d35e6e-7404-4fc0-9bc5-a265e9fca71b'),
     ('9d588869-25eb-466b-b5fd-e5e480523ab8','Body 6','3','2028-11-07T23:44:42.452775','1','10431aac-d368-4df8-addb-be5c0b8812fb','2ae12264-977d-419d-aa19-ce9658041fe4');
+
+INSERT INTO episode (id, streaming_release_date, run_time, tittle, serie_id) VALUES
+    ('738ad70d-155a-493e-bd32-78664f87b0bc', '2028-10-15', '45 minutes', 'Episode 10', '223e4567-e89b-12d3-a456-556642440002'),
+    ('c4ddff8d-db85-4ed0-a5d9-dbade606aa85', '2028-10-22', '50 minutes', 'Episode 20', '223e4567-e89b-12d3-a456-556642440002');
+
+INSERT INTO episode (id, streaming_release_date, run_time, tittle, serie_id) VALUES
+    ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '2028-10-15', '45 minutes', 'Episode 1', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06'),
+    ('6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06', '2028-10-22', '50 minutes', 'Episode 2', '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05');
+
+INSERT INTO episode (id, streaming_release_date, run_time, tittle, serie_id)
+VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '2028-11-05', '45 minutes', 'Episode 1', '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02'),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '2028-11-12', '50 minutes', 'Episode 2', '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02');
+
+INSERT INTO saga (id, name) VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', 'Action Saga 1');
+
+-- Sample data for the "comment" table
+INSERT INTO comment (id, body, like_count, publication_datetime, reported, film_id, user_id)
+VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', 'Great movie!', '10', '2028-10-15 14:30:00', FALSE, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03'),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', 'Enjoyed it!', '5', '2028-10-15 15:45:00', FALSE, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04'),
+    ('3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', 'Good storyline', '8', '2028-10-15 16:20:00', FALSE, '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', '6a7b4a82-4823-4d79-8c7c-5b7ea9cd9d06');
+
+INSERT INTO comment (id, body, like_count, publication_datetime, reported, film_id, user_id) VALUES
+    ('ee5bcc65-0ca1-4e3b-a7b4-7caf24e39827', 'This is a comment.', 10, '2028-10-15 08:30:00', 0, NULL, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02'),
+    ('98cafaec-4a02-4fdd-8d42-601751e8cd32', 'Another comment here.', 5, '2028-10-15 09:15:00', 1, '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01');
+
+INSERT INTO discuss (id, body, like_count, publication_datetime, reported, post_id, user_id) VALUES
+    ('3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03', 'Discussion topic.', 15, '2028-10-15 10:45:00', 0, NULL, '4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04'),
+    ('49cb02ba-9a1b-45ab-85d3-9a04f3a3e053', 'Discussing something important.', 8, '2028-10-15 12:00:00', 0, NULL, '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03');
+
+INSERT INTO discuss (id, body, like_count, publication_datetime, reported, post_id, user_id)
+VALUES
+    ('4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04', 'I have some questions', '2', '2028-10-16 10:15:00', FALSE, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03'),
+    ('5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05', 'Let\'s discuss this!', '4', '2028-10-16 11:30:00', FALSE, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04');
+
+-- Sample data for the "film" table
+INSERT INTO film (film_type, id, average_super_rating, average_user_rating, cooming_soon, distributor, original_language, streaming_release_date, suitable_for, synopsis, tittle, at_theaters, box_office, runtime, theaters_release_date, season_number, saga_id)
+VALUES
+    (1, 'c6ca9b13-71e5-4c13-b612-692a890b36d1', 8.5, 7.9, '2028-11-15', 'Universal Pictures', 'ENG', '2028-11-20', 'PG-13', 'A thrilling action movie', 'Action Movie 1', TRUE, '10000000', '120', '2028-11-25', NULL, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02'),
+    (2, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', 7.8, 7.2, '2028-12-05', 'Warner Bros.', 'FRE', '2028-12-10', 'R', 'A suspenseful thriller', 'Thriller Movie 1', TRUE, '8000000', '110', '2028-12-15', NULL, '3a7b4a82-4823-4d79-8c7c-5b7ea9cd9d03');
+
+-- Sample data for the "film_staff" table
+INSERT INTO film_staff (id, appear_as, role, film_id, staff_id)
+VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', 'John Doe', 'Director', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04'),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', 'Jane Smith', 'Producer', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05');
+
+-- Sample data for the "genre" table
+INSERT INTO genre (id, genre)
+VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', 'Action'),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', 'Thriller');
+
+-- Sample data for the "genre_film" table
+INSERT INTO genre_film (id, film_id, genre_id)
+VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01'),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02');
+
+-- Sample data for the "post" table
+INSERT INTO post (id, content, like_count, publication_datetime, synthesis, tittle, user_id)
+VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', 'This is an interesting post about the movie.', '12', '2028-10-17 13:15:00', 'A discussion about the movie', 'Movie Discussion', '4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04'),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', 'Join the discussion!', '5', '2028-10-17 14:30:00', 'Let\'s talk about the film.', 'Film Talk', '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05');
+
+-- Sample data for the "rating" table
+INSERT INTO rating (id, rating, super_rating, film_id, user_id)
+VALUES
+    ('1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', 8.0, TRUE, '1a7b4a82-4823-4d79-8c7c-5b7ea9cd9d01', '4a7b4a82-4823-4d79-8c7c-5b7ea9cd9d04'),
+    ('2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', 7.5, FALSE, '2a7b4a82-4823-4d79-8c7c-5b7ea9cd9d02', '5a7b4a82-4823-4d79-8c7c-5b7ea9cd9d05');
 set foreign_key_checks=1;
-
---select distinct film.id, film.tittle
---from film
---inner join stream_film
---on stream_film.film_id=film.id
---inner join genre_film
---on genre_film.film_id=film.id
---where stream_film.stream_id="7b0c02cc-efaa-4d9b-8619-8babb56e7b40"
---and genre_film.genre_id in ("4ba05e0c-43d7-45b1-943f-d3a8b863dec1", "dbe4b00f-7817-44aa-9942-bf05da8fb84f")
---and film.suitable_for = "PG-13"
---and film.film_type = '1'
---and film.at_theaters = TRUE
---and film.cooming_soon is not null
---and film.streaming_release_date is not null;
-
-
---select distinct film.*
---    from stream_film
---        inner join (select distinct genre_film.film_id
---                        from genre_film
---                            where genre_film.genre_id in
---                             ("4ba05e0c-43d7-45b1-943f-d3a8b863dec1",
---                             "dbe4b00f-7817-44aa-9942-bf05da8fb84f"))
---                             as t1 on t1.film_id= stream_film.film_id
---        inner join film
---            on film.id = t1.film_id
---        where stream_film.stream_id = "7b0c02cc-efaa-4d9b-8619-8babb56e7b40"
---        and film.suitable_for = "PG-13";
 
