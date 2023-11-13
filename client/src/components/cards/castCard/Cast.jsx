@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import cast from '../../assests/cast.PNG'
+import cast from '../../../assests/cast.PNG'
 
 function Cast() {
   return (
