@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+
 import smiling from '../../assests/smiling.png'
 import neutral from '../../assests/neutral.png'
 import sad from '../../assests/sad.png'
@@ -46,7 +48,7 @@ function MenuPanel(props) {
 function iterateData(value, index, flag) {
     if (flag) {
         return (
-            <Fragment key={(index + 2) * 10}>
+            <StyledLink to="/browse" key={(index + 2) * 10}>
                 <FlexCertified>
                     {value.image && (
                         <img src={value.image} width="130" height="200"></img>
@@ -90,55 +92,65 @@ function iterateData(value, index, flag) {
                                     return ''
                             }
                         })()}
-                        {value.rating && (
-                            <p className='blue'>{value.rating}</p>
-                        )}
+                        {value.rating && <p className="blue">{value.rating}</p>}
                     </FlexRating>
                     {value.text && (
                         <p className={value.textType + ' blue'}>{value.text}</p>
                     )}
                 </FlexCertified>
-            </Fragment>
+            </StyledLink>
         )
     }
     return (
-        <DivNews key={(index + 3) * 1000}>
-            {value.image && (
-                <img src={value.image} width="210" height="118"></img>
-            )}
-            <FlexRatingRow>
-                {(() => {
-                    switch (value.ratingImg) {
-                        case 1:
-                            return <img src={sad} width="16" height="16"></img>
-                        case 2:
-                            return (
-                                <img src={neutral} width="16" height="16"></img>
-                            )
-                        case 3:
-                            return (
-                                <img src={smiling} width="16" height="16"></img>
-                            )
-                        case 4:
-                            return (
-                                <img
-                                    src={greyNeutral}
-                                    width="16"
-                                    height="16"
-                                ></img>
-                            )
-                        default:
-                            return ''
-                    }
-                })()}
-
-                {value.text && (
-                    <p className={value.textType + ' blue'}>
-                        {value.rating + ' ' + value.text}
-                    </p>
+        <StyledLink to="/browse" key={(index + 3) * 1000}>
+            <DivNews>
+                {value.image && (
+                    <img src={value.image} width="210" height="118"></img>
                 )}
-            </FlexRatingRow>
-        </DivNews>
+                <FlexRatingRow>
+                    {(() => {
+                        switch (value.ratingImg) {
+                            case 1:
+                                return (
+                                    <img src={sad} width="16" height="16"></img>
+                                )
+                            case 2:
+                                return (
+                                    <img
+                                        src={neutral}
+                                        width="16"
+                                        height="16"
+                                    ></img>
+                                )
+                            case 3:
+                                return (
+                                    <img
+                                        src={smiling}
+                                        width="16"
+                                        height="16"
+                                    ></img>
+                                )
+                            case 4:
+                                return (
+                                    <img
+                                        src={greyNeutral}
+                                        width="16"
+                                        height="16"
+                                    ></img>
+                                )
+                            default:
+                                return ''
+                        }
+                    })()}
+
+                    {value.text && (
+                        <p className={value.textType + ' blue'}>
+                            {value.rating + ' ' + value.text}
+                        </p>
+                    )}
+                </FlexRatingRow>
+            </DivNews>
+        </StyledLink>
     )
 }
 
@@ -250,6 +262,13 @@ const DivNews = styled.div`
         .blue {
             color: ${(props) => props.theme.colors.hyperlinks};
         }
+    }
+`
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    p{
+        color: black;
     }
 `
 

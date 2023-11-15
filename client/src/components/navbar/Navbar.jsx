@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../../assests/logo.webp'
 import loup from '../../assests/loupe.png'
 import user from '../../assests/user.jpg'
@@ -23,26 +24,34 @@ function Navbar(props) {
                 />
             </SearchContainer>
             <NavItems>
-                <AnchorMovies>
-                    MOVIES
+                <MoviesDiv>
+                    <BaseAnchor to="/browse" id="anchorMovies">
+                        MOVIES
+                    </BaseAnchor>
                     <div id="aaa">
                         <MenuPanel
                             data={props.menuPanelData.movies}
                         ></MenuPanel>
                     </div>
-                </AnchorMovies>
-                <AnchorTv>
-                    TV SHOW
+                </MoviesDiv>
+
+                <TvDiv>
+                    <BaseAnchor to="/browse" id="anchorTv">
+                        TV SHOW
+                    </BaseAnchor>
                     <div id="aac">
                         <MenuPanel data={props.menuPanelData.tv}></MenuPanel>
                     </div>
-                </AnchorTv>
-                <AnchorNews>
-                    NEWS
+                </TvDiv>
+
+                <NewsDiv>
+                    <BaseAnchor to="/browse" id="anchorNews">
+                        NEWS
+                    </BaseAnchor>
                     <div id="aab">
                         <MenuPanel data={props.menuPanelData.news}></MenuPanel>
                     </div>
-                </AnchorNews>
+                </NewsDiv>
 
                 {isLoggedIn ? (
                     <ButtonLogin>
@@ -139,7 +148,17 @@ const ButtonSearch = styled.button`
     margin: 0;
     cursor: pointer;
 `
-const BaseAnchor = styled.a`
+const BaseAnchor = styled(Link)`
+    height: 48px;
+    padding: 0 8px;
+    padding-top: 8px;
+    text-align: center;
+    align-self: flex-end;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-decoration: none;
+`
+const BaseDiv = styled.div`
     height: 48px;
     padding: 0 8px;
     padding-top: 8px;
@@ -148,36 +167,45 @@ const BaseAnchor = styled.a`
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 `
-const AnchorMovies = styled(BaseAnchor)`
+
+const MoviesDiv = styled(BaseDiv)`
     &:hover {
-        color: black;
         background-color: white;
         #aaa {
             color: black;
             visibility: visible;
         }
-    }
-`
-const AnchorNews = styled(BaseAnchor)`
-    &:hover {
-        color: black;
-        background-color: white;
-        #aab {
+        #anchorMovies {
             color: black;
-            visibility: visible;
         }
     }
 `
-const AnchorTv = styled(BaseAnchor)`
+const TvDiv = styled(BaseDiv)`
     &:hover {
-        color: black;
         background-color: white;
         #aac {
             color: black;
             visibility: visible;
         }
+        #anchorTv {
+            color: black;
+        }
     }
 `
+
+const NewsDiv = styled(BaseDiv)`
+    &:hover {
+        background-color: white;
+        #aab {
+            color: black;
+            visibility: visible;
+        }
+        #anchorNews {
+            color: black;
+        }
+    }
+`
+
 const ButtonGetStarted = styled.button`
     background-color: ${(props) => props.theme.colors.secondary};
     border-width: 0;

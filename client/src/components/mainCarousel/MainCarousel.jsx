@@ -4,6 +4,7 @@ import smiling from '../../assests/smiling.png'
 import Carousel from 'react-elastic-carousel'
 import Tittle from '../../utils/Tittle'
 import { fontSizes } from '../../utils/globalStyles'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function MainCarousel({
     breakPoints,
@@ -23,7 +24,8 @@ function MainCarousel({
     }
     return (
         <Carousel
-            disableArrowsOnEnd={false}
+            disableArrowsOnEnd={true}
+            enableMouseSwipe={false}
             itemPadding={[0, 8, 0, 8]}
             breakPoints={breakPoints}
             pagination={pagination}
@@ -57,27 +59,30 @@ export function generateCard(
     sizes
 ) {
     const component = (
-        <ImageContainer
-            theme={{
-                img: value,
-                dimensionValue: dimension,
-                gradientValue: gradient,
-                borderValue: border,
-            }}
-        >
-            {insideText && (
-                <ImageTextWrapper>
-                    <TextContainer>
-                        <Tittle
-                            tittle={insideText.tittle}
-                            text={insideText.text}
-                            sizes={sizes}
-                        ></Tittle>
-                    </TextContainer>
-                </ImageTextWrapper>
-            )}
-        </ImageContainer>
+        <StyledLink to="/film" draggable={false}>
+            <ImageContainer
+                theme={{
+                    img: value,
+                    dimensionValue: dimension,
+                    gradientValue: gradient,
+                    borderValue: border,
+                }}
+            >
+                {insideText && (
+                    <ImageTextWrapper>
+                        <TextContainer>
+                            <Tittle
+                                tittle={insideText.tittle}
+                                text={insideText.text}
+                                sizes={sizes}
+                            ></Tittle>
+                        </TextContainer>
+                    </ImageTextWrapper>
+                )}
+            </ImageContainer>
+        </StyledLink>
     )
+
     if (!belowText) {
         return <Fragment key={key}>{component}</Fragment>
     } else {
@@ -222,4 +227,15 @@ const TextContainer = styled.div`
         }
     }
 `
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+`
+
 export default MainCarousel
