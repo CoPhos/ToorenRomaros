@@ -15,6 +15,7 @@ import MobileNavMenu from './components/navbar/MobileNavMenu'
 import Home from './components/routes/Home';
 import FilmDetails from './components/routes/FilmDetails';
 import Browse from './components/routes/Browse';
+import EditorContainer from './components/textEditor/EditorContainer';
 
  //themes
     const theme = {
@@ -37,6 +38,9 @@ export default function App() {
                     </Route>
                     <Route path="/browse">
                         <Browse></Browse>
+                    </Route>
+                    <Route path="/editor">
+                        <EditorContainer></EditorContainer>
                     </Route>
                     <Route>
                         <p>Page Not Found</p>

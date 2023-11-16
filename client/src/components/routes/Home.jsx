@@ -1,14 +1,12 @@
 import React, {Fragment} from 'react'
 //utils
 import Tittle from '../../utils/Tittle'
-import MainCarouselContainer from '../mainCarousel/MainCarouselContainer'
+import MainCarouselManager from '../mainCarousel/MainCarouselManager'
 import SimpleTopContainer from '../SimpleTop/SimpleTopContainer'
 import NewsSectionContainer from '../News&Blog/NewsSectionContainer'
 
 import { fontSizes } from '../../utils/globalStyles'
-{/*
-    TODO: use HOC with the carousels¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿
-*/}
+
 function Home() {
     //slides
     const mainSlides = [
@@ -110,7 +108,7 @@ function Home() {
     }
     return (
         <Fragment>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={mainSlides}
                 dimension={mainSizes}
                 insideText={insideText}
@@ -119,12 +117,12 @@ function Home() {
                 breakPoints={breakPointsMain}
                 pagination={true}
                 rating={true}
-            ></MainCarouselContainer>
-            <Tittle
+            ></MainCarouselManager>
+            {/* <Tittle
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={moviesSlides}
                 dimension={moviesSizes}
                 belowText={true}
@@ -133,12 +131,12 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={true}
-            ></MainCarouselContainer>
+            ></MainCarouselManager>
             <Tittle
                 tittle={'NEW & UPCOMING ON STREAMING'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={moviesSlides}
                 dimension={moviesSizes}
                 belowText={true}
@@ -147,12 +145,12 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={true}
-            ></MainCarouselContainer>
+            ></MainCarouselManager>
             <Tittle
                 tittle={'HULU HAS MOVIES'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={moviesSlides}
                 dimension={moviesSizes}
                 belowText={true}
@@ -161,13 +159,13 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={true}
-            ></MainCarouselContainer>
+            ></MainCarouselManager>
             <SimpleTopContainer></SimpleTopContainer>
             <Tittle
                 tittle={'POPULAR IN THEATERS'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={moviesSlides}
                 dimension={moviesSizes}
                 belowText={true}
@@ -176,12 +174,12 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={true}
-            ></MainCarouselContainer>
+            ></MainCarouselManager>
             <Tittle
                 tittle={'ESSENTIAL ROAD TRIP MOVIES'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={moviesSlides}
                 dimension={moviesSizes}
                 belowText={true}
@@ -190,12 +188,12 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={true}
-            ></MainCarouselContainer>
+            ></MainCarouselManager>
             <Tittle
                 tittle={'ESSENTIAL HIGH SCHOOL MOVIES'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={moviesSlides}
                 dimension={moviesSizes}
                 belowText={true}
@@ -204,7 +202,7 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={true}
-            ></MainCarouselContainer>
+            ></MainCarouselManager>
             <Tittle
                 tittle={'TRAILERS & BLOG'}
                 margin={'48px 0 16px 16px'}
@@ -227,7 +225,7 @@ function Home() {
                 tittle={'MOVIE & TV GUIDES'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
-            <MainCarouselContainer
+            <MainCarouselManager
                 slides={guidesSlides}
                 dimension={guidesSizes}
                 belowText={true}
@@ -236,7 +234,7 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={false}
-            ></MainCarouselContainer>
+            ></MainCarouselManager> */}
         </Fragment>
     )
 }

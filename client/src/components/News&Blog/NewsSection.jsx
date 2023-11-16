@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { generateCard } from '../mainCarousel/MainCarousel'
+import { generateCard } from '../mainCarousel/MainCarouselContainer'
 import { fontSizes } from '../../utils/globalStyles';
 
 function NewsSection({
