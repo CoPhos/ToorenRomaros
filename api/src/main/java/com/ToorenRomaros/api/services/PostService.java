@@ -1,5 +1,7 @@
 package com.ToorenRomaros.api.services;
 
-public interface PostService {
+import com.ToorenRomaros.api.dto.publication.PostDto;
 
+public interface PostService {
+    PostDto createPost(PostDto postDto);
 }

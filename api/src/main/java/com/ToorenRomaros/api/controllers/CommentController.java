@@ -52,7 +52,7 @@ public class CommentController {
         response.put("response", commentService.getAllCommentByFilmId(UUID.fromString(id), reported));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PostMapping("/comments/{id}")
+    @PutMapping("/comments/{id}")
     ResponseEntity<Map<String, Object>> updateComment(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
                                                       @RequestBody CommentDto commentDto) throws Exception {
         CommentDto updatedComment = commentService.updateComment(UUID.fromString(id),commentDto);

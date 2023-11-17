@@ -1,11 +1,14 @@
 import React, {Fragment} from 'react'
-//utils
-import Tittle from '../../utils/Tittle'
+
+//components
 import MainCarouselManager from '../mainCarousel/MainCarouselManager'
 import SimpleTopContainer from '../SimpleTop/SimpleTopContainer'
 import NewsSectionContainer from '../News&Blog/NewsSectionContainer'
+import ButtonCreatePostManager from '../button/ButtonCreatePostManager'
 
+//utils
 import { fontSizes } from '../../utils/globalStyles'
+import Tittle from '../../utils/Tittle'
 
 function Home() {
     //slides
@@ -108,7 +111,8 @@ function Home() {
     }
     return (
         <Fragment>
-            <MainCarouselManager
+            <ButtonCreatePostManager></ButtonCreatePostManager>
+            {/* <MainCarouselManager
                 slides={mainSlides}
                 dimension={mainSizes}
                 insideText={insideText}
@@ -117,7 +121,7 @@ function Home() {
                 breakPoints={breakPointsMain}
                 pagination={true}
                 rating={true}
-            ></MainCarouselManager>
+            ></MainCarouselManager> */}
             {/* <Tittle
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                 margin={'48px 0 16px 16px'}

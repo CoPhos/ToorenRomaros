@@ -4,10 +4,7 @@ import com.ToorenRomaros.api.dto.film.EpisodeDto;
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
 import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
-import com.ToorenRomaros.api.dto.publication.CommentDto;
-import com.ToorenRomaros.api.dto.publication.DiscussDto;
-import com.ToorenRomaros.api.dto.publication.ParentChildDiscussDto;
-import com.ToorenRomaros.api.dto.publication.RatingDto;
+import com.ToorenRomaros.api.dto.publication.*;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
@@ -16,10 +13,7 @@ import com.ToorenRomaros.api.entities.film.EpisodeEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
-import com.ToorenRomaros.api.entities.publication.CommentEntity;
-import com.ToorenRomaros.api.entities.publication.DiscussEntity;
-import com.ToorenRomaros.api.entities.publication.ParentChildDiscussEntity;
-import com.ToorenRomaros.api.entities.publication.RatingEntity;
+import com.ToorenRomaros.api.entities.publication.*;
 import com.ToorenRomaros.api.entities.socials.SocialEntity;
 import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
 import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
@@ -163,6 +157,14 @@ public class AppConfig {
                 mapper -> {
                     mapper.map(src -> src.getParent().getId(), ParentChildDiscussDto::setParentId);
                     mapper.map(src -> src.getChild().getId(), ParentChildDiscussDto::setChildId);
+                }
+        );
+
+        //ParentChild
+        TypeMap<PostEntity, PostDto> propertyMapperPostDto = modelMapper.createTypeMap(PostEntity.class, PostDto.class);
+        propertyMapperPostDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getUser().getId(), PostDto::setUser);
                 }
         );
 

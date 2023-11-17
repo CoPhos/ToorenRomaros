@@ -23,17 +23,17 @@ public class PostEntity {
     @Column(name = "PUBLICATION_DATETIME", columnDefinition = "DATETIME")
     @FutureOrPresent(message = "Publication date can not be past")
     private LocalDateTime publicationDateTime;
-    @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10)")
+    @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10) DEFAULT 0")
     @Min(value = 0, message = "Like count can not be negative")
     private int likeCount;
     @Column(name = "TITTLE", columnDefinition = "VARCHAR(255)")
-    @NotNull(message = "Tittle can not be null")
     private String tittle;
     @Column(name = "SYNTHESIS", columnDefinition = "VARCHAR(255)")
-    @NotNull(message = "Synthesis can not be null")
     private String synthesis;
     @Column(name = "CONTENT", columnDefinition = "MEDIUMTEXT")
     private String content;
+    @Column(name = "STATUS", columnDefinition = "VARCHAR(24)")
+    private String status;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -95,5 +95,13 @@ public class PostEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
