@@ -11,6 +11,7 @@ import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +47,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public String uploadImage(MultipartFile originalImage, String ownerId, String ownerType, String imageType) throws IOException {
+    public Map<String, String> uploadImage(MultipartFile originalImage, String ownerId, String ownerType, String imageType) throws IOException {
         List<ImageEntity> newImagesEntities = new ArrayList<>();
         HashMap<String, BufferedImage> resizedImages = resizeImages(originalImage);
         Object ownerEntity;
@@ -69,13 +70,17 @@ public class ImageServiceImpl implements ImageService {
         }
 
         for (Map.Entry<String, BufferedImage> entry : resizedImages.entrySet()) {
-            String filePath = FOLDER_PATH + entry.getValue().getWidth() + "x" + entry.getValue().getHeight() + originalImage.getOriginalFilename();
+            String filePath = FOLDER_PATH + entry.getValue().getWidth() + "x" + entry.getValue().getHeight() + "-" + originalImage.getOriginalFilename();
             newImagesEntities.add(new ImageEntity(filePath, entry.getKey(), LocalDateTime.now(), imageType, ownerEntity));
             ImageIO.write(entry.getValue(), "jpg", new File(filePath));
         }
-        imageRepostiroy.saveAll(newImagesEntities);
 
-        return "Image uploaded successfully";
+        List<ImageEntity> savedImages = imageRepostiroy.saveAll(newImagesEntities);
+        Map<String, String> data = new HashMap<>();
+        for (ImageEntity imageEntity: savedImages){
+            data.put(imageEntity.getImageSize(), imageEntity.getId().toString());
+        }
+        return data;
     }
 
     @Override
