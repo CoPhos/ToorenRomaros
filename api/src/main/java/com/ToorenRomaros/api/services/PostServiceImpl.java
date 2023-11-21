@@ -30,10 +30,16 @@ public class PostServiceImpl implements PostService{
         postEntity.setUser(userEntity);
         PostEntity savedPost = postRepository.save(postEntity);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
         return modelMapper.map(savedPost, PostDto.class);
+    }
+
+    @Override
+    public void deletePostById(UUID id) {
+        postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
+        postRepository.deleteById(id);
     }
 }

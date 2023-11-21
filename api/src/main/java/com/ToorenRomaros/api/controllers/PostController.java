@@ -8,8 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1")
@@ -27,5 +30,12 @@ public class PostController {
         Map<String, Object> response = new HashMap<>();
         response.put("created", newPost);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/posts/{id}")
+    ResponseEntity<String>  deletePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        postService.deletePostById(UUID.fromString(id));
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Post: " + id + " deleted successfully");
     }
 }

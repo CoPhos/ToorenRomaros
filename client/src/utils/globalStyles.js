@@ -122,6 +122,12 @@ export const colors = {
     red: '#F02D2D',
     yellow: '#FFCB34',
     green: '#66CC33',
+    secondaryHover: '#585b70',
+    secondaryBorder: '#bfbfbf',
+    green: '#04b36b',
+    greenHover: '#91dbbd',
+    red: '#f95360',
+    redHover: '#fc959d',
 }
 
 export const fontSizes = {

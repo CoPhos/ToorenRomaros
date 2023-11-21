@@ -1,110 +1,41 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { EditorState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
-import { SERVER_URL } from '../../utils/constants'
 
-function EditorContainer() {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
-  const [isLoading, setIsLoading] = useState(false)
-  const [postId, setpostId] = useState('0')
 
-  const [inputValue, setInputValue] = useState('')
+function EditorContainer(props) {
 
-  const handleInputChange = (event) => {
-      setInputValue(event.target.value)
-  }
-
-  const handleSubmit = (event) => {
-      event.preventDefault()
-      console.log(inputValue)
-  }
-
-  useEffect(() => {
-    createNewPost()
-  }, [])
-
-  function createNewPost() {
-    setIsLoading(true)
-    const demoUserId = 'b7a61937-6f59-4bbb-80a7-08d65d1ad656'
-    fetch(SERVER_URL + '/posts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            user: demoUserId,
-            publicationDateTime: new Date().toISOString(),
-            status: 'inDevelop',
-        }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.created.id) 
-          setpostId(data.created.id)
-          setIsLoading(false)
-        })
-        .catch((error) => {
-            console.error('Error:', error)
-        })
-  }
-
-  function uploadImageCallback(file){
-    return new Promise((resolve, reject) => {
-      const formData = new FormData()
-      formData.append('image', file)
-      formData.append('imageType', 'postContent')
-      fetch(SERVER_URL + '/RT/' + postId + '/image', {
-          method: 'POST',
-          body: formData,
-      })
-          .then((response) => response.json())
-          .then((data) => {
-              resolve({
-                  data: {
-                      link: SERVER_URL + '/images/' + data.created.Desktop,
-                  },
-              })
-          })
-          .catch((error) => {
-              console.error('Error:', error)
-              reject(error)
-          })
-    })
-  }
-
-   if (isLoading) {
+   if (props.isLoading) {
        return <div>Loading...</div>
    }
 
   return (
       <Wrapper>
           <ContainerForm>
-              <form>
-                  <ContainerInputs>
-                      <label htmlFor="fname">Tittle *</label>
-                      <StyledInput id="fname" type="text"  value={inputValue} onChange={handleInputChange}/>
+              <ContainerInputs>
+                  <label htmlFor="fname">Tittle *</label>
+                  <StyledInput id="fname" type="text" required />
 
-                      <label htmlFor="fheadline">Headline *</label>
-                      <StyledInput id="fheadline" type="text" />
+                  <label htmlFor="fheadline">Headline *</label>
+                  <StyledInput id="fheadline" type="text" required />
 
-                      <label htmlFor="fsynthesis">Synthesis *</label>
-                      <StyledInput id="fsynthesis" type="text" />
-                  </ContainerInputs>
-              </form>
+                  <label htmlFor="fsynthesis">Synthesis *</label>
+                  <StyledInput id="fsynthesis" type="text" required />
+              </ContainerInputs>
           </ContainerForm>
           <ContainerEditor>
               <Editor
                   editorStyle={{ border: '1px solid #F1F1F1' }}
-                  editorState={editorState}
-                  onEditorStateChange={setEditorState}
-                  placeholder="    Tell a story..."
+                  editorState={props.editorState}
+                  onEditorStateChange={props.setEditorState}
+                  placeholder=" Tell a story..."
                   toolbar={{
                       image: {
-                          uploadCallback: (file) => uploadImageCallback(file),
+                          uploadCallback: (file) =>
+                              props.uploadImageCallback(file),
                           alt: { present: true, mandatory: true },
                           urlEnabled: true,
                       },
@@ -125,11 +56,23 @@ function EditorContainer() {
                   }}
               />
           </ContainerEditor>
+          <ContainerButtons>
+              <ContainerSaveDiscard>
+                  <SaveButton>Save Draft</SaveButton>
+                  <DiscardButton
+                      onClick={(e) => props.discardPost()}
+                      formnovalidate
+                  >
+                      Discard
+                  </DiscardButton>
+              </ContainerSaveDiscard>
+              <PostButton>Post</PostButton>
+          </ContainerButtons>
       </Wrapper>
   )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -139,18 +82,20 @@ const Wrapper = styled.div`
 
 const ContainerEditor = styled.div`
     width: 80%;
+    margin: 16px 0;
 `
 const ContainerForm = styled.div`
     width: 80%;
+    margin-top: 8px;
 `
 
 const ContainerInputs = styled.div`
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: start;
-    
+    width: 100%;
+    gap: 8px;
 `
 
 const StyledInput = styled.input`
@@ -162,5 +107,55 @@ const StyledInput = styled.input`
         border: 2px solid #bfbfbf;
     }
 `
+
+const ContainerButtons = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    aling-items: center;
+    justify-content: flex-start;
+    width: 80%;
+`
+
+const ContainerSaveDiscard = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+`
+
+const PostButton = styled.button`
+    width: 100%;
+    height: 32px;
+    background-color: ${(props) => props.theme.colors.secondary};
+    border: none;
+    color: white;
+    border-radius: 4px;
+    &:hover {
+        cursor: pointer;
+        background-color: ${(props) => props.theme.colors.secondaryHover};
+    }
+`
+const SaveButton = styled.button`
+    height: 32px;
+    padding: 0 16px;
+    background-color: ${(props) => props.theme.colors.green};
+    border: none;
+    color: white;
+    border-radius: 4px;
+    &:hover {
+        cursor: pointer;
+        background-color: ${(props) => props.theme.colors.greenHover};
+    }
+`
+const DiscardButton = styled(SaveButton)`
+    background-color: ${(props) => props.theme.colors.red};
+    &:hover {
+        
+        background-color: ${(props) => props.theme.colors.redHover};
+    }
+`
+
 
 export default EditorContainer
