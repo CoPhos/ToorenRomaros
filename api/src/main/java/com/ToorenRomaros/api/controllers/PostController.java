@@ -32,6 +32,15 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PutMapping("/posts/{id}")
+    ResponseEntity<Map<String, Object>> updatePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+                                                      @RequestBody PostDto postDto) throws Exception {
+        PostDto updatedPost = postService.updatePostById(UUID.fromString(id), postDto);
+        Map<String, Object> response = new HashMap<>();
+        response.put("updated", updatedPost);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping("/posts/{id}")
     ResponseEntity<String>  deletePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         postService.deletePostById(UUID.fromString(id));

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import EditorContainer from './EditorContainer'
 
 import { SERVER_URL } from '../../utils/constants'
-import { EditorState } from 'draft-js'
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 
 
 function EditorManager() {
@@ -12,10 +12,19 @@ function EditorManager() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [isLoading, setIsLoading] = useState(false)
     const [postId, setpostId] = useState('0')
+    const [postInfo, setPostInfo] = useState({
+        tittle: '',
+        headline: '',
+        synthesis: ''
+    })
 
     useEffect(() => {
         createNewPost()
     }, [])
+
+    function handleOnChange(e, key){
+        setPostInfo({ ...postInfo, [key]: e.target.value })
+    }
 
     async function createNewPost() {
         setIsLoading(true)
@@ -97,6 +106,40 @@ function EditorManager() {
             })
     }
 
+    async function savePost(postStatus){
+        setIsLoading(true)
+
+        fetch(SERVER_URL + '/posts/' + postId, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                tittle: postInfo.tittle,
+                headline: postInfo.headline,
+                synthesis: postInfo.synthesis,
+                content: JSON.stringify(
+                    convertToRaw(editorState.getCurrentContent())
+                ),
+                status: postStatus,
+            }),
+        })
+            .then(async (response) => {
+                const data = await response.json()
+                if (!response.ok) {
+                    //const error = (data && data.message) || response.status
+                    //setError(error)
+                } else {
+                    console.log(data)
+                    setIsLoading(false)
+                    history.replace('/')
+                }
+            })
+            .catch((error) => {
+                console.error('There was an error!', error)
+            })
+    }
+
   return (
       <EditorContainer
           isLoading={isLoading}
@@ -104,6 +147,9 @@ function EditorManager() {
           setEditorState={setEditorState}
           uploadImageCallback={uploadImageCallback}
           discardPost={discardPost}
+          savePost={savePost}
+          postInfo={postInfo}
+          handleOnChange={handleOnChange}
       ></EditorContainer>
   )
 }

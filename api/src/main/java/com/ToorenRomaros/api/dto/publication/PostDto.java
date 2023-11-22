@@ -17,6 +17,7 @@ public class PostDto {
     private String user;
     private String status;
     private String content;
+    private String headline;
 
     public UUID getId() {
         return id;
@@ -80,5 +81,13 @@ public class PostDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 }

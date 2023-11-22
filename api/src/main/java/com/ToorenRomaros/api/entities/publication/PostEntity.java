@@ -34,6 +34,8 @@ public class PostEntity {
     private String content;
     @Column(name = "STATUS", columnDefinition = "VARCHAR(24)")
     private String status;
+    @Column(name = "HEADLINE", columnDefinition = "VARCHAR(255)")
+    private String headline;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -103,5 +105,13 @@ public class PostEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 }

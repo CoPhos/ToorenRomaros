@@ -6,5 +6,7 @@ import java.util.UUID;
 
 public interface PostService {
     PostDto createPost(PostDto postDto);
+
+    PostDto updatePostById(UUID id, PostDto postDto);
     void deletePostById(UUID id);
 }

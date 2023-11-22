@@ -12,18 +12,42 @@ function EditorContainer(props) {
        return <div>Loading...</div>
    }
 
+   const handleSubmit = (e) => {
+       e.preventDefault()
+       console.log(props.postInfo)
+   }
+
+
   return (
       <Wrapper>
-          <ContainerForm>
+          <ContainerForm onSubmit={(e) => handleSubmit(e)}>
               <ContainerInputs>
                   <label htmlFor="fname">Tittle *</label>
-                  <StyledInput id="fname" type="text" required />
+                  <StyledInput
+                      value={props.postInfo.tittle}
+                      id="fname"
+                      type="text"
+                      required
+                      onChange={(e) => props.handleOnChange(e, 'tittle')}
+                  />
 
                   <label htmlFor="fheadline">Headline *</label>
-                  <StyledInput id="fheadline" type="text" required />
+                  <StyledInput
+                      value={props.postInfo.headline}
+                      id="fheadline"
+                      type="text"
+                      required
+                      onChange={(e) => props.handleOnChange(e, 'headline')}
+                  />
 
                   <label htmlFor="fsynthesis">Synthesis *</label>
-                  <StyledInput id="fsynthesis" type="text" required />
+                  <StyledInput
+                      value={props.postInfo.synthesis}
+                      id="fsynthesis"
+                      type="text"
+                      required
+                      onChange={(e) => props.handleOnChange(e, 'synthesis')}
+                  />
               </ContainerInputs>
           </ContainerForm>
           <ContainerEditor>
@@ -58,7 +82,12 @@ function EditorContainer(props) {
           </ContainerEditor>
           <ContainerButtons>
               <ContainerSaveDiscard>
-                  <SaveButton>Save Draft</SaveButton>
+                  <SaveButton
+                      onClick={(e) => props.savePost('draft')}
+                      formnovalidate
+                  >
+                      Save Draft
+                  </SaveButton>
                   <DiscardButton
                       onClick={(e) => props.discardPost()}
                       formnovalidate
@@ -66,7 +95,9 @@ function EditorContainer(props) {
                       Discard
                   </DiscardButton>
               </ContainerSaveDiscard>
-              <PostButton>Post</PostButton>
+              <PostButton onClick={(e) => props.savePost('completed')}>
+                  Post
+              </PostButton>
           </ContainerButtons>
       </Wrapper>
   )
