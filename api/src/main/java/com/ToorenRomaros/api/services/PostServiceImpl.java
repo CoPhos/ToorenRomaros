@@ -11,7 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -37,6 +39,21 @@ public class PostServiceImpl implements PostService{
             Thread.currentThread().interrupt();
         }
         return modelMapper.map(savedPost, PostDto.class);
+    }
+
+    @Override
+    public PostDto getPostById(UUID id) {
+        PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
+        return modelMapper.map(postEntity, PostDto.class);
+    }
+
+    @Override
+    public List<PostDto> getLatestPostsTittleAndHeadline() {
+        List<PostEntity> postEntities = postRepository.getPostTittleAndPostHeadlineWhereStatusFinishedOrderByCreadtedDateDESCLimit8();
+        if(postEntities == null){
+            throw  new ResourceNotFoundException("No Posts found");
+        }
+        return postEntities.stream().map(postEntity -> modelMapper.map(postEntity, PostDto.class)).collect(Collectors.toList());
     }
 
     @Override

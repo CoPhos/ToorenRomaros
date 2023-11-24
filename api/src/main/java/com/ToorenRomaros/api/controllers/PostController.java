@@ -32,6 +32,20 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/posts/{id}")
+    ResponseEntity<Map<String, Object>> getPostById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", postService.getPostById(UUID.fromString(id)));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts/latest/preview")
+    ResponseEntity<Map<String, Object>> getLatestPostTittleAndHeadline() throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", postService.getLatestPostsTittleAndHeadline());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PutMapping("/posts/{id}")
     ResponseEntity<Map<String, Object>> updatePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
                                                       @RequestBody PostDto postDto) throws Exception {
