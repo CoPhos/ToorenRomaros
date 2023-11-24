@@ -40,6 +40,15 @@ function EditorContainer(props) {
                       onChange={(e) => props.handleOnChange(e, 'headline')}
                   />
 
+                  <label htmlFor="fimage">Front image *</label>
+                  <StyledInput
+                      id="fimage"
+                      type="file"
+                      accept="image/jpeg"
+                      required
+                      onChange={(e) => props.handleOnChange(e, 'image')}
+                  />
+
                   <label htmlFor="fsynthesis">Synthesis *</label>
                   <StyledInput
                       value={props.postInfo.synthesis}
