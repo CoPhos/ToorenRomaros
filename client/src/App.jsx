@@ -1,5 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import './index.css'; 
+
 import { ThemeProvider } from 'styled-components'
 
 //utils
