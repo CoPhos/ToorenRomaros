@@ -1,3 +1,120 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    box-sizing: border-box;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 20px;
+}
+*,
+::before,
+::after {
+    box-sizing: inherit;
+}
+#root {
+    max-width: 1204px;
+    background-color: #ffffff;
+    margin: 0 auto;
+}
+
+body {
+    margin: 0px;
+    background-color: #f2f2f2;
+
+    .rec-dot {
+        box-shadow: rgb(255, 89, 89) 0px 0px 1px 3px;
+    }
+    .rec-dot:hover,
+    .rec-dot:focus {
+        cursor: pointer;
+        box-shadow: rgb(255, 89, 89) 0px 0px 1px 3px;
+    }
+    .rec-dot_active {
+        background-color: rgba(255, 89, 89, 0.5);
+    }
+    .rec-arrow {
+        position: absolute;
+        z-index: 1;
+        background-color: white;
+        width: 40px;
+        height: 40px;
+        min-height: 28px;
+        min-width: 28px;
+        font-size: 24px;
+        line-height: 0px;
+    }
+    .rec.rec-arrow-left:hover:enabled,
+    .rec.rec-arrow-right:hover:enabled,
+    .rec.rec-arrow-left:focus:enabled,
+    .rec.rec-arrow-right:focus:enabled {
+        color: rgb(255, 255, 255);
+        background-color: #ff5959;
+        box-shadow: rgb(51, 51, 51) 0px 0px 2px 0px;
+    }
+    .rec-arrow-right {
+        right: 24px;
+    }
+    .rec-arrow-left {
+        left: 24px;
+    }
+
+    #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    h1 {
+        font-size: 71.29px;
+        line-height: calc(71.29px * 1.2);
+        letter-spacing: -2%;
+    }
+    h2 {
+        font-size: 48.83px;
+        line-height: calc(48.83px * 1.2);
+        letter-spacing: -2%;
+    }
+    h3 {
+        font-size: 25px;
+        line-height: calc(25px * 1.2);
+        letter-spacing: -2%;
+    }
+    p {
+        font-size: 20px;
+        line-height: calc(20px * 1.5);
+        letter-spacing: -0.2px;
+    }
+    @media only screen and (max-width: 904px) {
+        h1 {
+            font-size: 36.49px;
+            line-height: calc(36.49px * 1.2);
+            letter-spacing: -2%;
+        }
+        h2 {
+            font-size: 28.83px;
+            line-height: calc(28.83px * 1.2);
+            letter-spacing: -2%;
+        }
+        h3 {
+            font-size: 20.25px;
+            line-height: calc(20.25px * 1.2);
+            letter-spacing: -2%;
+        }
+        p {
+            font-size: 18px;
+            line-height: calc(18px * 1.5);
+            letter-spacing: -0.2px;
+        }
+    }
+    @media only screen and (max-width: 904px) {
+        body {
+            background-color: #ffffff;
+        }
+    }
+    @media only screen and (max-width: 904px) {
+        :root {
+            font-size: 18px;
+        }
+    }
+}
