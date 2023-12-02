@@ -1,11 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Sonsie+One&family=Source+Sans+3:wght@300;400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
     box-sizing: border-box;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 20px;
 }
 *,
 ::before,
@@ -13,9 +12,13 @@
     box-sizing: inherit;
 }
 #root {
-    max-width: 1204px;
+    max-width: 1140px;
     background-color: #ffffff;
     margin: 0 auto;
+}
+
+html {
+    font-size: 20px;
 }
 
 body {
@@ -110,11 +113,6 @@ body {
     @media only screen and (max-width: 904px) {
         body {
             background-color: #ffffff;
-        }
-    }
-    @media only screen and (max-width: 904px) {
-        :root {
-            font-size: 18px;
         }
     }
 }

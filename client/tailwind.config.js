@@ -1,7 +1,29 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx,html}'],
     theme: {
+        fontFamily: {
+            sans: ['"Source Sans 3"', ...defaultTheme.fontFamily.sans],
+            SonsieOne: ['Sonsie One'],
+        },
+        fontSize: {
+            sm: '18px',
+            base: '20px',
+            xl: '24px',
+            '2xl': '1.563rem',
+            '3xl': '1.953rem',
+            '4xl': '2.441rem',
+            '5xl': '3.052rem',
+        },
+        spacing: {
+            1: '8px',
+            2: '16px',
+            3: '24px',
+            4: '32px',
+            5: '40px',
+            6: '48px',
+        },
         extend: {
             colors: {
                 white: {
@@ -58,7 +80,7 @@ module.exports = {
                 },
             },
             lineHeight: {
-                text: '1.5', 
+                text: '1.5',
             },
             letterSpacing: {
                 text: '-0.2px',
