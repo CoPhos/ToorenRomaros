@@ -5,14 +5,17 @@ import gemstone from '../../assests/gemstone.png'
 
 function Navbar() {
   return (
-      <nav className="border-b border-white-300 px-2 min-h-[72px] flex flex-row items-center justify-between h-full">
-              <Link to="/">
-                  <div className="flex flex-row items-center justify-center h-full">
-                      <img src={gemstone} width={42} height={42}></img>
-                      <p className="font-SonsieOne text-xl">Cinnabar</p>
-                  </div>
-              </Link>
-              <div className="flex flex-row items-center justify-between">
+      <nav className="border-b border-white-300 px-2 min-h-[72px] flex flex-row items-center justify-between">
+          <Link to="/">
+              <div className="flex flex-row items-center justify-center h-full">
+                  <img src={gemstone} width={42} height={42} title="logo"></img>
+                  <p className="font-SonsieOne sm:text-h2-m-400 lg:text-h3-d-400">
+                      Cinnabar
+                  </p>
+              </div>
+          </Link>
+          <div className="flex flex-row items-center justify-between lg:invisible">
+              <Link to="/search">
                   <svg
                       width="24"
                       height="24"
@@ -31,12 +34,14 @@ function Navbar() {
                           </clipPath>
                       </defs>
                   </svg>
+              </Link>
+              <Link to="profile">
                   <svg
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
-                      className='ml-2'
+                      className="ml-2"
                   >
                       <g clip-path="url(#clip0_345_786)">
                           <path
@@ -50,7 +55,8 @@ function Navbar() {
                           </clipPath>
                       </defs>
                   </svg>
-              </div>
+              </Link>
+          </div>
       </nav>
   )
 }

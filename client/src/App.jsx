@@ -31,25 +31,27 @@ export default function App() {
             <GlobalStyle />
             <BrowserRouter>
                 <NavbarContainer></NavbarContainer>
-                <Switch>
-                    <Route exact path="/">
-                        <Home></Home>
-                    </Route>
-                    <Route path="/film">
-                        <FilmDetails></FilmDetails>
-                    </Route>
-                    <Route path="/browse">
-                        <Browse></Browse>
-                    </Route>
-                    <Route path="/editor">
-                        <EditorManager></EditorManager>
-                    </Route>
-                    <Route>
-                        <p>Page Not Found</p>
-                    </Route>
-                </Switch>
-                <MobileNavMenu></MobileNavMenu>
-                <Footer></Footer>
+                
+                    <Switch>
+                        <Route exact path="/">
+                            <Home></Home>
+                        </Route>
+                        <Route path="/film">
+                            <FilmDetails></FilmDetails>
+                        </Route>
+                        <Route path="/browse">
+                            <Browse></Browse>
+                        </Route>
+                        <Route path="/editor">
+                            <EditorManager></EditorManager>
+                        </Route>
+                        <Route>
+                            <p>Page Not Found</p>
+                        </Route>
+                    </Switch>
+                
+                {/* <MobileNavMenu></MobileNavMenu>
+                <Footer></Footer> */}
             </BrowserRouter>
         </ThemeProvider>
     )

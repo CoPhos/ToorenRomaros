@@ -8,13 +8,152 @@ module.exports = {
             SonsieOne: ['Sonsie One'],
         },
         fontSize: {
-            sm: '18px',
-            base: '20px',
-            xl: '24px',
-            '2xl': '1.563rem',
-            '3xl': '1.953rem',
-            '4xl': '2.441rem',
-            '5xl': '3.052rem',
+            //Desktop
+            'h1-d-700': [
+                '76.29px',
+                {
+                    lineHeight: '85.5px',
+                    letterSpacing: '-1.43px',
+                    fontWeight: '700',
+                },
+            ],
+            'h2-d-700': [
+                '48.83px',
+                {
+                    lineHeight: '58.6px',
+                    letterSpacing: '-0.98px',
+                    fontWeight: '700',
+                },
+            ],
+            'h2-d-400': [
+                '48.83px',
+                {
+                    lineHeight: '58.6px',
+                    letterSpacing: '-0.98px',
+                    fontWeight: '400',
+                },
+            ],
+            'h3-d-700': [
+                '25px',
+                {
+                    lineHeight: '30px',
+                    letterSpacing: '-0.15px',
+                    fontWeight: '700',
+                },
+            ],
+            'h3-d-400': [
+                '25px',
+                {
+                    lineHeight: '30px',
+                    letterSpacing: '-0.15px',
+                    fontWeight: '400',
+                },
+            ],
+            'body-d-400': [
+                '20px',
+                {
+                    lineHeight: '30px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '400',
+                },
+            ],
+            'body-d-700': [
+                '20px',
+                {
+                    lineHeight: '30px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '700',
+                },
+            ],
+            'small-d-400': [
+                '16px',
+                {
+                    lineHeight: '24px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '400',
+                },
+            ],
+            'small-d-300': [
+                '16px',
+                {
+                    lineHeight: '24px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '300',
+                },
+            ],
+            //Mobile
+            'h1-m-700': [
+                '36.49px',
+                {
+                    lineHeight: '43.8px',
+                    letterSpacing: '-0.73px',
+                    fontWeight: '700',
+                },
+            ],
+            'h2-m-700': [
+                '28.83px',
+                {
+                    lineHeight: '34.6px',
+                    letterSpacing: '-0.58px',
+                    fontWeight: '700',
+                },
+            ],
+            'h2-m-400': [
+                '28.83px',
+                {
+                    lineHeight: '34.6px',
+                    letterSpacing: '-0.58px',
+                    fontWeight: '400',
+                },
+            ],
+            'h3-m-700': [
+                '20.25px',
+                {
+                    lineHeight: '24.3px',
+                    letterSpacing: '-0.15px',
+                    fontWeight: '700',
+                },
+            ],
+            'h3-m-400': [
+                '20.25px',
+                {
+                    lineHeight: '24.3px',
+                    letterSpacing: '-0.15px',
+                    fontWeight: '400',
+                },
+            ],
+            'body-m-400': [
+                '18px',
+                {
+                    lineHeight: '27px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '400',
+                },
+            ],
+            'body-m-700': [
+                '18px',
+                {
+                    lineHeight: '27px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '700',
+                },
+            ],
+            'Small-m-400': [
+                '16px',
+                {
+                    lineHeight: '24px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '400',
+                },
+            ],
+            'Small-m-300': [
+                '16px',
+                {
+                    lineHeight: '24px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '300',
+                },
+            ],
         },
         spacing: {
             1: '8px',

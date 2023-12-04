@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { ALL } = require("dns");
 
 module.exports = {
     entry: './src/index.js',
@@ -19,6 +20,7 @@ module.exports = {
             directory: path.join(__dirname, 'build'),
         },
         port: 3000,
+        allowedHosts: 'all',
     },
     module: {
         // exclude node_modules
