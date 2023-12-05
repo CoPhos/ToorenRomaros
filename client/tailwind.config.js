@@ -138,7 +138,7 @@ module.exports = {
                     fontWeight: '700',
                 },
             ],
-            'Small-m-400': [
+            'small-m-400': [
                 '16px',
                 {
                     lineHeight: '24px',
@@ -146,7 +146,7 @@ module.exports = {
                     fontWeight: '400',
                 },
             ],
-            'Small-m-300': [
+            'small-m-300': [
                 '16px',
                 {
                     lineHeight: '24px',

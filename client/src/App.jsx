@@ -31,7 +31,7 @@ export default function App() {
             <GlobalStyle />
             <BrowserRouter>
                 <NavbarContainer></NavbarContainer>
-                
+                <main>
                     <Switch>
                         <Route exact path="/">
                             <Home></Home>
@@ -49,9 +49,26 @@ export default function App() {
                             <p>Page Not Found</p>
                         </Route>
                     </Switch>
+                </main>
                 
-                {/* <MobileNavMenu></MobileNavMenu>
-                <Footer></Footer> */}
+                <Footer></Footer>
+                <Route
+                    render={({ location }) => {
+                        const fillColor =
+                            location.pathname === '/'
+                                ? 'home'
+                                : location.pathname === '/browse'
+                                ? 'browse'
+                                : location.pathname === '/blog'
+                                ? 'blog'
+                                : location.pathname === '/profile'
+                                ? 'profile'
+                                : location.pathname === '/notification'
+                                ? 'notification'
+                                : 'default'
+                        return <MobileNavMenu fillColor={fillColor} />
+                    }}
+                />
             </BrowserRouter>
         </ThemeProvider>
     )

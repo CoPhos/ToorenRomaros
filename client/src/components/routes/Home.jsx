@@ -112,7 +112,7 @@ function Home() {
     return (
         <Fragment>
             <ButtonCreatePostManager></ButtonCreatePostManager>
-            {/* <MainCarouselManager
+            <MainCarouselManager
                 slides={mainSlides}
                 dimension={mainSizes}
                 insideText={insideText}
@@ -121,8 +121,8 @@ function Home() {
                 breakPoints={breakPointsMain}
                 pagination={true}
                 rating={true}
-            ></MainCarouselManager> */}
-            {/* <Tittle
+            ></MainCarouselManager>
+            <Tittle
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>
@@ -238,7 +238,7 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={false}
-            ></MainCarouselManager> */}
+            ></MainCarouselManager>
         </Fragment>
     )
 }
