@@ -15,61 +15,61 @@ import java.util.Arrays;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-@Configuration  
+//@Configuration
 //@EnableWebSecurity
 //@EnableMethodSecurity
 //(prePostEnabled = true)
-public class ResourceServerConfig {
-
-	private final JwtAuthConverter jwtAuthConverter;
-
-	public ResourceServerConfig(JwtAuthConverter jwtAuthConverter) {
-		this.jwtAuthConverter = jwtAuthConverter;
-	}
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-				.httpBasic()
-				.disable()
-				.formLogin()
-				.disable();
+//public class ResourceServerConfig {
+//
+//	private final JwtAuthConverter jwtAuthConverter;
+//
+//	public ResourceServerConfig(JwtAuthConverter jwtAuthConverter) {
+//		this.jwtAuthConverter = jwtAuthConverter;
+//	}
+//
+//	@Bean
+//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		http
+//				.httpBasic()
+//				.disable()
+//				.formLogin()
+//				.disable();
 //		http
 //				.csrf()
 //				.disable()
 //				.authorizeHttpRequests()
 //				.anyRequest()
 //				.authenticated();
-		http
-				.csrf().disable()
-				.cors().and().authorizeRequests()
-				.anyRequest().permitAll();
-
-		http
-				.oauth2ResourceServer()
-				.jwt()
-				.jwtAuthenticationConverter(jwtAuthConverter);
-
-		http
-				.sessionManagement()
-				.sessionCreationPolicy(STATELESS);
-
-		return http.build();
-	}
-	
-	@Bean
-	public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
-	    return new SecurityEvaluationContextExtension();
-	}
-
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
-	}
-}
+//		http
+//				.csrf().disable()
+//				.cors().and().authorizeRequests()
+//				.anyRequest().permitAll();
+//
+//		http
+//				.oauth2ResourceServer()
+//				.jwt()
+//				.jwtAuthenticationConverter(jwtAuthConverter);
+//
+//		http
+//				.sessionManagement()
+//				.sessionCreationPolicy(STATELESS);
+//
+//		return http.build();
+//	}
+//
+//	@Bean
+//	public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+//	    return new SecurityEvaluationContextExtension();
+//	}
+//
+//	@Bean
+//	CorsConfigurationSource corsConfigurationSource() {
+//		CorsConfiguration configuration = new CorsConfiguration();
+//		configuration.setAllowedOrigins(Arrays.asList("*"));
+//		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//		source.registerCorsConfiguration("/**", configuration);
+//		return source;
+//	}
+//}
