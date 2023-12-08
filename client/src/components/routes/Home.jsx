@@ -5,6 +5,7 @@ import MainCarouselManager from '../mainCarousel/MainCarouselManager'
 import SimpleTopContainer from '../SimpleTop/SimpleTopContainer'
 import NewsSectionContainer from '../News&Blog/NewsSectionContainer'
 import ButtonCreatePostManager from '../button/ButtonCreatePostManager'
+import MovieCard from '../cards/movieCard/MovieCard'
 
 //utils
 import { fontSizes } from '../../utils/globalStyles'
@@ -112,7 +113,8 @@ function Home() {
     return (
         <Fragment>
             <ButtonCreatePostManager></ButtonCreatePostManager>
-            <MainCarouselManager
+            <MovieCard></MovieCard>
+            {/* <MainCarouselManager
                 slides={mainSlides}
                 dimension={mainSizes}
                 insideText={insideText}
@@ -238,7 +240,7 @@ function Home() {
                 pagination={false}
                 border={'8px'}
                 rating={false}
-            ></MainCarouselManager>
+            ></MainCarouselManager> */}
         </Fragment>
     )
 }
