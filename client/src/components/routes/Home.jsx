@@ -10,6 +10,7 @@ import MovieCard from '../cards/movieCard/MovieCard'
 //utils
 import { fontSizes } from '../../utils/globalStyles'
 import Tittle from '../../utils/Tittle'
+import SpotlightCarouselManager from '../mainCarousel/SpotlightCarouselManager';
 
 function Home() {
     //slides
@@ -113,8 +114,14 @@ function Home() {
     return (
         <Fragment>
             <ButtonCreatePostManager></ButtonCreatePostManager>
-            <MovieCard></MovieCard>
-            {/* <MainCarouselManager
+            <MovieCard
+                tittle={'Avengers: End Game'}
+                opened={'Dec 07, 2023'}
+                criticPercentage={"100"}
+                userPercentage={null}
+            ></MovieCard>
+            <SpotlightCarouselManager></SpotlightCarouselManager>
+           <MainCarouselManager
                 slides={mainSlides}
                 dimension={mainSizes}
                 insideText={insideText}
@@ -124,7 +131,7 @@ function Home() {
                 pagination={true}
                 rating={true}
             ></MainCarouselManager>
-            <Tittle
+             {/* <Tittle
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                 margin={'48px 0 16px 16px'}
             ></Tittle>

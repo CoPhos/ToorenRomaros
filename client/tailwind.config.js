@@ -65,6 +65,14 @@ module.exports = {
                     fontWeight: '700',
                 },
             ],
+            'small-d-700': [
+                '16px',
+                {
+                    lineHeight: '24px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '700',
+                },
+            ],
             'small-d-400': [
                 '16px',
                 {
@@ -77,6 +85,22 @@ module.exports = {
                 '16px',
                 {
                     lineHeight: '24px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '300',
+                },
+            ],
+            'tiny-d-400': [
+                '12.8px',
+                {
+                    lineHeight: '19.2px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '400',
+                },
+            ],
+            'tiny-d-300': [
+                '12.8px',
+                {
+                    lineHeight: '19.2px',
                     letterSpacing: '-0.2px',
                     fontWeight: '300',
                 },
@@ -138,6 +162,14 @@ module.exports = {
                     fontWeight: '700',
                 },
             ],
+            'small-m-700': [
+                '16px',
+                {
+                    lineHeight: '24px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '700',
+                },
+            ],
             'small-m-400': [
                 '16px',
                 {
@@ -154,8 +186,25 @@ module.exports = {
                     fontWeight: '300',
                 },
             ],
+            'tiny-m-400': [
+                '11.52px',
+                {
+                    lineHeight: '17.3px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '400',
+                },
+            ],
+            'tiny-m-300': [
+                '11.52px',
+                {
+                    lineHeight: '17.3px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '300',
+                },
+            ],
         },
         spacing: {
+            0.5: '4px',
             1: '8px',
             2: '16px',
             3: '24px',
