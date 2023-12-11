@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 
 function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
     return (
-        <div className="max-w-[128px] lg:max-w-[170px]">
+        <div className="max-w-[128px] md:max-w-[170px]">
             <div className="hover:cursor-pointer group">
                 <Link to={'/a' + id}>
                     <img
                         //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                         src="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg"
                         alt="Elva dressed as a fairy"
-                        className="w-[128px] h-[168px] lg:w-[170px] lg:h-[258px] rounded-lg object-cover group-hover:opacity-75"
+                        className="w-[128px] h-[168px] md:w-[170px] md:h-[258px] rounded-lg object-cover object-center group-hover:opacity-75"
                     />
                     <div className="flex flex-row items-center gap-1 mt-1">
                         <div className="flex flex-row items-center justify-start gap-1">

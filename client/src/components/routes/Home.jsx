@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react'
 
 //components
-import MainCarouselManager from '../mainCarousel/MainCarouselManager'
 import SimpleTopContainer from '../SimpleTop/SimpleTopContainer'
 import NewsSectionContainer from '../News&Blog/NewsSectionContainer'
 import ButtonCreatePostManager from '../button/ButtonCreatePostManager'
@@ -9,8 +8,11 @@ import MovieCard from '../cards/movieCard/MovieCard'
 
 //utils
 import { fontSizes } from '../../utils/globalStyles'
+import TittleCard from '../cards/tittle/TittleCard'
 import Tittle from '../../utils/Tittle'
-import SpotlightCarouselManager from '../mainCarousel/SpotlightCarouselManager';
+import SpotlightCarouselManager from '../spotlightCarousel/SpotlightCarouselManager';
+import RegularCarouselManager from '../regularCarousel/RegularCarouselManager';
+import TopFilmsManager from '../SimpleTop/TopFilmsManager';
 
 function Home() {
     //slides
@@ -113,109 +115,63 @@ function Home() {
     }
     return (
         <Fragment>
-            <ButtonCreatePostManager></ButtonCreatePostManager>
-            <MovieCard
-                tittle={'Avengers: End Game'}
-                opened={'Dec 07, 2023'}
-                criticPercentage={"100"}
-                userPercentage={null}
-            ></MovieCard>
             <SpotlightCarouselManager></SpotlightCarouselManager>
-           <MainCarouselManager
-                slides={mainSlides}
-                dimension={mainSizes}
-                insideText={insideText}
-                belowText={false}
-                gradient={true}
-                breakPoints={breakPointsMain}
-                pagination={true}
-                rating={true}
-            ></MainCarouselManager>
-             {/* <Tittle
+            <TittleCard
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
-                margin={'48px 0 16px 16px'}
-            ></Tittle>
-            <MainCarouselManager
-                slides={moviesSlides}
-                dimension={moviesSizes}
-                belowText={true}
-                gradient={false}
-                breakPoints={breakPointsMovie}
-                pagination={false}
-                border={'8px'}
-                rating={true}
-            ></MainCarouselManager>
-            <Tittle
-                tittle={'NEW & UPCOMING ON STREAMING'}
-                margin={'48px 0 16px 16px'}
-            ></Tittle>
-            <MainCarouselManager
-                slides={moviesSlides}
-                dimension={moviesSizes}
-                belowText={true}
-                gradient={false}
-                breakPoints={breakPointsMovie}
-                pagination={false}
-                border={'8px'}
-                rating={true}
-            ></MainCarouselManager>
-            <Tittle
-                tittle={'HULU HAS MOVIES'}
-                margin={'48px 0 16px 16px'}
-            ></Tittle>
-            <MainCarouselManager
-                slides={moviesSlides}
-                dimension={moviesSizes}
-                belowText={true}
-                gradient={false}
-                breakPoints={breakPointsMovie}
-                pagination={false}
-                border={'8px'}
-                rating={true}
-            ></MainCarouselManager>
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+            <TittleCard
+                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+            <TittleCard
+                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+            <TittleCard
+                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+            <TittleCard
+                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-1">
+                <TopFilmsManager
+                    tittle={'MOST POPULAR TV ON RT'}
+                    to={'/adasd'}
+                    linkText={'View all'}
+                ></TopFilmsManager>
+                <TopFilmsManager
+                    tittle={'POPULAR STREAMING MOVIES'}
+                    to={'/adasd'}
+                    linkText={'View all'}
+                ></TopFilmsManager>{' '}
+                <TopFilmsManager
+                    tittle={'NEW TV THIS WEEK'}
+                    to={'/adasd'}
+                    linkText={'View all'}
+                ></TopFilmsManager>{' '}
+                <TopFilmsManager
+                    tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                    to={'/adasd'}
+                    linkText={'View all'}
+                ></TopFilmsManager>
+            </div>
             <SimpleTopContainer></SimpleTopContainer>
-            <Tittle
-                tittle={'POPULAR IN THEATERS'}
-                margin={'48px 0 16px 16px'}
-            ></Tittle>
-            <MainCarouselManager
-                slides={moviesSlides}
-                dimension={moviesSizes}
-                belowText={true}
-                gradient={false}
-                breakPoints={breakPointsMovie}
-                pagination={false}
-                border={'8px'}
-                rating={true}
-            ></MainCarouselManager>
-            <Tittle
-                tittle={'ESSENTIAL ROAD TRIP MOVIES'}
-                margin={'48px 0 16px 16px'}
-            ></Tittle>
-            <MainCarouselManager
-                slides={moviesSlides}
-                dimension={moviesSizes}
-                belowText={true}
-                gradient={false}
-                breakPoints={breakPointsMovie}
-                pagination={false}
-                border={'8px'}
-                rating={true}
-            ></MainCarouselManager>
-            <Tittle
-                tittle={'ESSENTIAL HIGH SCHOOL MOVIES'}
-                margin={'48px 0 16px 16px'}
-            ></Tittle>
-            <MainCarouselManager
-                slides={moviesSlides}
-                dimension={moviesSizes}
-                belowText={true}
-                gradient={false}
-                breakPoints={breakPointsMovie}
-                pagination={false}
-                border={'8px'}
-                rating={true}
-            ></MainCarouselManager>
+            <ButtonCreatePostManager></ButtonCreatePostManager>
+
+            {/*
             <Tittle
                 tittle={'TRAILERS & BLOG'}
                 margin={'48px 0 16px 16px'}
@@ -233,21 +189,7 @@ function Home() {
                     tittleD: fontSizes.h6,
                     base: fontSizes.base,
                 }}
-            ></NewsSectionContainer>
-            <Tittle
-                tittle={'MOVIE & TV GUIDES'}
-                margin={'48px 0 16px 16px'}
-            ></Tittle>
-            <MainCarouselManager
-                slides={guidesSlides}
-                dimension={guidesSizes}
-                belowText={true}
-                gradient={false}
-                breakPoints={breakPointsNews}
-                pagination={false}
-                border={'8px'}
-                rating={false}
-            ></MainCarouselManager> */}
+            ></NewsSectionContainer>*/}
         </Fragment>
     )
 }

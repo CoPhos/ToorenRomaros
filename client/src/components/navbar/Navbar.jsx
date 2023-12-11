@@ -5,7 +5,7 @@ import gemstone from '../../assests/gemstone.png'
 
 function Navbar() {
   return (
-      <nav className="border-b border-white-300 px-2 min-h-[72px] flex flex-row items-center sticky top-[0px] z-10 bg-white-50">
+      <nav className="border-b border-white-300 px-2 min-h-[72px] flex flex-row items-center sticky top-[0px] bg-white-50 z-20">
           <div className="flex flex-row items-center justify-between max-w-[1120px] mx-auto my-0 w-full">
               <Link to="/">
                   <div className="flex flex-row items-center justify-center h-full">
