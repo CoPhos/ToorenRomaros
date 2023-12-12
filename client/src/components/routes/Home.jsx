@@ -128,25 +128,8 @@ function Home() {
                 linkText={'View all'}
             ></TittleCard>
             <RegularCarouselManager></RegularCarouselManager>
-            <TittleCard
-                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
-                to={'/adasd'}
-                linkText={'View all'}
-            ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
-            <TittleCard
-                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
-                to={'/adasd'}
-                linkText={'View all'}
-            ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
-            <TittleCard
-                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
-                to={'/adasd'}
-                linkText={'View all'}
-            ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-1">
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-2 lg:gap-y-4 lg:gap-x-[128px] mb-3">
                 <TopFilmsManager
                     tittle={'MOST POPULAR TV ON RT'}
                     to={'/adasd'}
@@ -156,19 +139,40 @@ function Home() {
                     tittle={'POPULAR STREAMING MOVIES'}
                     to={'/adasd'}
                     linkText={'View all'}
-                ></TopFilmsManager>{' '}
+                ></TopFilmsManager>
                 <TopFilmsManager
                     tittle={'NEW TV THIS WEEK'}
                     to={'/adasd'}
                     linkText={'View all'}
-                ></TopFilmsManager>{' '}
+                ></TopFilmsManager>
                 <TopFilmsManager
                     tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                     to={'/adasd'}
                     linkText={'View all'}
                 ></TopFilmsManager>
             </div>
-            <SimpleTopContainer></SimpleTopContainer>
+            
+            <TittleCard
+                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+            <TittleCard
+                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+            <TittleCard
+                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                to={'/adasd'}
+                linkText={'View all'}
+            ></TittleCard>
+            <RegularCarouselManager></RegularCarouselManager>
+
+            
+
             <ButtonCreatePostManager></ButtonCreatePostManager>
 
             {/*

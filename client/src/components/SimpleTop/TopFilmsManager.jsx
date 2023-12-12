@@ -4,60 +4,38 @@ import TopFilmsContainer from './TopFilmsContainer';
 function TopFilmsManager({ tittle, to, linkText }) {
     const data = {
         0: {
-            image: '',
             text: 'Painkiller: Season 0',
-            rating: '38%',
-            ratingImg: 1,
-            textType: 'movieRtng',
+            rating: '38',        
         },
         1: {
-            image: '',
             text: 'Only murders in the Building: Sea the mother of god',
-            rating: '88%',
-            ratingImg: 2,
-            textType: 'movieRtng',
+            rating: '',        
         },
         2: {
-            image: '',
             text: 'Dark Winds: Season 1',
-            rating: '100%',
-            ratingImg: 2,
-            textType: 'movieRtng',
+            rating: '100',        
         },
         3: {
-            image: '',
             text: 'The Crowded Room: Season 0',
-            rating: '22%',
-            ratingImg: 1,
-            textType: 'movieRtng',
+            rating: '22',        
         },
         4: {
-            image: '',
             text: 'Painkiller: Season 0',
-            rating: '38%',
-            ratingImg: 1,
-            textType: 'movieRtng',
+            rating: '38',
+       
         },
         5: {
-            image: '',
             text: 'Only murders in the Building: Sea the mother of god',
-            rating: '88%',
-            ratingImg: 2,
-            textType: 'movieRtng',
+            rating: '',
+       
         },
         6: {
-            image: '',
             text: 'Dark Winds: Season 1',
-            rating: '100%',
-            ratingImg: 2,
-            textType: 'movieRtng',
+            rating: '100',        
         },
         7: {
-            image: '',
             text: 'The Crowded Room: Season 0',
-            rating: '22%',
-            ratingImg: 1,
-            textType: 'movieRtng',
+            rating: '22',        
         },
     }
      
