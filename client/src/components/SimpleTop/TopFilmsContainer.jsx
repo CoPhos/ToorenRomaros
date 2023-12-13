@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 function TopFilmsContainer({tittle, to, linkText, data}) {
   return (
-      <div>
+      <div className='ml-1'>
           <TittleCard tittle={tittle} to={to} linkText={linkText}></TittleCard>
           <ul className="p-0 w-full">
               {Object.values(Object.values(data)).map((value, index) => {

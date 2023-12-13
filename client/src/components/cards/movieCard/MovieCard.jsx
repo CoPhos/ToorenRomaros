@@ -5,7 +5,7 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
     return (
         <div className="max-w-[128px] md:max-w-[170px]">
             <div className="hover:cursor-pointer group">
-                <Link to={'/a' + id}>
+                <Link to={'/film'}>
                     <img
                         //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                         src="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg"
