@@ -65,6 +65,14 @@ module.exports = {
                     fontWeight: '700',
                 },
             ],
+            'body-d-300': [
+                '20px',
+                {
+                    lineHeight: '30px',
+                    letterSpacing: '4px',
+                    fontWeight: '300',
+                },
+            ],
             'small-d-700': [
                 '16px',
                 {
@@ -160,6 +168,14 @@ module.exports = {
                     lineHeight: '27px',
                     letterSpacing: '-0.2px',
                     fontWeight: '700',
+                },
+            ],
+            'body-m-300': [
+                '18px',
+                {
+                    lineHeight: '27px',
+                    letterSpacing: '4px',
+                    fontWeight: '300',
                 },
             ],
             'small-m-700': [
