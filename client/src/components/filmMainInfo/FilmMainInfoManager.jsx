@@ -8,7 +8,8 @@ function FilmMainInfoManager() {
       neutral: 8,
       negative: 8,
       total: 56
-    }
+    },
+    value: 65
   }
   return (
     <FilmMainInfoContainer data={data}></FilmMainInfoContainer>

@@ -14,7 +14,7 @@ function VideoContainer() {
     }
 
     return (
-        <div className="flex flex-row w-full">
+        <div className="flex flex-row w-full mt-2">
             <video
                 ref={videoRef}
                 controls

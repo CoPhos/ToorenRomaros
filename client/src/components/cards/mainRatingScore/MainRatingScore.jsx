@@ -10,6 +10,16 @@ function MainRatingScore({data}) {
         Math.round((data.rating.neutral * 100) / data.rating.total) + '%'
     const redBar = Math.round((data.rating.negative * 100) / data.rating.total) + '%'
 
+    const baseClassesRating =
+        'flex items-center justify-center rounded-xl h-[64px] w-[64px]'
+    
+    const dynamicClasses =
+        data.value <= 40
+            ? 'bg-red-500'
+            : data.value < 70 && data.value > 40
+            ? 'bg-[#ffbd3f]'
+            : 'bg-green-600'
+
     return (
         <div className="flex flex-col items-start justify-center w-full">
             <div className="flex flex-row items-center justify-between w-full mt-2">
@@ -28,8 +38,10 @@ function MainRatingScore({data}) {
                     </Link>
                 </div>
                 <div>
-                    <div className="flex items-center justify-center bg-green-600 rounded-xl h-[64px] w-[64px]">
-                        <p className="text-[36px] font-bold text-white-50">87</p>
+                    <div className={`${baseClassesRating} ${dynamicClasses}`}>
+                        <p className="text-[36px] font-bold text-white-50">
+                            {data.value}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -44,7 +56,6 @@ function MainRatingScore({data}) {
                 ></div>
                 <div className="bg-red-500 h-1" style={{ width: redBar }}></div>
             </div>
-            
         </div>
     )
 }
