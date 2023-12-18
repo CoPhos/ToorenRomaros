@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import CirlceRating from '../rating/CirlceRating'
 
 function RatingScore(props) {
     let text = '';
@@ -19,7 +18,7 @@ function RatingScore(props) {
 
   return (
       <Wrapper>
-          <CirlceRating number={props.number} cursor={props.cursor}></CirlceRating>
+          {/* <CirlceRating number={props.number} cursor={props.cursor}></CirlceRating> */}
           <TextContainer size={{ value: props.date }}>
               <p>{props.tittle}</p>
               <p>{text}</p>

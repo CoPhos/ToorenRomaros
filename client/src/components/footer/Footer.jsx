@@ -23,16 +23,16 @@ function Footer() {
                 <div className="flex flex-col items-center justify-center gap-3 lg:flex-row lg:justify-between lg:items-center w-full">
                     <div className="flex-1 flex-col items-start justify-center hidden lg:flex">
                         <p className="text-body-m-700 lg:text-body-d-700">OVERVIEW</p>
-                        <Link className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
+                        <Link to="/asdxx" className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
                             About Cinnabar
                         </Link>
-                        <Link className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
+                        <Link to="/asdxx" className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
                             Critic submission
                         </Link>
-                        <Link className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
+                        <Link to="/asdxx" className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
                             Licensing
                         </Link>
-                        <Link className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
+                        <Link to="/asdxx" className="hover:cursor-pointer hover:text-red-600 text-small-m-300 lg:text-small-d-300">
                             FAQ
                         </Link>
                     </div>

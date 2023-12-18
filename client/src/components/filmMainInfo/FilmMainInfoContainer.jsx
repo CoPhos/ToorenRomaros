@@ -8,7 +8,7 @@ import TittleCard from '../cards/tittle/TittleCard'
 
 function FilmMainInfoContainer({data}) {
     const component = (
-       <>
+        <>
             <TittleCard
                 tittle={'Critics Consensus'}
                 to={null}
@@ -17,7 +17,7 @@ function FilmMainInfoContainer({data}) {
             <p className="mt-1 text-small-m-400 lg:text-small-d-400">
                 Wildly imaginative and exhilaratingly over the top, Poor Things
                 is a bizarre, brilliant tour de force for director Yorgos
-                Lanthimos and star Emma Stone.
+                Lanthimos and star Emma Stone.&nbsp;
                 <Link
                     to="critics"
                     className="hover:cursor-pointer text-blue-800 hover:text-blue-600"
