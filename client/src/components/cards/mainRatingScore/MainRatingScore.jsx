@@ -3,22 +3,28 @@ import {Link} from 'react-router-dom'
 
 
 function MainRatingScore({data}) {
-    
     const greenBar =
         Math.round((data.rating.positive * 100) / data.rating.total) + '%'
     const yellowBar =
         Math.round((data.rating.neutral * 100) / data.rating.total) + '%'
-    const redBar = Math.round((data.rating.negative * 100) / data.rating.total) + '%'
+    const redBar =
+        Math.round((data.rating.negative * 100) / data.rating.total) + '%'
 
     const baseClassesRating =
         'flex items-center justify-center rounded-xl h-[64px] w-[64px]'
-    
-    const dynamicClasses =
-        data.value <= 40
-            ? 'bg-red-500'
-            : data.value < 70 && data.value > 40
-            ? 'bg-[#ffbd3f]'
-            : 'bg-green-600'
+
+    let dynamicClasses
+    let totalScoreText
+    if (data.value <= 40) {
+        dynamicClasses = 'bg-red-500'
+        totalScoreText = 'Generally Unfavorable'
+    } else if (data.value < 70 && data.value > 40) {
+        dynamicClasses = 'bg-[#ffbd3f]'
+        totalScoreText = 'Mixed or Average'
+    } else {
+        dynamicClasses = 'bg-green-600'
+        totalScoreText = 'Generally Favorable'
+    } 
 
     return (
         <div className="flex flex-col items-start justify-center w-full">
@@ -28,7 +34,7 @@ function MainRatingScore({data}) {
                         METASCORE
                     </p>
                     <p className="text-small-m-700 lg:text-small-d-700">
-                        Universal Acclaim
+                        {totalScoreText}
                     </p>
                     <Link
                         to="/asdas"
