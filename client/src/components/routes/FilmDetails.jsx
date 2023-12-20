@@ -1,10 +1,6 @@
 import React, { Fragment } from 'react'
 
-
-
-import FilmScoreContainer from '../FilmScore/FilmScoreContainer'
 import FilmsPanelContainer from '../FilmsPanel/FilmsPanelContainer'
-import ReviewsContainer from '../review/ReviewsContainer'
 import EssentialLinks from '../cards/essentialListCard/EssentialLinks'
 import FilmMainInfoManager from '../filmMainInfo/FilmMainInfoManager';
 import FilmDetailsManager from '../FilmDetails/FilmDetailsManager';
@@ -18,8 +14,7 @@ function FilmDetails() {
           <FilmDetailsManager></FilmDetailsManager>
           <ReviewManager></ReviewManager>
           {/* <FilmScoreContainer></FilmScoreContainer> */}
-          {/* <FilmsPanelContainer></FilmsPanelContainer> */}
-          <ReviewsContainer></ReviewsContainer>
+          <FilmsPanelContainer></FilmsPanelContainer>
           {/*<EssentialLinks></EssentialLinks> */}
       </Fragment>
   )

@@ -22,6 +22,7 @@ html {
 
 body {
     margin: 0px;
+    /* background-color: #f3f3f3; */
 
     .rec-dot {
         box-shadow: rgb(255, 89, 89) 0px 0px 1px 3px;

@@ -78,7 +78,7 @@ function PostRatingContainer() {
                   {children}
               </Carousel>
           </div>
-          <button className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400">
+          <button className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400 hover:border-white-600 hover:text-white-500">
               Add My Review
           </button>
       </div>
