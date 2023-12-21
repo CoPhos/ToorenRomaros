@@ -6,7 +6,7 @@ function CastContainer({ cast }) {
     const baseClasses =
         'flex flex-row items-center justify-start gap-2 flex-wrap overflow-hidden'
 
-    const dynamicClass = show ? 'max-h-max' : 'max-h-[230px]'
+    const dynamicClass = show ? 'max-h-max' : 'max-h-[250px]'
 
     const toggle = () => {
         setshow(!show)

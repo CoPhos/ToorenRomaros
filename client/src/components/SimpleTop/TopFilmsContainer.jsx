@@ -30,526 +30,526 @@ function TopFilmsContainer({tittle, to, linkText, data}) {
                                               fill="none"
                                               xmlns="http://www.w3.org/2000/svg"
                                           >
-                                              <g clip-path="url(#clip0_426_27733)">
+                                              <g clipPath="url(#clip0_426_27733)">
                                                   <path
                                                       d="M14.8638 0.792786C14.8573 0.819452 14.8559 0.848411 14.8597 0.879661C14.8639 0.912577 14.866 0.944765 14.8663 0.976223C14.8679 1.21956 14.8688 1.51195 14.8688 1.85341C14.8688 2.11341 14.7116 2.33841 14.4709 2.42247C14.4168 2.44122 14.349 2.45518 14.2675 2.46435C14.201 2.47206 14.1344 2.4807 14.0675 2.49029"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.0675 2.49029C14.0715 2.4955 14.068 2.49467 14.0572 2.48779"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.0572 2.48776L13.6691 1.52808"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M13.6691 1.52812C13.7416 1.51916 13.8129 1.50937 13.8831 1.49874C14.0784 1.46906 14.0791 1.14437 13.8881 1.11343C13.7878 1.09718 13.6316 1.13781 13.5187 1.15718"
                                                       stroke="#636262"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M13.5187 1.15716L13.4206 0.920593"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.7816 3.12436L12.5991 2.66998"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.2466 2.93311L14.0675 2.4903"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M13.5187 1.15717L13.6691 1.5281"
                                                       stroke="#B1B0BE"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.0572 2.48779L12.5997 2.65592"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.5997 2.65591L12.2344 1.74841"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.2344 1.74838L12.0837 1.37213"
                                                       stroke="#B1B0BE"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.0837 1.37216L11.9797 1.09998"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M11.3456 3.30403L11.1691 2.8606"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.0837 1.37213C11.826 1.41046 11.5684 1.44932 11.3109 1.48869C11.2338 1.50036 11.182 1.51744 11.1553 1.53994C11.0462 1.63182 11.0734 1.83713 11.2078 1.87963C11.2434 1.89088 11.3029 1.88994 11.3862 1.87682C11.6664 1.83286 11.9492 1.79005 12.2344 1.74838"
                                                       stroke="#636262"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.5997 2.65588C12.5966 2.65984 12.5963 2.66453 12.5991 2.66995"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.5991 2.66998L11.1819 2.84717C11.1781 2.8478 11.1754 2.84977 11.1738 2.85311C11.1725 2.85561 11.1709 2.85811 11.1691 2.86061"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M11.169 2.86061C11.1507 2.83728 11.1455 2.83196 11.1534 2.84467"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M11.1534 2.84466L10.5225 1.27997"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.87749 3.48625L9.69437 3.03375"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M11.1534 2.84467C10.6951 2.90529 10.2392 2.96258 9.78563 3.01654C9.77896 3.01737 9.765 3.02133 9.74375 3.02842C9.72354 3.03508 9.70823 3.03133 9.69781 3.01717"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.69782 3.01713L9.07001 1.45807"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M8.44062 3.66432L8.25937 3.21307"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.6978 3.01715L9.69437 3.03371"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.69437 3.03375L8.25937 3.21313"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M8.25937 3.21309C8.25333 3.20434 8.24812 3.19892 8.24374 3.19684"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M8.24374 3.19685L7.61374 1.63904"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.97437 3.84467L6.79468 3.39655"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M8.24374 3.19684C8.23354 3.20871 8.2227 3.21538 8.21125 3.21684C7.74041 3.27371 7.26989 3.33142 6.79968 3.38996"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.79969 3.38995L6.16406 1.81964"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.53781 4.02842L5.35938 3.57623"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.79968 3.38995C6.79801 3.39225 6.79634 3.39443 6.79468 3.39652"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.79469 3.39655L5.35938 3.57623"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.35937 3.57624L5.34125 3.55499"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.34125 3.55498L4.71344 2.00092"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.34125 3.55499C5.3225 3.56812 5.30511 3.57572 5.28907 3.57781C5.00115 3.61656 4.5873 3.66989 4.0475 3.73781C3.99917 3.74385 3.94813 3.75083 3.89438 3.75874"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.89437 3.75871C3.90125 3.75433 3.89958 3.75287 3.88937 3.75433"
                                                       stroke="#898896"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.88936 3.75432C3.88999 3.75162 3.89061 3.74891 3.89124 3.7462C3.89186 3.74349 3.89176 3.74089 3.89093 3.73839L3.26218 2.18182"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.89438 3.75873L4.07969 4.20404"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M2.37937 4.40495C2.31458 4.0364 2.10365 3.80109 1.74656 3.69901C1.71219 3.68922 1.65083 3.68005 1.5625 3.67151"
                                                       stroke="#898896"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.88938 3.75435L2.58313 3.91654C2.5783 3.91719 2.57338 3.91645 2.56895 3.9144C2.56452 3.91235 2.56077 3.90908 2.55813 3.90498C2.33001 3.54435 1.99845 3.35414 1.56345 3.33435"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M2.38405 4.50061C2.38311 4.96999 2.02717 5.32061 1.56186 5.3453"
                                                       stroke="#898896"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M2.72499 4.50153C2.71624 4.58215 2.71697 4.64246 2.72718 4.68246"
                                                       stroke="#898896"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M2.72719 4.6825C2.6124 5.15062 2.35156 5.46156 1.94469 5.61531C1.83052 5.65843 1.70312 5.68041 1.5625 5.68125"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M4.18094 4.50122L4.86094 6.18122"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M4.86093 6.18121C4.85801 6.19309 4.85229 6.19913 4.84374 6.19934C4.47729 6.20288 3.9752 6.20278 3.33749 6.19903"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.33749 6.19904C3.33958 6.20112 3.34166 6.2032 3.34374 6.20529"
                                                       stroke="#898896"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.34374 6.20531L2.72717 4.6825"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.34375 6.20526L1.5625 6.20932"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.50812 6.62311L1.5625 6.62405"
                                                       stroke="#954943"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.71719 4.50183L5.84313 4.83527"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.84313 4.83527C5.61563 4.83589 5.39032 4.83662 5.16719 4.83745C5.09282 4.83787 5.03959 4.84808 5.0075 4.86808C4.89 4.94152 4.88375 5.12589 4.99907 5.19589C5.03365 5.21672 5.08844 5.22735 5.16344 5.22777C5.44011 5.22881 5.71896 5.22881 6 5.22777"
                                                       stroke="#636262"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6 5.22778L6.3925 6.19966"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.39248 6.19965C6.39457 6.20235 6.39373 6.20527 6.38998 6.2084"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.39001 6.20919L4.8797 6.20685"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M4.87968 6.20684L4.86093 6.18121"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M4.8797 6.20685L5.0447 6.6206"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.04468 6.62061L3.50812 6.62311"
                                                       stroke="#E69BA8"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M3.50812 6.6231L3.33749 6.19904"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.8741 6.62311C14.8712 6.67061 14.8697 6.7155 14.8697 6.7578C14.8687 9.22009 14.8682 11.6824 14.8685 14.1447C14.8685 14.2699 14.8553 14.3659 14.8291 14.4328C14.7672 14.5895 14.653 14.7046 14.4866 14.7781C14.4235 14.8058 14.2571 14.8197 13.9875 14.8197C9.91751 14.8184 5.85178 14.8178 1.79033 14.8178C1.7197 14.8178 1.6547 14.804 1.58408 14.7987"
                                                       stroke="#F65D4E"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M7.9303 6.20807L8.09374 6.61213"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M8.09374 6.61218L6.5553 6.62093"
                                                       stroke="#E69BA8"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.5553 6.62093L6.38998 6.20844"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M7.23218 4.50214L7.36968 4.84026"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M7.36969 4.84027L7.52531 5.22527"
                                                       stroke="#B1B0BE"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M7.5253 5.22528L7.90811 6.17372"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M7.90811 6.17371C7.91436 6.1885 7.90592 6.1961 7.8828 6.19652C7.55551 6.2036 7.05874 6.20464 6.39249 6.19964"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.99998 5.22777L5.84311 4.83527"
                                                       stroke="#B1B0BE"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M6.5553 6.62107L5.04468 6.62061"
                                                       stroke="#954943"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.60312 6.62375C9.12479 6.62395 8.64771 6.62416 8.17188 6.62437C8.14333 6.62437 8.11729 6.62031 8.09375 6.61218"
                                                       stroke="#954943"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.6556 6.62313L11.14 6.61188"
                                                       stroke="#954943"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.1906 6.61188L12.6556 6.62313"
                                                       stroke="#E69BA8"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.6556 6.62307L12.4891 6.20526"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M15.2856 6.61969L14.8741 6.62313"
                                                       stroke="#8F4138"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.8741 6.62313L14.1906 6.61188"
                                                       stroke="#954943"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.1906 6.61184L14.0278 6.20715"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M10.9831 6.21747L11.14 6.61184"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M11.14 6.61188C11.1256 6.61959 11.1153 6.62354 11.1091 6.62375C10.8803 6.62646 10.4351 6.62469 9.77343 6.61844C9.71427 6.61781 9.65749 6.61959 9.60312 6.62375"
                                                       stroke="#E69BA8"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.60313 6.62375L9.43594 6.20563"
                                                       stroke="#7F7E92"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M8.75717 4.5025L9.43748 6.18875"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.43751 6.18872C9.43896 6.19205 9.43844 6.19768 9.43594 6.2056"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M9.43592 6.20563L7.9303 6.20813"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M7.9303 6.20808L7.90811 6.17371"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M7.52531 5.22531C7.67365 5.22885 7.81886 5.23104 7.96094 5.23187C8.15969 5.23312 8.26156 5.00375 8.09656 4.875C8.06636 4.85145 8.00771 4.83895 7.92063 4.8375C7.73938 4.83437 7.55573 4.83531 7.36969 4.84031"
                                                       stroke="#636262"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M11.8065 4.50214L12.4919 6.20057"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.4919 6.20062C12.4908 6.20229 12.4899 6.20385 12.4891 6.20531"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.4891 6.20528C11.9968 6.21194 11.503 6.21184 11.0078 6.20496C10.992 6.20476 10.9837 6.20892 10.9831 6.21746"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M10.9831 6.21747L10.9609 6.18622"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M13.3294 4.50153L14.0084 6.18153"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.0084 6.18152C14.0118 6.18381 14.0126 6.18683 14.0109 6.19058C14.0082 6.19621 14.0038 6.19902 13.9975 6.19902L12.4919 6.20058"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.8625 4.52936C14.8683 4.96102 14.8704 5.3904 14.8687 5.81748C14.8683 5.93165 14.8531 6.01405 14.8231 6.06467C14.7696 6.15488 14.6801 6.2029 14.5547 6.20873C14.4636 6.2129 14.288 6.21238 14.0278 6.20717"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.0278 6.20714L14.0084 6.18152"
                                                       stroke="#8C8B9F"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M10.2794 4.50122L10.9609 6.18622"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M10.9609 6.18622C10.9574 6.18747 10.9537 6.18986 10.95 6.19341C10.9444 6.19861 10.9377 6.20111 10.93 6.20091L9.4375 6.18872"
                                                       stroke="#DADAFB"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M1.33875 4.79432C1.37752 4.82254 1.42162 4.84261 1.46837 4.85332C1.51512 4.86402 1.56355 4.86515 1.61075 4.85662C1.65794 4.84809 1.70292 4.83009 1.74296 4.8037C1.78301 4.77731 1.81729 4.74308 1.84375 4.70307C1.88264 4.6442 1.90314 4.57508 1.90264 4.50452C1.90214 4.43396 1.88066 4.36514 1.84093 4.30682"
                                                       stroke="#9695A3"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M1.84094 4.30683C1.81192 4.26449 1.77411 4.22894 1.73009 4.20262C1.68607 4.17629 1.6369 4.15982 1.58594 4.15433C1.5302 4.14822 1.47381 4.15543 1.42138 4.17537C1.36896 4.19531 1.322 4.2274 1.28437 4.26902C1.25093 4.30597 1.22563 4.34954 1.21013 4.3969C1.19462 4.44427 1.18926 4.49435 1.19439 4.54391C1.19952 4.59346 1.21503 4.64137 1.2399 4.68451C1.26477 4.72766 1.29845 4.76508 1.33875 4.79433"
                                                       stroke="#898896"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M1.84093 4.30684C1.80906 4.29997 1.77833 4.29247 1.74875 4.28434C1.60593 4.24434 1.46281 4.29965 1.37781 4.41684C1.30573 4.51601 1.29271 4.64184 1.33875 4.79434"
                                                       stroke="#3A3939"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M12.86 7.3137C12.86 7.26215 12.8395 7.21271 12.8031 7.17625C12.7666 7.1398 12.7172 7.11932 12.6656 7.11932H9.26624C9.21469 7.11932 9.16525 7.1398 9.1288 7.17625C9.09235 7.21271 9.07187 7.26215 9.07187 7.3137V7.3187C9.07187 7.37025 9.09235 7.41969 9.1288 7.45614C9.16525 7.49259 9.21469 7.51307 9.26624 7.51307H12.6656C12.7172 7.51307 12.7666 7.49259 12.8031 7.45614C12.8395 7.41969 12.86 7.37025 12.86 7.3187V7.3137Z"
                                                       stroke="#FD7C72"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.1138 7.30686C14.1138 7.25746 14.0941 7.21009 14.0592 7.17516C14.0243 7.14023 13.9769 7.12061 13.9275 7.12061H13.4725C13.4231 7.12061 13.3757 7.14023 13.3408 7.17516C13.3059 7.21009 13.2863 7.25746 13.2863 7.30686V7.32561C13.2863 7.375 13.3059 7.42238 13.3408 7.4573C13.3757 7.49223 13.4231 7.51186 13.4725 7.51186H13.9275C13.9769 7.51186 14.0243 7.49223 14.0592 7.4573C14.0941 7.42238 14.1138 7.375 14.1138 7.32561V7.30686Z"
                                                       stroke="#FD7C72"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M2.49009 8.35249C2.49013 8.32808 2.48537 8.30389 2.47606 8.28131C2.46676 8.25874 2.4531 8.23822 2.43586 8.22092C2.41862 8.20362 2.39815 8.18989 2.37561 8.18051C2.35307 8.17113 2.3289 8.16627 2.30448 8.16623L2.28698 8.1662C2.26256 8.16616 2.23837 8.17092 2.2158 8.18023C2.19322 8.18953 2.1727 8.20319 2.1554 8.22043C2.13811 8.23767 2.12438 8.25814 2.11499 8.28068C2.10561 8.30322 2.10076 8.32739 2.10071 8.35181L2.09991 8.80931C2.09987 8.83373 2.10464 8.85792 2.11394 8.88049C2.12325 8.90307 2.13691 8.92359 2.15414 8.94088C2.17138 8.95818 2.19185 8.97191 2.2144 8.9813C2.23694 8.99068 2.26111 8.99553 2.28553 8.99557L2.30303 8.99561C2.32745 8.99565 2.35163 8.99088 2.37421 8.98158C2.39678 8.97227 2.4173 8.95861 2.4346 8.94138C2.4519 8.92414 2.46563 8.90367 2.47501 8.88112C2.4844 8.85858 2.48925 8.83441 2.48929 8.80999L2.49009 8.35249Z"
                                                       stroke="#FD7C72"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M5.57155 8.82718L5.57061 10.0384C5.57061 10.0541 5.5628 10.0619 5.54718 10.0619C4.8653 10.0631 4.16113 10.0631 3.43468 10.0619C3.14093 10.0616 3.15624 10.4628 3.41749 10.4634C6.71728 10.4699 10.0506 10.4699 13.4175 10.4634C13.6369 10.4628 13.7062 10.1797 13.5244 10.0875C13.4887 10.0696 13.4317 10.0607 13.3531 10.0609C12.6331 10.0638 11.945 10.0641 11.2887 10.0616C11.2785 10.0616 11.2734 10.0564 11.2734 10.0462L11.2737 8.81999C11.2737 8.80811 11.2798 8.80218 11.2919 8.80218C11.9946 8.79968 12.6942 8.80051 13.3906 8.80468C13.6984 8.80624 13.6953 8.40749 13.4116 8.40749C10.1011 8.40645 6.78436 8.40613 3.46124 8.40655C3.34749 8.40686 3.24436 8.44843 3.22593 8.57343C3.20155 8.7378 3.3303 8.80655 3.47718 8.80561C4.13322 8.80145 4.76093 8.8002 5.3603 8.80186C5.42322 8.80207 5.48697 8.80353 5.55155 8.80624C5.56488 8.80686 5.57155 8.81384 5.57155 8.82718Z"
                                                       stroke="#FEB2AC"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M2.49124 9.61312C2.49124 9.56181 2.47086 9.51261 2.43458 9.47633C2.39831 9.44006 2.34911 9.41968 2.2978 9.41968H2.2928C2.2415 9.41968 2.1923 9.44006 2.15602 9.47633C2.11975 9.51261 2.09937 9.56181 2.09937 9.61312V13.0162C2.09937 13.0675 2.11975 13.1167 2.15602 13.153C2.1923 13.1893 2.2415 13.2097 2.2928 13.2097H2.2978C2.34911 13.2097 2.39831 13.1893 2.43458 13.153C2.47086 13.1167 2.49124 13.0675 2.49124 13.0162V9.61312Z"
                                                       stroke="#FD7C72"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M13.6253 11.9147C13.6253 11.8627 13.6047 11.8129 13.5679 11.7761C13.5312 11.7394 13.4813 11.7188 13.4294 11.7188H3.41499C3.36303 11.7187 3.31319 11.7394 3.27644 11.7761C3.2397 11.8129 3.21906 11.8627 3.21906 11.9147V11.9253C3.21906 11.9773 3.2397 12.0271 3.27644 12.0639C3.31319 12.1006 3.36303 12.1213 3.41499 12.1213H13.4294C13.4813 12.1213 13.5312 12.1006 13.5679 12.0639C13.6047 12.0271 13.6253 11.9773 13.6253 11.9253V11.9147Z"
                                                       stroke="#FEB2AC"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M11.1162 13.575C11.1162 13.5232 11.0957 13.4735 11.059 13.4368C11.0224 13.4002 10.9727 13.3796 10.9209 13.3796H3.41718C3.36538 13.3796 3.3157 13.4002 3.27907 13.4368C3.24244 13.4735 3.22186 13.5232 3.22186 13.575V13.5781C3.22186 13.6299 3.24244 13.6796 3.27907 13.7162C3.3157 13.7528 3.36538 13.7734 3.41718 13.7734H10.9209C10.9727 13.7734 11.0224 13.7528 11.059 13.7162C11.0957 13.6796 11.1162 13.6299 11.1162 13.5781V13.575Z"
                                                       stroke="#FEB2AC"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M10.8822 8.82937C10.8822 8.8265 10.8816 8.82365 10.8805 8.821C10.8794 8.81835 10.8778 8.81593 10.8758 8.8139C10.8737 8.81187 10.8713 8.81026 10.8687 8.80916C10.866 8.80806 10.8632 8.8075 10.8603 8.8075H5.98467C5.9818 8.8075 5.97896 8.80806 5.9763 8.80916C5.97365 8.81026 5.97124 8.81187 5.96921 8.8139C5.96718 8.81593 5.96556 8.81835 5.96446 8.821C5.96336 8.82365 5.9628 8.8265 5.9628 8.82937V10.0406C5.9628 10.0464 5.9651 10.052 5.96921 10.0561C5.97331 10.0602 5.97887 10.0625 5.98467 10.0625H10.8603C10.8661 10.0625 10.8717 10.0602 10.8758 10.0561C10.8799 10.052 10.8822 10.0464 10.8822 10.0406V8.82937Z"
                                                       stroke="#FEB2AC"
-                                                      stroke-width="2"
+                                                      strokeWidth="2"
                                                   />
                                                   <path
                                                       d="M14.8637 0.792791C14.8573 0.819457 14.8559 0.848416 14.8597 0.879666C14.8639 0.912582 14.866 0.94477 14.8662 0.976228C14.8679 1.21956 14.8687 1.51196 14.8687 1.85342C14.8687 2.11342 14.7116 2.33842 14.4709 2.42248C14.4168 2.44123 14.349 2.45519 14.2675 2.46435C14.201 2.47206 14.1344 2.48071 14.0675 2.49029C14.0715 2.4955 14.068 2.49467 14.0572 2.48779L13.6691 1.5281C13.7416 1.51914 13.8129 1.50935 13.8831 1.49873C14.0784 1.46904 14.0791 1.14435 13.8881 1.11342C13.7878 1.09717 13.6316 1.13779 13.5187 1.15717L13.4206 0.920603C13.8312 0.867478 14.2431 0.816332 14.6562 0.767166C14.7 0.761957 14.7692 0.770499 14.8637 0.792791Z"

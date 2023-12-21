@@ -3,8 +3,11 @@ import {Link} from 'react-router-dom'
 
 function VideoCard({ videoType, tittle, text, to }) {
     return (
-        <Link to="/asdas" className="w-[320px] md:w-[265px] group hover:cursor-pointer">
-            <div class="w-[320px] h-[178px] md:w-[265px] md:h-[151px] relative">
+        <Link
+            to="/asdas"
+            className="w-[320px] md:w-[265px] group hover:cursor-pointer"
+        >
+            <div className="w-[320px] h-[178px] md:w-[265px] md:h-[151px] relative">
                 <img
                     //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                     src="https://blog-admin.siriusxm.com/wp-content/uploads/2023/07/barbie-interview.jpg"

@@ -27,7 +27,7 @@ function MobileNavMenu({ fillColor }) {
                 </svg>
 
                 <p
-                    className={`text-small-m-400 ${
+                    className={`text-tiny-d-400 ${
                         fillColor == 'home' ? 'text-red-600' : 'fill-white-950'
                     }`}
                 >
@@ -67,7 +67,7 @@ function MobileNavMenu({ fillColor }) {
                 </svg>
 
                 <p
-                    className={`text-small-m-400 ${
+                    className={`text-tiny-d-400 ${
                         fillColor == 'browse'
                             ? 'text-red-600'
                             : 'fill-white-950'
@@ -100,7 +100,7 @@ function MobileNavMenu({ fillColor }) {
                 </svg>
 
                 <p
-                    className={`text-small-m-400 ${
+                    className={`text-tiny-d-400 ${
                         fillColor == 'blog' ? 'text-red-600' : 'fill-white-950'
                     }`}
                 >
@@ -131,7 +131,7 @@ function MobileNavMenu({ fillColor }) {
                 </svg>
 
                 <p
-                    className={`text-small-m-400 ${
+                    className={`text-tiny-d-400 ${
                         fillColor == 'profile'
                             ? 'text-red-600'
                             : 'fill-white-950'
@@ -164,7 +164,7 @@ function MobileNavMenu({ fillColor }) {
                 </svg>
 
                 <p
-                    className={`text-small-m-400 ${
+                    className={`text-tiny-d-400 ${
                         fillColor == 'notification'
                             ? 'text-red-600'
                             : 'fill-white-950'

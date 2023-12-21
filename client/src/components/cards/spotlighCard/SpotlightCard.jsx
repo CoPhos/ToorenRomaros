@@ -2,7 +2,7 @@ import React from 'react'
 
 function SpotlightCard({ insideText }) {
     return (
-        <div class="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative">
+        <div className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative">
             <img
                 //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                 src="https://www.geekmi.news/__export/1682884106095/sites/debate/img/2023/04/30/axadir_un_txtulo_x22x.jpg_759710130.jpg"

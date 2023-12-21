@@ -97,6 +97,14 @@ module.exports = {
                     fontWeight: '300',
                 },
             ],
+            'tiny-d-700': [
+                '12.8px',
+                {
+                    lineHeight: '19.2px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '700',
+                },
+            ],
             'tiny-d-400': [
                 '12.8px',
                 {
@@ -200,6 +208,14 @@ module.exports = {
                     lineHeight: '24px',
                     letterSpacing: '-0.2px',
                     fontWeight: '300',
+                },
+            ],
+            'tiny-m-700': [
+                '11.52px',
+                {
+                    lineHeight: '17.3px',
+                    letterSpacing: '-0.2px',
+                    fontWeight: '700',
                 },
             ],
             'tiny-m-400': [

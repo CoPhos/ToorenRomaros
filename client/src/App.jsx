@@ -10,7 +10,7 @@ import { fontSizes } from './utils/globalStyles'
 import { GlobalStyle } from './utils/globalStyles'
 
 //components
-import NavbarContainer from './components/navbar/NavbarContainer'
+import NavbarManager from './components/navbar/NavbarManager';
 import Footer from './components/footer/Footer'
 import MobileNavMenu from './components/navbar/MobileNavMenu'
 
@@ -30,7 +30,7 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <GlobalStyle />
             <BrowserRouter>
-                <NavbarContainer></NavbarContainer>
+                <NavbarManager></NavbarManager>
                 <main>
                     <Switch>
                         <Route exact path="/">
@@ -50,7 +50,7 @@ export default function App() {
                         </Route>
                     </Switch>
                 </main>
-                
+
                 <Footer></Footer>
                 <Route
                     render={({ location }) => {

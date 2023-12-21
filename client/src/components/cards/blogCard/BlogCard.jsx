@@ -7,7 +7,7 @@ function BlogCard({text}) {
           to="/asdas"
           className="w-[95vw] group hover:cursor-pointer sm:grow sm:w-10/12 min-[1080px]:w-[265px] min-[1080px]:grow-0"
       >
-          <div class="w-full">
+          <div className="w-full">
               <img
                   //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                   src="https://i.ytimg.com/vi/OVnzpfDgvME/maxresdefault.jpg"

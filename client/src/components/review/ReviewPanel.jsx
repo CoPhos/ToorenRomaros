@@ -7,7 +7,7 @@ function ReviewPanel({expand}) {
     const [active, setactive] = useState(1)
     const baseClassesButton =
         'text-white-300 text-small-m-400 lg:text-small-d-400 border-[none] hover:cursor-pointer py-2 px-1'
-    const focus = 'border-t-[1px] border-white-950'
+    const focus = 'text-white-900 border-t-[1px] border-white-950'
     const notFocus = 'border-[none]'
     const show = 'flex flex-col items-center justify-start gap-2'
     const notShow = 'hidden'
