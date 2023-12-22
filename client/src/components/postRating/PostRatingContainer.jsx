@@ -4,7 +4,12 @@ import Carousel from 'react-elastic-carousel'
 
 import gemstone from '../../assests/gemstone.png'
 
-function PostRatingContainer({ handleSubmit, handleChange, formData }) {
+function PostRatingContainer({
+    handleSubmit,
+    handleChange,
+    formData,
+    handleCheckboxChange,
+}) {
     const [hoveredIndex, setHoveredIndex] = useState(null)
     const [isClickTriggered, setIsClickTriggered] = useState(false)
     const [isPopupOpen, setPopupOpen] = useState(false)
@@ -50,7 +55,7 @@ function PostRatingContainer({ handleSubmit, handleChange, formData }) {
     let dynamicClasses
     let totalScoreText
     if (hoveredIndex + 1 <= 4) {
-        dynamicClasses = 'bg-red-500'
+        dynamicClasses = 'bg-red-600'
         totalScoreText = 'Generally Unfavorable'
     } else if (hoveredIndex + 1 < 7 && hoveredIndex + 1 > 4) {
         dynamicClasses = 'bg-[#ffbd3f]'
@@ -60,11 +65,9 @@ function PostRatingContainer({ handleSubmit, handleChange, formData }) {
         totalScoreText = 'Generally Favorable'
     }
 
-
     const baseClasses =
         'flex items-center justify-center rounded-[50%] w-[44px] h-[44px] hover:cursor-pointer'
     const characters = 5000 - formData.text.length
-
 
     const children = new Array(10).fill(null).map((_, index) => {
         let dynamicClasses = 'child '
@@ -74,7 +77,7 @@ function PostRatingContainer({ handleSubmit, handleChange, formData }) {
             dynamicClasses = dynamicClasses + 'opacity-50 '
         }
         if (index + 1 <= 4) {
-            dynamicClasses = dynamicClasses + 'bg-red-500 '
+            dynamicClasses = dynamicClasses + 'bg-red-600 '
         } else if (index + 1 < 7 && index + 1 > 4) {
             dynamicClasses = dynamicClasses + 'bg-[#ffbd3f] '
         } else {
@@ -260,7 +263,7 @@ function PostRatingContainer({ handleSubmit, handleChange, formData }) {
                                             id="spoiler"
                                             name="spoiler"
                                             checked={formData.spoiler}
-                                            onChange={handleChange}
+                                            onChange={handleCheckboxChange}
                                             className="h-[24px] w-[24px]"
                                         />
                                         <label
@@ -285,6 +288,7 @@ function PostRatingContainer({ handleSubmit, handleChange, formData }) {
                                 </div>
                                 <div className="flex flex-row items-center justify-center gap-1 w-full">
                                     <button
+                                        onClick={closePopup}
                                         type="submit"
                                         className="flex flex-row items-center justify-center grow mt-2 w-full text-white-900 text-small-m-400 lg:text-small-d-400 rounded bg-[#ffffff] border border-white-800 py-1 h-full hover:cursor-pointer hover:opacity-50"
                                     >
@@ -293,11 +297,7 @@ function PostRatingContainer({ handleSubmit, handleChange, formData }) {
                                     <button
                                         type="submit"
                                         className="flex flex-row items-center justify-center grow mt-2 w-full text-white-50 text-small-m-400 lg:text-small-d-400 rounded bg-[#404040] py-1 h-full hover:cursor-pointer hover:opacity-50"
-                                        disabled={
-                                            characters < 0
-                                                ? true
-                                                : false
-                                        }
+                                        disabled={characters < 0 ? true : false}
                                     >
                                         Post
                                     </button>

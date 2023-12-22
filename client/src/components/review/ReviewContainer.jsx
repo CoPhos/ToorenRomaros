@@ -6,7 +6,7 @@ import ReviewPanel from './ReviewPanel';
 function ReviewContainer({ rating }) {
 
     return (
-        <div className="flex flex-col items-start justify-start gap-4 py-2 md:flex-row mt-4">
+        <div className="flex flex-col items-start justify-start gap-4 py-2 md:flex-row mt-4 px-1 lg:px-[0px]">
             <div className="flex flex-col items-start justify-center gap-2 grow">
                 <div className="flex flex-col items-start justify-center">
                     <ReviewRating

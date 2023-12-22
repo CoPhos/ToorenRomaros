@@ -4,8 +4,12 @@ import PostRatingContainer from './PostRatingContainer';
 function PostRatingManager() {
    const [formData, setFormData] = useState({
       text: '',
-      spoiler: false,
    })
+   const [isChecked, setIsChecked] = useState(false)
+
+   const handleCheckboxChange = () => {
+       setIsChecked((prevChecked) => !prevChecked)
+   }
 
    const handleChange = (e) => {
        const { name, value } = e.target
@@ -17,11 +21,16 @@ function PostRatingManager() {
 
    const handleSubmit = (e) => {
        e.preventDefault()
-       console.log('Form submitted:', formData)
+       console.log('Form submitted:', formData + isChecked)
    }
 
   return (
-    <PostRatingContainer formData={formData} handleChange={handleChange} handleSubmit={handleSubmit}></PostRatingContainer>
+      <PostRatingContainer
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          handleCheckboxChange={handleCheckboxChange}
+      ></PostRatingContainer>
   )
 }
 

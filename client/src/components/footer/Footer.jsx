@@ -5,7 +5,7 @@ import gemstone from '../../assests/gemstone.png'
 
 function Footer() {
     return (
-        <footer className="flex flex-col items-center justify-center p-2 border-t border-white-300">
+        <footer className="flex flex-col items-center justify-center p-2 border-t border-white-300 mt-[128px]">
             <div className="flex flex-col items-center justify-center max-w-[1120px] mx-auto my-0 w-full gap-3">
                 <Link to="/">
                     <div className="flex flex-row items-center justify-center h-full">
