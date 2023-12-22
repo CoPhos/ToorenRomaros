@@ -2,13 +2,6 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './index.css'; 
 
-import { ThemeProvider } from 'styled-components'
-
-//utils
-import { colors } from './utils/globalStyles'
-import { fontSizes } from './utils/globalStyles'
-import { GlobalStyle } from './utils/globalStyles'
-
 //components
 import NavbarManager from './components/navbar/NavbarManager';
 import Footer from './components/footer/Footer'
@@ -19,16 +12,9 @@ import FilmDetails from './components/routes/FilmDetails';
 import Browse from './components/routes/Browse';
 import EditorManager from './components/textEditor/EditorManager'
 
- //themes
-    const theme = {
-        colors: colors,
-        fontSizes: fontSizes,
-    }
-
 export default function App() {
     return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyle />
+        
             <BrowserRouter>
                 <NavbarManager></NavbarManager>
                 <main>
@@ -70,6 +56,6 @@ export default function App() {
                     }}
                 />
             </BrowserRouter>
-        </ThemeProvider>
+        
     )
 }

@@ -1,8 +1,9 @@
 import React from 'react'
+import BrowseManager from '../browse/BrowseManager';
 
-function Browse() {
+function Browse({}) {
   return (
-    <div>Browse All Films</div>
+    <BrowseManager ></BrowseManager>
   )
 }
 
