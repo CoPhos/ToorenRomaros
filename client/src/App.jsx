@@ -43,7 +43,7 @@ export default function App() {
                         const fillColor =
                             location.pathname === '/'
                                 ? 'home'
-                                : location.pathname === '/browse'
+                                : location.pathname.includes("/browse")
                                 ? 'browse'
                                 : location.pathname === '/blog'
                                 ? 'blog'

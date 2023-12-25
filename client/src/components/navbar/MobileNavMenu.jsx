@@ -36,7 +36,7 @@ function MobileNavMenu({ fillColor }) {
             </Link>
 
             <Link
-                to="/browse"
+                to="/browse/theaters"
                 className="flex flex-col items-center justify-center w-5 gap-1"
             >
                 <svg

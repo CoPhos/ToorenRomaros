@@ -15,8 +15,7 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
                     <div className="flex flex-row items-center gap-1 mt-1">
                         <div className="flex flex-row items-center justify-start gap-1">
                             <svg
-                                width="24"
-                                height="24"
+                                className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -938,7 +937,7 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
                             Opened: {opened}
                         </p>
                     ) : (
-                        <p className='h-[19.19px'></p>
+                        <p className="h-[19.19px"></p>
                     )}
                 </Link>
             </div>

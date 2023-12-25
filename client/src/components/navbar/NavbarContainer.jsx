@@ -101,7 +101,7 @@ function Navbar({ handleSubmit, handleChange, formData, data1 ,data2 }) {
                             <li className="group px-2 hover:bg-white-100 rounded-t-md h-6">
                                 <div className="h-full flex flex-row items-center justify-center">
                                     <Link
-                                        to="/browse"
+                                        to="/browse/theaters"
                                         className="group-hover:cursor-pointer group-hover:text-red-600 text-body-d-700 "
                                     >
                                         Movies
@@ -118,7 +118,7 @@ function Navbar({ handleSubmit, handleChange, formData, data1 ,data2 }) {
                             <li className="group px-2 hover:bg-white-100 rounded-t-md h-6">
                                 <div className="h-full flex flex-row items-center justify-center">
                                     <Link
-                                        to="/browse"
+                                        to="/browse/tv"
                                         className="group-hover:cursor-pointer group-hover:text-red-600 text-body-d-700 "
                                     >
                                         Tv Shows
