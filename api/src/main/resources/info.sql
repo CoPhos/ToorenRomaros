@@ -7,6 +7,11 @@ VALUES
     ('2ae12264-977d-419d-aa19-ce9658041fe4','sara_wilson', '1980-12-10', '2050-09-28', 'Nature lover.', 400, 700),
     ('6f95b5af-4d6f-448c-8f3d-ca54521f4653','chris_martin', '1992-07-01', '2052-04-02', 'Music enthusiast.', 250, 350);
 
+insert into user (id, username, password, CREATED_DATE, email, user_status, role)
+values
+    ('a1b9b31d-e73c-4112-af7c-b68530f38222', 'scott', '{bcrypt}$2a$10$neR0EcYY5./tLVp4litNyuBy/kfrTsqEv8hiyqEKX0TXIQQwC/5Rm', '1990-05-15', 'bruce@scott.db',  'ACTIVE', 'USER'),
+    ('a1b9b31d-e73c-4112-af7c-b68530f38223', 'scott2', '{bcrypt}$2a$10$neR0EcYY5./tLVp4litNyuBy/kfrTsqEv8hiyqEKX0TXIQQwC/5Rm', '1990-05-15', 'bruce2@scott.db', 'ACTIVE', 'ADMIN');
+
 INSERT INTO user_follower (ID, USER_ID, FOLLOWER_ID, FOLLOW_SINCE)
 VALUES
     ('2159ecc3-4778-4b42-add2-72228311c05b','b7a61937-6f59-4bbb-80a7-08d65d1ad656', '1e61da98-e8d9-4e82-b2a0-bc53b124aef1', '1990-05-15'),

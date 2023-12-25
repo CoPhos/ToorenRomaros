@@ -8,6 +8,7 @@ import com.ToorenRomaros.api.dto.publication.*;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
+import com.ToorenRomaros.api.dto.user.RefreshTokenDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.entities.film.EpisodeEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
@@ -19,6 +20,7 @@ import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
 import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
 import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
+import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -168,6 +170,13 @@ public class AppConfig {
                 }
         );
 
+        //UserToken
+        TypeMap<UserEntity, RefreshTokenDto> propertyMapperRefreshTokenDto = modelMapper.createTypeMap(UserEntity.class, RefreshTokenDto.class);
+        propertyMapperRefreshTokenDto.addMappings(
+                mapper -> {
+                    mapper.map(UserEntity::getId, RefreshTokenDto::setUser);
+                }
+        );
 
         return modelMapper;
     }

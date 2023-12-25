@@ -1,19 +1,13 @@
 package com.ToorenRomaros.api.entities.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,59 +24,52 @@ public class UserEntity {
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
     @Column(name = "USERNAME", unique = true, nullable = false, columnDefinition = "VARCHAR(32)")
-    //@Basic(optional = false)
+    @NotNull(message = "User name is required.")
+    @Basic(optional = false)
     @Size(max = 32, message = "username max size is 32 characters")
     private String username;
+    @Column(name = "PASSWORD")
+    private String password;
+    @Column(name = "EMAIL")
+    private String email;
     @Past(message = "birthday must be past")
     @Column(name = "BIRTHDAY", columnDefinition = "DATE")
     private LocalDate birthday;
     @FutureOrPresent
     @Column(name = "CREATED_DATE", columnDefinition = "DATE")
-    private LocalDate createdDate;
+    private LocalDate createdDate = LocalDate.now();
     @Column(name = "ABOUT", columnDefinition = "VARCHAR(255)")
     @Size(max = 255, message = "About max size is 255 characters")
     private String about;
     @PositiveOrZero(message = "following count can not be negative")
     @Column(name = "FOLLOWING_COUNT")
-    private Integer followingCount;
+    private Integer followingCount = 0;
     @PositiveOrZero(message = "following me count can not be negative")
     @Column(name = "FOLLOWING_ME_COUNT")
-    private Integer followmeCount;
-
-
-    public UserEntity(String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
-        this.username = username;
-        this.birthday = birthday;
-        this.createdDate = createdDate;
-        this.about = about;
-        this.followingCount = followingCount;
-        this.followmeCount = followmeCount;
-    }
-
-    public UserEntity(UUID id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
-        this.id = id;
-        this.username = username;
-        this.birthday = birthday;
-        this.createdDate = createdDate;
-        this.about = about;
-        this.followingCount = followingCount;
-        this.followmeCount = followmeCount;
-    }
-
-    public UserEntity(UUID id, String username, LocalDate birthday, LocalDate createdDate) {
-        this.id = id;
-        this.username = username;
-        this.birthday = birthday;
-        this.createdDate = createdDate;
-    }
-    public UserEntity() {
-    }
+    private Integer followmeCount = 0;
+    @Column(name = "USER_STATUS")
+    private String userStatus = "ACTIVE";
+    @Column(name = "ROLE")
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role = RoleEnum.USER;
 
     public String getUsername() {
         return username;
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public LocalDate getBirthday() {
         return birthday;
@@ -119,6 +106,19 @@ public class UserEntity {
     }
     public void setId(UUID id) {
         this.id = id;
+    }
+    public String getUserStatus() {
+        return userStatus;
+    }
+    public UserEntity setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+        return this;
+    }
+    public RoleEnum getRole() {
+        return role;
+    }
+    public void setRole(RoleEnum role) {
+        this.role = role;
     }
 
     @Override

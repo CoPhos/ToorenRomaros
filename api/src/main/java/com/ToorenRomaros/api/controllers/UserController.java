@@ -26,14 +26,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
-    ResponseEntity<Map<String, Object>> createUser(@RequestBody @Valid UserAddRequestDto userAddRequestDto) throws Exception {
-        UserDto newUser = userService.createUser(userAddRequestDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("created", newUser);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-
-    }
     @GetMapping("/users/{id}")
     ResponseEntity<Map<String, Object>> getUserById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();

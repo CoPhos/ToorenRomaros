@@ -30,10 +30,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.MethodNotAllowedException;
 
+import static com.ToorenRomaros.api.security.Constants.TOKEN_URL;
+
 @ControllerAdvice
 public class RestApiErrorHandler {
-    @Value("${keycloak.tokenurl}")
-    private String TOKEN_URL;
+
     private final MessageSource messageSource;
     @Autowired
     public RestApiErrorHandler(MessageSource messageSource) {
@@ -267,6 +268,20 @@ public class RestApiErrorHandler {
                 .createError(
                         String.format("%s %s", ErrorCode.RESOURCE_NOT_FOUND.getErrMsgKey(), ex.getMessage()),
                         ex.getErrorCode(),
+                        HttpStatus.NOT_FOUND.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<Error> handleInvalidRefreshTokenException(
+            HttpServletRequest request,
+            InvalidRefreshTokenException ex,
+            Locale locale) {
+        String errorMsg = String.format("%s %s",ErrorCode.RESOURCE_NOT_FOUND.getErrMsgKey(), ex.getMessage());
+        Error error = ErrorUtils
+                .createError(errorMsg, ErrorCode.RESOURCE_NOT_FOUND.getErrCode(),
                         HttpStatus.NOT_FOUND.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());

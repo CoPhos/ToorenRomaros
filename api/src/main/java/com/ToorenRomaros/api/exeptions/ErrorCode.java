@@ -20,6 +20,7 @@ public enum ErrorCode {
     USER_NOT_FOUND("API-0101", "Requested user not found."),
     RESOURCE_NOT_FOUND("API-0102", "Requested resource not found."),
     GENERIC_ALREADY_EXISTS("API-0103", "Already exists.");
+
     
 
     private String errCode;
