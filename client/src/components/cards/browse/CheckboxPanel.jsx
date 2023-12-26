@@ -10,6 +10,7 @@ function CheckboxPanel({
     checkedCheckboxes,
     elements,
     handleResetClick,
+    left
 }) {
     const panelRef = useRef()
 
@@ -26,8 +27,7 @@ function CheckboxPanel({
         }
     }, [panelKey, onClose])
 
-    const showClasses =
-        'z-20 w-full max-w-[380px] absolute top-[38%] left-[0px] md:top-[42px] md:left-[0px] bg-white-50 px-2 pt-2 pb-3 rounded-md shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]'
+    const showClasses = `z-20 w-screen absolute top-[42px] left-[0px] min-[665px]:top-[42px] min-[665px]:left-[0] min-[665px]:w-[320px] bg-white-50 px-2 pt-2 pb-3 rounded-md shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]`
     const notShowClasses = 'hidden'
     return (
         <div ref={panelRef} className={isOpen ? showClasses : notShowClasses}>

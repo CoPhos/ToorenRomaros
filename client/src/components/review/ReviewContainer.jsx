@@ -14,9 +14,13 @@ function ReviewContainer({ rating }) {
                         totalScore={65}
                         numberOfReviews={80}
                         rating={rating}
+                        viewAll={true}
                     ></ReviewRating>
 
-                    <ReviewPanel expand={false}></ReviewPanel>
+                    <ReviewPanel
+                        expand={false}
+                        to={'/reviews/critic'}
+                    ></ReviewPanel>
                 </div>
             </div>
             <div className="flex flex-col items-start justify-center gap-2 grow">
@@ -26,9 +30,13 @@ function ReviewContainer({ rating }) {
                         totalScore={65}
                         numberOfReviews={80}
                         rating={rating}
+                        viewAll={true}
                     ></ReviewRating>
 
-                    <ReviewPanel expand={true}></ReviewPanel>
+                    <ReviewPanel
+                        expand={true}
+                        to={'/reviews/user'}
+                    ></ReviewPanel>
                 </div>
             </div>
         </div>

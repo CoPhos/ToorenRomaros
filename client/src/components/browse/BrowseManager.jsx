@@ -7,7 +7,11 @@ function BrowseManager({}) {
     const location = useLocation()
     const [selectedRadio, setSelectedRadio] = useState('')
 
-    const [checkedCheckboxes, setCheckedCheckboxes] = useState({Genre: {}, Rating: {}})
+    const [checkedCheckboxes, setCheckedCheckboxes] = useState({
+        Genre: {},
+        Rating: {},
+        Streaming: {},
+    })
 
     useEffect(() => {
         const pathParts = location.pathname.split('/')

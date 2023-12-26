@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 import ReviewCard from '../cards/filmData/ReviewCard'
 
-function ReviewPanel({expand}) {
+function ReviewPanel({expand, to}) {
     const [active, setactive] = useState(1)
     const baseClassesButton =
         'text-white-300 text-small-m-400 lg:text-small-d-400 border-[none] hover:cursor-pointer py-2 px-1'
@@ -74,7 +74,7 @@ function ReviewPanel({expand}) {
             </div>
 
             <Link
-                to="aasdad"
+                to={to}
                 className="flex flex-row items-center justify-center mt-2 w-full rounded bg-[#404040] py-1 h-full hover:cursor-pointer hover:opacity-50"
             >
                 <p className="text-white-50 text-small-m-400 lg:text-small-d-400">

@@ -14,11 +14,8 @@ function BrowseContainer({
     selectedRadio,
     checkedCheckboxes,
     handleResetClick,
+    
 }) {
-    const [showSort, setshowSort] = useState(false)
-    const [showGenre, setshowGenre] = useState(false)
-    const [showRating, setshowRating] = useState(false)
-
     const [openPanels, setOpenPanels] = useState([])
 
     const handleButtonClick = (panelKey, event) => {
@@ -48,9 +45,9 @@ function BrowseContainer({
         'adventure',
         'comedy',
         'thriller',
-        
     ]
     const ratings = ['G', 'PG', 'PG-13', 'NC-17']
+    const streamPlatform = ['Netflix', 'Hulu', 'Apple TV+', 'Disney+']
 
     return (
         <Fragment>
@@ -61,7 +58,7 @@ function BrowseContainer({
             <p>Type: {type}</p>
             <p>Sort: {sort}</p>
 
-            <div className="flex flex-row items-center justify-start gap-3 overflow-x-scroll lg:overflow-x-hidden mt-2 border-b border-white-300">
+            <div className="flex flex-row items-center justify-start gap-3 overflow-x-scroll min-[420px]:overflow-x-hidden mt-2 border-b border-white-300">
                 <div
                     className={`${baseClassesLink} ${
                         type == 'theaters'
@@ -122,8 +119,8 @@ function BrowseContainer({
                 </div>
             </div>
 
-            <div className="flex flex-row items-center justify-start gap-2 mt-2 md:relative flex-wrap">
-                <div className="">
+            <div className="flex flex-row items-center justify-start gap-2 mt-2 relative min-[665px]:static flex-wrap">
+                <div className="static min-[665px]:relative">
                     <div
                         onClick={(event) => handleButtonClick('sort', event)}
                         className="flex flex-row items-center justify-start gap-1 px-2 py-[4px] border border-white-300 rounded-[18px] hover:cursor-pointer"
@@ -155,7 +152,7 @@ function BrowseContainer({
                     ></SortPanel>
                 </div>
 
-                <div className="">
+                <div className="static min-[665px]:relative">
                     <div
                         onClick={(event) => handleButtonClick('genre', event)}
                         className="flex flex-row items-center justify-start gap-1 px-2 py-[4px] border border-white-300 rounded-[18px] hover:cursor-pointer"
@@ -189,7 +186,7 @@ function BrowseContainer({
                     ></CheckboxPanel>
                 </div>
 
-                <div className="">
+                <div className="static min-[665px]:relative">
                     <div
                         onClick={(event) => handleButtonClick('rating', event)}
                         className="flex flex-row items-center justify-start gap-1 px-2 py-[4px] border border-white-300 rounded-[18px] hover:cursor-pointer"
@@ -222,23 +219,51 @@ function BrowseContainer({
                         handleResetClick={handleResetClick}
                     ></CheckboxPanel>
                 </div>
-            </div>
 
-            <div className="flex flex-row items-center justify-start gap-3 overflow-x-scroll lg:overflow-x-hidden mt-2">
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
-                <WhereToWatch blank={false}></WhereToWatch>
+                {type == 'atHome' || type == 'tv' ? (
+                    <div className="static min-[665px]:relative">
+                        <div
+                            onClick={(event) =>
+                                handleButtonClick('Streaming', event)
+                            }
+                            className="flex flex-row items-center justify-start gap-1 px-2 py-[4px] border border-white-300 rounded-[18px] hover:cursor-pointer"
+                        >
+                            <button className="text-small-m-400 lg:text-small-d-400 text-white-700 uppercase">
+                                Streaming
+                            </button>
+                            <svg
+                                width="10"
+                                height="10"
+                                viewBox="0 0 10 10"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M10 2.8248V2.87734C9.98659 3.06601 9.91836 3.22187 9.79531 3.34491C8.39258 4.74817 6.99818 6.14257 5.61211 7.52812C5.49883 7.6414 5.41575 7.71425 5.36289 7.74667C5.14492 7.88026 4.86797 7.88124 4.64609 7.75234C4.59232 7.72109 4.50462 7.64472 4.38301 7.52323C2.98848 6.12922 1.59421 4.73495 0.200195 3.34042C0.0796224 3.21972 0.0128906 3.06457 0 2.87499V2.82226C0.00976562 2.68411 0.0473958 2.56711 0.112891 2.47128C0.252344 2.26698 0.444857 2.16067 0.69043 2.15234C0.811263 2.1483 0.929688 2.17844 1.0457 2.24276C1.10299 2.27454 1.1776 2.33638 1.26953 2.42831C2.49154 3.65175 3.73359 4.894 4.9957 6.15507C4.99857 6.15793 5.0015 6.15793 5.00449 6.15507C6.2748 4.88476 7.53776 3.6218 8.79336 2.3662C9.06953 2.09023 9.50273 2.08026 9.7832 2.34589C9.91484 2.4705 9.98711 2.63013 10 2.8248Z"
+                                    fill="black"
+                                />
+                            </svg>
+                        </div>
+                        <CheckboxPanel
+                            tittle={'Streaming'}
+                            panelKey="Streaming"
+                            isOpen={isPanelOpen('Streaming')}
+                            isPanelOpen={isPanelOpen}
+                            onClose={handlePanelClose}
+                            handleCheckboxChange={handleCheckboxChange}
+                            checkedCheckboxes={checkedCheckboxes}
+                            elements={streamPlatform}
+                            handleResetClick={handleResetClick}
+                        ></CheckboxPanel>
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
 
             <Link
-                to="browse"
-                className="text-small-m-300 lg:text-small-d-300 text-blue-800 hover:cursor-pointer hover:text-blue-600"
+                to="/browse/theaters"
+                className="text-small-m-300 lg:text-small-d-300 text-blue-900 hover:cursor-pointer hover:text-blue-600"
             >
                 Reset Filters
             </Link>
