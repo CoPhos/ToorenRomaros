@@ -14,7 +14,7 @@ function BlogCard({text}) {
                   alt="Elva dressed as a fairy"
                   className="w-full h-auto min-[1080px]:w-[265px] min-[1080px]:h-[151px] object-cover object-center"
               />
-              <p className="text-small-m-400 min-[1080px]:text-small-d-400 group-hover:text-blue-700">
+              <p className="text-small-m-400 min-[1080px]:text-small-d-400 group-hover:text-red-600">
                   {text}
               </p>
           </div>

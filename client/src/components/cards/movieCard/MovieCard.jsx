@@ -769,7 +769,7 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
                                 </defs>
                             </svg>
 
-                            <p className="text-small-m-700 lg:text-small-d-700 group-hover:text-blue-800">
+                            <p className="text-small-m-700 lg:text-small-d-700 group-hover:text-red-600">
                                 {criticPercentage
                                     ? criticPercentage + '%'
                                     : '--'}
@@ -924,16 +924,16 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
                                     fill="#F05A29"
                                 />
                             </svg>
-                            <p className="text-small-m-700 lg:text-small-d-700 group-hover:text-blue-800">
+                            <p className="text-small-m-700 lg:text-small-d-700 group-hover:text-red-600">
                                 {userPercentage ? userPercentage + '%' : '--'}
                             </p>
                         </div>
                     </div>
-                    <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-blue-800">
+                    <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
                         {tittle}
                     </p>
                     {opened ? (
-                        <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-blue-800">
+                        <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600">
                             Opened: {opened}
                         </p>
                     ) : (

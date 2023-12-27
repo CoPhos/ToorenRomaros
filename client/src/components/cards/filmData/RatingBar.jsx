@@ -24,10 +24,10 @@ function RatingBar({ keyValue, value, barValues }) {
             className="flex flex-col items-start justify-center w-full hover:cursor-pointer group"
         >
             <div className="flex flex-row items-center justify-between w-full">
-                <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-blue-800">
+                <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600">
                     {value + ' ' + keyValue + ' ratings'}
                 </p>
-                <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-blue-800">
+                <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600">
                     {width}
                 </p>
             </div>

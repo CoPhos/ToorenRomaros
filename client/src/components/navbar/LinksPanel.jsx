@@ -10,14 +10,14 @@ function LinksPanel({data, tittle1, tittle2}) {
                   <Link
                       to="/adads"
                       key={value}
-                      className="text-small-d-400 text-white-500 hover:cursor-pointer hover:text-blue-800 whitespace-nowrap"
+                      className="text-small-d-400 text-white-500 hover:cursor-pointer hover:text-red-600 whitespace-nowrap"
                   >
                       {value}
                   </Link>
               ))}
               <Link
                   to="/asdasd"
-                  className="text-small-d-700 hover:cursor-pointer hover:text-blue-800 whitespace-nowrap"
+                  className="text-small-d-700 hover:cursor-pointer hover:text-red-600 whitespace-nowrap"
               >
                   See all
               </Link>
@@ -29,7 +29,7 @@ function LinksPanel({data, tittle1, tittle2}) {
                       <Link
                           to="/adads"
                           key={value}
-                          className="text-small-d-400 text-white-500 hover:cursor-pointer hover:text-blue-800 whitespace-nowrap"
+                          className="text-small-d-400 text-white-500 hover:cursor-pointer hover:text-red-600 whitespace-nowrap"
                       >
                           {value}
                       </Link>
@@ -37,7 +37,7 @@ function LinksPanel({data, tittle1, tittle2}) {
               })}
               <Link
                   to="/asdasd"
-                  className="text-small-d-700 hover:cursor-pointer hover:text-blue-800 whitespace-nowrap"
+                  className="text-small-d-700 hover:cursor-pointer hover:text-red-600 whitespace-nowrap"
               >
                   See all
               </Link>

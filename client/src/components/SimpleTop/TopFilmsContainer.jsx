@@ -18,11 +18,11 @@ function TopFilmsContainer({tittle, to, linkText, data}) {
                                   to="/sadas"
                                   className="flex flex-row items-center justify-between h-full group"
                               >
-                                  <p className="grow-[3] max-w-full overflow-hidden text-ellipsis line-clamp-1 break-words text-small-m-400 lg:text-small-d-400 group-hover:cursor-pointer group-hover:text-blue-800">
+                                  <p className="grow-[3] max-w-full overflow-hidden text-ellipsis line-clamp-1 break-words text-small-m-400 lg:text-small-d-400 group-hover:cursor-pointer group-hover:text-red-600">
                                       {value.text}
                                   </p>
                                   <div className="flex flex-row items-center justify-end">
-                                      <div className="flex flex-row items-center justify-start w-[56px] gap-0.5 group-hover:cursor-pointer group-hover:text-blue-800">
+                                      <div className="flex flex-row items-center justify-start w-[56px] gap-0.5 group-hover:cursor-pointer group-hover:text-red-600">
                                           <svg
                                               width="16"
                                               height="16"

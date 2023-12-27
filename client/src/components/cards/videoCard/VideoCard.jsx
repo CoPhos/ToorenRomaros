@@ -14,17 +14,17 @@ function VideoCard({ videoType, tittle, text, to }) {
                     alt="Elva dressed as a fairy"
                     className="w-full h-[178px] lg:h-[151px] object-cover object-center"
                 />
-                <div className="min-h-[22px] absolute left-[1px] right-0 bottom-[0px] overflow-hidden bg-blue-800 rounded-[4px]">
+                <div className="min-h-[22px] absolute left-[1px] right-0 bottom-[0px] overflow-hidden bg-red-700 rounded-[4px]">
                     <p className="text-white-50 overflow-hidden text-ellipsis line-clamp-1 text-small-m-300 lg:text-small-d-300 px-0.5">
                         {videoType}
                     </p>
                 </div>
             </div>
             <div>
-                <p className="text-body-m-700 lg:text-body-d-700 group-hover:text-blue-700">
+                <p className="text-body-m-700 lg:text-body-d-700 group-hover:text-red-600">
                     {tittle}
                 </p>
-                <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-blue-700">
+                <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
                     {text}
                 </p>
             </div>

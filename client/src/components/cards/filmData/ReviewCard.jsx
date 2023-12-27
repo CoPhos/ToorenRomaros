@@ -115,7 +115,7 @@ function ReviewCard({expand}) {
                     className="group-hover:fill-blue-800"
                 />
             </svg>
-            <button className="bg-transparent max-w-[80px] border-none text-small-m-400 lg:text-small-d-400 group-hover:text-blue-800">
+            <button className="bg-transparent max-w-[80px] border-none text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
                 Report
             </button>
         </div>
@@ -134,10 +134,10 @@ function ReviewCard({expand}) {
                         </p>
                     </div>
                     <div className="flex flex-col items-start justify-center">
-                        <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-blue-800">
+                        <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
                             Username123uwu
                         </p>
-                        <p className="text-tiny-m-400 lg:text-tiny-d-400  group-hover:text-blue-800">
+                        <p className="text-tiny-m-400 lg:text-tiny-d-400  group-hover:text-red-600">
                             Augs 8, 2023
                         </p>
                     </div>

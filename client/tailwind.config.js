@@ -33,6 +33,22 @@ module.exports = {
                     fontWeight: '400',
                 },
             ],
+            number: [
+                '30px',
+                {
+                    lineHeight: '30px',
+                    letterSpacing: '-0.15px',
+                    fontWeight: '700',
+                },
+            ],
+            tag: [
+                '14px',
+                {
+                    lineHeight: '16px',
+                    letterSpacing: '-0.15px',
+                    fontWeight: '400',
+                },
+            ],
             'h3-d-700': [
                 '25px',
                 {

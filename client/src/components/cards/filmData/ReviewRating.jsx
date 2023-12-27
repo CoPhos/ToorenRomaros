@@ -67,7 +67,7 @@ function ReviewRating({
                                 </p>
                                 <Link
                                     to="/allratings"
-                                    className="text-small-m-400 lg:text-small-d-400 hover:text-blue-800 hover:cursor-pointer"
+                                    className="text-small-m-400 lg:text-small-d-400 hover:text-red-600 hover:cursor-pointer"
                                 >
                                     Based on {numberOfReviews + ' ' + tittle}
                                 </Link>

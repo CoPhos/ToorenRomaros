@@ -104,7 +104,7 @@ function MobileNavMenu({ fillColor }) {
                         fillColor == 'blog' ? 'text-red-600' : 'fill-white-950'
                     }`}
                 >
-                    News
+                    Blog
                 </p>
             </Link>
 

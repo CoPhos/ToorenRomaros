@@ -89,7 +89,7 @@ function Navbar({ handleSubmit, handleChange, formData, data1 ,data2 }) {
                             alt="Elva dressed as a fairy"
                             className="w-[34px] h-[34px] rounded-[50%] object-cover object-center"
                         />
-                        <p className="hidden sm:block text-small-d-400 group-hover:text-blue-800">
+                        <p className="hidden sm:block text-small-d-400 group-hover:text-red-600">
                             Ruka Inaba
                         </p>
                     </Link>
@@ -135,7 +135,7 @@ function Navbar({ handleSubmit, handleChange, formData, data1 ,data2 }) {
                             <li className="group px-2 hover:bg-white-100 rounded-md h-6">
                                 <div className="h-full flex flex-row items-center justify-center">
                                     <Link
-                                        to="/browse"
+                                        to="/blog"
                                         className="group-hover:cursor-pointer group-hover:text-red-600 text-body-d-700 "
                                     >
                                         Blog
@@ -182,7 +182,7 @@ function Navbar({ handleSubmit, handleChange, formData, data1 ,data2 }) {
                                 alt="Elva dressed as a fairy"
                                 className="w-[34px] h-[34px] rounded-[50%] object-cover object-center"
                             />
-                            <p className="text-small-d-400 group-hover:text-blue-800">
+                            <p className="text-small-d-400 group-hover:text-red-600">
                                 Ruka Inaba
                             </p>
                         </Link>

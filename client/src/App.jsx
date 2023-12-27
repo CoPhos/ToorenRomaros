@@ -13,6 +13,7 @@ import Browse from './components/routes/Browse';
 import EditorManager from './components/textEditor/EditorManager'
 import ProfileManager from './components/profile/ProfileManager';
 import AllReviewsManager from './components/allReviews/AllReviewsManager'
+import HomeBlogManager from './components/homeBlog/HomeBlogManager';
 
 export default function App() {
     return (
@@ -37,6 +38,9 @@ export default function App() {
                     </Route>
                     <Route path="/reviews">
                         <AllReviewsManager></AllReviewsManager>
+                    </Route>
+                    <Route path="/blog">
+                       <HomeBlogManager></HomeBlogManager>
                     </Route>
                     <Route>
                         <p>Page Not Found</p>
