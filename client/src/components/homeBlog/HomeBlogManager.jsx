@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import HomeBlogContainer from './HomeBlogContainer';
+import HomeBlogLoginContainer from './HomeBlogLoginContainer';
 
 function HomeBlogManager() {
+   const login = true
   return (
-    <HomeBlogContainer></HomeBlogContainer>
+      <Fragment>
+          {login ? <HomeBlogLoginContainer></HomeBlogLoginContainer> : <HomeBlogContainer></HomeBlogContainer>}
+      </Fragment>
   )
 }
 

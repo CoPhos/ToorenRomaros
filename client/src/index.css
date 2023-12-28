@@ -21,6 +21,64 @@ html {
     padding: 0px;
 }
 
+.carousel {
+    .rec-dot {
+        border: none;
+        color: rgb(104, 104, 104);
+        background-color: transparent;
+        box-shadow: none;
+    }
+    .rec-dot:hover,
+    .rec-dot:focus {
+        cursor: pointer;
+        border: none;
+        box-shadow: none;
+    }
+    .rec-dot_active {
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+    }
+    .rec-arrow {
+        position: absolute;
+        z-index: 10;
+        background-color: transparent;
+        color: rgb(104, 104, 104);
+        width: 20px;
+        height: 20px;
+        min-height: 16px;
+        min-width: 16px;
+        font-size: 16px;
+        line-height: 0px;
+        border: none;
+        box-shadow: none;
+    }
+    .rec.rec-arrow-left:hover:enabled,
+    .rec.rec-arrow-right:hover:enabled,
+    .rec.rec-arrow-left:focus:enabled,
+    .rec.rec-arrow-right:focus:enabled {
+        border: none;
+        color: rgb(61, 61, 61);
+        background-color: transparent;
+        box-shadow: none;
+    }
+    .rec.rec-arrow-left:hover,
+    .rec.rec-arrow-right:hover {
+        color: rgb(61, 61, 61);
+        background-color: transparent;
+        box-shadow: none;
+    }
+    .rec-arrow-right {
+        right: 00px;
+    }
+    .rec-arrow-left {
+        left: 00px;
+    }
+    .rec-slider-container {
+        margin: 0;
+    }
+}
+
 body {
     margin: 0px;
     padding: 0px;
