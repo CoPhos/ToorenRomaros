@@ -6,10 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 
 public enum RoleEnum  implements GrantedAuthority {
     USER(Const.USER),
-
+    CRITIC(Const.CRITIC),
     ADMIN(Const.ADMIN),
-
-    CSR(Const.CSR);
+    MODERATOR(Const.MODERATOR);
 
     private String authority;
 
@@ -42,6 +41,7 @@ public enum RoleEnum  implements GrantedAuthority {
 
         public static final String ADMIN = "ROLE_ADMIN";
         public static final String USER = "ROLE_USER";
-        public static final String CSR = "ROLE_CSR";
+        public static final String CRITIC = "ROLE_CRITIC";
+        public static final String MODERATOR = "ROLE_MODERATOR";
     }
 }
