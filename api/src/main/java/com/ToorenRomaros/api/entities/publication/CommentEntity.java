@@ -21,7 +21,7 @@ public class CommentEntity{
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-    @Column(name = "BODY", columnDefinition = "VARCHAR(max)")
+    @Column(name = "BODY", columnDefinition = "TEXT")
     @NotNull(message = "Body can not be null")
     private String body;
     @Column(name = "PUBLICATION_DATETIME", columnDefinition = "DATETIME")

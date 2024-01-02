@@ -1,7 +1,7 @@
 DROP TRIGGER IF EXISTS CalculateAverageUserRatingUserInsert;//
 DROP TRIGGER IF EXISTS CalculateAverageUserRatingSuperInsert;//
 DROP TRIGGER IF EXISTS CalculateAverageUserRatingUserUpdate;//
-DROP TRIGGER IF EXISTS CalculateAverageUserRatingSuperUpdate;
+DROP TRIGGER IF EXISTS CalculateAverageUserRatingSuperUpdate;//
 //
 CREATE TRIGGER CalculateAverageUserRatingUserInsert
 AFTER INSERT

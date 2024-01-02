@@ -49,9 +49,9 @@ public class FilmEntity {
     private LocalDate streamingReleaseDate;
     @Column(name = "COOMING_SOON", columnDefinition = "DATE")
     private LocalDate coomingSoon;
-    @Column(name = "AVERAGE_SUPER_RATING", columnDefinition = "FLOAT")
+    @Column(name = "AVERAGE_SUPER_RATING", columnDefinition = "FLOAT DEFAULT 0")
     private Float averageSuperRating;
-    @Column(name = "AVERAGE_USER_RATING", columnDefinition = "FLOAT")
+    @Column(name = "AVERAGE_USER_RATING", columnDefinition = "FLOAT DEFAULT 0")
     private Float averageUserRating;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "PREQUEL_ID", referencedColumnName = "id")
