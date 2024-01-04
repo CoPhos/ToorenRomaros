@@ -8,7 +8,7 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
                 <Link to={'/film'}>
                     <img
                         //srcset="https://small 480w, https://medium 800w, https://large 1100w"
-                        src="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg"
+                        src="http://localhost:9090/api/v1/images/fb4da2f1-de6d-4405-983f-018e20af7c86"
                         alt="Elva dressed as a fairy"
                         className="w-[128px] h-[168px] md:w-[170px] md:h-[258px] rounded-lg object-cover object-center group-hover:opacity-75"
                     />

@@ -26,7 +26,7 @@ public class ImageController {
     @PostMapping("/{ownerType}/{id}/image")
     ResponseEntity<Map<String, Object>> createImage(@RequestParam("image") @NotNull MultipartFile file,
                                                     @RequestParam("imageType") @NotNull String imageType,
-                                                    @PathVariable @NotNull @Pattern(regexp = uuidRegExp) String ownerType,
+                                                    @PathVariable @NotNull String ownerType,
                                                     @PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
             Map<String, Object> response = new HashMap<>();
             response.put("created", imageService.uploadImage(file, id, ownerType, imageType));

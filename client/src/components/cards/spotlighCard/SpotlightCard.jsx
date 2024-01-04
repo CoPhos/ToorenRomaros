@@ -7,7 +7,7 @@ function SpotlightCard({ insideText }) {
                 //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                 src="https://www.geekmi.news/__export/1682884106095/sites/debate/img/2023/04/30/axadir_un_txtulo_x22x.jpg_759710130.jpg"
                 alt="Elva dressed as a fairy"
-                className="w-full h-full lg:w-full lg:h-auto min-h-[280px] md:min-h-[340px] lg:min-h-[408px] object-cover object-center"
+                className="w-full h-full lg:w-full lg:h-auto min-h-[300px] md:min-h-[340px] lg:min-h-[408px] object-cover object-center"
             />
             <div
                 className=" min-h-[80px] absolute left-0 right-0 bottom-[16px] my-auto ml-2 p-[10px] overflow-hidden border-solid border-l-4
