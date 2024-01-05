@@ -1,5 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
+import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.services.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +17,11 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("api/v1")
-public class ImageController {
+public class ImageFilmController {
     private static final String uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
     private final ImageService imageService;
     private static final Logger log = LoggerFactory.getLogger(ImageController.class);
-    public ImageController(@Qualifier("ImageServiceFilmImpl") ImageService imageService) {
+    public ImageFilmController(@Qualifier("ImageServiceFilmImpl") ImageService imageService, ImageRepostiroy imageRepostiroy) {
         this.imageService = imageService;
     }
 
@@ -29,16 +30,16 @@ public class ImageController {
                                                     @RequestParam("imageType") @NotNull String imageType,
                                                     @PathVariable @NotNull String ownerType,
                                                     @PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-            Map<String, Object> response = new HashMap<>();
-            response.put("created", imageService.uploadImage(file, id, ownerType, imageType));
-            return new ResponseEntity<>(response, HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("created", imageService.uploadImage(file, id, ownerType, imageType));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-//    @GetMapping("/images/{id}")
-//    ResponseEntity<?> getImageFromFileSystem(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-//        byte[] imageBytes = imageService.getImageById(id);
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.IMAGE_JPEG);
-//        headers.setCacheControl(CacheControl.maxAge(3600, TimeUnit.SECONDS));
-//        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
-//    }
+    @GetMapping("/images/{id}")
+    ResponseEntity<?> getImageFromFileSystem(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+        byte[] imageBytes = imageService.getImageById(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setCacheControl(CacheControl.maxAge(3600, TimeUnit.SECONDS));
+        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
 }
