@@ -4,7 +4,7 @@ public enum ImageTypeEnum {
     FILM_MAIN,
     FILM_COLLECTION,
     USER_PROFILE,
-    VIDEO_THUMBAIL,
+    VIDEO_THUMBNAIL,
     POST_MAIN,
     POST_COLLECTION
 }

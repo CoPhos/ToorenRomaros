@@ -1,36 +1,46 @@
 package com.ToorenRomaros.api.services;
 
+import com.ToorenRomaros.api.dto.media.GetAllImagesByTypeAndOwnerIdDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
+import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
 import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import org.imgscalr.Scalr;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ImageService {
-    Map<String, String> uploadImage(MultipartFile originalImage, String ownerId, String ownerType, String imageType) throws IOException;
+    Map<String, String> uploadImage(MultipartFile originalImage, String ownerId, String imageType) throws IOException;
     byte[] getImageById(String imageId) throws IOException;
+    List<GetAllImagesByTypeAndOwnerIdDto> getImageByImageType(String imageType, String ownerId);
 
-    default String processImage(MultipartFile originalImage,
-                                String suffix,
+    default String processImage(String suffix,
                                 BufferedImage bufferedImage,
                                 int width, int height,
                                 Object entity,
                                 String folderPath,
                                 ImageTypeEnum imageType,
+                                ImageSizeEnum imageSize,
                                 ImageRepostiroy imageRepostiroy) throws IOException {
-        String filePath = folderPath + originalImage.getOriginalFilename() + suffix;
-        ImageEntity imageEntity = new ImageEntity(filePath, LocalDateTime.now(), imageType, entity);
-        ImageEntity savedImage = imageRepostiroy.save(imageEntity);
+        String filePath = folderPath + suffix + UUID.randomUUID() + ".jpg";
+
+        File directory = new File(filePath).getParentFile();
+        if (!directory.exists()) {
+            if(directory.mkdirs()){
+                // Directories created successfully
+            }
+        }
 
         if (width > 0 && height > 0) {
             BufferedImage resizedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, width, height, Scalr.OP_ANTIALIAS);
@@ -38,6 +48,9 @@ public interface ImageService {
         } else {
             ImageIO.write(bufferedImage, "jpg", new File(filePath));
         }
+        ImageEntity imageEntity = new ImageEntity(filePath, LocalDateTime.now(), imageType, imageSize, entity);
+        ImageEntity savedImage = imageRepostiroy.save(imageEntity);
         return savedImage.getId().toString();
     }
 }
+

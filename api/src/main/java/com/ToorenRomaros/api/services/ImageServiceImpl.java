@@ -25,27 +25,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+
 public class ImageServiceImpl {
-    private final ImageRepostiroy imageRepostiroy;
-    private final UserRepository userRepository;
-    private final PostRepository postRepository;
-    private final FilmRepository filmRepository;
-    private final VideoRepository videoRepository;
-
-    @Value("${images.folderPath}")
-    private String FOLDER_PATH;
-    private static final Logger log = LoggerFactory.getLogger(ImageServiceImpl.class);
-
-    public ImageServiceImpl(ImageRepostiroy imageRepostiroy, UserRepository userRepository, PostRepository postRepository, FilmRepository filmRepository, VideoRepository videoRepository) {
-        this.imageRepostiroy = imageRepostiroy;
-        this.userRepository = userRepository;
-        this.postRepository = postRepository;
-        this.filmRepository = filmRepository;
-        this.videoRepository = videoRepository;
-
-    }
-
 //    @Override
 //    public Map<String, String> uploadImage(MultipartFile file, String ownerId, String ownerType, String imageType) throws IOException {
 //        return null;

@@ -6,7 +6,9 @@
 *.sw?
 *~
 .#*
-/api/src/main/resources/media/
+/api/src/main/resources/media/**
+/api/src/main/resources/.jks
+/api/src/main/resources/application.properties
 .*.md.html
 .DS_Store
 .attach_pid*

@@ -31,21 +31,24 @@ public class ImageEntity {
     private UUID id;
     @Column(name = "FILE_PATH", columnDefinition = "VARCHAR(255)")
     private String filePath;
-    @Column(name = "SIZE", columnDefinition = "VARCHAR(8)")
-    private String imageSize;
     @Column(name = "CREATED_AT", columnDefinition = "DATETIME")
     private LocalDateTime createdAt;
     @Column(name = "IMAGE_TYPE")
     @Enumerated(EnumType.STRING)
     private ImageTypeEnum imageType;
+
+    @Column(name = "IMAGE_SIZE")
+    @Enumerated(EnumType.STRING)
+    private ImageSizeEnum imageSize;
     @Any(metaDef = "OwnerMetaDef", metaColumn = @Column(name = "OWNER_TYPE"))
     @JoinColumn(name="OWNER_ID")
     private Object owner;
 
-    public ImageEntity(String filePath, LocalDateTime createdAt, ImageTypeEnum imageType, Object owner) {
+    public ImageEntity(String filePath, LocalDateTime createdAt, ImageTypeEnum imageType, ImageSizeEnum imageSize,Object owner) {
         this.filePath = filePath;
         this.createdAt = createdAt;
         this.imageType = imageType;
+        this.imageSize = imageSize;
         this.owner = owner;
     }
 
@@ -64,12 +67,6 @@ public class ImageEntity {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-    public String getImageSize() {
-        return imageSize;
-    }
-    public void setImageSize(String imageSize) {
-        this.imageSize = imageSize;
-    }
     public Object getOwner() {
         return owner;
     }
@@ -87,5 +84,11 @@ public class ImageEntity {
     }
     public void setImageType(ImageTypeEnum imageType) {
         this.imageType = imageType;
+    }
+    public ImageSizeEnum getImageSize() {
+        return imageSize;
+    }
+    public void setImageSize(ImageSizeEnum imageSize) {
+        this.imageSize = imageSize;
     }
 }
