@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 
 import EditorContainer from './EditorContainer'
 
-import { SERVER_URL } from '../../utils/constants'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 
 
@@ -18,6 +17,7 @@ function EditorManager() {
         synthesis: '',
         image: ''
     })
+    const SERVER_URL = ""
 
     useEffect(() => {
         createNewPost()

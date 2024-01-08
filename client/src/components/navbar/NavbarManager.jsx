@@ -3,24 +3,6 @@ import NavbarContainer from './NavbarContainer.jsx'
 
 function NavbarManager() {
     const [login, setLogin] = useState(1)
-    const [formData, setFormData] = useState({
-        email: '',
-        username: '',
-        password: '',
-    })
-
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }))
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('Form submitted:', formData)
-    }
 
     const data1 = {
         explore: [
@@ -76,9 +58,6 @@ function NavbarManager() {
     return (
         <NavbarContainer
             isLoggedIn={login}
-            formData={formData}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
             data1={data1}
             data2={data2}
         ></NavbarContainer>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { QueryClientProvider, QueryClient } from 'react-query';
 import './index.css'; 
 
 //components
@@ -15,57 +16,61 @@ import ProfileManager from './components/profile/ProfileManager';
 import AllReviewsManager from './components/allReviews/AllReviewsManager'
 import HomeBlogManager from './components/homeBlog/HomeBlogManager';
 
+const queryClient = new QueryClient()
+
 export default function App() {
     return (
-        <BrowserRouter>
-            <NavbarManager></NavbarManager>
-            <main>
-                <Switch>
-                    <Route exact path="/">
-                        <Home></Home>
-                    </Route>
-                    <Route path="/film">
-                        <FilmDetails></FilmDetails>
-                    </Route>
-                    <Route path="/browse">
-                        <Browse></Browse>
-                    </Route>
-                    <Route path="/editor">
-                        <EditorManager></EditorManager>
-                    </Route>
-                    <Route path="/profile">
-                        <ProfileManager></ProfileManager>
-                    </Route>
-                    <Route path="/reviews">
-                        <AllReviewsManager></AllReviewsManager>
-                    </Route>
-                    <Route path="/blog">
-                       <HomeBlogManager></HomeBlogManager>
-                    </Route>
-                    <Route>
-                        <p>Page Not Found</p>
-                    </Route>
-                </Switch>
-            </main>
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+                <NavbarManager></NavbarManager>
+                <main>
+                    <Switch>
+                        <Route exact path="/">
+                            <Home></Home>
+                        </Route>
+                        <Route path="/film">
+                            <FilmDetails></FilmDetails>
+                        </Route>
+                        <Route path="/browse">
+                            <Browse></Browse>
+                        </Route>
+                        <Route path="/editor">
+                            <EditorManager></EditorManager>
+                        </Route>
+                        <Route path="/profile">
+                            <ProfileManager></ProfileManager>
+                        </Route>
+                        <Route path="/reviews">
+                            <AllReviewsManager></AllReviewsManager>
+                        </Route>
+                        <Route path="/blog">
+                            <HomeBlogManager></HomeBlogManager>
+                        </Route>
+                        <Route>
+                            <p>Page Not Found</p>
+                        </Route>
+                    </Switch>
+                </main>
 
-            <Footer></Footer>
-            <Route
-                render={({ location }) => {
-                    const fillColor =
-                        location.pathname === '/'
-                            ? 'home'
-                            : location.pathname.includes('/browse')
-                            ? 'browse'
-                            : location.pathname === '/blog'
-                            ? 'blog'
-                            : location.pathname === '/profile'
-                            ? 'profile'
-                            : location.pathname === '/notification'
-                            ? 'notification'
-                            : 'default'
-                    return <MobileNavMenu fillColor={fillColor} />
-                }}
-            />
-        </BrowserRouter>
+                <Footer></Footer>
+                <Route
+                    render={({ location }) => {
+                        const fillColor =
+                            location.pathname === '/'
+                                ? 'home'
+                                : location.pathname.includes('/browse')
+                                ? 'browse'
+                                : location.pathname === '/blog'
+                                ? 'blog'
+                                : location.pathname === '/profile'
+                                ? 'profile'
+                                : location.pathname === '/notification'
+                                ? 'notification'
+                                : 'default'
+                        return <MobileNavMenu fillColor={fillColor} />
+                    }}
+                />
+            </BrowserRouter>
+        </QueryClientProvider>
     )
 }

@@ -1,1 +1,5 @@
-export const SERVER_URL = 'http://localhost:9090/api/v1'
+import axios from 'axios'
+
+export default axios.create({
+    baseURL: 'http://localhost:9090/api/v1',
+})

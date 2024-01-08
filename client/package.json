@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "autoprefixer": "^10.4.16",
+        "axios": "^1.6.5",
         "babel-polyfill": "^6.26.0",
         "draft-js": "^0.11.7",
         "postcss": "^8.4.31",
