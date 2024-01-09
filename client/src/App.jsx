@@ -1,13 +1,10 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query';
 import './index.css'; 
 
 //components
-import NavbarManager from './components/navbar/NavbarManager';
-import Footer from './components/footer/Footer'
 import MobileNavMenu from './components/navbar/MobileNavMenu'
-
 import Home from './components/routes/Home';
 import FilmDetails from './components/routes/FilmDetails';
 import Browse from './components/routes/Browse';
@@ -15,44 +12,38 @@ import EditorManager from './components/textEditor/EditorManager'
 import ProfileManager from './components/profile/ProfileManager';
 import AllReviewsManager from './components/allReviews/AllReviewsManager'
 import HomeBlogManager from './components/homeBlog/HomeBlogManager';
+import Layout from './components/routes/Layout';
+import RequiredAuth from './components/routes/RequiredAuth';
+import Unauthorized from './components/routes/Unauthorized';
+import NotFound from './components/routes/NotFound'
 
 const queryClient = new QueryClient()
 
 export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <NavbarManager></NavbarManager>
-                <main>
-                    <Switch>
-                        <Route exact path="/">
-                            <Home></Home>
-                        </Route>
-                        <Route path="/film">
-                            <FilmDetails></FilmDetails>
-                        </Route>
-                        <Route path="/browse">
-                            <Browse></Browse>
-                        </Route>
-                        <Route path="/editor">
-                            <EditorManager></EditorManager>
-                        </Route>
-                        <Route path="/profile">
-                            <ProfileManager></ProfileManager>
-                        </Route>
-                        <Route path="/reviews">
-                            <AllReviewsManager></AllReviewsManager>
-                        </Route>
-                        <Route path="/blog">
-                            <HomeBlogManager></HomeBlogManager>
-                        </Route>
-                        <Route>
-                            <p>Page Not Found</p>
-                        </Route>
-                    </Switch>
-                </main>
+            <Routes>
+                <Route path="/" element={<Layout></Layout>}>
+                    {/* public routes */}
+                    <Route exact path="/" element={<Home />} />
+                    <Route path="/film" element={<FilmDetails />} />
+                    <Route path="/browse" element={<Browse />} />
+                    <Route path="/reviews" element={<AllReviewsManager />} />
+                    <Route path="/blog" element={<HomeBlogManager />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
 
-                <Footer></Footer>
+                    {/* private routes */}
+                    <Route element={<RequiredAuth allowedRoles={['CRITIC']} />}>
+                        <Route path="/editor" element={<EditorManager />} />
+                    </Route>
+
+                    <Route element={<RequiredAuth allowedRoles={['USER']} />}>
+                        <Route path="/profile" element={<ProfileManager />} />
+                    </Route>
+
+                    {/* 404 */}
+                    <Route path="*" element={<NotFound />} />
+                </Route>
                 <Route
                     render={({ location }) => {
                         const fillColor =
@@ -70,7 +61,7 @@ export default function App() {
                         return <MobileNavMenu fillColor={fillColor} />
                     }}
                 />
-            </BrowserRouter>
+            </Routes>
         </QueryClientProvider>
     )
 }

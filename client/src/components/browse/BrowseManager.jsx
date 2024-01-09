@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import BrowseContainer from './BrowseContainer'
 
 function BrowseManager({}) {
-    const history = useHistory()
+    const history = useNavigate()
     const location = useLocation()
     const [selectedRadio, setSelectedRadio] = useState('')
 

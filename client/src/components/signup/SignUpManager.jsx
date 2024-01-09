@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
-import SignUpContainer from './SignUpContainer';
 import { useMutation } from 'react-query'
+
+import SignUpContainer from './SignUpContainer';
 import axios from '../../utils/constants'
 
 function SignUpManager({active}) {
@@ -27,11 +28,29 @@ function SignUpManager({active}) {
     const [validmatchPassword, setvalidMatchPassword] = useState(false)
     const [matchPasswordFocus, setmatchPasswordFocus] = useState(false)
 
-    const [errorMessage, seterrorMessage] = useState('')
-    const [success, setsuccess] = useState(false)
+    const [errorMessage, seterrorMessage] = useState("")
 
     const userRef = useRef()
     const errorRef = useRef()
+
+    const handleApiError = (error) => {
+        if (!error.response) {
+            seterrorMessage('No Server Response')
+        } else {
+            handleHttpError(error)
+        }
+    }
+
+    const handleHttpError = (error) => {
+        switch (error.response.status) {
+            case 401:
+                seterrorMessage('Unauthorize')
+                break
+            default:
+                console.log(error.response.data.message)
+                seterrorMessage(error.response.data.message)
+        }
+    }
 
     const mutation = useMutation(
         async () => {
@@ -52,7 +71,24 @@ function SignUpManager({active}) {
         },
         {
             onSuccess: (data) => {
-                console.log('Data:', data)
+                setuser('')
+                setvalidUsername(false)
+                setuserFocus(false)
+                setemail('')
+                setvalidEmail(false)
+                setemailFocus(false)
+                setpassword('')
+                setvalidPassword(false)
+                setpasswordFocus(false)
+                setmatchPassword('')
+                setvalidMatchPassword(false)
+                setmatchPasswordFocus(false)
+                seterrorMessage('')
+
+            },
+            onError: (error) => {
+                handleApiError(error)
+                errorRef.current.focus()
             },
         }
     )

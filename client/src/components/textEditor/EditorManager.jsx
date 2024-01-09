@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import EditorContainer from './EditorContainer'
 
@@ -7,7 +7,7 @@ import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 
 
 function EditorManager() {
-    const history = useHistory()
+    const history = useNavigate()
     const [editorState, setEditorState] = useState(EditorState.createEmpty())
     const [isLoading, setIsLoading] = useState(false)
     const [postId, setpostId] = useState('0')

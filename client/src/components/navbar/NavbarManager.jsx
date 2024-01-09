@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import useAuth from '../hooks/useAuth'
 import NavbarContainer from './NavbarContainer.jsx'
 
 function NavbarManager() {
     const [login, setLogin] = useState(1)
+    const { auth } = useAuth()
 
     const data1 = {
         explore: [
@@ -57,7 +59,7 @@ function NavbarManager() {
 
     return (
         <NavbarContainer
-            isLoggedIn={login}
+            user={auth?.user}
             data1={data1}
             data2={data2}
         ></NavbarContainer>

@@ -37,18 +37,24 @@ function SignUpContainer({
                 discover top movies, TV shows, posts, and more!
             </p>
 
-            <section>
-                <p
+            <section className="w-[344px]">
+                <div
                     ref={errorRef}
-                    className={errorMessage ? 'block' : 'hidden'}
+                    className={
+                        errorMessage
+                            ? 'flex flex-row items-center justify-center bg-[#e95b5b] max-w-[344px] min-h-6 p-[4px] mb-1'
+                            : 'hidden'
+                    }
                     aria-live="assertive"
                 >
-                    {errorMessage}
-                </p>
+                    <p className="text-white-50 text-center overflow-hidden text-ellipsis line-clamp-3 break-words text-small-m-700 lg:text-small-d-700">
+                        {errorMessage}
+                    </p>
+                </div>
 
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col items-start justify-center gap-1 w-[344px] mt-8"
+                    className="flex flex-col items-start justify-center gap-1 w-full mt-8"
                 >
                     <div className="w-full">
                         <label
