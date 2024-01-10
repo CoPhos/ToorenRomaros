@@ -8,7 +8,6 @@ import java.util.UUID;
 public interface PostService {
     PostDto createPost(PostDto postDto);
     PostDto getPostById(UUID id);
-    List<PostDto> getLatestPostsTittleAndHeadline();
     PostDto updatePostById(UUID id, PostDto postDto);
     void deletePostById(UUID id);
 }

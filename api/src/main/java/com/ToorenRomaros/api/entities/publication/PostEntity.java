@@ -28,17 +28,22 @@ public class PostEntity {
     private int likeCount;
     @Column(name = "TITTLE", columnDefinition = "VARCHAR(255)")
     private String tittle;
-    @Column(name = "SYNTHESIS", columnDefinition = "VARCHAR(255)")
+    @Column(name = "SYNTHESIS", columnDefinition = "TEXT")
     private String synthesis;
     @Column(name = "CONTENT", columnDefinition = "MEDIUMTEXT")
     private String content;
-    @Column(name = "STATUS", columnDefinition = "VARCHAR(24)")
-    private String status;
+    @Column(name = "IS_REVIEW", columnDefinition = "Boolean")
+    private boolean isReview;
+    @Column(name = "STATUS")
+    @Enumerated(EnumType.STRING)
+    private PostStatusEnum status;
     @Column(name = "HEADLINE", columnDefinition = "VARCHAR(255)")
     private String headline;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
+
     //@Formula("()")
     //private String discussCount;
 
@@ -46,72 +51,61 @@ public class PostEntity {
     public UUID getId() {
         return id;
     }
-
     public void setId(UUID id) {
         this.id = id;
     }
-
     public LocalDateTime getPublicationDateTime() {
         return publicationDateTime;
     }
-
     public void setPublicationDateTime(LocalDateTime publicationDateTime) {
         this.publicationDateTime = publicationDateTime;
     }
-
     public int getLikeCount() {
         return likeCount;
     }
-
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-
     public String getTittle() {
         return tittle;
     }
-
     public void setTittle(String tittle) {
         this.tittle = tittle;
     }
-
     public String getSynthesis() {
         return synthesis;
     }
-
     public void setSynthesis(String synthesis) {
         this.synthesis = synthesis;
     }
-
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
-
     public UserEntity getUser() {
         return user;
     }
-
     public void setUser(UserEntity user) {
         this.user = user;
     }
-
-    public String getStatus() {
+    public PostStatusEnum getStatus() {
         return status;
     }
-
-    public void setStatus(String status) {
+    public void setStatus(PostStatusEnum status) {
         this.status = status;
     }
-
     public String getHeadline() {
         return headline;
     }
-
     public void setHeadline(String headline) {
         this.headline = headline;
+    }
+    public boolean isReview() {
+        return isReview;
+    }
+    public void setReview(boolean review) {
+        isReview = review;
     }
 }

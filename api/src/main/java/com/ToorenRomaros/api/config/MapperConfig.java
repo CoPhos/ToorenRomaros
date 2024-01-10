@@ -8,6 +8,7 @@ import com.ToorenRomaros.api.dto.publication.*;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
+import com.ToorenRomaros.api.dto.tag.TagPostDto;
 import com.ToorenRomaros.api.dto.user.RefreshTokenDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.entities.film.EpisodeEntity;
@@ -15,11 +16,11 @@ import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
 import com.ToorenRomaros.api.entities.publication.*;
-import com.ToorenRomaros.api.entities.socials.SocialEntity;
 import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
 import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
 import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
+import com.ToorenRomaros.api.entities.tag.TagPostEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +32,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppConfig {
+public class MapperConfig {
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -175,6 +176,15 @@ public class AppConfig {
         propertyMapperRefreshTokenDto.addMappings(
                 mapper -> {
                     mapper.map(UserEntity::getId, RefreshTokenDto::setUser);
+                }
+        );
+
+        //UserToken
+        TypeMap<TagPostEntity, TagPostDto> propertyMapperTagPostDto = modelMapper.createTypeMap(TagPostEntity.class, TagPostDto.class);
+        propertyMapperTagPostDto.addMappings(
+                mapper -> {
+                    mapper.map(TagPostEntity::getPost, TagPostDto::setPost);
+                    mapper.map(TagPostEntity::getTag, TagPostDto::setTag);
                 }
         );
 

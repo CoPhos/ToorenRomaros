@@ -43,8 +43,8 @@ public class AuthController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/auth/token")
-    public ResponseEntity<Void> signOut(@RequestBody @Valid RefreshTokenDto refreshTokenDto) {
-        userService.removeRefreshToken(refreshTokenDto);
+    public ResponseEntity<Void> signOut(@RequestParam String refreshToken) {
+        userService.removeRefreshToken(refreshToken);
         return accepted().build();
     }
 

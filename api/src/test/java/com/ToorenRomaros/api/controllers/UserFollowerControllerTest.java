@@ -1,11 +1,10 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.config.AppConfig;
+import com.ToorenRomaros.api.config.MapperConfig;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.exeptions.RestApiErrorHandler;
-import com.ToorenRomaros.api.repositories.user.UserFollowerRepository;
 import com.ToorenRomaros.api.services.UserFollowerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
@@ -19,9 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,7 +32,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,8 +63,8 @@ class UserFollowerControllerTest {
 
     @BeforeEach
     public void setup() {
-        ObjectMapper mapper = new AppConfig().objectMapper();
-        this.modelMapper = new AppConfig().modelMapper();
+        ObjectMapper mapper = new MapperConfig().objectMapper();
+        this.modelMapper = new MapperConfig().modelMapper();
         JacksonTester.initFields(this, mapper);
         MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new
                 MappingJackson2HttpMessageConverter();

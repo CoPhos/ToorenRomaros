@@ -1,18 +1,47 @@
 import React from 'react'
-import ProfileContainer from './ProfileContainer';
+import axios from '../../utils/constants'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from 'react-query'
+
+import ProfileContainer from './ProfileContainer'
 
 
 function ProfileManager() {
-   const { logout } = useAuth()
+  const LOGOUT_URL = '/auth/token'
+   const { logout, auth } = useAuth()
    const navigate = useNavigate()
+
+   const mutation = useMutation(
+       async () => {
+           return axios.delete(
+               `${LOGOUT_URL}?refreshToken=${encodeURIComponent(
+                   auth.refreshToken
+               )}`,
+               {
+                   headers: {
+                       'Content-Type': 'application/json',
+                       withCredentials: true,
+                   },
+               }
+           )
+       },
+       {
+           onSuccess: (data) => {
+            navigate('/', { replace: true })
+            logout()  
+           },
+           onError: (error) => {
+               console.log(error)
+           },
+       }
+   )
 
    function handleLogout(e){
     e.preventDefault()
-    logout()
-    navigate("/", { replace: true })
+    mutation.mutate()
    }
+
   return <ProfileContainer handleLogout={handleLogout}></ProfileContainer>
 }
 

@@ -17,20 +17,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.*;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -54,6 +51,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "' does not exists"));
         return modelMapper.map(user, UserDto.class);
     }
+
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator') || #username == authentication.name")
     @Override
     public UserDto updateUser(UUID id, UserAddRequestDto userAddRequestDto, String username) {
@@ -66,11 +64,14 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(savedUser, UserDto.class);
 
     }
+
     @Override
     @PreAuthorize("hasRole('adminrole')")
     public void deleteUserById(UUID id) {
-        UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "'"));
-        userRepository.delete(user);
+        userRepository.findById(id)
+                .ifPresentOrElse(userRepository::delete, () -> {
+                    throw new UserNotFoundException("'" + id + "'");
+                });
     }
 
     @Override
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Invalid user.");
         }
         final String uname = username.trim();
-        return userRepository.findByUsername(uname).orElseThrow(() -> new UsernameNotFoundException(String.format("Given user(%s) not found.", uname)));
+        return userRepository.findByUsername(uname).orElseThrow(() -> new UsernameNotFoundException(String.format("Given user(%s) not found.", username)));
     }
 
     @Override
@@ -117,9 +118,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeRefreshToken(RefreshTokenDto refreshTokenDto) {
+    public void removeRefreshToken(String refreshToken) {
         //TODO: implement blacklist token list????
-        userTokenRepository.findByRefreshToken(refreshTokenDto.getRefreshToken())
+        userTokenRepository.findByRefreshToken(refreshToken)
                 .ifPresentOrElse(userTokenRepository::delete, () -> {
                     throw new InvalidRefreshTokenException("Invalid token.");
                 });
@@ -155,8 +156,9 @@ public class UserServiceImpl implements UserService {
 
     private static class RandomHolder {
         static final Random random = new SecureRandom();
+
         public static String randomKey(int length) {
-            return String.format("%"+length+"s", new BigInteger(length*5/*base 32,2^5*/, random)
+            return String.format("%" + length + "s", new BigInteger(length * 5/*base 32,2^5*/, random)
                     .toString(32)).replace('\u0020', '0');
         }
     }

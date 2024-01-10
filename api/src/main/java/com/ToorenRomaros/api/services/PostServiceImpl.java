@@ -48,15 +48,6 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostDto> getLatestPostsTittleAndHeadline() {
-        List<PostEntity> postEntities = postRepository.getPostTittleAndPostHeadlineWhereStatusFinishedOrderByCreadtedDateDESCLimit8();
-        if(postEntities == null){
-            throw  new ResourceNotFoundException("No Posts found");
-        }
-        return postEntities.stream().map(postEntity -> modelMapper.map(postEntity, PostDto.class)).collect(Collectors.toList());
-    }
-
-    @Override
     public PostDto updatePostById(UUID id, PostDto postDto) {
         PostEntity newPostEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
         PostEntity postEntity = modelMapper.map(postDto, PostEntity.class);

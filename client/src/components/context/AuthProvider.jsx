@@ -5,8 +5,8 @@ const AuthContext = createContext({})
 export const AuthProvider = ({children}) => {
   const [auth, setauth] = useState({})
   
-  const login = ( user, password, roles, accessToken ) => {
-      setauth({ user, password, roles, accessToken })
+  const login = ( user, password, roles, accessToken, refreshToken ) => {
+      setauth({ user, password, roles, accessToken, refreshToken })
   }
 
   const logout = () => {

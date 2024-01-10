@@ -29,30 +29,23 @@ public class GenreFilmEntity {
         this.film = film;
         this.genre = genre;
     }
-
     public GenreFilmEntity() {
     }
-
     public UUID getId() {
         return id;
     }
-
     public void setId(UUID id) {
         this.id = id;
     }
-
     public FilmEntity getFilm() {
         return film;
     }
-
     public void setFilm(FilmEntity film) {
         this.film = film;
     }
-
     public GenreEntity getGenre() {
         return genre;
     }
-
     public void setGenre(GenreEntity genre) {
         this.genre = genre;
     }

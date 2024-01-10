@@ -3,7 +3,6 @@ import useAuth from '../hooks/useAuth'
 import NavbarContainer from './NavbarContainer.jsx'
 
 function NavbarManager() {
-    const [login, setLogin] = useState(1)
     const { auth } = useAuth()
 
     const data1 = {

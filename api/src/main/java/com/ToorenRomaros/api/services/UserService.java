@@ -17,5 +17,5 @@ public interface UserService {
     Optional<UserSignedInDto> createUser(CreateUserDto createUserDto);
     UserSignedInDto getSignedInUser(UserEntity userEntity);
     Optional<UserSignedInDto> getAccessToken(RefreshTokenDto refreshTokenDto);
-    void removeRefreshToken(RefreshTokenDto refreshTokenDto);
+    void removeRefreshToken(String refreshToken);
 }
