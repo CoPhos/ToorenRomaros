@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -36,6 +37,23 @@ public class PostController {
     ResponseEntity<Map<String, Object>> getPostById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
         response.put("response", postService.getPostById(UUID.fromString(id)));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts")
+    ResponseEntity<Map<String, Object>> getPostByCustomQuery(@RequestParam(required = false) List<String> attributes,
+                                                             @RequestParam(required = false) List<UUID> tags,
+                                                             @RequestParam(required = false) boolean latest,
+                                                             @RequestParam(required = false) boolean popular,
+                                                             @RequestParam(defaultValue = "0") int page,
+                                                             @RequestParam(defaultValue = "6") int size) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> posts = postService.getPostByCustomQuery(attributes, tags, latest, popular, page, size);
+        response.put("response", posts.get("queryResult"));
+        response.put("currentPage", posts.get("pageNumber"));
+        response.put("pageSize", posts.get("pageSize"));
+        response.put("maxResults", posts.get("maxResults"));
+        response.put("totalPages", posts.get("totalPages"));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

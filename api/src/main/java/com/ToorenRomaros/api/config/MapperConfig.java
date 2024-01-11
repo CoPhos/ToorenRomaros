@@ -84,6 +84,7 @@ public class MapperConfig {
                 }
         );
 
+        //socialUser
         TypeMap<SocialUserEntity, SocialGenericDto> propertyMapperSocialUseroDto = modelMapper.createTypeMap(SocialUserEntity.class, SocialGenericDto.class);
         propertyMapperSocialUseroDto.addMappings(
                 mapper -> {
@@ -179,7 +180,7 @@ public class MapperConfig {
                 }
         );
 
-        //UserToken
+        //TagPost
         TypeMap<TagPostEntity, TagPostDto> propertyMapperTagPostDto = modelMapper.createTypeMap(TagPostEntity.class, TagPostDto.class);
         propertyMapperTagPostDto.addMappings(
                 mapper -> {

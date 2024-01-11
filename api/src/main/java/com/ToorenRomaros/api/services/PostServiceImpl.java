@@ -1,6 +1,7 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.publication.PostDto;
+import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.publication.PostEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,18 @@ public class PostServiceImpl implements PostService{
     public PostDto getPostById(UUID id) {
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
         return modelMapper.map(postEntity, PostDto.class);
+    }
+
+    @Override
+    public Map<String, Object> getPostByCustomQuery(List<String> attributes, List<UUID> tags, boolean latest, boolean popular, int page, int size) {
+        Map<String, Object> result = postRepository.findPostsWithCustomAttributes(attributes, tags, latest,
+                popular, page, size);
+        List<PostEntity> postEntities = (List<PostEntity>) result.get("queryResult");
+        if (postEntities == null) {
+            throw new ResourceNotFoundException("No results");
+        }
+
+        return result;
     }
 
     @Override

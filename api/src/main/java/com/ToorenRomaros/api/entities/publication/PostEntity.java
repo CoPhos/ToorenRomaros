@@ -33,7 +33,7 @@ public class PostEntity {
     @Column(name = "CONTENT", columnDefinition = "MEDIUMTEXT")
     private String content;
     @Column(name = "IS_REVIEW", columnDefinition = "Boolean")
-    private boolean isReview;
+    private boolean isReview=true;
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private PostStatusEnum status;
@@ -43,9 +43,9 @@ public class PostEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-
     //@Formula("()")
     //private String discussCount;
+
 
 
     public UUID getId() {

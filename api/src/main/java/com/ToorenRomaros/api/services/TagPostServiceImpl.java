@@ -11,9 +11,10 @@ import com.ToorenRomaros.api.repositories.publication.PostRepository;
 import com.ToorenRomaros.api.repositories.tag.TagPostRepository;
 import com.ToorenRomaros.api.repositories.tag.TagRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
+@Service
 public class TagPostServiceImpl implements  TagPostService{
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
