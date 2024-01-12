@@ -20,7 +20,7 @@ import java.util.Map;
 public class ImagePostController {
     private static final String uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
     private final ImageService imageService;
-    public ImagePostController(@Qualifier("ImageServiceFilmImpl") ImageService imageService) {
+    public ImagePostController(@Qualifier("ImageServicePostImpl") ImageService imageService) {
         this.imageService = imageService;
     }
 

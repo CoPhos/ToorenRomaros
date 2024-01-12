@@ -10,6 +10,6 @@ public interface PostService {
     PostDto createPost(PostDto postDto);
     PostDto getPostById(UUID id);
     PostDto updatePostById(UUID id, PostDto postDto);
-    Map<String, Object> getPostByCustomQuery(List<String> attributes, List<UUID> tags, boolean latest, boolean popular, int page, int size);
+    Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, int page, int size);
     void deletePostById(UUID id);
 }

@@ -41,9 +41,9 @@ public class ImageServicePostImpl extends ImageServiceDefaultImpl{
         PostEntity postEntity = postRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new UserNotFoundException("'" + ownerId + "'"));
 
         Map<String, String> data = new HashMap<>();
-        data.put("original", processImage("posts/"+ownerId+"/80x80_", bufferedImage, 0, 0, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.THREE_DPI, this.imageRepostiroy));
-        data.put("900x580", processImage( "posts/"+ownerId+"/170x280_", bufferedImage, 900, 580, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.TWO_DPI, this.imageRepostiroy));
-        data.put("450x240", processImage( "posts/"+ownerId+"/170x280_", bufferedImage, 450, 240, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType),  ImageSizeEnum.ONE_DPI,this.imageRepostiroy));
+        data.put("original", processImage("posts/"+ownerId+"/original_", bufferedImage, 0, 0, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.THREE_DPI, this.imageRepostiroy));
+        data.put("900x580", processImage( "posts/"+ownerId+"/900x580_", bufferedImage, 900, 580, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.TWO_DPI, this.imageRepostiroy));
+        data.put("450x240", processImage( "posts/"+ownerId+"/450x240_", bufferedImage, 450, 240, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType),  ImageSizeEnum.ONE_DPI,this.imageRepostiroy));
         return data;
     }
 }

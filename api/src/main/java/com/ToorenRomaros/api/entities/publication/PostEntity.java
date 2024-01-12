@@ -43,6 +43,17 @@ public class PostEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    public PostEntity() {
+    }
+
+    public PostEntity(UUID id, String tittle, LocalDateTime publicationDateTime, int likeCount, String headline, UserEntity user) {
+        this.id = id;
+        this.publicationDateTime = publicationDateTime;
+        this.likeCount = likeCount;
+        this.tittle = tittle;
+        this.headline = headline;
+        this.user = user;
+    }
     //@Formula("()")
     //private String discussCount;
 

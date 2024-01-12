@@ -7,5 +7,5 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface PostRepositoryCustom {
-    Map<String, Object> findPostsWithCustomAttributes(List<String> attributes, List<UUID> tags, boolean latest, boolean popular, int page, int size);
+    Map<String, Object> findPostsMainInfoByLatestOrPopularOrTags(List<UUID> tags, boolean isReview, boolean latest, boolean popular, int page, int size);
 }

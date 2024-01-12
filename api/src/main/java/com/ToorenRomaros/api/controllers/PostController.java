@@ -41,14 +41,14 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    ResponseEntity<Map<String, Object>> getPostByCustomQuery(@RequestParam(required = false) List<String> attributes,
-                                                             @RequestParam(required = false) List<UUID> tags,
+    ResponseEntity<Map<String, Object>> getPostByCustomQuery(@RequestParam(required = false) List<UUID> tags,
+                                                             @RequestParam(required = false) boolean isReview,
                                                              @RequestParam(required = false) boolean latest,
                                                              @RequestParam(required = false) boolean popular,
                                                              @RequestParam(defaultValue = "0") int page,
                                                              @RequestParam(defaultValue = "6") int size) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        Map<String, Object> posts = postService.getPostByCustomQuery(attributes, tags, latest, popular, page, size);
+        Map<String, Object> posts = postService.getPostByCustomQuery(tags, isReview, latest, popular, page, size);
         response.put("response", posts.get("queryResult"));
         response.put("currentPage", posts.get("pageNumber"));
         response.put("pageSize", posts.get("pageSize"));
