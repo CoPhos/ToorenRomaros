@@ -20,7 +20,7 @@ public class ImageFilmController {
         this.imageService = imageService;
     }
 
-    @PostMapping("/film/image")
+    @PostMapping("/film/images")
     ResponseEntity<Map<String, Object>> createImage(@RequestParam("image") @NotNull MultipartFile file,
                                                     @RequestParam("imageType") @NotNull String imageType,
                                                     @RequestParam @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {

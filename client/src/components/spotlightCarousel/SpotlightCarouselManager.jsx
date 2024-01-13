@@ -13,30 +13,45 @@ function SpotlightCarouselManager() {
     }
   })
 
-  const getAllImages = useQuery({
-    queryKey: ["allImages"],
-    queryFn: async () => {
-      if(!getLatestPost.data){
-        return []
+  const getAllImages = useQuery('allImages', async () => {
+      if (!getLatestPost.data) {
+          return []
       }
-      const secondResponses = await Promise.all(
+
+      const imageResponses = await Promise.all(
           getLatestPost.data.data.response.map(async (item) => {
               const response = await axios.get(
                   `${item.id}/media/images?imageType=POST_MAIN`
               )
-              return response.data
+              return { id: item.id, images: response.data }
           })
       )
-    return secondResponses;
-    },
-    enabled: !!getLatestPost.data,
-  })
 
-    
-  return (
+      getLatestPost.data.data.response.forEach((item) => {
+          const correspondingImage = imageResponses.find(
+              (image) => image.id === item.id
+          )
+          if (correspondingImage) {
+              item.images = correspondingImage.images
+          }
+      })
+      console.dir(getLatestPost.data.data.response, { depth: null })
+      return getLatestPost.data.data.response
+  }, {enabled: !!getLatestPost.data},)
+
+  return (getLatestPost.error || getAllImages.error) ? (
+      <div>
+          <p>
+              Oops! Something went wrong while fetching the data.
+              <br></br>
+              {getLatestPost.error?.message} 
+              <br></br>
+              {getAllImages.error?.message}
+          </p>
+      </div>
+  ) : (
       <SpotlightCarouselContainer
           data={getLatestPost.data?.data?.response || []}
-          images={getAllImages.data || []}
           isLoading={getLatestPost.isLoading || getAllImages.isLoading}
       />
   )

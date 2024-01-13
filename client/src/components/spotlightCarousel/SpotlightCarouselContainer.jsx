@@ -2,7 +2,7 @@ import React from 'react'
 import SpotlightCard from '../cards/spotlighCard/SpotlightCard'
 import Carousel from 'react-elastic-carousel'
 
-function SpotlightCarouselContainer({ data, images, isLoading }) {
+function SpotlightCarouselContainer({ data, isLoading }) {
     const breakPointsMain = [
         { width: 1, itemsToShow: 1, itemsToScroll: 1 },
         { width: 650, itemsToShow: 2, itemsToScroll: 2 },
@@ -25,7 +25,7 @@ function SpotlightCarouselContainer({ data, images, isLoading }) {
                         <SpotlightCard
                             key={item.id}
                             insideText={item}
-                            images={Array.of(images)[0][index]}
+                            images={item.images}
                         ></SpotlightCard>
                     )
                 })}

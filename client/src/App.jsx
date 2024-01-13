@@ -17,7 +17,13 @@ import RequiredAuth from './components/routes/RequiredAuth';
 import Unauthorized from './components/routes/Unauthorized';
 import NotFound from './components/routes/NotFound'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false, 
+        },
+    },
+})
 
 export default function App() {
     return (
