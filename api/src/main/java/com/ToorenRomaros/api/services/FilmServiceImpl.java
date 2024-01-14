@@ -49,14 +49,14 @@ public class FilmServiceImpl implements FilmService {
         return filmMapper.mapToFilmDto(savedMovie);
     }
     @Override
-    public Map<String, Object> getFilmByDynamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming, String orderBy, String userRating, String superRating, int page, int size) {
+    public Map<String, Object> getFilmByDynamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, String atTheaters, String coomingSoon, String atStreaming, String orderBy, String userRating, String superRating, int page, int size) {
         Map<String, Object> result = filmRepository.findDinamicQuery(streamSiteId, genres, suitableFor,
                 filmType, atTheaters, coomingSoon, atStreaming, orderBy, userRating, superRating, page, size);
         List<FilmEntity> filmEntities = (List<FilmEntity>) result.get("queryResult");
         if (filmEntities == null) {
             throw new ResourceNotFoundException("Resource not found");
         }
-            result.replace("queryResult", filmEntities.stream().map(filmMapper::mapToFilmDto).collect(Collectors.toList()));
+            result.replace("queryResult", filmEntities.stream().map(filmMapper::mapToGetDynamicQueryFilmDto).collect(Collectors.toList()));
             return result;
     }
     @Override

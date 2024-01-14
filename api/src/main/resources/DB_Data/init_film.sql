@@ -48,7 +48,7 @@ VALUES
         'Lucasfilm',
         'PG',
         null,
-        '2023-03-15',
+        null,
         'e5cc7851-39a7-4342-aabf-ef8f72c7d648',
         'cd086f77-3009-4f62-8c7a-914bde6fbbf4',
         "538400000",
@@ -84,7 +84,7 @@ VALUES
         '20th Century Fox',
         'PG',
         null,
-        '2023-05-15',
+        null,
         'cd086f77-3009-4f62-8c7a-914bde6fbbf4',
         '9637c4e3-288b-4d8b-b25c-4475e7aa5cda',
         "1027000000",
@@ -102,7 +102,7 @@ VALUES
         '20th Century Fox',
         'PG',
         null,
-        '2023-06-15',
+        null,
         'e80d4a56-52a7-4f52-a2f2-5b88bc79b5e2',
         'a45a2bb9-7e52-4284-8cfe-5b2f5f2b8c1d',
         "649400000",
@@ -156,7 +156,7 @@ VALUES
         'Walt Disney Studios',
         'PG-13',
         null,
-        '2023-09-15',
+        null,
         'd26e4ab3-9dce-420c-8254-7a8b1461d1bf',
         'f456ce87-d4a1-4c5f-98a7-e8100cfe4bd0',
         "1333000000",
@@ -180,7 +180,7 @@ VALUES
         "1074000000",
         "142",
         '2019-12-20',
-        FALSE
+        TRUE
     );
 
 --Pirates of the Caribbean
@@ -231,7 +231,7 @@ VALUES
         'Walt Disney Pictures',
         'PG-13',
         null,
-        '2023-03-15',
+        null,
         'f4b3d4e2-2f3d-4a13-8f2c-729b26e964c5',
         'bd6929a2-c6c5-452b-8e8c-9b9b2ad89321',
         "1068000000",
@@ -285,13 +285,13 @@ VALUES
         'Walt Disney Pictures',
         'PG-13',
         null,
-        '2023-06-15',
+        null,
         'e6d90526-08b3-47c1-a01d-2f9b48c94a9c',
         NULL,
         794900000,
         129,
         '2017-05-26',
-        FALSE
+        TRUE
     );
 
 --Harry Potter
@@ -360,7 +360,7 @@ VALUES
         'Warner Bros. Pictures',
         'PG',
         null,
-        '2023-04-15',
+        null,
         'ec28a46e-9852-4cb8-9b23-96c6d98e00d5',
         'c1e229e7-1705-4c3d-b6bf-c3da3f019d05',
         796700000,
@@ -414,7 +414,7 @@ VALUES
         'Warner Bros. Pictures',
         'PG',
         null,
-        '2023-07-15',
+        null,
         'd6ff152f-2cb3-4082-8b14-f36d23cc3f77',
         'f63285d1-eae0-4a5c-b0b9-54bf0bf3c40c',
         934500000,
@@ -432,7 +432,7 @@ VALUES
         'Warner Bros. Pictures',
         'PG-13',
         null,
-        '2023-08-15',
+        null,
         'f1e2e8f8-cbbe-4fb0-8588-098cb9c5b19f',
         '8538f37c-0c25-45f2-9d14-40bca1fb8794',
         976900000,
@@ -450,13 +450,13 @@ VALUES
         'Warner Bros. Pictures',
         'PG-13',
         null,
-        '2023-09-15',
+        null,
         'f63285d1-eae0-4a5c-b0b9-54bf0bf3c40c',
         NULL,
         1341000000,
         130,
         '2011-07-15',
-        FALSE
+        TRUE
     );
 
 --The Lord of the Rings
@@ -531,7 +531,7 @@ VALUES
         1148000000,
         201,
         '2003-12-17',
-        FALSE
+        TRUE
     );
 
 --X-Men
@@ -582,7 +582,7 @@ VALUES
         '20th Century Fox',
         'PG-13',
         null,
-        '2023-03-15',
+        null,
         'd8ea07ab-2c74-4c92-b265-64eb81e3e4fe', -- Preceded by X-Men
         '34f48f58-2d22-4b71-96b4-548b84d4b019', -- Followed by X-Men: The Last Stand
         407700000,
@@ -654,13 +654,13 @@ VALUES
         '20th Century Fox',
         'PG-13',
         null,
-        '2023-07-15',
+        null,
         'f84e28c4-5803-4d2c-9b9a-18779413405a', -- Preceded by X-Men: Apocalypse
         NULL, -- No sequel planned for X-Men: Dark Phoenix
         252500000,
         113,
         '2019-06-05',
-        FALSE
+        TRUE
     );
 
 --Transformers
@@ -711,7 +711,7 @@ VALUES
         'Paramount Pictures',
         'PG-13',
         null,
-        '2023-03-15',
+        null,
         'ff17f7e8-363c-4a6b-b8d4-cb3a3f90b587', -- Preceded by Transformers
         'a3b2454e-4970-4c43-927e-848b84d4b019', -- Followed by Transformers: Dark of the Moon
         836300000,
@@ -729,7 +729,7 @@ VALUES
         'Paramount Pictures',
         'PG-13',
         null,
-        '2023-04-15',
+        null,
         'df62eb26-8f9b-4150-87f1-df8836a0b28f', -- Preceded by Transformers: Revenge of the Fallen
         '3c5d387a-b25f-446a-8794-1c5112542a95', -- Followed by Transformers: Age of Extinction
         1124000000,
@@ -789,7 +789,7 @@ VALUES
         468200000,
         114,
         '2018-12-21',
-        FALSE
+        TRUE
     );
 
 --Fast & Furious
@@ -930,7 +930,7 @@ VALUES
         'Universal Pictures',
         'PG-13',
         null,
-        '2023-08-15',
+        null,
         'd5bf89ae-ba7f-49f1-a1c0-19b29d051c2e', -- Preceded by Fast & Furious 6
         '3cc0efb7-cdb9-47c8-9c5f-862ad86c16b5', -- Followed by The Fate of the Furious
         1515000000,
@@ -972,7 +972,7 @@ VALUES
         759500000,
         137,
         '2019-08-02',
-        FALSE
+        TRUE
     );
 --Twilight
 INSERT INTO film (
@@ -1022,7 +1022,7 @@ VALUES
         'Summit Entertainment',
         'PG-13',
         null,
-        '2023-03-15',
+        null,
         'ca7f3a44-67ef-4920-bf5c-6a2e5e3e4f88', -- Preceded by Twilight
         '207b149f-cc3e-4d08-8260-77d3df47f9c3', -- Followed by The Twilight Saga: Eclipse
         709700000,
@@ -1040,7 +1040,7 @@ VALUES
         'Summit Entertainment',
         'PG-13',
         null,
-        '2023-04-15',
+        null,
         'ebf92416-0587-420d-a7ce-86dc7b3175d5', -- Preceded by The Twilight Saga: New Moon
         'a3e736b0-45f7-401a-a37f-57bb2ad89321', -- Followed by The Twilight Saga: Breaking Dawn - Part 1
         698500000,
@@ -1082,7 +1082,7 @@ VALUES
         829700000,
         115,
         '2012-11-16',
-        FALSE
+        TRUE
     );
 
 --The Chronicles of Narnia
@@ -1157,7 +1157,7 @@ VALUES
         415700000,
         113,
         '2010-12-10',
-        FALSE
+        TRUE
     );
 
 --Toy Story
@@ -1226,7 +1226,7 @@ VALUES
         'Walt Disney Pictures',
         'G',
         null,
-        '2023-04-15',
+        null,
         'eeb5074a-9ecb-4bf9-b57b-86dc7b3175d5', -- Preceded by Toy Story 2
         'ac938090-3bd0-4b19-8d6c-57bb2ad89321', -- Followed by Toy Story 4
         1076000000,
@@ -1250,7 +1250,7 @@ VALUES
         1073000000,
         100,
         '2019-06-11',
-        FALSE
+        TRUE
     );
 
 --Shrek
@@ -1319,7 +1319,7 @@ VALUES
         'DreamWorks Pictures',
         'PG',
         null,
-        '2023-04-15',
+        null,
         'e2e8bb26-3d4a-4285-91d0-86dc7b3175d5', -- Preceded by Shrek 2
         'd0a8c33d-3d44-4ff7-a0d7-57bb2ad89321', -- Followed by Shrek Forever After
         798900000,
@@ -1337,13 +1337,13 @@ VALUES
         'DreamWorks Pictures',
         'PG',
         null,
-        '2023-05-15',
+        null,
         'ec7f4a8f-4971-4e4b-b040-77d3df47f9c3', -- Preceded by Shrek the Third
         NULL, -- No sequel planned for Shrek Forever After
         752600000,
         93,
         '2010-04-21',
-        FALSE
+        TRUE
     );
 
 --Mission Impossible
@@ -1394,7 +1394,7 @@ VALUES
         'Paramount Pictures',
         'PG-13',
         null,
-        '2023-03-15',
+        null,
         'd2f17dbf-ff6a-4cfc-92ec-549b84d4b019', -- Preceded by Mission: Impossible
         '7b6b98e3-9f2f-4ef2-8d1c-77d3df47f9c3', -- Followed by Mission: Impossible III
         546400000,
@@ -1466,13 +1466,13 @@ VALUES
         'Paramount Pictures',
         'PG-13',
         null,
-        '2023-07-15',
+        null,
         'f3b609a5-53e8-4a42-aecc-19b29d051c2e', -- Preceded by Rogue Nation
         NULL, -- No sequel planned for Fallout
         791100000,
         147,
         '2018-07-27',
-        FALSE
+        TRUE
     );
 
 --The Mummy
@@ -1523,7 +1523,7 @@ VALUES
         'Universal Pictures',
         'PG-13',
         null,
-        '2023-03-15',
+        null,
         'f97cc5ef-81e2-48dd-94e7-549b84d4b019', -- Preceded by The Mummy
         'c384dab1-63f2-4f77-b45a-77d3df47f9c3', -- Followed by The Mummy: Tomb of the Dragon Emperor
         435000000,
@@ -1541,13 +1541,13 @@ VALUES
         'Universal Pictures',
         'PG-13',
         null,
-        '2023-04-15',
+        null,
         'ee5f49eb-52f1-4fc1-940c-86dc7b3175d5', -- Preceded by The Mummy Returns
         NULL, -- No sequel planned for Tomb of the Dragon Emperor
         401000000,
         112,
         '2008-07-24',
-        FALSE
+        TRUE
     );
 --Resident Evil
 INSERT INTO film (
@@ -1597,7 +1597,7 @@ VALUES
         'Screen Gems',
         'R',
         null,
-        '2023-03-15',
+        null,
         'cd50e45e-b6db-470d-8e9e-549b84d4b019', -- Preceded by Resident Evil
         '693c3792-7e36-4ea4-a18e-77d3df47f9c3', -- Followed by Resident Evil: Extinction
         129400000,
@@ -1675,7 +1675,7 @@ VALUES
         312242626,
         107,
         '2016-12-23',
-        FALSE
+        TRUE
     );
 
 --Ice Age
@@ -1726,7 +1726,7 @@ VALUES
         '20th Century Fox',
         'PG',
         null,
-        '2023-03-15',
+        null,
         'f613d654-d9cb-4b5b-bb46-549b84d4b019', -- Preceded by Ice Age
         '34579e3a-4de0-4c44-9079-77d3df47f9c3', -- Followed by Ice Age: Dawn of the Dinosaurs
         660940780,
@@ -1780,13 +1780,13 @@ VALUES
         '20th Century Fox',
         'PG',
         null,
-        '2023-06-15',
+        null,
         'd0e7fdaa-1a71-47b1-a70a-57bb2ad89321', -- Preceded by Ice Age: Continental Drift
         NULL, -- No sequel planned for Ice Age: Collision Course
         408579038,
         94,
         '2016-07-22',
-        FALSE
+        TRUE
     );
 
 --Spider-Man
@@ -1861,11 +1861,8 @@ VALUES
         894983373,
         139,
         '2007-05-01',
-        FALSE
-    )
-    -- Add more mock data as needed
-    ;
-
+        TRUE
+    );
 --The Matrix
 INSERT INTO film (
     id,
@@ -1938,7 +1935,7 @@ VALUES
         427343288,
         129,
         '2003-10-27',
-        FALSE
+        TRUE
     );
 
 --Iron Man
@@ -2031,7 +2028,7 @@ VALUES
         "1.214 billion",
         "130",
         '2013-04-24',
-        FALSE
+        TRUE
     );
 
 --Indiana Jones
@@ -2106,7 +2103,7 @@ VALUES
         474171806,
         127,
         '1989-05-24',
-        FALSE
+        TRUE
     );
 --The Terminator
 INSERT INTO film (
@@ -2210,7 +2207,7 @@ VALUES
         'Paramount Pictures',
         'PG-13',
         null,
-        '2023-06-15',
+        null,
         'f59d6ff6-c469-4767-9cc7-19b29d051c2e', -- Preceded by Terminator Salvation
         'c0e1d24f-c6da-4912-8980-19b29d051c2e', -- Followed by Terminator: Dark Fate
         "440.6 million",
@@ -2234,7 +2231,7 @@ VALUES
         "261.1 million",
         128,
         '2019-10-23',
-        FALSE
+        TRUE
     );
 
 --Jurassic Park
@@ -2363,7 +2360,7 @@ VALUES
         "1.434 billion",
         132,
         '2020-08-10',
-        FALSE
+        TRUE
     );
 
 --Rambo
@@ -2432,7 +2429,7 @@ VALUES
         'TriStar Pictures',
         'R',
         null,
-        '2023-04-15',
+        null,
         'e1e9637c-badd-46ab-a630-86dc7b3175d5', -- Preceded by Rambo: First Blood Part II
         'f35b8a06-1a57-4a22-9f71-19b29d051c2e', -- Followed by Rambo
         "189.0 million",
@@ -2468,13 +2465,13 @@ VALUES
         'Lionsgate',
         'R',
         null,
-        '2023-06-15',
+        null,
         'f35b8a06-1a57-4a22-9f71-19b29d051c2e', -- Preceded by Rambo
         NULL, -- No sequel planned for Rambo: Last Blood
         "91.5 million",
         89,
         '2019-09-20',
-        FALSE
+        TRUE
     );
 
 --The Hangover
@@ -2549,7 +2546,7 @@ VALUES
         "362 million",
         100,
         '2013-05-23',
-        FALSE
+        TRUE
     );
 
 --Back to the Future
@@ -2624,7 +2621,7 @@ VALUES
         "244.5 million",
         118,
         '1990-05-25',
-        FALSE
+        TRUE
     );
 
 --Men in Black
@@ -2717,7 +2714,7 @@ VALUES
         "253.9 million",
         115,
         '2019-06-14',
-        FALSE
+        TRUE
     );
 --Die Hard
 INSERT INTO film (
@@ -2827,7 +2824,7 @@ VALUES
         "304.7 million",
         98,
         '2013-02-14',
-        FALSE
+        TRUE
     );
 
 --Rush Hour
@@ -2902,7 +2899,7 @@ VALUES
         "258.2 million",
         91,
         '2007-08-10',
-        FALSE
+        TRUE
     );
 
 --Bring It On
@@ -2977,7 +2974,7 @@ VALUES
         "17.2 million",
         99,
         '2006-08-08',
-        FALSE
+        TRUE
     );
 
 --Alien
@@ -3028,7 +3025,7 @@ VALUES
         '20th Century Fox',
         'R',
         null,
-        '2023-03-15',
+        null,
         'e17a30eb-baa1-4b42-9661-549b84d4b019', -- Preceded by Alien
         '7cda4f3e-9cf7-4072-8f1a-77d3df47f9c3', -- Followed by Alien³
         "131.1 million",
@@ -3070,7 +3067,7 @@ VALUES
         "161.4 million",
         109,
         '1997-11-26',
-        FALSE
+        TRUE
     );
 
 --Star Trek
@@ -3163,7 +3160,7 @@ VALUES
         "133 million",
         119,
         '1986-11-26',
-        FALSE
+        TRUE
     );
 
 --Planet of the Apes
@@ -3214,7 +3211,7 @@ VALUES
         '20th Century Fox',
         'G',
         null,
-        '2023-03-15',
+        null,
         'f7a9a1b3-ec1d-4df3-a0fe-549b84d4b019', -- Preceded by Planet of the Apes
         '6c5cf208-7c74-4212-ba2b-77d3df47f9c3', -- Followed by Escape from the Planet of the Apes
         "19 million",
@@ -3274,7 +3271,7 @@ VALUES
         "8.8 million",
         93,
         '1973-06-15',
-        FALSE
+        TRUE
     );
 
 --The Bourne
@@ -3313,7 +3310,7 @@ VALUES
         "214 million",
         119,
         '2002-06-14',
-        FALSE
+        TRUE
     ),
     (
         '26f59b9c-1020-4da7-b8e8-86dc7b3175d5',

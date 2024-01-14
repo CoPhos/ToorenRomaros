@@ -7,5 +7,5 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface FilmRepositoryCustom {
-    Map<String, Object> findDinamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean commingSoon, boolean atStreaming, String orderBy, String userRating, String superRating, int page, int size);
+    Map<String, Object> findDinamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, String atTheaters, String commingSoon, String atStreaming, String orderBy, String userRating, String superRating, int page, int size);
 }

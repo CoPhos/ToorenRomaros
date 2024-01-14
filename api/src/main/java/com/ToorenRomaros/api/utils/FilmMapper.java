@@ -1,8 +1,6 @@
 package com.ToorenRomaros.api.utils;
 
-import com.ToorenRomaros.api.dto.film.FilmDto;
-import com.ToorenRomaros.api.dto.film.MovieDto;
-import com.ToorenRomaros.api.dto.film.SerieDto;
+import com.ToorenRomaros.api.dto.film.*;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
@@ -37,6 +35,19 @@ public class FilmMapper {
         }
         if (filmEntity instanceof Serie){
             FilmDto filmDto = modelMapper.map(filmEntity, SerieDto.class);
+            filmDto.setFilmType(2);
+            return filmDto;
+        }
+        return null;
+    }
+    public GetDynamicQyeryFilmDto mapToGetDynamicQueryFilmDto(FilmEntity filmEntity){
+        if(filmEntity instanceof Movie){
+            GetDynamicQyeryFilmDto filmDto = modelMapper.map(filmEntity, GetDynamicQueryMovieDto.class);
+            filmDto.setFilmType(1);
+            return filmDto;
+        }
+        if (filmEntity instanceof Serie){
+            GetDynamicQyeryFilmDto filmDto = modelMapper.map(filmEntity, GetDynamicQuerySerieDto.class);
             filmDto.setFilmType(2);
             return filmDto;
         }

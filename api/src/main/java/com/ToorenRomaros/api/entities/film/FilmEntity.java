@@ -55,6 +55,7 @@ public class FilmEntity {
     @JoinColumn(name = "saga_id")
     SagaEntity saga;
 
+
     public FilmEntity() {
     }
     public FilmEntity(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, FilmEntity prequel, FilmEntity sequel, SagaEntity saga) {

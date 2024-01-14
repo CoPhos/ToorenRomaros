@@ -12,5 +12,5 @@ public interface FilmService {
      List<FilmDto>  getAllFilmsBySagaId(UUID id);
      FilmDto updateFilm(UUID id, FilmDto filmDto);
      void deleteFilm(UUID id);
-     Map<String, Object> getFilmByDynamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, boolean atTheaters, boolean coomingSoon, boolean atStreaming, String orderBy, String userRating, String superRating, int page, int size);
+     Map<String, Object> getFilmByDynamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, String atTheaters, String coomingSoon, String atStreaming, String orderBy, String userRating, String superRating, int page, int size);
 }
