@@ -22,6 +22,15 @@ public class GetDynamicQyeryFilmDto {
     private Integer filmType;
     private Float averageSuperRating;
     private Float averageUserRating;
+    private Long viewCount;
+
+    public Long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
 
     public String getId() {
         return id;

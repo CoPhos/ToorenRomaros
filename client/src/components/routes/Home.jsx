@@ -21,14 +21,18 @@ function Home() {
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
+            <RegularCarouselManager
+                parameters={'?atStreaming=0&page=0&size=10'}
+            ></RegularCarouselManager>
 
             <TittleCard
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
+            <RegularCarouselManager
+                parameters={'?atStreaming=0&page=0&size=10'}
+            ></RegularCarouselManager>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-2 lg:gap-y-4 lg:gap-x-[128px] mb-3">
                 <TopFilmsManager
@@ -58,21 +62,27 @@ function Home() {
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
+            <RegularCarouselManager
+                parameters={'?atStreaming=0&page=0&size=10'}
+            ></RegularCarouselManager>
 
             <TittleCard
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
+            <RegularCarouselManager
+                parameters={'?atStreaming=0&page=0&size=10'}
+            ></RegularCarouselManager>
 
             <TittleCard
                 tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
-            <RegularCarouselManager></RegularCarouselManager>
+            <RegularCarouselManager
+                parameters={'?atStreaming=0&page=0&size=10'}
+            ></RegularCarouselManager>
 
             <TittleCard
                 tittle={'TRAILERS & VIDEOS'}

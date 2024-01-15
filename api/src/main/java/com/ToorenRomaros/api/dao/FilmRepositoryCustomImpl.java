@@ -20,8 +20,19 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
     }
 
     @Override
-    public Map<String, Object> findDinamicQuery(String streamSiteId, List<UUID> genres, String suitableFor, String filmType, String atTheaters, String commingSoon, String atStreaming, String orderBy, String userRating, String superRating, int page, int size) {
-        log.info(String.valueOf(atStreaming));
+    public Map<String, Object> findDinamicQuery(String streamSiteId,
+                                                List<UUID> genres,
+                                                String suitableFor,
+                                                String filmType,
+                                                String atTheaters,
+                                                String atStreaming,
+                                                String commingSoonStreaming,
+                                                String commingSoonTheaters,
+                                                String orderBy,
+                                                String userRating,
+                                                String superRating,
+                                                int page,
+                                                int size) {
        try {
            StringBuilder queryText = new StringBuilder("SELECT DISTINCT film.* FROM film" +
                    " LEFT JOIN stream_film ON stream_film.film_id=film.id" +
@@ -67,10 +78,11 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                argumentCounter++;
                providedParameters.add(atTheaters);
            }
-           if (commingSoon != null) {
-               queryText.append(" and film.cooming_soon = ?");
-               queryText.append(argumentCounter);
-               providedParameters.add(commingSoon);
+           if (commingSoonStreaming != null) {
+               queryText.append(" and film.STREAMING_RELEASE_DATE > CURDATE()");
+           }
+           if (commingSoonTheaters != null) {
+               queryText.append(" and film.THEATERS_RELEASE_DATE  > CURDATE()");
            }
            if (Objects.equals(atStreaming, "1")) {
                queryText.append(" and film.streaming_release_date is not null");

@@ -1,14 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { BASE_URL } from '../../../utils/constants'
 
-function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
+function MovieCard({ data, images }) {
+    const IMAGE_URL = '/images/'
+    const image = BASE_URL + IMAGE_URL + (images?.[0]?.id || '')
+    const today = new Date()
     return (
-        <div className="max-w-[128px] md:max-w-[170px]">
+        <div className="max-w-[128px] md:max-w-[170px] min-h-[375px] flex flex-col items-start justify-between">
             <div className="hover:cursor-pointer group">
-                <Link to={'/film'}>
+                <Link to={`/film/${data.id}`}>
                     <img
-                        //srcset="https://small 480w, https://medium 800w, https://large 1100w"
-                        src="http://localhost:9090/api/v1/images/fb4da2f1-de6d-4405-983f-018e20af7c86"
+                        src={image}
                         alt="Elva dressed as a fairy"
                         className="w-[128px] h-[168px] md:w-[170px] md:h-[258px] rounded-lg object-cover object-center group-hover:opacity-75"
                     />
@@ -770,8 +773,8 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
                             </svg>
 
                             <p className="text-small-m-700 lg:text-small-d-700 group-hover:text-red-600">
-                                {criticPercentage
-                                    ? criticPercentage + '%'
+                                {data.averageSuperRating
+                                    ? data.averageSuperRating + '%'
                                     : '--'}
                             </p>
                         </div>
@@ -925,23 +928,23 @@ function MovieCard({ tittle, opened, criticPercentage, userPercentage, id }) {
                                 />
                             </svg>
                             <p className="text-small-m-700 lg:text-small-d-700 group-hover:text-red-600">
-                                {userPercentage ? userPercentage + '%' : '--'}
+                                {data.averageUserRating
+                                    ? data.averageUserRating + '%'
+                                    : '--'}
                             </p>
                         </div>
                     </div>
-                    <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
-                        {tittle}
+                    <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600 overflow-hidden text-ellipsis line-clamp-2 break-words mt-[4px]">
+                        {data.tittle}
                     </p>
-                    {opened ? (
-                        <p className="text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600">
-                            Opened: {opened}
-                        </p>
-                    ) : (
-                        <p className="h-[19.19px"></p>
-                    )}
+                    <p className="h-[19.19px] text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600">
+                        {data.theatersReleaseDate > today
+                            ? `Opens:${data.theatersReleaseDate}`
+                            : ''}
+                    </p>
                 </Link>
             </div>
-            <button className="flex flex-row items-center justify-center gap-1 border border-white-800 rounded-lg px-1 hover:border-white-300 hover:cursor-pointer mt-2 w-full">
+            <button className="flex flex-row items-center justify-center gap-1 border border-white-800 rounded-lg px-1 hover:border-white-300 hover:cursor-pointer w-full">
                 <svg
                     width="16"
                     height="16"

@@ -3,9 +3,9 @@ import { BASE_URL } from '../../../utils/constants'
 
 function SpotlightCard({ insideText, images }) {
     const IMAGE_URL = "/images/"
-    const small = BASE_URL + IMAGE_URL + images[0].id
-    const medium = BASE_URL + IMAGE_URL + images[1].id
-    const large = BASE_URL + IMAGE_URL + images[2].id
+    const small = BASE_URL + IMAGE_URL + (images?.[0]?.id || '')
+    const medium = BASE_URL + IMAGE_URL + (images?.[1]?.id || '')
+    const large = BASE_URL + IMAGE_URL + (images?.[2]?.id || '')
     
   
     return (

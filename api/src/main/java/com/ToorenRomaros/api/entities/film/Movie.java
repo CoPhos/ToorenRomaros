@@ -24,8 +24,16 @@ public class Movie extends FilmEntity {
     @Column(name = "AT_THEATERS", columnDefinition = "Boolean")
     private Boolean atTheaters;
 
+    public Movie(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, int averageSuperRating, int averageUserRating, FilmEntity prequel, FilmEntity sequel, SagaEntity saga, Long viewCount, LocalDate addedDate, String boxOffice, String runTime, LocalDate theatersReleaseDate, Boolean atTheaters) {
+        super(filmType, id, tittle, synopsis, originalLanguage, distributor, suitableFor, streamingReleaseDate, coomingSoon, averageSuperRating, averageUserRating, prequel, sequel, saga, viewCount, addedDate);
+        this.boxOffice = boxOffice;
+        this.runTime = runTime;
+        this.theatersReleaseDate = theatersReleaseDate;
+        this.atTheaters = atTheaters;
+    }
+
     public Movie(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, FilmEntity prequel, FilmEntity sequel, SagaEntity saga, String boxOffice, String runTime, LocalDate theatersReleaseDate, Boolean atTheaters) {
-        super(filmType, id, tittle, synopsis, originalLanguage, distributor, suitableFor, streamingReleaseDate, coomingSoon, prequel, sequel, saga);
+
         this.boxOffice = boxOffice;
         this.runTime = runTime;
         this.theatersReleaseDate = theatersReleaseDate;

@@ -54,11 +54,14 @@ public class FilmEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "saga_id")
     SagaEntity saga;
-
-
+    @Column(name = "view_count")
+    private Long viewCount;
+    @Column(name = "ADDED_DATE", columnDefinition = "DATE")
+    private LocalDate addedDate;
     public FilmEntity() {
     }
-    public FilmEntity(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, FilmEntity prequel, FilmEntity sequel, SagaEntity saga) {
+
+    public FilmEntity(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, int averageSuperRating, int averageUserRating, FilmEntity prequel, FilmEntity sequel, SagaEntity saga, Long viewCount, LocalDate addedDate) {
         this.filmType = filmType;
         this.id = id;
         this.tittle = tittle;
@@ -68,9 +71,13 @@ public class FilmEntity {
         this.suitableFor = suitableFor;
         this.streamingReleaseDate = streamingReleaseDate;
         this.coomingSoon = coomingSoon;
+        this.averageSuperRating = averageSuperRating;
+        this.averageUserRating = averageUserRating;
         this.prequel = prequel;
         this.sequel = sequel;
         this.saga = saga;
+        this.viewCount = viewCount;
+        this.addedDate = addedDate;
     }
 
     public UUID getId() {
@@ -156,6 +163,12 @@ public class FilmEntity {
     }
     public void setAverageUserRating(int averageUserRating) {
         this.averageUserRating = averageUserRating;
+    }
+    public Long getViewCount() {
+        return viewCount;
+    }
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
     }
 
     @Override
