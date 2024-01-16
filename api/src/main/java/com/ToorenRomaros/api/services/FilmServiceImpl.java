@@ -57,7 +57,7 @@ public class FilmServiceImpl implements FilmService {
                                                      String atStreaming,
                                                      String commingSoonStreaming,
                                                      String commingSoonTheaters,
-                                                     String orderBy,
+                                                     String[] orderBy,
                                                      String userRating,
                                                      String superRating,
                                                      int page,

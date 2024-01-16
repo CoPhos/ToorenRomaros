@@ -16,6 +16,7 @@ import Layout from './components/routes/Layout';
 import RequiredAuth from './components/routes/RequiredAuth';
 import Unauthorized from './components/routes/Unauthorized';
 import NotFound from './components/routes/NotFound'
+import { LoginPopUpProvider } from '../src/components/context/LoginPopUpProvider'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -28,46 +29,61 @@ const queryClient = new QueryClient({
 export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <Routes>
-                <Route path="/" element={<Layout></Layout>}>
-                    {/* public routes */}
-                    <Route exact path="/" element={<Home />} />
-                    <Route path="/film" element={<FilmDetails />} />
-                    <Route path="/browse" element={<Browse />} />
-                    <Route path="/reviews" element={<AllReviewsManager />} />
-                    <Route path="/blog" element={<HomeBlogManager />} />
-                    <Route path="/unauthorized" element={<Unauthorized />} />
+            <LoginPopUpProvider>
+                <Routes>
+                    <Route path="/" element={<Layout></Layout>}>
+                        {/* public routes */}
+                        <Route exact path="/" element={<Home />} />
+                        <Route path="/film" element={<FilmDetails />} />
+                        <Route path="/browse" element={<Browse />} />
+                        <Route
+                            path="/reviews"
+                            element={<AllReviewsManager />}
+                        />
+                        <Route path="/blog" element={<HomeBlogManager />} />
+                        <Route
+                            path="/unauthorized"
+                            element={<Unauthorized />}
+                        />
 
-                    {/* private routes */}
-                    <Route element={<RequiredAuth allowedRoles={['CRITIC']} />}>
-                        <Route path="/editor" element={<EditorManager />} />
+                        {/* private routes */}
+                        <Route
+                            element={<RequiredAuth allowedRoles={['CRITIC']} />}
+                        >
+                            <Route path="/editor" element={<EditorManager />} />
+                        </Route>
+
+                        <Route
+                            element={<RequiredAuth allowedRoles={['USER']} />}
+                        >
+                            <Route
+                                path="/profile"
+                                element={<ProfileManager />}
+                            />
+                        </Route>
+
+                        {/* 404 */}
+                        <Route path="*" element={<NotFound />} />
                     </Route>
-
-                    <Route element={<RequiredAuth allowedRoles={['USER']} />}>
-                        <Route path="/profile" element={<ProfileManager />} />
-                    </Route>
-
-                    {/* 404 */}
-                    <Route path="*" element={<NotFound />} />
-                </Route>
-                <Route
-                    render={({ location }) => {
-                        const fillColor =
-                            location.pathname === '/'
-                                ? 'home'
-                                : location.pathname.includes('/browse')
-                                ? 'browse'
-                                : location.pathname === '/blog'
-                                ? 'blog'
-                                : location.pathname === '/profile'
-                                ? 'profile'
-                                : location.pathname === '/notification'
-                                ? 'notification'
-                                : 'default'
-                        return <MobileNavMenu fillColor={fillColor} />
-                    }}
-                />
-            </Routes>
+                    <Route
+                        render={({ location }) => {
+                            const fillColor =
+                                location.pathname === '/'
+                                    ? 'home'
+                                    : location.pathname.includes('/browse')
+                                    ? 'browse'
+                                    : location.pathname === '/blog'
+                                    ? 'blog'
+                                    : location.pathname === '/profile'
+                                    ? 'profile'
+                                    : location.pathname === '/notification'
+                                    ? 'notification'
+                                    : 'default'
+                            return <MobileNavMenu fillColor={fillColor} />
+                        }}
+                    />
+                </Routes>
+            </LoginPopUpProvider>
         </QueryClientProvider>
     )
 }

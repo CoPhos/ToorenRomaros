@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/v1")
@@ -49,7 +46,7 @@ public class FilmController {
                                                     @RequestParam(required = false) String commingSoonStreaming,
                                                     @RequestParam(required = false) String commingSoonTheaters,
                                                     @RequestParam(required = false) String atStreaming,
-                                                    @RequestParam(defaultValue = "film.tittle-asc") String orderBy,
+                                                    @RequestParam(defaultValue = "tittle-asc") String[] orderBy,
                                                     @RequestParam(required = false) String userRating,
                                                     @RequestParam(required = false) String superRating,
                                                     @RequestParam(defaultValue = "0") int page,

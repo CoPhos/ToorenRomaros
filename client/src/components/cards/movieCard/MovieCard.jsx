@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { BASE_URL } from '../../../utils/constants'
 
-function MovieCard({ data, images }) {
+function MovieCard({ data, images, handleAddWatchList }) {
     const IMAGE_URL = '/images/'
     const image = BASE_URL + IMAGE_URL + (images?.[0]?.id || '')
     const today = new Date()
@@ -944,7 +944,10 @@ function MovieCard({ data, images }) {
                     </p>
                 </Link>
             </div>
-            <button className="flex flex-row items-center justify-center gap-1 border border-white-800 rounded-lg px-1 hover:border-white-300 hover:cursor-pointer w-full">
+            <button
+                className="flex flex-row items-center justify-center gap-1 border border-white-800 rounded-lg px-1 hover:border-white-300 hover:cursor-pointer w-full"
+                onClick={(e) => handleAddWatchList(e, data.id)}
+            >
                 <svg
                     width="16"
                     height="16"

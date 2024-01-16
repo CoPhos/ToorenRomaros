@@ -24,22 +24,17 @@ import static org.springframework.http.ResponseEntity.*;
 public class AuthController {
     private final UserService userService;
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
-    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService, PasswordEncoder passwordEncoder) {
+
+    public AuthController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
     @PostMapping("/auth/token")
     ResponseEntity<Map<String, Object>> signIn(@RequestBody @Valid SignInDto signInDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        UserEntity userEntity = userService.findUserByUsername(signInDto.getUsername());
-        if (passwordEncoder.matches(signInDto.getPassword(), userEntity.getPassword())) {
-            response.put("Ok", userService.getSignedInUser(userEntity));
-        }else{
-            throw new InsufficientAuthenticationException("Unauthorized.");
-        }
+        response.put("Ok", userService.signin(signInDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/auth/token")

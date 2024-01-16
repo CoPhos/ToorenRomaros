@@ -13,7 +13,7 @@ public interface UserService {
     public UserDto updateUser(UUID id, UserAddRequestDto user, String username);
     public UserDto getUserById(UUID id);
     public void deleteUserById(UUID id);
-    UserEntity findUserByUsername(String username);
+    UserSignedInDto signin(SignInDto signInDto);
     Optional<UserSignedInDto> createUser(CreateUserDto createUserDto);
     UserSignedInDto getSignedInUser(UserEntity userEntity);
     Optional<UserSignedInDto> getAccessToken(RefreshTokenDto refreshTokenDto);

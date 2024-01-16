@@ -57,7 +57,7 @@ public class FilmEntity {
     @Column(name = "view_count")
     private Long viewCount;
     @Column(name = "ADDED_DATE", columnDefinition = "DATE")
-    private LocalDate addedDate;
+    private LocalDate addedDate= LocalDate.now();
     public FilmEntity() {
     }
 
@@ -169,6 +169,12 @@ public class FilmEntity {
     }
     public void setViewCount(Long viewCount) {
         this.viewCount = viewCount;
+    }
+    public LocalDate getAddedDate() {
+        return addedDate;
+    }
+    public void setAddedDate(LocalDate addedDate) {
+        this.addedDate = addedDate;
     }
 
     @Override

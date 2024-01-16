@@ -22,16 +22,24 @@ function Home() {
                 linkText={'View all'}
             ></TittleCard>
             <RegularCarouselManager
-                parameters={'?atStreaming=0&page=0&size=10'}
+                parameters={
+                    '?atTheaters=1&orderBy=added_date-asc&page=0&size=15'
+                }
+                queryName={'NewMovies'}
+                promiseName={'NewMoviesImages'}
             ></RegularCarouselManager>
 
             <TittleCard
-                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                tittle={'NEW & UPCOMING TV SERIES'}
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
             <RegularCarouselManager
-                parameters={'?atStreaming=0&page=0&size=10'}
+                parameters={
+                    '?filmType=2&atStreaming=1&orderBy=added_date-asc&page=0&size=15'
+                }
+                queryName={'NewTvSeries'}
+                promiseName={'NewTvSeriesImages'}
             ></RegularCarouselManager>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-2 lg:gap-y-4 lg:gap-x-[128px] mb-3">
@@ -58,30 +66,29 @@ function Home() {
             </div>
 
             <TittleCard
-                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                tittle={'POPULAR MOVIES AT THEATERS'}
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
             <RegularCarouselManager
-                parameters={'?atStreaming=0&page=0&size=10'}
+                parameters={
+                    '?filmType=1&atTheaters=1&orderBy=view_count-asc&page=0&size=15'
+                }
+                queryName={'popularMoviesAtTheaters'}
+                promiseName={'popularMoviesAtTheatersImages'}
             ></RegularCarouselManager>
 
             <TittleCard
-                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
+                tittle={'LATEST CERTIFIED FRESH MOVIES'}
                 to={'/adasd'}
                 linkText={'View all'}
             ></TittleCard>
             <RegularCarouselManager
-                parameters={'?atStreaming=0&page=0&size=10'}
-            ></RegularCarouselManager>
-
-            <TittleCard
-                tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
-                to={'/adasd'}
-                linkText={'View all'}
-            ></TittleCard>
-            <RegularCarouselManager
-                parameters={'?atStreaming=0&page=0&size=10'}
+                parameters={
+                    '?filmType=1&orderBy=average_super_rating-desc,view_count-desc&page=0&size=15'
+                }
+                queryName={'latestCertified'}
+                promiseName={'latestCertifiedImages'}
             ></RegularCarouselManager>
 
             <TittleCard

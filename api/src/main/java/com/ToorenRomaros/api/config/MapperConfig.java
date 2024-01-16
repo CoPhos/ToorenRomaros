@@ -11,6 +11,7 @@ import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
 import com.ToorenRomaros.api.dto.tag.TagPostDto;
 import com.ToorenRomaros.api.dto.user.RefreshTokenDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
+import com.ToorenRomaros.api.dto.watchList.WatchListDto;
 import com.ToorenRomaros.api.entities.film.EpisodeEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
@@ -23,6 +24,7 @@ import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.ToorenRomaros.api.entities.tag.TagPostEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
+import com.ToorenRomaros.api.entities.watchList.WatchListEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -186,6 +188,15 @@ public class MapperConfig {
                 mapper -> {
                     mapper.map(TagPostEntity::getPost, TagPostDto::setPost);
                     mapper.map(TagPostEntity::getTag, TagPostDto::setTag);
+                }
+        );
+
+        //Watchlist
+        TypeMap<WatchListEntity, WatchListDto> propertyMapperWatchListDto = modelMapper.createTypeMap(WatchListEntity.class, WatchListDto.class);
+        propertyMapperWatchListDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getFilm().getId(), WatchListDto::setFilm);
+                    mapper.map(src -> src.getUser().getId(), WatchListDto::setUser);
                 }
         );
 

@@ -4,16 +4,21 @@ const AuthContext = createContext({})
 
 export const AuthProvider = ({children}) => {
   const [auth, setauth] = useState({})
+  const [isAuthenticated, setisAuthenticated] = useState(false)
   
-  const login = ( user, password, roles, accessToken, refreshToken ) => {
-      setauth({ user, password, roles, accessToken, refreshToken })
+  const login = ( id, user, password, roles, accessToken, refreshToken ) => {
+      setauth({ id, user, password, roles, accessToken, refreshToken })
+      setisAuthenticated(true)
   }
 
   const logout = () => {
       setauth({})
+      setisAuthenticated(false)
   }
     return (
-        <AuthContext.Provider value={{ auth, setauth, login, logout }}>
+        <AuthContext.Provider
+            value={{ auth, isAuthenticated, setauth, login, logout }}
+        >
             {children}
         </AuthContext.Provider>
     )

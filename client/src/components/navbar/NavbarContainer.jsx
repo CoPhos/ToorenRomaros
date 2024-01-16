@@ -1,5 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { LoginPopUpContext } from '../context/LoginPopUpProvider'
 
 import gemstone from '../../assests/gemstone.png'
 import LinksPanel from './LinksPanel';
@@ -7,15 +8,15 @@ import LoginManager from '../login/LoginManager';
 import SignUpManager from '../signup/SignUpManager';
 
 function Navbar({ user, data1, data2 }) {
-    const [isPopupOpen, setPopupOpen] = useState(false)
+    const { isPopupOpen, setisPopupOpen } = useContext(LoginPopUpContext)
     const [active, setactive] = useState(1)
 
     const openPopup = () => {
-        setPopupOpen(true)
+        setisPopupOpen(true)
     }
 
     const closePopup = () => {
-        setPopupOpen(false)
+        setisPopupOpen(false)
     }
 
     useEffect(() => {

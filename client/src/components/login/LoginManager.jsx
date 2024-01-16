@@ -60,10 +60,11 @@ function LoginManager({ active, closePopup }) {
         },
         {
             onSuccess: (data) => {
+                const id = data?.data?.Ok?.userId
                 const accessToken = data?.data?.Ok?.accessToken
                 const refreshToken = data?.data?.Ok?.refreshToken
                 const roles = jwtDecode(accessToken).roles || []
-                login(user, password, roles, accessToken, refreshToken) 
+                login(id, user, password, roles, accessToken, refreshToken) 
                 setuser('')
                 setpassword('')
                 seterrorMessage('')

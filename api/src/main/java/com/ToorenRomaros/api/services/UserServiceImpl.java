@@ -5,6 +5,7 @@ import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserTokenEntity;
 import com.ToorenRomaros.api.exeptions.GenericAlreadyExistsException;
 import com.ToorenRomaros.api.exeptions.InvalidRefreshTokenException;
+import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.repositories.user.UserTokenRepository;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,20 +32,23 @@ import java.util.Random;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserTokenRepository userTokenRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final JwtManager tokenManager;
+    private final PasswordEncoder passwordEncoder;
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    public UserServiceImpl(UserRepository userRepository, UserTokenRepository userTokenRepository, ModelMapper modelMapper, PasswordEncoder bCryptPasswordEncoder, JwtManager tokenManager) {
+    public UserServiceImpl(UserRepository userRepository, UserTokenRepository userTokenRepository, ModelMapper modelMapper, PasswordEncoder bCryptPasswordEncoder, JwtManager tokenManager, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userTokenRepository = userTokenRepository;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.tokenManager = tokenManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -73,16 +78,20 @@ public class UserServiceImpl implements UserService {
                     throw new UserNotFoundException("'" + id + "'");
                 });
     }
-
     @Override
-    public UserEntity findUserByUsername(String username) {
-        if (Strings.isBlank(username)) {
-            throw new UsernameNotFoundException("Invalid user.");
+    public UserSignedInDto signin(SignInDto signInDto) {
+        try {
+            UserEntity userEntity = userRepository.findByUsername(signInDto.getUsername()).orElseThrow(() -> new UsernameNotFoundException(String.format("Given user(%s) not found.", signInDto.getUsername())));
+            if (passwordEncoder.matches(signInDto.getPassword(), userEntity.getPassword())) {
+                return getSignedInUser(userEntity);
+            }else{
+                throw new InsufficientAuthenticationException("Unauthorized.");
+            }
+        }catch (Exception e){
+            log.info(e.getMessage());
         }
-        final String uname = username.trim();
-        return userRepository.findByUsername(uname).orElseThrow(() -> new UsernameNotFoundException(String.format("Given user(%s) not found.", username)));
+        return null;
     }
-
     @Override
     @Transactional
     public Optional<UserSignedInDto> createUser(CreateUserDto createUserDto) {

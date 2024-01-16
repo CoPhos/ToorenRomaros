@@ -28,7 +28,7 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                                                 String atStreaming,
                                                 String commingSoonStreaming,
                                                 String commingSoonTheaters,
-                                                String orderBy,
+                                                String[] orderBy,
                                                 String userRating,
                                                 String superRating,
                                                 int page,
@@ -99,16 +99,19 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
            } else if (Objects.equals(superRating, "up")) {
                queryText.append(" and film.average_super_rating > 60");
            }
-           if (orderBy != null && !orderBy.isBlank()) {
-               String[] arrOfString = orderBy.split("-", 2);
-               queryText.append(" ORDER BY ?");
-               queryText.append(argumentCounter);
-               argumentCounter++;
-               queryText.append(" ?");
-               queryText.append(argumentCounter);
-               providedParameters.add(arrOfString[0]);
-               providedParameters.add(arrOfString[1].toUpperCase());
-           }
+
+           String[] orderby = orderBy[0].split("-", 2);
+           queryText.append(" ORDER BY film.");
+           queryText.append(orderby[0]);
+           queryText.append(" ");
+           queryText.append(orderby[1].toUpperCase());
+           for (int i = 1; i < orderBy.length; i++) {
+              String[] arrOfString = orderBy[i].split("-", 2);
+              queryText.append(", film.");
+              queryText.append(arrOfString[0]);
+               queryText.append(" ");
+               queryText.append(arrOfString[1].toUpperCase());
+          }
 
            Query query = em.createNativeQuery(queryText.toString(), FilmEntity.class);
 

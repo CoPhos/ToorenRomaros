@@ -1,23 +1,28 @@
-import React,{useEffect} from 'react'
+import React, { useContext } from 'react'
 import RegularCarouselContainer from './RegularCarouselContainer'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import axios from '../../utils/constants'
 import { useQueryClient } from 'react-query'
+import useAuth from '../hooks/useAuth'
+import { LoginPopUpContext } from '../context/LoginPopUpProvider'
 
-function RegularCarouselManager({parameters}) { 
+function RegularCarouselManager({parameters ,queryName, promiseName}) { 
   const queryClient = useQueryClient()
+  const { setisPopupOpen } = useContext(LoginPopUpContext)
+  const { auth, isAuthenticated } = useAuth()
   
   const FILM_URL = '/films'
+  const WATCH_LIST_URL = '/watchLists'
   
   const getFilms = useQuery({
-    queryKey: ["customFilmsQuery"],
-    queryFn: async () => { 
-      return axios.get(FILM_URL + parameters)
-    }
+      queryKey: [queryName],
+      queryFn: async () => {
+          return axios.get(FILM_URL + parameters)
+      },
   })
 
   const getAllImages = useQuery(
-      'allImagesfromCustomFilmsQuery',
+      promiseName,
       async () => {
           if (!getFilms.data) {
               return []
@@ -41,12 +46,49 @@ function RegularCarouselManager({parameters}) {
                   : item
           })
 
-          queryClient.setQueryData(['customFilmsQuery'], {
+          queryClient.setQueryData([queryName], {
               data: { response: updatedFilms },
           })
       },
       { enabled: !!getFilms.data }
   )
+  const postWatchListItem = useMutation({
+      mutationKey: ['postWatchListItem'],
+      mutationFn: async (formData) => {
+        try {
+            return axios.post(WATCH_LIST_URL, formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+        } catch (error) {
+            throw error
+        }
+      },
+
+      onSuccess: (data) => {
+          console.log(data?.data?.created)
+      },
+      onError: (error) => {
+          console.log(error)
+      },
+  })
+  
+
+  function handleAddWatchList(e, filmId){
+    e.preventDefault()
+    if (!isAuthenticated) {
+        setisPopupOpen(true)
+    } else {
+        postWatchListItem.mutate(
+            JSON.stringify({
+                film: filmId,
+                user: auth.id,
+            })
+        )
+    }
+   
+  }
   
   if (getFilms.isLoading || getAllImages.isLoading) {
       return <p></p>
@@ -65,6 +107,7 @@ function RegularCarouselManager({parameters}) {
   ) : (
       <RegularCarouselContainer
           data={getFilms.data.data.response}
+          handleAddWatchList={handleAddWatchList}
       />
   )
 

@@ -15,7 +15,7 @@ public interface FilmRepositoryCustom {
                                          String atStreaming,
                                          String commingSoonStreaming,
                                          String commingSoonTheaters,
-                                         String orderBy,
+                                         String[] orderBy,
                                          String userRating,
                                          String superRating,
                                          int page,
