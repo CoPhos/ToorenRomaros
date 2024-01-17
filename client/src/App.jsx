@@ -34,10 +34,15 @@ export default function App() {
                     <Route path="/" element={<Layout></Layout>}>
                         {/* public routes */}
                         <Route exact path="/" element={<Home />} />
-                        <Route path="/film" element={<FilmDetails />} />
+                        <Route
+                            exact
+                            path="/film/:uuid/"
+                            element={<FilmDetails />}
+                        />
                         <Route path="/browse" element={<Browse />} />
                         <Route
-                            path="/reviews"
+                            exact
+                            path="/film/:uuid/reviews/"
                             element={<AllReviewsManager />}
                         />
                         <Route path="/blog" element={<HomeBlogManager />} />

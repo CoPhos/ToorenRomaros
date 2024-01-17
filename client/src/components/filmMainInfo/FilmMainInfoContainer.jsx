@@ -1,12 +1,14 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom'
 import VideoManager from '../videoPlayer/VideoManager'
 import MainRatingScore from '../cards/mainRatingScore/MainRatingScore';
 import PostRatingManager from '../postRating/PostRatingManager';
 import TittleCard from '../cards/tittle/TittleCard'
 
 function FilmMainInfoContainer({data}) {
+    const location = useLocation()
+     const pathname = location.pathname
     const component = (
         <>
             <TittleCard
@@ -19,7 +21,7 @@ function FilmMainInfoContainer({data}) {
                 is a bizarre, brilliant tour de force for director Yorgos
                 Lanthimos and star Emma Stone.&nbsp;
                 <Link
-                    to="critics"
+                    to={`${pathname}/reviews`}
                     className="hover:cursor-pointer text-blue-800 hover:text-blue-600"
                 >
                     Read critic reviews

@@ -1,7 +1,15 @@
 import React from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import FilmMainInfoContainer from '../filmMainInfo/FilmMainInfoContainer'
 
 function FilmMainInfoManager() {
+  const params = useParams()
+  console.log(params.uuid)
+
+  //movie critic consensus
+  //total super and user ratings
+  //ratings score
+
   const data = {
     rating: {
       positive: 40,
@@ -11,7 +19,7 @@ function FilmMainInfoManager() {
     },
     value: 65
   }
-  return (
+  return ( 
     <FilmMainInfoContainer data={data}></FilmMainInfoContainer>
   )
 }

@@ -12,5 +12,6 @@ public interface RatingService {
     List<RatingDto> getAllRatingByUserId(UUID id);
     List<RatingDto> getAllRatingByFilmIdAndRatingType(UUID id, Boolean superRating);
     RatingDto updateRating(UUID id, RatingDto ratingDto);
+    int getTotalRatingByFilmIdAndRatingType(UUID id, int superRating);
     void deleteRating (UUID id);
 }

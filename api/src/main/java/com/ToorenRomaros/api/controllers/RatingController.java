@@ -57,6 +57,14 @@ public class RatingController {
         response.put("response", ratingService.getAllRatingByUserId(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/films/{id}/ratings/{superRating}")
+    ResponseEntity<Map<String, Object>> getTotalRatingByFilmIdRatingType(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+                                                                         @PathVariable @NotNull int superRating) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", ratingService.getTotalRatingByFilmIdAndRatingType(UUID.fromString(id), superRating));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     @PutMapping("/ratings/{id}")
     ResponseEntity<Map<String, Object>> updateRating(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid RatingDto ratingDto) throws Exception {

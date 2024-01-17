@@ -17,8 +17,7 @@ import java.util.UUID;
                 @MetaValue(targetEntity = Movie.class, value = "M"),
                 @MetaValue(targetEntity = Serie.class, value = "S"),
                 @MetaValue(targetEntity = UserEntity.class, value = "U"),
-                @MetaValue(targetEntity = PostEntity.class, value = "RT"),
-                @MetaValue(targetEntity = VideoEntity.class, value = "V")
+                @MetaValue(targetEntity = PostEntity.class, value = "RT")
         })
 @Entity
 @Table(name = "image")

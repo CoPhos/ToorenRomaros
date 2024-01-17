@@ -96,6 +96,11 @@ public class RatingServiceImpl implements RatingService{
     }
 
     @Override
+    public int getTotalRatingByFilmIdAndRatingType(UUID id, int superRating) {
+        return ratingRepository.getotalRatingsByFilmIdAndRatingType(String.valueOf(id), superRating);
+    }
+
+    @Override
     public void deleteRating(UUID id) {
         ratingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
         ratingRepository.deleteById(id);

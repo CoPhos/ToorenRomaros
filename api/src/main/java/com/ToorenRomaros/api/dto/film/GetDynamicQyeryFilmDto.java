@@ -23,6 +23,8 @@ public class GetDynamicQyeryFilmDto {
     private Float averageSuperRating;
     private Float averageUserRating;
     private Long viewCount;
+    private String criticsConsensus;
+
 
     public Long getViewCount() {
         return viewCount;
@@ -86,5 +88,13 @@ public class GetDynamicQyeryFilmDto {
 
     public void setAverageUserRating(Float averageUserRating) {
         this.averageUserRating = averageUserRating;
+    }
+
+    public String getCriticsConsensus() {
+        return criticsConsensus;
+    }
+
+    public void setCriticsConsensus(String criticsConsensus) {
+        this.criticsConsensus = criticsConsensus;
     }
 }

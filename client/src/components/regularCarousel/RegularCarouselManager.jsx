@@ -62,7 +62,7 @@ function RegularCarouselManager({parameters ,queryName, promiseName}) {
                 },
             })
         } catch (error) {
-            throw error
+            return error
         }
       },
 

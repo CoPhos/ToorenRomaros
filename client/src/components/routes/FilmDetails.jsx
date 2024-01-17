@@ -11,7 +11,7 @@ import PhotostopManager from '../photosTop/PhotosTopManager'
 
 function FilmDetails() {
   return (
-      <Fragment>
+      <Fragment> 
           <FilmMainInfoManager></FilmMainInfoManager>
 
           <FilmDetailsManager></FilmDetailsManager>

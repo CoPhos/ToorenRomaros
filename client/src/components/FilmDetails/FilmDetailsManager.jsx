@@ -69,7 +69,7 @@ function FilmDetailsManager() {
             as: 'Naru',
         },
     }
-  return (
+  return ( 
     <FilmDetailsContainer movieInfo={movieInfo} cast={cast}></FilmDetailsContainer>
   )
 }

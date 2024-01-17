@@ -4,7 +4,6 @@ import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
-import com.ToorenRomaros.api.repositories.media.VideoRepository;
 import com.ToorenRomaros.api.repositories.publication.PostRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import org.imgscalr.Scalr;
