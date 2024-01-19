@@ -37,6 +37,7 @@ public class FilmDto {
     private String sagaId;
     private Float averageSuperRating;
     private Float averageUserRating;
+    private String criticsConsensus;
 
     public Integer getFilmType() {
         return filmType;
@@ -121,6 +122,14 @@ public class FilmDto {
     }
     public void setCoomingSoon(LocalDate coomingSoon) {
         this.coomingSoon = coomingSoon;
+    }
+
+    public String getCriticsConsensus() {
+        return criticsConsensus;
+    }
+
+    public void setCriticsConsensus(String criticsConsensus) {
+        this.criticsConsensus = criticsConsensus;
     }
 
     @Override

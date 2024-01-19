@@ -4,7 +4,7 @@ import Info from '../cards/filmData/Info'
 import CastContainer from '../cards/filmData/CastContainer';
 import WhereToWatch from '../cards/filmData/WhereToWatch';
 
-function FilmDetailsContainer({ movieInfo, cast }) {
+function FilmDetailsContainer({ movieInfo, cast }) { 
    
 
     return (

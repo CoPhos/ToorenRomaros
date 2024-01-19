@@ -2,12 +2,14 @@ import React, { useContext } from 'react'
 import RegularCarouselContainer from './RegularCarouselContainer'
 import { useMutation, useQuery } from 'react-query'
 import axios from '../../utils/constants'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { useQueryClient } from 'react-query'
 import useAuth from '../hooks/useAuth'
 import { LoginPopUpContext } from '../context/LoginPopUpProvider'
 
 function RegularCarouselManager({parameters ,queryName, promiseName}) { 
   const queryClient = useQueryClient()
+  const axiosPrivate = useAxiosPrivate()
   const { setisPopupOpen } = useContext(LoginPopUpContext)
   const { auth, isAuthenticated } = useAuth()
   
@@ -56,7 +58,7 @@ function RegularCarouselManager({parameters ,queryName, promiseName}) {
       mutationKey: ['postWatchListItem'],
       mutationFn: async (formData) => {
         try {
-            return axios.post(WATCH_LIST_URL, formData, {
+            return axiosPrivate.post(WATCH_LIST_URL, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

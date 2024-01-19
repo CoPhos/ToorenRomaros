@@ -92,7 +92,6 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/v1/**/image").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/films/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/watchLists/**").permitAll()
                 .antMatchers(HttpMethod.GET, FILMS_URL).permitAll()
                 .antMatchers(H2_URL_PREFIX).permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/admin/**")
@@ -163,12 +162,13 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(List.of("*"));
+		configuration.setAllowedOrigins(List.of("http://localhost:3000"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
+		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "Accept"));
+        configuration.setAllowCredentials(true);
+//        configuration.addAllowedOrigin("*");
+//        configuration.addAllowedHeader("*");
+//        configuration.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;

@@ -13,6 +13,16 @@ public interface RatingRepository extends JpaRepository<RatingEntity, UUID> {
     List<RatingEntity> getAllRatingByUserId(String id);
     @Query(nativeQuery = true, value = "select * from rating r where film_id = ?1 and super_rating = ?2")
     List<RatingEntity> getAllRatingByFilmIdAndRatingType(String id, Boolean superRating);
-    @Query(nativeQuery = true, value = "select count(rating.id) from rating r where film_id = ?1 and super_rating = ?2")
-    int getotalRatingsByFilmIdAndRatingType(String id, int superRating);
+    @Query(nativeQuery = true, value = "SELECT" +
+            " SUM(CASE WHEN rating >= 70 AND super_rating = 1 THEN 1 ELSE 0 END), " +
+            " SUM(CASE WHEN rating >= 40 and rating < 70 AND super_rating = 1 THEN 1 ELSE 0 END), " +
+            " SUM(CASE WHEN rating < 40 AND super_rating = 1 THEN 1 ELSE 0 END), " +
+            " SUM(CASE WHEN rating >= 70 AND super_rating = 0 THEN 1 ELSE 0 END), " +
+            " SUM(CASE WHEN rating >= 40 and rating < 70 AND super_rating = 0 THEN 1 ELSE 0 END), " +
+            " SUM(CASE WHEN rating < 40 AND super_rating = 0 THEN 1 ELSE 0 END) " +
+            " FROM " +
+            " rating " +
+            " WHERE " +
+            " film_id = ?1")
+    List<Object[]> getotalRatingsByFilmIdAndRatingType(String id);
 }

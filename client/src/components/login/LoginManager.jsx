@@ -46,18 +46,18 @@ function LoginManager({ active, closePopup }) {
         async () => {
            try {
             return axios.post(
-                 LOGIN_URL,
-                 JSON.tringify({
-                     ussername: user,
-                     password: password,
-                 }),
-                 {
-                     headers: {
-                         'Content-Type': 'application/json',
-                         withCredentials: true,
-                     },
-                 }
-             )
+                LOGIN_URL,
+                JSON.stringify({
+                    username: user,
+                    password: password,
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    withCredentials: true,
+                }
+            )
            } catch (error) {
             return error
            }

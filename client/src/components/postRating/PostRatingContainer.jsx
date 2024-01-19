@@ -11,7 +11,6 @@ function PostRatingContainer({
     handleCheckboxChange,
 }) {
     const [hoveredIndex, setHoveredIndex] = useState(null)
-    const [isClickTriggered, setIsClickTriggered] = useState(false)
     const [isPopupOpen, setPopupOpen] = useState(false)
     const [active, setactive] = useState(1)
 
@@ -24,14 +23,12 @@ function PostRatingContainer({
     }
 
     function handleOnMouseLeave() {
-        if (!isClickTriggered) {
-            setHoveredIndex(null)
-        }
+        
+         setHoveredIndex(null)
+        
     }
     function handleOnClick(index) {
-        setIsClickTriggered(true)
         setHoveredIndex(index)
-        console.log(index)
     }
 
     useEffect(() => {
@@ -93,7 +90,7 @@ function PostRatingContainer({
                 onClick={() => handleOnClick(index)}
             >
                 <p className="w-fit h-fit text-body-b-700 text-white-50">
-                    {index + 1 + '0'}
+                    {(index + 1) * 10}
                 </p>
             </div>
         )

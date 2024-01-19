@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -44,24 +46,16 @@ public class RatingController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/films/{id}/ratings")
-    ResponseEntity<Map<String, Object>> getAllRatingsByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestParam Boolean superRating) throws Exception {
-        Map<String, Object> response = new HashMap<>();
-        response.put("response", ratingService.getAllRatingByFilmIdAndRatingType(UUID.fromString(id), superRating));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     @GetMapping("/users/{id}/ratings")
     ResponseEntity<Map<String, Object>> getAllRatingsByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
         response.put("response", ratingService.getAllRatingByUserId(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/films/{id}/ratings/{superRating}")
-    ResponseEntity<Map<String, Object>> getTotalRatingByFilmIdRatingType(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
-                                                                         @PathVariable @NotNull int superRating) throws Exception {
+    @GetMapping("/films/{id}/ratings")
+    ResponseEntity<Map<String, Object>> getTotalRatingByFilmIdRatingType(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("response", ratingService.getTotalRatingByFilmIdAndRatingType(UUID.fromString(id), superRating));
+        response.put("response", ratingService.getTotalRatingByFilmIdAndRatingType(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

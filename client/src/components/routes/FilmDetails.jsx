@@ -1,20 +1,17 @@
 import React, { Fragment } from 'react'
 
-import FilmMainInfoManager from '../filmMainInfo/FilmMainInfoManager';
-import FilmDetailsManager from '../FilmDetails/FilmDetailsManager';
 import ReviewManager from '../review/ReviewManager';
 import TittleCard from '../cards/tittle/TittleCard';
 import VideosTopManager from '../videosTop/VideosTopManager';
 import BlogTopManager from '../blogTop/BlogTopManager';
 import RegularCarouselManager from '../regularCarousel/RegularCarouselManager';
 import PhotostopManager from '../photosTop/PhotosTopManager'
+import FilmManager from '../FilmDetails/FilmManager';
 
 function FilmDetails() {
   return (
       <Fragment> 
-          <FilmMainInfoManager></FilmMainInfoManager>
-
-          <FilmDetailsManager></FilmDetailsManager>
+         <FilmManager></FilmManager>
           
           <ReviewManager></ReviewManager>
 

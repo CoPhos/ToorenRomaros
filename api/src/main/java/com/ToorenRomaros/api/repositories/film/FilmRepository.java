@@ -15,6 +15,6 @@ public interface FilmRepository extends JpaRepository<FilmEntity, UUID>, FilmRep
     List<FilmEntity> getAllFilmbySagaId(String id);
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE film f SET f.viewCount = COALESCE(f.viewCount, 0) + 1 WHERE f.id = ?1")
+    @Query(nativeQuery = true, value = "UPDATE film f SET f.view_count = COALESCE(f.view_count, 0) + 1 WHERE f.id = ?1")
     void incrementViewCount(String id);
 }

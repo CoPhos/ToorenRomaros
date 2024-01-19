@@ -1,30 +1,31 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 
-function MainRatingScore({data}) {
-    const greenBar =
-        Math.round((data.rating.positive * 100) / data.rating.total) + '%'
-    const yellowBar =
-        Math.round((data.rating.neutral * 100) / data.rating.total) + '%'
-    const redBar =
-        Math.round((data.rating.negative * 100) / data.rating.total) + '%'
+function MainRatingScore({ data, totalScore }) {
+    const location = useLocation()
+    const pathname = location.pathname
+    const total = data.positive + data.negative + data.neutral
+    const greenBar = Math.round((data.positive * 100) / total) + '%'
+    const yellowBar = Math.round((data.neutral * 100) / total) + '%'
+    const redBar = Math.round((data.negative * 100) / total) + '%'
 
     const baseClassesRating =
         'flex items-center justify-center rounded-xl h-[64px] w-[64px]'
 
     let dynamicClasses
     let totalScoreText
-    if (data.value <= 40) {
+
+    if (totalScore <= 40) {
         dynamicClasses = 'bg-red-500'
         totalScoreText = 'Generally Unfavorable'
-    } else if (data.value < 70 && data.value > 40) {
+    } else if (totalScore < 70 && totalScore > 40) {
         dynamicClasses = 'bg-[#ffbd3f]'
         totalScoreText = 'Mixed or Average'
     } else {
         dynamicClasses = 'bg-green-600'
         totalScoreText = 'Generally Favorable'
-    } 
+    }
 
     return (
         <div className="flex flex-col items-start justify-center w-full">
@@ -37,16 +38,16 @@ function MainRatingScore({data}) {
                         {totalScoreText}
                     </p>
                     <Link
-                        to="/asdas"
+                        to={`${pathname}/reviews`}
                         className="text-small-d-400 lg:text-small-d-400 underline hover:cursor-pointer hover:text-blue-800"
                     >
-                        Based on 54 Critic Reviews
+                        Based on {total} Critic Reviews
                     </Link>
                 </div>
                 <div>
                     <div className={`${baseClassesRating} ${dynamicClasses}`}>
                         <p className="text-[36px] font-bold text-white-50">
-                            {data.value}
+                            {totalScore}
                         </p>
                     </div>
                 </div>
