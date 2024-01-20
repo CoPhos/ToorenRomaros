@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.media.GetAllImagesByTypeAndOwnerIdDto;
-import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.dto.media.GetListImagesDto;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
 import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
@@ -10,20 +9,19 @@ import org.imgscalr.Scalr;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface ImageService {
     Map<String, String> uploadImage(MultipartFile originalImage, String ownerId, String imageType) throws IOException;
     byte[] getImageById(String imageId) throws IOException;
-    List<GetAllImagesByTypeAndOwnerIdDto> getImageByImageType(String imageType, String ownerId);
+    List<GetListImagesDto> getImageByImageType(String imageType, String ownerId);
+    List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid);
 
     default String processImage(String suffix,
                                 BufferedImage bufferedImage,

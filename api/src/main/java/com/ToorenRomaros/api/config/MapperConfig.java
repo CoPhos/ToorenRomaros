@@ -4,6 +4,7 @@ import com.ToorenRomaros.api.dto.film.EpisodeDto;
 import com.ToorenRomaros.api.dto.film.MovieDto;
 import com.ToorenRomaros.api.dto.film.SerieDto;
 import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
+import com.ToorenRomaros.api.dto.media.GetListImagesDto;
 import com.ToorenRomaros.api.dto.publication.*;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
@@ -16,6 +17,7 @@ import com.ToorenRomaros.api.entities.film.EpisodeEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
+import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.publication.*;
 import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
 import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
@@ -32,6 +34,8 @@ import org.modelmapper.*;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.lang.reflect.InvocationTargetException;
 
 @Configuration
 public class MapperConfig {
@@ -101,6 +105,7 @@ public class MapperConfig {
                 mapper -> {
                     mapper.map(src -> src.getFilm().getTittle(), StaffFilmDto::setFilmName);
                     mapper.map(src -> src.getStaff().getFullName(), StaffFilmDto::setStaffName);
+                    mapper.map(src -> src.getStaff().getId(), StaffFilmDto::setStaffId);
                 }
         );
 
@@ -197,6 +202,20 @@ public class MapperConfig {
                 mapper -> {
                     mapper.map(src -> src.getFilm().getId(), WatchListDto::setFilm);
                     mapper.map(src -> src.getUser().getId(), WatchListDto::setUser);
+                }
+        );
+
+        //Watchlist
+        TypeMap<ImageEntity, GetListImagesDto> propertyMapperGetListImagesDto = modelMapper.createTypeMap(ImageEntity.class, GetListImagesDto.class);
+        propertyMapperGetListImagesDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> {
+                        try {
+                            return src.getOwnerId();
+                        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }, GetListImagesDto::setOwner);
                 }
         );
 

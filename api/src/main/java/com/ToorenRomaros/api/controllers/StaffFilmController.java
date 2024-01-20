@@ -33,7 +33,7 @@ public class StaffFilmController {
         response.put("created", newStaffFilm);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/films/staffs/{id}")
+    @GetMapping("/films/{id}/staffs")
     ResponseEntity<Map<String, Object>> getStaffFilmByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
         response.put("response", staffFilmService.getAllStaffFromFilm(UUID.fromString(id)));

@@ -29,9 +29,12 @@ public class ImageController {
         headers.setCacheControl(CacheControl.maxAge(3600, TimeUnit.SECONDS));
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
-
     @GetMapping("{ownerId}/media/images")
     ResponseEntity<?> getImagesIdByImageType(@RequestParam @NotNull String imageType, @PathVariable @NotNull String ownerId) throws Exception {
         return new ResponseEntity<>(imageService.getImageByImageType(imageType, ownerId), HttpStatus.OK);
+    }
+    @GetMapping("films/{id}/staffs/media/images")
+    ResponseEntity<?> getAllImagesFromStaffByImageTypeAndFilmid(@RequestParam @NotNull String imageType, @PathVariable @NotNull String id) throws Exception {
+        return new ResponseEntity<>(imageService.getAllImagesFromStaffByImageTypeAndFilmid(imageType, id), HttpStatus.OK);
     }
 }

@@ -4,9 +4,16 @@ import Info from '../cards/filmData/Info'
 import CastContainer from '../cards/filmData/CastContainer';
 import WhereToWatch from '../cards/filmData/WhereToWatch';
 
-function FilmDetailsContainer({ movieInfo, cast }) { 
-   
+function FilmDetailsContainer({ data, staff, genre, staffImages }) {
+    const staffWithImages = staff.map((item) => {
+        const correspondingImageKey = Object.keys(staffImages).find(
+            (key) => staffImages[key].owner === item.staffId
+        )
 
+        return correspondingImageKey
+            ? { ...item, images: staffImages[correspondingImageKey] }
+            : item
+    })
     return (
         <div className="flex flex-col items-start justify-center ml-1">
             <TittleCard
@@ -14,15 +21,14 @@ function FilmDetailsContainer({ movieInfo, cast }) {
                 to={null}
                 linkText={''}
             ></TittleCard>
-            <Info movieInfo={movieInfo}></Info>
+            <Info data={data} staff={staff} genre={genre}></Info>
 
             <TittleCard
                 tittle={'CAST & CREW'}
                 to={null}
                 linkText={''}
             ></TittleCard>
-            <CastContainer cast={cast}></CastContainer>
-
+            <CastContainer staff={staffWithImages}></CastContainer>
             <TittleCard
                 tittle={'WHERE TO WATCH'}
                 to={null}
@@ -33,7 +39,6 @@ function FilmDetailsContainer({ movieInfo, cast }) {
                 <WhereToWatch></WhereToWatch>
                 <WhereToWatch></WhereToWatch>
             </div>
-            
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Cast from './Cast'
 
-function CastContainer({ cast }) {
+function CastContainer({ staff }) {
     const [show, setshow] = useState(false)
     const baseClasses =
         'flex flex-row items-center justify-start gap-2 flex-wrap overflow-hidden'
@@ -12,13 +12,15 @@ function CastContainer({ cast }) {
         setshow(!show)
     }
 
-
     return (
         <div className="flex flex-col items-start justify-start">
             <div className={`${baseClasses} ${dynamicClass}`}>
-                {Object.entries(cast).map(([key, value]) => {
-                    return <Cast key={key.toString()} data={value}></Cast>
-                })}
+                {staff.map((element, index) => (
+                    <Cast
+                        key={element.id.toString()}
+                        data={element}
+                    ></Cast>
+                ))}
             </div>
             <button
                 onClick={toggle}

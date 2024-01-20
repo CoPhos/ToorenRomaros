@@ -1,30 +1,33 @@
 import React, { Fragment } from 'react'
 
-function Info({ movieInfo }) {
+function Info({ data, staff, genre }) {
+    const director = staff.filter((staff) => staff.director === 'Director')
+    const screenwriter = staff.filter((staff) => staff.director === 'Screenwriter')
+    const producer = staff.filter((staff) => staff.director === 'Producer')
     return (
         <Fragment>
             <div className="mt-2">
                 <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.summary}
+                    {data.synopsis}
                 </p>
             </div>
             <div className="flex flex-row items-center justify-start">
                 <p className="text-small-m-700 lg:text-small-d-700">Rating:</p>
                 &nbsp;
                 <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.Rating}
+                    {data.suitableFor}
                 </p>
             </div>
             <div className="flex flex-row items-center justify-start">
                 <p className="text-small-m-700 lg:text-small-d-700">Genre:</p>
                 &nbsp;
-                {movieInfo.Genre.map((element, index) => (
+                {genre.map((element, index) => (
                     <p
-                        key={element}
+                        key={element.id}
                         className="text-small-m-400 lg:text-small-d-400"
                     >
-                        {element}
-                        {index < movieInfo.Genre.length - 1 && ','}&nbsp;
+                        {element.genre}
+                        {index < genre.length - 1 && ','}&nbsp;
                     </p>
                 ))}
             </div>
@@ -34,60 +37,112 @@ function Info({ movieInfo }) {
                 </p>
                 &nbsp;
                 <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.OriginalLanguage}
+                    {data.originalLanguage}
                 </p>
             </div>
-            <div className="flex flex-row items-center justify-start">
-                <p className="text-small-m-700 lg:text-small-d-700">
-                    Director:
-                </p>
-                &nbsp;
-                <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.Director}
-                </p>
-            </div>
-            <div className="flex flex-row items-center justify-start">
-                <p className="text-small-m-700 lg:text-small-d-700">
-                    Producer:
-                </p>
-                &nbsp;
-                {movieInfo.Producer.map((element, index) => (
-                    <p
-                        key={element}
-                        className="text-small-m-400 lg:text-small-d-400"
-                    >
-                        {element}
-                        {index < movieInfo.Producer.length - 1 && ','}&nbsp;
+            {director !== null &&
+            director !== undefined &&
+            Object.keys(director).length > 0 ? (
+                <div className="flex flex-row items-center justify-start">
+                    <p className="text-small-m-700 lg:text-small-d-700">
+                        Director:
                     </p>
-                ))}
-            </div>
-            <div className="flex flex-row items-center justify-start">
-                <p className="text-small-m-700 lg:text-small-d-700">Writer:</p>
-                &nbsp;
-                {movieInfo.Writer.map((element, index) => (
-                    <p
-                        key={element}
-                        className="text-small-m-400 lg:text-small-d-400"
-                    >
-                        {element}
-                        {index < movieInfo.Writer.length - 1 && ','}&nbsp;
+                    &nbsp;
+                    {Object.entries(director).forEach(
+                        ([key, value], index, array) => {
+                            return (
+                                <p
+                                    key={value}
+                                    className="text-small-m-400 lg:text-small-d-400"
+                                >
+                                    {value}
+                                    {index < array.length - 1 && ','}&nbsp;
+                                </p>
+                            )
+                        }
+                    )}
+                </div>
+            ) : (
+                ''
+            )}
+            {producer !== null &&
+            producer !== undefined &&
+            Object.keys(producer).length > 0 ? (
+                <div className="flex flex-row items-center justify-start">
+                    <p className="text-small-m-700 lg:text-small-d-700">
+                        Producer:
                     </p>
-                ))}
-            </div>
-            <div className="flex flex-row items-center justify-start">
-                <p className="text-small-m-700 lg:text-small-d-700">
-                    Release Date (Theaters):
-                </p>
-                &nbsp;
-                <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.ReleaseDateTheaters}
-                </p>
-            </div>
+                    &nbsp;
+                    {Object.entries(producer).forEach(
+                        ([key, value], index, array) => {
+                            return (
+                                <p
+                                    key={value}
+                                    className="text-small-m-400 lg:text-small-d-400"
+                                >
+                                    {value}
+                                    {index < array.length - 1 && ','}&nbsp;
+                                </p>
+                            )
+                        }
+                    )}
+                </div>
+            ) : (
+                ''
+            )}
+            {screenwriter !== null &&
+            screenwriter !== undefined &&
+            Object.keys(screenwriter).length > 0 ? (
+                <div className="flex flex-row items-center justify-start">
+                    <p className="text-small-m-700 lg:text-small-d-700">
+                        Writer:
+                    </p>
+                    &nbsp;
+                    {Object.entries(screenwriter).forEach(
+                        ([key, value], index, array) => {
+                            return (
+                                <p className="text-small-m-400 lg:text-small-d-400">
+                                    {value}
+                                    {index < array.length - 1 && ','}&nbsp;
+                                </p>
+                            )
+                        }
+                    )}
+                </div>
+            ) : (
+                ''
+            )}
+            {data.theatersReleaseDate ? (
+                <div className="flex flex-row items-center justify-start">
+                    <p className="text-small-m-700 lg:text-small-d-700">
+                        Release Date (Theaters):
+                    </p>
+                    &nbsp;
+                    <p className="text-small-m-400 lg:text-small-d-400">
+                        {data.theatersReleaseDate}
+                    </p>
+                </div>
+            ) : (
+                ''
+            )}
+            {data.streamingReleaseDate ? (
+                <div className="flex flex-row items-center justify-start">
+                    <p className="text-small-m-700 lg:text-small-d-700">
+                        Release Date (Streaming):
+                    </p>
+                    &nbsp;
+                    <p className="text-small-m-400 lg:text-small-d-400">
+                        {data.streamingReleaseDate}
+                    </p>
+                </div>
+            ) : (
+                ''
+            )}
             <div className="flex flex-row items-center justify-start">
                 <p className="text-small-m-700 lg:text-small-d-700">Runtime:</p>
                 &nbsp;
                 <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.Runtime}
+                    {data.runTime}
                 </p>
             </div>
             <div className="flex flex-row items-center justify-start">
@@ -96,25 +151,29 @@ function Info({ movieInfo }) {
                 </p>
                 &nbsp;
                 <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.Distributor}
+                    {data.distributor}
                 </p>
             </div>
-            <div className="flex flex-row items-center justify-start">
-                <p className="text-small-m-700 lg:text-small-d-700">
-                    Production Co:
-                </p>
-                &nbsp;
-                <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.ProductionCo}
-                </p>
-            </div>
+            {data.boxOffice ? (
+                <div className="flex flex-row items-center justify-start">
+                    <p className="text-small-m-700 lg:text-small-d-700">
+                        Box Office:
+                    </p>
+                    &nbsp;
+                    <p className="text-small-m-400 lg:text-small-d-400">
+                        ${parseInt(data.boxOffice, 10).toLocaleString('en-US')}
+                    </p>
+                </div>
+            ) : (
+                ''
+            )}
             <div className="flex flex-row items-center justify-start">
                 <p className="text-small-m-700 lg:text-small-d-700">
                     SoundMix:
                 </p>
                 &nbsp;
                 <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.SoundMix}
+                    {data.soundMix}
                 </p>
             </div>
             <div className="flex flex-row items-center justify-start">
@@ -123,7 +182,7 @@ function Info({ movieInfo }) {
                 </p>
                 &nbsp;
                 <p className="text-small-m-400 lg:text-small-d-400">
-                    {movieInfo.AspectRatio}
+                    {data.aspectRatio}
                 </p>
             </div>
         </Fragment>

@@ -24,27 +24,27 @@ public class GenreFilmController {
         this.genreFilmService = genreFilmService;
     }
 
-    @PostMapping("/films/genre")
+    @PostMapping("/films/genres")
     ResponseEntity<Map<String, Object>> createFilmGenre(@RequestBody @Valid GenreFilmDto genreFilmDto) throws Exception {
         GenreFilmDto newFilmGenre = genreFilmService.createGenreFilm(genreFilmDto);
         Map<String, Object> response = new HashMap<>();
         response.put("created", newFilmGenre);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/films/genre/{id}")
+    @GetMapping("/films/{id}/genres")
     ResponseEntity<Map<String, Object>> getFilmGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
         response.put("response", genreFilmService.getGenreFilm(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PutMapping("/films/genre/{id}")
+    @PutMapping("/films/{id}/genres")
     ResponseEntity<Map<String, Object>> updateFilmGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid GenreFilmDto genreFilmDto) throws Exception {
         GenreFilmDto updatedFilmGenre = genreFilmService.updateGenreFilm(UUID.fromString(id), genreFilmDto);
         Map<String, Object> response = new HashMap<>();
         response.put("updated", updatedFilmGenre);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @DeleteMapping("/films/genre/{id}")
+    @DeleteMapping("/films/genres/{id}")
     ResponseEntity<String> deleteFilmGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         genreFilmService.deleteGenreFilm(UUID.fromString(id));
         return ResponseEntity.status(HttpStatus.ACCEPTED)

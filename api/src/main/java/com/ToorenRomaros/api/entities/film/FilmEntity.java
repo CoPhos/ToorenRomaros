@@ -56,6 +56,10 @@ public class FilmEntity {
     SagaEntity saga;
     @Column(name = "view_count")
     private Long viewCount;
+    @Column(name = "aspect_ratio")
+    private String aspectRatio;
+    @Column(name = "sound_mix")
+    private String soundMix;
     @Column(name = "critics_consensus", columnDefinition = "VARCHAR(255)")
     private String criticsConsensus;
     @Column(name = "ADDED_DATE", columnDefinition = "DATE")
@@ -178,13 +182,27 @@ public class FilmEntity {
     public void setAddedDate(LocalDate addedDate) {
         this.addedDate = addedDate;
     }
-
     public String getCriticsConsensus() {
         return criticsConsensus;
     }
-
     public void setCriticsConsensus(String criticsConsensus) {
         this.criticsConsensus = criticsConsensus;
+    }
+
+    public String getAspectRatio() {
+        return aspectRatio;
+    }
+
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    public String getSoundMix() {
+        return soundMix;
+    }
+
+    public void setSoundMix(String soundMix) {
+        this.soundMix = soundMix;
     }
 
     @Override

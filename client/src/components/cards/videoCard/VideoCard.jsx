@@ -7,12 +7,12 @@ function VideoCard({ videoType, tittle, text, to }) {
             to="/asdas"
             className="w-[320px] md:w-[265px] group hover:cursor-pointer"
         >
-            <div className="w-[320px] h-[178px] md:w-[265px] md:h-[151px] relative">
+            <div className="w-[320px] md:w-[265px] h-[151px] relative">
                 <img
                     //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                     src="https://blog-admin.siriusxm.com/wp-content/uploads/2023/07/barbie-interview.jpg"
                     alt="Elva dressed as a fairy"
-                    className="w-full h-[178px] lg:h-[151px] object-cover object-center"
+                    className="w-full h-[151px] object-cover object-center"
                 />
                 <div className="min-h-[22px] absolute left-[1px] right-0 bottom-[0px] overflow-hidden bg-red-700 rounded-[4px]">
                     <p className="text-white-50 overflow-hidden text-ellipsis line-clamp-1 text-small-m-300 lg:text-small-d-300 px-0.5">

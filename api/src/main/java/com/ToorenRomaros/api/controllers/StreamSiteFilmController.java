@@ -28,7 +28,7 @@ public class StreamSiteFilmController {
         response.put("created", newStreamSiteFilm);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/streaming/film/{id}")
+    @GetMapping("/films/{id}/streamingsites")
     ResponseEntity<Map<String, Object>> getStreamSiteFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
         response.put("response", streamSiteFilmService.getStreamSitesByFilmId(UUID.fromString(id)));

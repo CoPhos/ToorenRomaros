@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.Formula;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -38,6 +39,8 @@ public class FilmDto {
     private Float averageSuperRating;
     private Float averageUserRating;
     private String criticsConsensus;
+    private String aspectRatio;
+    private String soundMix;
 
     public Integer getFilmType() {
         return filmType;
@@ -123,13 +126,23 @@ public class FilmDto {
     public void setCoomingSoon(LocalDate coomingSoon) {
         this.coomingSoon = coomingSoon;
     }
-
     public String getCriticsConsensus() {
         return criticsConsensus;
     }
-
     public void setCriticsConsensus(String criticsConsensus) {
         this.criticsConsensus = criticsConsensus;
+    }
+    public String getAspectRatio() {
+        return aspectRatio;
+    }
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+    public String getSoundMix() {
+        return soundMix;
+    }
+    public void setSoundMix(String soundMix) {
+        this.soundMix = soundMix;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.controllers.ImageController;
-import com.ToorenRomaros.api.dto.media.GetAllImagesByTypeAndOwnerIdDto;
+import com.ToorenRomaros.api.dto.media.GetListImagesDto;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
@@ -35,13 +34,27 @@ public class ImageServiceDefaultImpl implements ImageService {
     }
 
     @Override
-    public List<GetAllImagesByTypeAndOwnerIdDto> getImageByImageType(String imageType, String ownerId) {
+    public List<GetListImagesDto> getImageByImageType(String imageType, String ownerId) {
         List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType(imageType, ownerId);
         if (imageEntities.isEmpty()) {
             throw new ResourceNotFoundException("No Images Were Found ");
         } else {
-            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetAllImagesByTypeAndOwnerIdDto.class)).collect(Collectors.toList());
+            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
         }
+    }
+
+    @Override
+    public List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid) {
+        try{
+            List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStaffByImageTypeAndFilmid(imageType, filmid);
+            if (imageEntities.isEmpty()) {
+                throw new ResourceNotFoundException("No Images Were Found ");
+            } else {
+                return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
+            }
+        }catch (Exception e){
+            log.info(e.getMessage());
+        }return null;
     }
 
     @Override

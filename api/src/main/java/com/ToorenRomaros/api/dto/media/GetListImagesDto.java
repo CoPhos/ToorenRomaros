@@ -1,8 +1,17 @@
 package com.ToorenRomaros.api.dto.media;
 
-public class GetAllImagesByTypeAndOwnerIdDto {
+public class GetListImagesDto {
     private String id;
     private String imageSize;
+    private String owner;
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
 
     public String getId() {
         return id;

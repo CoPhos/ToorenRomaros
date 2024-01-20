@@ -18,6 +18,15 @@ public class StaffFilmDto {
     private String filmName;
     @NotNull(message = "Staff id can not be null")
     private String staffName;
+    private UUID staffId;
+
+    public UUID getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(UUID staffId) {
+        this.staffId = staffId;
+    }
 
     public UUID getId() {
         return id;
