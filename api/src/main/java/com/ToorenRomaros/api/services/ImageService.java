@@ -22,6 +22,7 @@ public interface ImageService {
     byte[] getImageById(String imageId) throws IOException;
     List<GetListImagesDto> getImageByImageType(String imageType, String ownerId);
     List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid);
+    List<GetListImagesDto> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(String imageType, String filmid);
 
     default String processImage(String suffix,
                                 BufferedImage bufferedImage,

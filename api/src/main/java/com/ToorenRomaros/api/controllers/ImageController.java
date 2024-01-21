@@ -37,4 +37,9 @@ public class ImageController {
     ResponseEntity<?> getAllImagesFromStaffByImageTypeAndFilmid(@RequestParam @NotNull String imageType, @PathVariable @NotNull String id) throws Exception {
         return new ResponseEntity<>(imageService.getAllImagesFromStaffByImageTypeAndFilmid(imageType, id), HttpStatus.OK);
     }
+
+    @GetMapping("films/{id}/streamsites/media/images")
+    ResponseEntity<?> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(@RequestParam @NotNull String imageType, @PathVariable @NotNull String id) throws Exception {
+        return new ResponseEntity<>(imageService.getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(imageType, id), HttpStatus.OK);
+    }
 }

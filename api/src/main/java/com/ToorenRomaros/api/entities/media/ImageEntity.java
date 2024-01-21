@@ -5,6 +5,7 @@ import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.publication.PostEntity;
 import com.ToorenRomaros.api.entities.staff.StaffEntity;
+import com.ToorenRomaros.api.entities.streamSite.StreamSiteEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import org.hibernate.annotations.*;
 
@@ -23,6 +24,7 @@ import java.util.UUID;
                 @MetaValue(targetEntity = UserEntity.class, value = "U"),
                 @MetaValue(targetEntity = PostEntity.class, value = "RT"),
                 @MetaValue(targetEntity = StaffEntity.class, value = "ST"),
+                @MetaValue(targetEntity = StreamSiteEntity.class, value = "SS"),
         })
 @Entity
 @Table(name = "image")

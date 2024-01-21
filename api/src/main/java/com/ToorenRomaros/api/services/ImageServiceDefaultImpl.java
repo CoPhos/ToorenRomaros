@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service("ImageServiceDefaultImpl")
@@ -44,17 +45,23 @@ public class ImageServiceDefaultImpl implements ImageService {
     }
 
     @Override
+    public List<GetListImagesDto> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(String imageType, String filmid) {
+        List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStreamSiteByImageTypeAndStreamSiteId(imageType, filmid);
+        if (imageEntities.isEmpty()) {
+            throw new ResourceNotFoundException("No Images Were Found ");
+        } else {
+            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
+        }
+    }
+
+    @Override
     public List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid) {
-        try{
-            List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStaffByImageTypeAndFilmid(imageType, filmid);
-            if (imageEntities.isEmpty()) {
-                throw new ResourceNotFoundException("No Images Were Found ");
-            } else {
-                return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
-            }
-        }catch (Exception e){
-            log.info(e.getMessage());
-        }return null;
+        List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStaffByImageTypeAndFilmid(imageType, filmid);
+        if (imageEntities.isEmpty()) {
+            throw new ResourceNotFoundException("No Images Were Found ");
+        } else {
+            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
+        }
     }
 
     @Override

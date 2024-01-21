@@ -6,6 +6,7 @@ public enum ImageTypeEnum {
     USER_PROFILE,
     STAFF_PROFILE,
     VIDEO_THUMBNAIL,
+    STREAMSITE_MAIN,
     POST_MAIN,
     POST_COLLECTION
 }

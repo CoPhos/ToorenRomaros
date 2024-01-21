@@ -124,6 +124,7 @@ public class MapperConfig {
                 mapper -> {
                     mapper.map(src -> src.getFilm().getTittle(), StreamSiteFilmDto::setFilmName);
                     mapper.map(src -> src.getStreamSite().getName(), StreamSiteFilmDto::setStreamSiteName);
+                    mapper.map(src -> src.getStreamSite().getId(), StreamSiteFilmDto::setStreamsiteId);
                 }
         );
 

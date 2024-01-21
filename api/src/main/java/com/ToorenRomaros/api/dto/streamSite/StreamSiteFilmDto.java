@@ -14,6 +14,15 @@ public class StreamSiteFilmDto {
     private Boolean buy;
     private String filmName;
     private String streamSiteName;
+    private UUID streamsiteId;
+
+    public UUID getStreamsiteId() {
+        return streamsiteId;
+    }
+
+    public void setStreamsiteId(UUID streamsiteId) {
+        this.streamsiteId = streamsiteId;
+    }
 
     public UUID getId() {
         return id;

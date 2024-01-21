@@ -4,16 +4,13 @@ import Info from '../cards/filmData/Info'
 import CastContainer from '../cards/filmData/CastContainer';
 import WhereToWatch from '../cards/filmData/WhereToWatch';
 
-function FilmDetailsContainer({ data, staff, genre, staffImages }) {
-    const staffWithImages = staff.map((item) => {
-        const correspondingImageKey = Object.keys(staffImages).find(
-            (key) => staffImages[key].owner === item.staffId
-        )
-
-        return correspondingImageKey
-            ? { ...item, images: staffImages[correspondingImageKey] }
-            : item
-    })
+function FilmDetailsContainer({
+    data,
+    staff,
+    genre,
+    streamSites,
+}) {    console.log(streamSites)
+ 
     return (
         <div className="flex flex-col items-start justify-center ml-1">
             <TittleCard
@@ -28,16 +25,18 @@ function FilmDetailsContainer({ data, staff, genre, staffImages }) {
                 to={null}
                 linkText={''}
             ></TittleCard>
-            <CastContainer staff={staffWithImages}></CastContainer>
+            <CastContainer staff={staff}></CastContainer>
             <TittleCard
                 tittle={'WHERE TO WATCH'}
                 to={null}
                 linkText={''}
             ></TittleCard>
             <div className="flex flex-row items-center justify-start flex-wrap gap-2 mt-2">
-                <WhereToWatch></WhereToWatch>
-                <WhereToWatch></WhereToWatch>
-                <WhereToWatch></WhereToWatch>
+                {streamSites.map((item) => {
+                    return (
+                        <WhereToWatch key={item.id} data={item}></WhereToWatch>
+                    )
+                })}
             </div>
         </div>
     )
