@@ -138,13 +138,19 @@ function Info({ data, staff, genre }) {
             ) : (
                 ''
             )}
-            <div className="flex flex-row items-center justify-start">
-                <p className="text-small-m-700 lg:text-small-d-700">Runtime:</p>
-                &nbsp;
-                <p className="text-small-m-400 lg:text-small-d-400">
-                    {data.runTime}
-                </p>
-            </div>
+            {data.runTime ? (
+                <div className="flex flex-row items-center justify-start">
+                    <p className="text-small-m-700 lg:text-small-d-700">
+                        Runtime:
+                    </p>
+                    &nbsp;
+                    <p className="text-small-m-400 lg:text-small-d-400">
+                        {data.runTime}
+                    </p>
+                </div>
+            ) : (
+                ''
+            )}
             <div className="flex flex-row items-center justify-start">
                 <p className="text-small-m-700 lg:text-small-d-700">
                     Distributor:

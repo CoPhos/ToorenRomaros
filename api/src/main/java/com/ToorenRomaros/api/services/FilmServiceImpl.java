@@ -38,12 +38,6 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public FilmDto createFilm(FilmDto filmDto) {
         FilmEntity newMovie = filmMapper.mapToFilmEntity(filmDto);
-        if (filmDto.getSequel() != null) {
-            newMovie.setSequel(addSequel(filmDto));
-        }
-        if (filmDto.getPrequel() != null) {
-            newMovie.setPrequel(addPrequel(filmDto));
-        }
         if (filmDto.getSagaId() != null) {
             SagaEntity sagaEntity = sagaRepository.findById(UUID.fromString(filmDto.getSagaId())).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
             newMovie.setSaga(sagaEntity);
@@ -79,9 +73,11 @@ public class FilmServiceImpl implements FilmService {
     @Override
     @Transactional
     public FilmDto getFilmById(UUID id) {
-        filmRepository.incrementViewCount(id.toString());
-        FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
-        return filmMapper.mapToFilmDto(film);
+
+            filmRepository.incrementViewCount(id.toString());
+            FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+            return filmMapper.mapToFilmDto(film);
+
     }
 
     @Override
@@ -99,18 +95,10 @@ public class FilmServiceImpl implements FilmService {
         FilmEntity newFilm = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
         FilmEntity film = filmMapper.mapToFilmEntity(filmDto);
 
-        film.setSequel(null);
-        film.setPrequel(null);
         film.setSaga(null);
 
         BeanUtils.copyProperties(film, newFilm, Utils.getNullPropertyNames(film));
 
-        if (filmDto.getSequel() != null) {
-            newFilm.setSequel(addSequel(filmDto));
-        }
-        if (filmDto.getPrequel() != null) {
-            newFilm.setPrequel(addPrequel(filmDto));
-        }
         if (filmDto.getSagaId() != null) {
             SagaEntity sagaEntity = sagaRepository.findById(UUID.fromString(filmDto.getSagaId())).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
             newFilm.setSaga(sagaEntity);
@@ -123,16 +111,6 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public void deleteFilm(UUID id) {
         filmRepository.deleteById(id);
-    }
-
-    private FilmEntity addSequel(FilmDto filmDto) {
-        String newSequelId = filmDto.getSequel();
-        return filmRepository.findById(UUID.fromString(newSequelId)).orElseThrow(() -> new ResourceNotFoundException(newSequelId + " not found"));
-    }
-
-    private FilmEntity addPrequel(FilmDto filmDto) {
-        String newPrequelId = filmDto.getPrequel();
-        return filmRepository.findById(UUID.fromString(newPrequelId)).orElseThrow(() -> new ResourceNotFoundException(newPrequelId + " not found"));
     }
 }
 

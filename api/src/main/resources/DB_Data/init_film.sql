@@ -3,7 +3,9 @@ SET foreign_key_checks = 0;
 --start wars
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -14,8 +16,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -24,7 +24,9 @@ INSERT INTO film (
     )
 VALUES (
         'e5cc7851-39a7-4342-aabf-ef8f72c7d648',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Star Wars: Episode IV - A New Hope',
@@ -35,8 +37,6 @@ VALUES (
         'PG',
         NULL,
         '2028-02-15',
-        NULL,
-        '0e3a8915-c68c-46dd-aee2-98dbde4b4b14',
         "775000000",
         "121",
         '1977-05-25',
@@ -45,7 +45,9 @@ VALUES (
     ),
     (
         '0e3a8915-c68c-46dd-aee2-98dbde4b4b14',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode V - The Empire Strikes Back',
@@ -56,8 +58,6 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'e5cc7851-39a7-4342-aabf-ef8f72c7d648',
-        'cd086f77-3009-4f62-8c7a-914bde6fbbf4',
         "538400000",
         "124",
         '1980-05-21',
@@ -66,7 +66,9 @@ VALUES (
     ),
     (
         'cd086f77-3009-4f62-8c7a-914bde6fbbf4',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode VI - Return of the Jedi',
@@ -77,8 +79,6 @@ VALUES (
         'PG',
         NULL,
         '2023-04-15',
-        '0e3a8915-c68c-46dd-aee2-98dbde4b4b14',
-        'e80d4a56-52a7-4f52-a2f2-5b88bc79b5e2',
         "475100000",
         "131",
         '1983-05-25',
@@ -87,7 +87,9 @@ VALUES (
     ),
     (
         'e80d4a56-52a7-4f52-a2f2-5b88bc79b5e2',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode I - The Phantom Menace',
@@ -98,8 +100,6 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'cd086f77-3009-4f62-8c7a-914bde6fbbf4',
-        '9637c4e3-288b-4d8b-b25c-4475e7aa5cda',
         "1027000000",
         "136",
         '1999-05-19',
@@ -108,7 +108,9 @@ VALUES (
     ),
     (
         '9637c4e3-288b-4d8b-b25c-4475e7aa5cda',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode II - Attack of the Clones',
@@ -119,8 +121,6 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'e80d4a56-52a7-4f52-a2f2-5b88bc79b5e2',
-        'a45a2bb9-7e52-4284-8cfe-5b2f5f2b8c1d',
         "649400000",
         "142",
         '2002-05-16',
@@ -129,7 +129,9 @@ VALUES (
     ),
     (
         'a45a2bb9-7e52-4284-8cfe-5b2f5f2b8c1d',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode III - Revenge of the Sith',
@@ -140,8 +142,6 @@ VALUES (
         'PG-13',
         NULL,
         '2023-07-15',
-        '9637c4e3-288b-4d8b-b25c-4475e7aa5cda',
-        'd26e4ab3-9dce-420c-8254-7a8b1461d1bf',
         "848800000",
         "140",
         '2005-05-19',
@@ -150,7 +150,9 @@ VALUES (
     ),
     (
         'd26e4ab3-9dce-420c-8254-7a8b1461d1bf',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode VII - The Force Awakens',
@@ -161,8 +163,6 @@ VALUES (
         'PG-13',
         NULL,
         '2023-08-15',
-        'a45a2bb9-7e52-4284-8cfe-5b2f5f2b8c1d',
-        'bf24f51c-6b56-4a04-ae5e-86d6b3d2eb74',
         "2068000000",
         "138",
         '2015-12-18',
@@ -171,7 +171,9 @@ VALUES (
     ),
     (
         'bf24f51c-6b56-4a04-ae5e-86d6b3d2eb74',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode VIII - The Last Jedi',
@@ -182,8 +184,6 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'd26e4ab3-9dce-420c-8254-7a8b1461d1bf',
-        'f456ce87-d4a1-4c5f-98a7-e8100cfe4bd0',
         "1333000000",
         "152",
         '2017-12-15',
@@ -192,7 +192,9 @@ VALUES (
     ),
     (
         'f456ce87-d4a1-4c5f-98a7-e8100cfe4bd0',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Wars: Episode IX - The Rise of Skywalker',
@@ -203,8 +205,6 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'bf24f51c-6b56-4a04-ae5e-86d6b3d2eb74',
-        NULL,
         "1074000000",
         "142",
         '2028-02-15',
@@ -214,7 +214,9 @@ VALUES (
 --Pirates of the Caribbean
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -225,8 +227,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -235,7 +235,9 @@ INSERT INTO film (
     )
 VALUES (
         'f4b3d4e2-2f3d-4a13-8f2c-729b26e964c5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Pirates of the Caribbean: The Curse of the Black Pearl',
@@ -246,8 +248,6 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        'af9a78e1-e999-4c47-9cf4-4601627f0648',
         "654300000",
         "143",
         '2003-07-09',
@@ -256,7 +256,9 @@ VALUES (
     ),
     (
         'af9a78e1-e999-4c47-9cf4-4601627f0648',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         "Pirates of the Caribbean: Dead Man's Chest",
@@ -267,8 +269,6 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'f4b3d4e2-2f3d-4a13-8f2c-729b26e964c5',
-        'bd6929a2-c6c5-452b-8e8c-9b9b2ad89321',
         "1068000000",
         "151",
         '2006-07-07',
@@ -277,7 +277,9 @@ VALUES (
     ),
     (
         'bd6929a2-c6c5-452b-8e8c-9b9b2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         "Pirates of the Caribbean: At World's End",
@@ -288,8 +290,6 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        'af9a78e1-e999-4c47-9cf4-4601627f0648',
-        'e6d90526-08b3-47c1-a01d-2f9b48c94a9c',
         "963400000",
         "169",
         '2007-05-24',
@@ -298,7 +298,9 @@ VALUES (
     ),
     (
         'e6d90526-08b3-47c1-a01d-2f9b48c94a9c',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Pirates of the Caribbean: On Stranger Tides',
@@ -309,9 +311,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'bd6929a2-c6c5-452b-8e8c-9b9b2ad89321',
-        'f49218c1-2c5d-4f6b-8182-2b3e55c85711',
-        1046000000,
+        '1046000000',
         136,
         '2028-02-15',
         FALSE,
@@ -319,7 +319,9 @@ VALUES (
     ),
     (
         'f49218c1-2c5d-4f6b-8182-2b3e55c85711',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Pirates of the Caribbean: Dead Men Tell No Tales',
@@ -330,9 +332,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'e6d90526-08b3-47c1-a01d-2f9b48c94a9c',
-        NULL,
-        794900000,
+        '794900000',
         129,
         '2017-05-26',
         TRUE,
@@ -341,7 +341,9 @@ VALUES (
 --Harry Potter
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -352,8 +354,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -362,7 +362,9 @@ INSERT INTO film (
     )
 VALUES (
         '2f901ff3-968b-4e90-9db0-5e16843d1e16',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         "Harry Potter and the Sorcerer's Stone",
@@ -373,10 +375,7 @@ VALUES (
         'PG',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Sorcerer's Stone
-        '4587bd15-7d50-42a3-b4c0-58c0c092070b',
-        974800000,
+        '974800000',
         152,
         '2001-11-16',
         FALSE,
@@ -384,7 +383,9 @@ VALUES (
     ),
     (
         'ec28a46e-9852-4cb8-9b23-96c6d98e00d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Harry Potter and the Chamber of Secrets',
@@ -395,9 +396,7 @@ VALUES (
         'PG',
         NULL,
         '2023-03-15',
-        '2f901ff3-968b-4e90-9db0-5e16843d1e16',
-        'a57d328f-bc58-4bb5-b0db-9c6342a5b0a0',
-        879500000,
+        '879500000',
         161,
         '2002-11-15',
         FALSE,
@@ -405,7 +404,9 @@ VALUES (
     ),
     (
         'a57d328f-bc58-4bb5-b0db-9c6342a5b0a0',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Harry Potter and the Prisoner of Azkaban',
@@ -416,9 +417,7 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'ec28a46e-9852-4cb8-9b23-96c6d98e00d5',
-        'c1e229e7-1705-4c3d-b6bf-c3da3f019d05',
-        796700000,
+        '796700000',
         142,
         '2028-02-15',
         FALSE,
@@ -426,7 +425,9 @@ VALUES (
     ),
     (
         'c1e229e7-1705-4c3d-b6bf-c3da3f019d05',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Harry Potter and the Goblet of Fire',
@@ -437,9 +438,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        'a57d328f-bc58-4bb5-b0db-9c6342a5b0a0',
-        'd6ff152f-2cb3-4082-8b14-f36d23cc3f77',
-        896400000,
+        '896400000',
         157,
         '2005-11-18',
         FALSE,
@@ -447,7 +446,9 @@ VALUES (
     ),
     (
         'd6ff152f-2cb3-4082-8b14-f36d23cc3f77',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Harry Potter and the Order of the Phoenix',
@@ -458,9 +459,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-06-15',
-        'c1e229e7-1705-4c3d-b6bf-c3da3f019d05',
-        'f1e2e8f8-cbbe-4fb0-8588-098cb9c5b19f',
-        942000000,
+        '942000000',
         138,
         '2007-07-11',
         FALSE,
@@ -468,7 +467,9 @@ VALUES (
     ),
     (
         'f1e2e8f8-cbbe-4fb0-8588-098cb9c5b19f',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Harry Potter and the Half-Blood Prince',
@@ -479,9 +480,7 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'd6ff152f-2cb3-4082-8b14-f36d23cc3f77',
-        'f63285d1-eae0-4a5c-b0b9-54bf0bf3c40c',
-        934500000,
+        '934500000',
         153,
         '2009-07-15',
         FALSE,
@@ -489,7 +488,9 @@ VALUES (
     ),
     (
         'f63285d1-eae0-4a5c-b0b9-54bf0bf3c40c',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Harry Potter and the Deathly Hallows - Part 1',
@@ -500,9 +501,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'f1e2e8f8-cbbe-4fb0-8588-098cb9c5b19f',
-        '8538f37c-0c25-45f2-9d14-40bca1fb8794',
-        976900000,
+        '976900000',
         146,
         '2010-11-19',
         FALSE,
@@ -510,7 +509,9 @@ VALUES (
     ),
     (
         '8538f37c-0c25-45f2-9d14-40bca1fb8794',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Harry Potter and the Deathly Hallows - Part 2',
@@ -521,9 +522,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'f63285d1-eae0-4a5c-b0b9-54bf0bf3c40c',
-        NULL,
-        1341000000,
+        '1341000000',
         130,
         '2011-07-15',
         TRUE,
@@ -532,7 +531,9 @@ VALUES (
 --The Lord of the Rings
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -543,8 +544,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -553,7 +552,9 @@ INSERT INTO film (
     )
 VALUES (
         '642f36f2-4edd-43d2-9df8-810344d5e733',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Lord of the Rings: The Fellowship of the Ring',
@@ -564,11 +565,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        NULL,
-        -- No prequel for The Fellowship of the Ring
-        '2e2c6482-d9be-4e05-9b24-c6b2c30754d8',
-        -- Followed by The Two Towers
-        887500000,
+        '887500000',
         178,
         '2028-02-15',
         FALSE,
@@ -576,7 +573,9 @@ VALUES (
     ),
     (
         '2e2c6482-d9be-4e05-9b24-c6b2c30754d8',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Lord of the Rings: The Two Towers',
@@ -587,11 +586,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-03-15',
-        '642f36f2-4edd-43d2-9df8-810344d5e733',
-        -- Preceded by The Fellowship of the Ring
-        '4a9386b3-89d2-4ae6-a72d-d2ac18f2a2bd',
-        -- Followed by The Return of the King
-        947200000,
+        '947200000',
         179,
         '2002-12-18',
         FALSE,
@@ -599,7 +594,9 @@ VALUES (
     ),
     (
         '4a9386b3-89d2-4ae6-a72d-d2ac18f2a2bd',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Lord of the Rings: The Return of the King',
@@ -610,11 +607,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        '2e2c6482-d9be-4e05-9b24-c6b2c30754d8',
-        -- Preceded by The Two Towers
-        NULL,
-        -- No sequel planned for The Return of the King
-        1148000000,
+        '1148000000',
         201,
         '2003-12-17',
         TRUE,
@@ -623,7 +616,9 @@ VALUES (
 --X-Men
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -634,8 +629,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -643,7 +636,9 @@ INSERT INTO film (
     )
 VALUES (
         'd8ea07ab-2c74-4c92-b265-64eb81e3e4fe',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'X-Men',
@@ -654,18 +649,16 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for X-Men
-        '1a025732-6e0c-41d2-9f77-862ad86c16b5',
-        -- Followed by X2: X-Men United
-        296300000,
+        '296300000',
         104,
         '2000-07-14',
         FALSE
     ),
     (
         '1a025732-6e0c-41d2-9f77-862ad86c16b5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'X2: X-Men United',
@@ -676,18 +669,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'd8ea07ab-2c74-4c92-b265-64eb81e3e4fe',
-        -- Preceded by X-Men
-        '34f48f58-2d22-4b71-96b4-548b84d4b019',
-        -- Followed by X-Men: The Last Stand
-        407700000,
+        '407700000',
         133,
         '2003-05-02',
         FALSE
     ),
     (
         '34f48f58-2d22-4b71-96b4-548b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'X-Men: The Last Stand',
@@ -698,18 +689,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        '1a025732-6e0c-41d2-9f77-862ad86c16b5',
-        -- Preceded by X2: X-Men United
-        '46a8f689-2a93-4a5a-9234-6a2e5e3e4f88',
-        -- Followed by X-Men: Days of Future Past
-        459400000,
+        '459400000',
         104,
         '2006-05-26',
         FALSE
     ),
     (
         '46a8f689-2a93-4a5a-9234-6a2e5e3e4f88',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'X-Men: Days of Future Past',
@@ -720,18 +709,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        '34f48f58-2d22-4b71-96b4-548b84d4b019',
-        -- Preceded by X-Men: The Last Stand
-        'f84e28c4-5803-4d2c-9b9a-18779413405a',
-        -- Followed by X-Men: Apocalypse
-        747900000,
+        '747900000',
         131,
         '2014-05-10',
         FALSE
     ),
     (
         'f84e28c4-5803-4d2c-9b9a-18779413405a',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'X-Men: Apocalypse',
@@ -742,18 +729,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '46a8f689-2a93-4a5a-9234-6a2e5e3e4f88',
-        -- Preceded by X-Men: Days of Future Past
-        'd7a32df4-79b7-470a-8f25-6a2e5e3e4f88',
-        -- Followed by X-Men: Dark Phoenix
-        543900000,
+        '543900000',
         144,
         '2028-02-15',
         FALSE
     ),
     (
         'd7a32df4-79b7-470a-8f25-6a2e5e3e4f88',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'X-Men: Dark Phoenix',
@@ -764,11 +749,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'f84e28c4-5803-4d2c-9b9a-18779413405a',
-        -- Preceded by X-Men: Apocalypse
-        NULL,
-        -- No sequel planned for X-Men: Dark Phoenix
-        252500000,
+        '252500000',
         113,
         '2019-06-05',
         TRUE
@@ -776,7 +757,9 @@ VALUES (
 --Transformers
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -787,8 +770,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -797,7 +778,9 @@ INSERT INTO film (
     )
 VALUES (
         'ff17f7e8-363c-4a6b-b8d4-cb3a3f90b587',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Transformers',
@@ -808,11 +791,7 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Transformers
-        'df62eb26-8f9b-4150-87f1-df8836a0b28f',
-        -- Followed by Transformers: Revenge of the Fallen
-        709700000,
+        '709700000',
         144,
         '2007-07-03',
         FALSE,
@@ -820,7 +799,9 @@ VALUES (
     ),
     (
         'df62eb26-8f9b-4150-87f1-df8836a0b28f',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Transformers: Revenge of the Fallen',
@@ -831,11 +812,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'ff17f7e8-363c-4a6b-b8d4-cb3a3f90b587',
-        -- Preceded by Transformers
-        'a3b2454e-4970-4c43-927e-848b84d4b019',
-        -- Followed by Transformers: Dark of the Moon
-        836300000,
+        '836300000',
         150,
         '2009-06-24',
         FALSE,
@@ -843,7 +820,9 @@ VALUES (
     ),
     (
         'a3b2454e-4970-4c43-927e-848b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Transformers: Dark of the Moon',
@@ -854,11 +833,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'df62eb26-8f9b-4150-87f1-df8836a0b28f',
-        -- Preceded by Transformers: Revenge of the Fallen
-        '3c5d387a-b25f-446a-8794-1c5112542a95',
-        -- Followed by Transformers: Age of Extinction
-        1124000000,
+        '1124000000',
         154,
         '2011-06-29',
         FALSE,
@@ -866,7 +841,9 @@ VALUES (
     ),
     (
         '3c5d387a-b25f-446a-8794-1c5112542a95',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Transformers: Age of Extinction',
@@ -877,11 +854,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'a3b2454e-4970-4c43-927e-848b84d4b019',
-        -- Preceded by Transformers: Dark of the Moon
-        '9d5835f1-7ce7-482b-a5a5-05f39461d1bf',
-        -- Followed by Transformers: The Last Knight
-        1089000000,
+        '1089000000',
         165,
         '2028-02-15',
         FALSE,
@@ -889,7 +862,9 @@ VALUES (
     ),
     (
         '9d5835f1-7ce7-482b-a5a5-05f39461d1bf',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Transformers: The Last Knight',
@@ -900,11 +875,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-06-15',
-        '3c5d387a-b25f-446a-8794-1c5112542a95',
-        -- Preceded by Transformers: Age of Extinction
-        '38c69c22-7805-4da5-9d04-57bb2ad89321',
-        -- Followed by Bumblebee
-        605400000,
+        '605400000',
         154,
         '2017-06-21',
         FALSE,
@@ -912,7 +883,9 @@ VALUES (
     ),
     (
         '38c69c22-7805-4da5-9d04-57bb2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Bumblebee',
@@ -923,11 +896,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-07-15',
-        '9d5835f1-7ce7-482b-a5a5-05f39461d1bf',
-        -- Preceded by Transformers: The Last Knight
-        NULL,
-        -- No sequel planned for Bumblebee
-        468200000,
+        '468200000',
         114,
         '2018-12-21',
         TRUE,
@@ -936,7 +905,9 @@ VALUES (
 --Fast & Furious
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -947,8 +918,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -957,7 +926,9 @@ INSERT INTO film (
     )
 VALUES (
         '8260b2a8-7a9b-4fe6-ae6b-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Fast and the Furious',
@@ -968,11 +939,7 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for The Fast and the Furious
-        'b5c88e68-3c5d-481b-b53b-6a2e5e3e4f88',
-        -- Followed by 2 Fast 2 Furious
-        207300000,
+        '207300000',
         106,
         '2001-06-22',
         FALSE,
@@ -980,7 +947,9 @@ VALUES (
     ),
     (
         'b5c88e68-3c5d-481b-b53b-6a2e5e3e4f88',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         '2 Fast 2 Furious',
@@ -991,11 +960,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-03-15',
-        '8260b2a8-7a9b-4fe6-ae6b-549b84d4b019',
-        -- Preceded by The Fast and the Furious
-        '2f12ffcb-b8c5-496f-831c-77d3df47f9c3',
-        -- Followed by The Fast and the Furious: Tokyo Drift
-        236400000,
+        '236400000',
         107,
         '2003-06-06',
         FALSE,
@@ -1003,7 +968,9 @@ VALUES (
     ),
     (
         '2f12ffcb-b8c5-496f-831c-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Fast and the Furious: Tokyo Drift',
@@ -1014,11 +981,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        'b5c88e68-3c5d-481b-b53b-6a2e5e3e4f88',
-        -- Preceded by 2 Fast 2 Furious
-        'c1c5c654-1f90-496e-bb88-78b2d8238fe1',
-        -- Followed by Fast & Furious
-        157000000,
+        '157000000',
         104,
         '2006-06-16',
         FALSE,
@@ -1026,7 +989,9 @@ VALUES (
     ),
     (
         'c1c5c654-1f90-496e-bb88-78b2d8238fe1',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Fast & Furious',
@@ -1037,11 +1002,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        '2f12ffcb-b8c5-496f-831c-77d3df47f9c3',
-        -- Preceded by The Fast and the Furious: Tokyo Drift
-        'c6e22957-5a2f-4b8c-8e98-8f11f5d71ed9',
-        -- Followed by Fast Five
-        363300000,
+        '363300000',
         107,
         '2009-04-03',
         FALSE,
@@ -1049,7 +1010,9 @@ VALUES (
     ),
     (
         'c6e22957-5a2f-4b8c-8e98-8f11f5d71ed9',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Fast Five',
@@ -1060,11 +1023,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-06-15',
-        'c1c5c654-1f90-496e-bb88-78b2d8238fe1',
-        -- Preceded by Fast & Furious
-        'd5bf89ae-ba7f-49f1-a1c0-19b29d051c2e',
-        -- Followed by Fast & Furious 6
-        626100000,
+        '626100000',
         130,
         '2011-04-29',
         FALSE,
@@ -1072,7 +1031,9 @@ VALUES (
     ),
     (
         'd5bf89ae-ba7f-49f1-a1c0-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Fast & Furious 6',
@@ -1083,11 +1044,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-07-15',
-        'c6e22957-5a2f-4b8c-8e98-8f11f5d71ed9',
-        -- Preceded by Fast Five
-        '0df89bf3-8b0f-4d3a-8101-cb3a3f90b587',
-        -- Followed by Furious 7
-        788700000,
+        '788700000',
         130,
         '2013-05-07',
         FALSE,
@@ -1095,7 +1052,9 @@ VALUES (
     ),
     (
         '0df89bf3-8b0f-4d3a-8101-cb3a3f90b587',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Furious 7',
@@ -1106,11 +1065,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'd5bf89ae-ba7f-49f1-a1c0-19b29d051c2e',
-        -- Preceded by Fast & Furious 6
-        '3cc0efb7-cdb9-47c8-9c5f-862ad86c16b5',
-        -- Followed by The Fate of the Furious
-        1515000000,
+        '1515000000',
         137,
         '2028-02-15',
         FALSE,
@@ -1118,7 +1073,9 @@ VALUES (
     ),
     (
         '3cc0efb7-cdb9-47c8-9c5f-862ad86c16b5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Fate of the Furious',
@@ -1129,11 +1086,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-09-15',
-        '0df89bf3-8b0f-4d3a-8101-cb3a3f90b587',
-        -- Preceded by Furious 7
-        'd3bc7aa2-49fc-4e4f-b1f2-77d3df47f9c3',
-        -- Followed by Fast & Furious Presents: Hobbs & Shaw
-        1239000000,
+        '1239000000',
         136,
         '2017-04-04',
         FALSE,
@@ -1141,7 +1094,9 @@ VALUES (
     ),
     (
         'd3bc7aa2-49fc-4e4f-b1f2-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Fast & Furious Presents: Hobbs & Shaw',
@@ -1152,11 +1107,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-10-15',
-        '3cc0efb7-cdb9-47c8-9c5f-862ad86c16b5',
-        -- Preceded by The Fate of the Furious
-        NULL,
-        -- No sequel planned for Hobbs & Shaw
-        759500000,
+        '759500000',
         137,
         '2019-08-02',
         TRUE,
@@ -1165,7 +1116,9 @@ VALUES (
 --Twilight
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -1176,8 +1129,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -1186,7 +1137,9 @@ INSERT INTO film (
     )
 VALUES (
         'ca7f3a44-67ef-4920-bf5c-6a2e5e3e4f88',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Twilight',
@@ -1197,11 +1150,7 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Twilight
-        'ebf92416-0587-420d-a7ce-86dc7b3175d5',
-        -- Followed by The Twilight Saga: New Moon
-        393600000,
+        '393600000',
         122,
         '2008-11-21',
         FALSE,
@@ -1209,7 +1158,9 @@ VALUES (
     ),
     (
         'ebf92416-0587-420d-a7ce-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Twilight Saga: New Moon',
@@ -1220,11 +1171,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'ca7f3a44-67ef-4920-bf5c-6a2e5e3e4f88',
-        -- Preceded by Twilight
-        '207b149f-cc3e-4d08-8260-77d3df47f9c3',
-        -- Followed by The Twilight Saga: Eclipse
-        709700000,
+        '709700000',
         130,
         '2009-11-20',
         FALSE,
@@ -1232,7 +1179,9 @@ VALUES (
     ),
     (
         '207b149f-cc3e-4d08-8260-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Twilight Saga: Eclipse',
@@ -1243,11 +1192,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'ebf92416-0587-420d-a7ce-86dc7b3175d5',
-        -- Preceded by The Twilight Saga: New Moon
-        'a3e736b0-45f7-401a-a37f-57bb2ad89321',
-        -- Followed by The Twilight Saga: Breaking Dawn - Part 1
-        698500000,
+        '698500000',
         124,
         '2010-06-30',
         FALSE,
@@ -1255,7 +1200,9 @@ VALUES (
     ),
     (
         'a3e736b0-45f7-401a-a37f-57bb2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Twilight Saga: Breaking Dawn - Part 1',
@@ -1266,11 +1213,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '207b149f-cc3e-4d08-8260-77d3df47f9c3',
-        -- Preceded by The Twilight Saga: Eclipse
-        'd9d92a19-23b1-46c1-81f1-19b29d051c2e',
-        -- Followed by The Twilight Saga: Breaking Dawn - Part 2
-        712200000,
+        '712200000',
         117,
         '2028-02-15',
         FALSE,
@@ -1278,7 +1221,9 @@ VALUES (
     ),
     (
         'd9d92a19-23b1-46c1-81f1-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Twilight Saga: Breaking Dawn - Part 2',
@@ -1289,11 +1234,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-06-15',
-        'a3e736b0-45f7-401a-a37f-57bb2ad89321',
-        -- Preceded by The Twilight Saga: Breaking Dawn - Part 1
-        NULL,
-        -- No sequel planned for Breaking Dawn - Part 2
-        829700000,
+        '829700000',
         115,
         '2012-11-16',
         TRUE,
@@ -1302,7 +1243,9 @@ VALUES (
 --The Chronicles of Narnia
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -1313,8 +1256,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -1322,7 +1263,9 @@ INSERT INTO film (
     )
 VALUES (
         '833c2904-369d-4c46-ae80-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Chronicles of Narnia: The Lion, the Witch and the Wardrobe',
@@ -1333,18 +1276,16 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        NULL,
-        -- No prequel for The Lion, the Witch and the Wardrobe
-        'a4e13e08-3d3d-4aa5-9b46-86dc7b3175d5',
-        -- Followed by The Chronicles of Narnia: Prince Caspian
-        745000000,
+        '745000000',
         143,
         '2028-02-15',
         FALSE
     ),
     (
         'a4e13e08-3d3d-4aa5-9b46-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Chronicles of Narnia: Prince Caspian',
@@ -1355,18 +1296,16 @@ VALUES (
         'PG',
         NULL,
         '2023-03-15',
-        '833c2904-369d-4c46-ae80-549b84d4b019',
-        -- Preceded by The Lion, the Witch and the Wardrobe
-        'bd050c17-3a03-47a5-9b24-77d3df47f9c3',
-        -- Followed by The Chronicles of Narnia: The Voyage of the Dawn Treader
-        419700000,
+        '419700000',
         150,
         '2008-05-16',
         FALSE
     ),
     (
         'bd050c17-3a03-47a5-9b24-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Chronicles of Narnia: The Voyage of the Dawn Treader',
@@ -1377,11 +1316,7 @@ VALUES (
         'PG',
         NULL,
         '2023-04-15',
-        'a4e13e08-3d3d-4aa5-9b46-86dc7b3175d5',
-        -- Preceded by Prince Caspian
-        NULL,
-        -- No sequel planned for The Voyage of the Dawn Treader
-        415700000,
+        '415700000',
         113,
         '2010-12-10',
         TRUE
@@ -1389,7 +1324,9 @@ VALUES (
 --Toy Story
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -1400,8 +1337,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -1409,7 +1344,9 @@ INSERT INTO film (
     )
 VALUES (
         '5e02c3c0-368e-48d2-897c-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Toy Story',
@@ -1420,18 +1357,16 @@ VALUES (
         'G',
         NULL,
         NULL,
-        NULL,
-        -- No prequel for Toy Story
-        'eeb5074a-9ecb-4bf9-b57b-86dc7b3175d5',
-        -- Followed by Toy Story 2
-        373600000,
+        '373600000',
         81,
         '2028-02-15',
         FALSE
     ),
     (
         'eeb5074a-9ecb-4bf9-b57b-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Toy Story 2',
@@ -1442,18 +1377,16 @@ VALUES (
         'G',
         NULL,
         '2023-03-15',
-        '5e02c3c0-368e-48d2-897c-549b84d4b019',
-        -- Preceded by Toy Story
-        '1e1e7ce8-2330-4d4e-9a4b-77d3df47f9c3',
-        -- Followed by Toy Story 3
-        497400000,
+        '497400000',
         92,
         '1999-11-24',
         FALSE
     ),
     (
         '1e1e7ce8-2330-4d4e-9a4b-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Toy Story 3',
@@ -1464,18 +1397,16 @@ VALUES (
         'G',
         NULL,
         NULL,
-        'eeb5074a-9ecb-4bf9-b57b-86dc7b3175d5',
-        -- Preceded by Toy Story 2
-        'ac938090-3bd0-4b19-8d6c-57bb2ad89321',
-        -- Followed by Toy Story 4
-        1076000000,
+        '1076000000',
         103,
         '2028-02-15',
         FALSE
     ),
     (
         'ac938090-3bd0-4b19-8d6c-57bb2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Toy Story 4',
@@ -1486,11 +1417,7 @@ VALUES (
         'G',
         NULL,
         '2023-05-15',
-        '1e1e7ce8-2330-4d4e-9a4b-77d3df47f9c3',
-        -- Preceded by Toy Story 3
-        NULL,
-        -- No sequel planned for Toy Story 4
-        1073000000,
+        '1073000000',
         100,
         '2019-06-11',
         TRUE
@@ -1498,7 +1425,9 @@ VALUES (
 --Shrek
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -1509,8 +1438,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -1519,7 +1446,9 @@ INSERT INTO film (
     )
 VALUES (
         '3f4089d4-7f7a-4ba0-8812-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Shrek',
@@ -1530,11 +1459,7 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        NULL,
-        -- No prequel for Shrek
-        'e2e8bb26-3d4a-4285-91d0-86dc7b3175d5',
-        -- Followed by Shrek 2
-        484400000,
+        '484400000',
         90,
         '2028-02-15',
         FALSE,
@@ -1542,7 +1467,9 @@ VALUES (
     ),
     (
         'e2e8bb26-3d4a-4285-91d0-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Shrek 2',
@@ -1553,11 +1480,7 @@ VALUES (
         'PG',
         NULL,
         '2023-03-15',
-        '3f4089d4-7f7a-4ba0-8812-549b84d4b019',
-        -- Preceded by Shrek
-        'ec7f4a8f-4971-4e4b-b040-77d3df47f9c3',
-        -- Followed by Shrek the Third
-        919200000,
+        '919200000',
         93,
         '2004-04-28',
         FALSE,
@@ -1565,7 +1488,9 @@ VALUES (
     ),
     (
         'ec7f4a8f-4971-4e4b-b040-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Shrek the Third',
@@ -1576,11 +1501,7 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'e2e8bb26-3d4a-4285-91d0-86dc7b3175d5',
-        -- Preceded by Shrek 2
-        'd0a8c33d-3d44-4ff7-a0d7-57bb2ad89321',
-        -- Followed by Shrek Forever After
-        798900000,
+        '798900000',
         93,
         '2028-02-15',
         FALSE,
@@ -1588,7 +1509,9 @@ VALUES (
     ),
     (
         'd0a8c33d-3d44-4ff7-a0d7-57bb2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Shrek Forever After',
@@ -1599,11 +1522,7 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'ec7f4a8f-4971-4e4b-b040-77d3df47f9c3',
-        -- Preceded by Shrek the Third
-        NULL,
-        -- No sequel planned for Shrek Forever After
-        752600000,
+        '752600000',
         93,
         '2010-04-21',
         TRUE,
@@ -1612,7 +1531,9 @@ VALUES (
 --Mission Impossible
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -1623,8 +1544,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -1632,7 +1551,9 @@ INSERT INTO film (
     )
 VALUES (
         'd2f17dbf-ff6a-4cfc-92ec-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Mission: Impossible',
@@ -1643,18 +1564,16 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Mission: Impossible
-        'b22ee6aa-6f36-4be6-a31a-86dc7b3175d5',
-        -- Followed by Mission: Impossible 2
-        457700000,
+        '457700000',
         110,
         '1996-05-22',
         FALSE
     ),
     (
         'b22ee6aa-6f36-4be6-a31a-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Mission: Impossible 2',
@@ -1665,18 +1584,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'd2f17dbf-ff6a-4cfc-92ec-549b84d4b019',
-        -- Preceded by Mission: Impossible
-        '7b6b98e3-9f2f-4ef2-8d1c-77d3df47f9c3',
-        -- Followed by Mission: Impossible III
-        546400000,
+        '546400000',
         123,
         '2000-05-24',
         FALSE
     ),
     (
         '7b6b98e3-9f2f-4ef2-8d1c-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Mission: Impossible III',
@@ -1687,18 +1604,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        'b22ee6aa-6f36-4be6-a31a-86dc7b3175d5',
-        -- Preceded by Mission: Impossible 2
-        'befd8643-97e9-4f6d-9a5e-57bb2ad89321',
-        -- Followed by Mission: Impossible – Ghost Protocol
-        397900000,
+        '397900000',
         126,
         '2006-05-05',
         FALSE
     ),
     (
         'befd8643-97e9-4f6d-9a5e-57bb2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Mission: Impossible – Ghost Protocol',
@@ -1709,18 +1624,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '7b6b98e3-9f2f-4ef2-8d1c-77d3df47f9c3',
-        -- Preceded by Mission: Impossible III
-        'f3b609a5-53e8-4a42-aecc-19b29d051c2e',
-        -- Followed by Mission: Impossible – Rogue Nation
-        694700000,
+        '694700000',
         132,
         '2028-02-15',
         FALSE
     ),
     (
         'f3b609a5-53e8-4a42-aecc-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Mission: Impossible – Rogue Nation',
@@ -1731,18 +1644,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-06-15',
-        'befd8643-97e9-4f6d-9a5e-57bb2ad89321',
-        -- Preceded by Ghost Protocol
-        'e5ac0580-0d64-4f2c-88c5-8f11f5d71ed9',
-        -- Followed by Mission: Impossible – Fallout
-        682700000,
+        '682700000',
         147,
         '2015-07-31',
         FALSE
     ),
     (
         'e5ac0580-0d64-4f2c-88c5-8f11f5d71ed9',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Mission: Impossible – Fallout',
@@ -1753,11 +1664,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'f3b609a5-53e8-4a42-aecc-19b29d051c2e',
-        -- Preceded by Rogue Nation
-        NULL,
-        -- No sequel planned for Fallout
-        791100000,
+        '791100000',
         147,
         '2018-07-27',
         TRUE
@@ -1765,7 +1672,9 @@ VALUES (
 --The Mummy
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -1776,8 +1685,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -1785,7 +1692,9 @@ INSERT INTO film (
     )
 VALUES (
         'f97cc5ef-81e2-48dd-94e7-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Mummy',
@@ -1796,18 +1705,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        NULL,
-        -- No prequel for The Mummy
-        'ee5f49eb-52f1-4fc1-940c-86dc7b3175d5',
-        -- Followed by The Mummy Returns
-        155400000,
+        '155400000',
         125,
         '2028-02-15',
         FALSE
     ),
     (
         'ee5f49eb-52f1-4fc1-940c-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Mummy Returns',
@@ -1818,18 +1725,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'f97cc5ef-81e2-48dd-94e7-549b84d4b019',
-        -- Preceded by The Mummy
-        'c384dab1-63f2-4f77-b45a-77d3df47f9c3',
-        -- Followed by The Mummy: Tomb of the Dragon Emperor
-        435000000,
+        '435000000',
         130,
         '2001-05-04',
         FALSE
     ),
     (
         'c384dab1-63f2-4f77-b45a-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Mummy: Tomb of the Dragon Emperor',
@@ -1840,11 +1745,7 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'ee5f49eb-52f1-4fc1-940c-86dc7b3175d5',
-        -- Preceded by The Mummy Returns
-        NULL,
-        -- No sequel planned for Tomb of the Dragon Emperor
-        401000000,
+        '401000000',
         112,
         '2008-07-24',
         TRUE
@@ -1852,7 +1753,9 @@ VALUES (
 --Resident Evil
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -1863,8 +1766,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -1872,7 +1773,9 @@ INSERT INTO film (
     )
 VALUES (
         'cd50e45e-b6db-470d-8e9e-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Resident Evil',
@@ -1883,18 +1786,16 @@ VALUES (
         'R',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Resident Evil
-        '67ee768e-8a36-4e68-a2cf-86dc7b3175d5',
-        -- Followed by Resident Evil: Apocalypse
-        102900000,
+        '102900000',
         100,
         '2002-03-15',
         FALSE
     ),
     (
         '67ee768e-8a36-4e68-a2cf-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Resident Evil: Apocalypse',
@@ -1905,18 +1806,16 @@ VALUES (
         'R',
         NULL,
         NULL,
-        'cd50e45e-b6db-470d-8e9e-549b84d4b019',
-        -- Preceded by Resident Evil
-        '693c3792-7e36-4ea4-a18e-77d3df47f9c3',
-        -- Followed by Resident Evil: Extinction
-        129400000,
+        '129400000',
         94,
         '2028-02-15',
         FALSE
     ),
     (
         '693c3792-7e36-4ea4-a18e-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Resident Evil: Extinction',
@@ -1927,18 +1826,16 @@ VALUES (
         'R',
         NULL,
         '2023-04-15',
-        '67ee768e-8a36-4e68-a2cf-86dc7b3175d5',
-        -- Preceded by Resident Evil: Apocalypse
-        '51587792-c53e-44f8-8bf7-57bb2ad89321',
-        -- Followed by Resident Evil: Afterlife
-        147717833,
+        '147717833',
         95,
         '2007-09-21',
         FALSE
     ),
     (
         '51587792-c53e-44f8-8bf7-57bb2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Resident Evil: Afterlife',
@@ -1949,18 +1846,16 @@ VALUES (
         'R',
         NULL,
         NULL,
-        '693c3792-7e36-4ea4-a18e-77d3df47f9c3',
-        -- Preceded by Resident Evil: Extinction
-        'a9f446b5-676d-4d2b-b065-19b29d051c2e',
-        -- Followed by Resident Evil: Retribution
-        300228084,
+        '300228084',
         96,
         '2028-02-15',
         FALSE
     ),
     (
         'a9f446b5-676d-4d2b-b065-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Resident Evil: Retribution',
@@ -1971,18 +1866,16 @@ VALUES (
         'R',
         NULL,
         '2023-06-15',
-        '51587792-c53e-44f8-8bf7-57bb2ad89321',
-        -- Preceded by Resident Evil: Afterlife
-        'fd9f7f5c-314b-47b3-bb7b-8f11f5d71ed9',
-        -- Followed by Resident Evil: The Final Chapter
-        240159255,
+        '240159255',
         95,
         '2012-09-14',
         FALSE
     ),
     (
         'fd9f7f5c-314b-47b3-bb7b-8f11f5d71ed9',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Resident Evil: The Final Chapter',
@@ -1993,11 +1886,7 @@ VALUES (
         'R',
         NULL,
         '2023-07-15',
-        'a9f446b5-676d-4d2b-b065-19b29d051c2e',
-        -- Preceded by Resident Evil: Retribution
-        NULL,
-        -- No sequel planned for The Final Chapter
-        312242626,
+        '312242626',
         107,
         '2016-12-23',
         TRUE
@@ -2005,7 +1894,9 @@ VALUES (
 --Ice Age
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2016,8 +1907,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2025,7 +1914,9 @@ INSERT INTO film (
     )
 VALUES (
         'f613d654-d9cb-4b5b-bb46-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Ice Age',
@@ -2036,18 +1927,16 @@ VALUES (
         'PG',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Ice Age
-        '890e4a6e-cf1f-4397-8f54-86dc7b3175d5',
-        -- Followed by Ice Age: The Meltdown
-        383300000,
+        '383300000',
         81,
         '2002-03-15',
         FALSE
     ),
     (
         '890e4a6e-cf1f-4397-8f54-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Ice Age: The Meltdown',
@@ -2058,18 +1947,16 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'f613d654-d9cb-4b5b-bb46-549b84d4b019',
-        -- Preceded by Ice Age
-        '34579e3a-4de0-4c44-9079-77d3df47f9c3',
-        -- Followed by Ice Age: Dawn of the Dinosaurs
-        660940780,
+        '660940780',
         91,
         '2006-03-31',
         FALSE
     ),
     (
         '34579e3a-4de0-4c44-9079-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Ice Age: Dawn of the Dinosaurs',
@@ -2080,18 +1967,16 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        '890e4a6e-cf1f-4397-8f54-86dc7b3175d5',
-        -- Preceded by Ice Age: The Meltdown
-        'd0e7fdaa-1a71-47b1-a70a-57bb2ad89321',
-        -- Followed by Ice Age: Continental Drift
-        886686817,
+        '886686817',
         94,
         '2028-02-15',
         FALSE
     ),
     (
         'd0e7fdaa-1a71-47b1-a70a-57bb2ad89321',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Ice Age: Continental Drift',
@@ -2102,18 +1987,16 @@ VALUES (
         'PG',
         NULL,
         '2023-05-15',
-        '34579e3a-4de0-4c44-9079-77d3df47f9c3',
-        -- Preceded by Ice Age: Dawn of the Dinosaurs
-        'f8727d9d-afda-4f8c-87b2-19b29d051c2e',
-        -- Followed by Ice Age: Collision Course
-        877244782,
+        '877244782',
         88,
         '2012-07-13',
         FALSE
     ),
     (
         'f8727d9d-afda-4f8c-87b2-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Ice Age: Collision Course',
@@ -2124,11 +2007,7 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        'd0e7fdaa-1a71-47b1-a70a-57bb2ad89321',
-        -- Preceded by Ice Age: Continental Drift
-        NULL,
-        -- No sequel planned for Ice Age: Collision Course
-        408579038,
+        '408579038',
         94,
         '2016-07-22',
         TRUE
@@ -2136,7 +2015,9 @@ VALUES (
 --Spider-Man
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2147,8 +2028,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2156,7 +2035,9 @@ INSERT INTO film (
     )
 VALUES (
         '4ec7fecc-f015-4a11-8871-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Spider-Man',
@@ -2167,18 +2048,16 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Spider-Man
-        'c2f143ab-e992-4cfa-8ad0-86dc7b3175d5',
-        -- Followed by Spider-Man 2
-        821708551,
+        '821708551',
         121,
         '2002-05-03',
         FALSE
     ),
     (
         'c2f143ab-e992-4cfa-8ad0-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Spider-Man 2',
@@ -2189,18 +2068,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '4ec7fecc-f015-4a11-8871-549b84d4b019',
-        -- Preceded by Spider-Man
-        'e343cb24-0d8f-4d92-826f-77d3df47f9c3',
-        -- Followed by Spider-Man 3
-        783766341,
+        '783766341',
         127,
         '2028-02-15',
         FALSE
     ),
     (
         'e343cb24-0d8f-4d92-826f-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Spider-Man 3',
@@ -2211,11 +2088,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        'c2f143ab-e992-4cfa-8ad0-86dc7b3175d5',
-        -- Preceded by Spider-Man 2
-        NULL,
-        -- No sequel planned for Spider-Man 3
-        894983373,
+        '894983373',
         139,
         '2007-05-01',
         TRUE
@@ -2223,7 +2096,9 @@ VALUES (
 --The Matrix
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2234,8 +2109,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2243,7 +2116,9 @@ INSERT INTO film (
     )
 VALUES (
         '997f1b76-3484-4d87-8b21-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Matrix',
@@ -2254,18 +2129,16 @@ VALUES (
         'R',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for The Matrix
-        '491e0975-b9bf-4ac3-9274-86dc7b3175d5',
-        -- Followed by The Matrix Reloaded
-        463517383,
+        '463517383',
         136,
         '1999-03-31',
         FALSE
     ),
     (
         '491e0975-b9bf-4ac3-9274-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Matrix Reloaded',
@@ -2276,18 +2149,16 @@ VALUES (
         'R',
         NULL,
         NULL,
-        '997f1b76-3484-4d87-8b21-549b84d4b019',
-        -- Preceded by The Matrix
-        '3f60de1c-4f5e-4b63-835c-77d3df47f9c3',
-        -- Followed by The Matrix Revolutions
-        738576929,
+        '738576929',
         138,
         '2028-02-15',
         FALSE
     ),
     (
         '3f60de1c-4f5e-4b63-835c-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Matrix Revolutions',
@@ -2298,11 +2169,7 @@ VALUES (
         'R',
         NULL,
         '2023-04-15',
-        '491e0975-b9bf-4ac3-9274-86dc7b3175d5',
-        -- Preceded by The Matrix Reloaded
-        NULL,
-        -- No sequel planned for The Matrix Revolutions
-        427343288,
+        '4273432880',
         129,
         '2003-10-27',
         TRUE
@@ -2310,7 +2177,9 @@ VALUES (
 --Iron Man
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2321,8 +2190,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2330,7 +2197,9 @@ INSERT INTO film (
     )
 VALUES (
         '7fc79eb3-f84c-4650-a4c3-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Iron Man',
@@ -2341,18 +2210,16 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Iron Man
-        '1f1d7e23-6899-40aa-8ad4-86dc7b3175d5',
-        -- Followed by Iron Man 2
-        585174222,
+        '5851742220',
         126,
         '2008-04-30',
         FALSE
     ),
     (
         '1f1d7e23-6899-40aa-8ad4-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Iron Man 2',
@@ -2363,18 +2230,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-03-15',
-        '7fc79eb3-f84c-4650-a4c3-549b84d4b019',
-        -- Preceded by Iron Man
-        '5072401a-cfae-4e3b-9538-77d3df47f9c3',
-        -- Followed by The Avengers
-        623933331,
+        '6239333310',
         124,
         '2010-04-26',
         FALSE
     ),
     (
         '5072401a-cfae-4e3b-9538-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Avengers',
@@ -2385,18 +2250,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '1f1d7e23-6899-40aa-8ad4-86dc7b3175d5',
-        -- Preceded by Iron Man 2
-        '943b4b26-c495-40d6-a172-19b29d051c2e',
-        -- Followed by Iron Man 3
-        "1.518 billion",
+        "1518000000",
         143,
         '2028-02-15',
         FALSE
     ),
     (
         '943b4b26-c495-40d6-a172-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Iron Man 3',
@@ -2407,11 +2270,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        '5072401a-cfae-4e3b-9538-77d3df47f9c3',
-        -- Preceded by The Avengers
-        NULL,
-        -- No sequel planned for Iron Man 3
-        "1.214 billion",
+        "12140000000",
         "130",
         '2013-04-24',
         TRUE
@@ -2419,7 +2278,9 @@ VALUES (
 --Indiana Jones
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2430,8 +2291,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2439,7 +2298,9 @@ INSERT INTO film (
     )
 VALUES (
         '0ec5e7c4-3d17-4d2b-9c44-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Raiders of the Lost Ark',
@@ -2450,18 +2311,16 @@ VALUES (
         'PG',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Raiders of the Lost Ark
-        '2ac3d9d4-52f6-4f3b-bdf3-86dc7b3175d5',
-        -- Followed by Indiana Jones and the Temple of Doom
-        389925971,
+        '3899259710',
         115,
         '1981-06-12',
         FALSE
     ),
     (
         '2ac3d9d4-52f6-4f3b-bdf3-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Indiana Jones and the Temple of Doom',
@@ -2472,18 +2331,16 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        '0ec5e7c4-3d17-4d2b-9c44-549b84d4b019',
-        -- Preceded by Raiders of the Lost Ark
-        '5f64d75a-e0ea-4598-9cf0-77d3df47f9c3',
-        -- Followed by Indiana Jones and the Last Crusade
-        474171806,
+        '4741718006',
         118,
         '2028-02-15',
         FALSE
     ),
     (
         '5f64d75a-e0ea-4598-9cf0-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Indiana Jones and the Last Crusade',
@@ -2494,11 +2351,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        '2ac3d9d4-52f6-4f3b-bdf3-86dc7b3175d5',
-        -- Preceded by Indiana Jones and the Temple of Doom
-        NULL,
-        -- No sequel planned for Indiana Jones and the Last Crusade
-        474171806,
+        '4741718006',
         127,
         '1989-05-24',
         TRUE
@@ -2506,7 +2359,9 @@ VALUES (
 --The Terminator
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2517,8 +2372,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2526,7 +2379,9 @@ INSERT INTO film (
     )
 VALUES (
         'b943a1cf-5b18-43f7-862a-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Terminator',
@@ -2537,18 +2392,16 @@ VALUES (
         'R',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for The Terminator
-        '2e1b83aa-3dbf-4a61-b5a2-86dc7b3175d5',
-        -- Followed by Terminator 2: Judgment Day
-        "78.4 million",
+        "784000000",
         107,
         '1984-10-26',
         FALSE
     ),
     (
         '2e1b83aa-3dbf-4a61-b5a2-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Terminator 2: Judgment Day',
@@ -2559,18 +2412,16 @@ VALUES (
         'R',
         NULL,
         '2023-03-15',
-        'b943a1cf-5b18-43f7-862a-549b84d4b019',
-        -- Preceded by The Terminator
-        '3cf70b25-8a47-4f5b-ae91-77d3df47f9c3',
-        -- Followed by Terminator 3: Rise of the Machines
-        "519.8 million",
+        "5198000000",
         137,
         '1991-07-01',
         FALSE
     ),
     (
         '3cf70b25-8a47-4f5b-ae91-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Terminator 3: Rise of the Machines',
@@ -2581,18 +2432,16 @@ VALUES (
         'R',
         NULL,
         NULL,
-        '2e1b83aa-3dbf-4a61-b5a2-86dc7b3175d5',
-        -- Preceded by Terminator 2: Judgment Day
-        'f59d6ff6-c469-4767-9cc7-19b29d051c2e',
-        -- Followed by Terminator Salvation
-        "433.4 million",
+        "4334000000",
         109,
         '2028-02-15',
         FALSE
     ),
     (
         'f59d6ff6-c469-4767-9cc7-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Terminator Salvation',
@@ -2603,18 +2452,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        '3cf70b25-8a47-4f5b-ae91-77d3df47f9c3',
-        -- Preceded by Terminator 3: Rise of the Machines
-        '6143835a-2292-42c7-8bfa-86dc7b3175d5',
-        -- Followed by Terminator Genisys
-        "371.4 million",
+        "3714000000",
         115,
         '2009-05-14',
         FALSE
     ),
     (
         '6143835a-2292-42c7-8bfa-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Terminator Genisys',
@@ -2625,18 +2472,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        'f59d6ff6-c469-4767-9cc7-19b29d051c2e',
-        -- Preceded by Terminator Salvation
-        'c0e1d24f-c6da-4912-8980-19b29d051c2e',
-        -- Followed by Terminator: Dark Fate
-        "440.6 million",
+        "4406000000",
         126,
         '2015-06-28',
         FALSE
     ),
     (
         'c0e1d24f-c6da-4912-8980-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Terminator: Dark Fate',
@@ -2647,11 +2492,7 @@ VALUES (
         'R',
         NULL,
         '2023-07-15',
-        '6143835a-2292-42c7-8bfa-86dc7b3175d5',
-        -- Preceded by Terminator Genisys
-        NULL,
-        -- No sequel planned for Terminator: Dark Fate
-        "261.1 million",
+        "2611000000",
         128,
         '2019-10-23',
         TRUE
@@ -2659,7 +2500,9 @@ VALUES (
 --Jurassic Park
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2670,8 +2513,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2679,7 +2520,9 @@ INSERT INTO film (
     )
 VALUES (
         '9535a650-c1c2-4f12-8302-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Jurassic Park',
@@ -2690,18 +2533,16 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Jurassic Park
-        '9a00426e-62c0-4872-a1c7-86dc7b3175d5',
-        -- Followed by The Lost World: Jurassic Park
-        "1.029 billion",
+        "1029000000",
         127,
         '1993-06-11',
         FALSE
     ),
     (
         '9a00426e-62c0-4872-a1c7-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Lost World: Jurassic Park',
@@ -2712,18 +2553,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '9535a650-c1c2-4f12-8302-549b84d4b019',
-        -- Preceded by Jurassic Park
-        '780df39b-7f88-4ce6-a7e6-77d3df47f9c3',
-        -- Followed by Jurassic Park III
-        "618.6 million",
+        "6186000000",
         129,
         '2028-02-15',
         FALSE
     ),
     (
         '780df39b-7f88-4ce6-a7e6-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Jurassic Park III',
@@ -2734,18 +2573,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        '9a00426e-62c0-4872-a1c7-86dc7b3175d5',
-        -- Preceded by The Lost World: Jurassic Park
-        '34b84936-c72c-45c8-a04e-19b29d051c2e',
-        -- Followed by Jurassic World
-        "368.8 million",
+        "3688000000",
         92,
         '2001-07-18',
         FALSE
     ),
     (
         '34b84936-c72c-45c8-a04e-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Jurassic World',
@@ -2756,18 +2593,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        '780df39b-7f88-4ce6-a7e6-77d3df47f9c3',
-        -- Preceded by Jurassic Park III
-        '9c2d977a-116a-44e6-a3c1-86dc7b3175d5',
-        -- Followed by Jurassic World: Fallen Kingdom
-        "1.672 billion",
+        "1672000000",
         124,
         '2015-06-09',
         FALSE
     ),
     (
         '9c2d977a-116a-44e6-a3c1-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Jurassic World: Fallen Kingdom',
@@ -2778,18 +2613,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-06-15',
-        '34b84936-c72c-45c8-a04e-19b29d051c2e',
-        -- Preceded by Jurassic World
-        '04d5a6a7-d465-42b4-81da-19b29d051c2e',
-        -- Followed by Jurassic World: Dominion
-        "1.308 billion",
+        "1308000000",
         128,
         '2018-06-06',
         FALSE
     ),
     (
         '04d5a6a7-d465-42b4-81da-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Jurassic World: Dominion',
@@ -2800,10 +2633,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-07-15',
-        '9c2d977a-116a-44e6-a3c1-86dc7b3175d5',
-        -- Preceded by Jurassic World: Fallen Kingdom
-        NULL,
-        "1.434 billion",
+        "1434000000",
         132,
         '2020-08-10',
         TRUE
@@ -2811,7 +2641,9 @@ VALUES (
 --Rambo
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2822,8 +2654,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2831,7 +2661,9 @@ INSERT INTO film (
     )
 VALUES (
         '2b226f0f-3c93-46b9-9e62-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'First Blood',
@@ -2842,18 +2674,16 @@ VALUES (
         'R',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for First Blood
-        'e1e9637c-badd-46ab-a630-86dc7b3175d5',
-        -- Followed by Rambo: First Blood Part II
-        "125.2 million",
+        "125200000",
         96,
         '1982-10-22',
         FALSE
     ),
     (
         'e1e9637c-badd-46ab-a630-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Rambo: First Blood Part II',
@@ -2864,18 +2694,16 @@ VALUES (
         'R',
         NULL,
         '2023-03-15',
-        '2b226f0f-3c93-46b9-9e62-549b84d4b019',
-        -- Preceded by First Blood
-        '7c635499-3f46-4e1d-ba1d-77d3df47f9c3',
-        -- Followed by Rambo III
-        "300.4 million",
+        "300400000",
         96,
         '1985-05-22',
         FALSE
     ),
     (
         '7c635499-3f46-4e1d-ba1d-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Rambo III',
@@ -2886,18 +2714,16 @@ VALUES (
         'R',
         NULL,
         NULL,
-        'e1e9637c-badd-46ab-a630-86dc7b3175d5',
-        -- Preceded by Rambo: First Blood Part II
-        'f35b8a06-1a57-4a22-9f71-19b29d051c2e',
-        -- Followed by Rambo
-        "189.0 million",
+        "189000000",
         102,
         '2028-02-15',
         FALSE
     ),
     (
         'f35b8a06-1a57-4a22-9f71-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Rambo',
@@ -2908,18 +2734,16 @@ VALUES (
         'R',
         NULL,
         '2023-05-15',
-        '7c635499-3f46-4e1d-ba1d-77d3df47f9c3',
-        -- Preceded by Rambo III
-        'c9f276ed-0a8a-4d1a-89d5-86dc7b3175d5',
-        -- Followed by Rambo: Last Blood
-        "113.2 million",
+        "113200000",
         89,
         '2008-01-25',
         FALSE
     ),
     (
         'c9f276ed-0a8a-4d1a-89d5-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Rambo: Last Blood',
@@ -2930,11 +2754,7 @@ VALUES (
         'R',
         NULL,
         NULL,
-        'f35b8a06-1a57-4a22-9f71-19b29d051c2e',
-        -- Preceded by Rambo
-        NULL,
-        -- No sequel planned for Rambo: Last Blood
-        "91.5 million",
+        "91500000",
         89,
         '2019-09-20',
         TRUE
@@ -2942,7 +2762,9 @@ VALUES (
 --The Hangover
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -2953,8 +2775,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -2962,7 +2782,9 @@ INSERT INTO film (
     )
 VALUES (
         '5e6a4861-493a-4a14-b950-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Hangover',
@@ -2973,18 +2795,16 @@ VALUES (
         'R',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for The Hangover
-        '0f9c90da-d591-42ab-af2d-86dc7b3175d5',
-        -- Followed by The Hangover Part II
-        "467.5 million",
+        "467500000",
         100,
         '2009-06-05',
         FALSE
     ),
     (
         '0f9c90da-d591-42ab-af2d-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Hangover Part II',
@@ -2995,33 +2815,27 @@ VALUES (
         'R',
         NULL,
         NULL,
-        '5e6a4861-493a-4a14-b950-549b84d4b019',
-        -- Preceded by The Hangover
-        'd1b70fc3-0b12-4c8d-9d6a-77d3df47f9c3',
-        -- Followed by The Hangover Part III
-        "586.8 million",
+        "586800000",
         102,
         '2028-02-15',
         FALSE
     ),
     (
         'd1b70fc3-0b12-4c8d-9d6a-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Hangover Part III',
         'The Wolfpack attempts an intervention to help Alan, but things take a dangerous turn when they cross paths with a criminal.',
         'EN',
-        'bb82103a-708e-4a86-953c-7a8b1461d1bf',
+        'adc21998-a3d7-4ab1-b57c-0d548481195d',
         'Warner Bros. Pictures',
         'R',
         NULL,
         '2023-04-15',
-        'adc21998-a3d7-4ab1-b57c-0d548481195d',
-        -- Preceded by The Hangover Part II
-        NULL,
-        -- No sequel planned for The Hangover Part III
-        "362 million",
+        "362000000",
         100,
         '2013-05-23',
         TRUE
@@ -3029,7 +2843,9 @@ VALUES (
 --Back to the Future
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3040,8 +2856,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3049,7 +2863,9 @@ INSERT INTO film (
     )
 VALUES (
         '823f77c2-6b1c-4cc3-92b2-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Back to the Future',
@@ -3060,18 +2876,16 @@ VALUES (
         'PG',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Back to the Future
-        '83a46bc4-7d3b-40cb-ae71-86dc7b3175d5',
-        -- Followed by Back to the Future Part II
-        "389.1 million",
+        "389100000",
         116,
         '1985-07-03',
         FALSE
     ),
     (
         '83a46bc4-7d3b-40cb-ae71-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Back to the Future Part II',
@@ -3082,18 +2896,16 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        '823f77c2-6b1c-4cc3-92b2-549b84d4b019',
-        -- Preceded by Back to the Future
-        'c68608f8-ef27-4c5a-bf2e-77d3df47f9c3',
-        -- Followed by Back to the Future Part III
-        "332 million",
+        "332000000",
         108,
         '2028-02-15',
         FALSE
     ),
     (
         'c68608f8-ef27-4c5a-bf2e-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Back to the Future Part III',
@@ -3104,11 +2916,7 @@ VALUES (
         'PG',
         NULL,
         '2023-04-15',
-        '83a46bc4-7d3b-40cb-ae71-86dc7b3175d5',
-        -- Preceded by Back to the Future Part II
-        NULL,
-        -- No sequel planned for Back to the Future Part III
-        "244.5 million",
+        "244500000",
         118,
         '1990-05-25',
         TRUE
@@ -3116,7 +2924,9 @@ VALUES (
 --Men in Black
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3127,8 +2937,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3136,7 +2944,9 @@ INSERT INTO film (
     )
 VALUES (
         'c0cc183c-30e5-4714-bec0-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Men in Black',
@@ -3147,18 +2957,16 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Men in Black
-        '0ec5c120-3801-46e7-a3f5-86dc7b3175d5',
-        -- Followed by Men in Black II
-        "589.4 million",
+        "589400000",
         98,
         '1997-07-02',
         FALSE
     ),
     (
         '0ec5c120-3801-46e7-a3f5-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Men in Black II',
@@ -3169,18 +2977,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-03-15',
-        'c0cc183c-30e5-4714-bec0-549b84d4b019',
-        -- Preceded by Men in Black
-        '1379b3cc-e0bf-4f4a-8e90-77d3df47f9c3',
-        -- Followed by Men in Black 3
-        "441.8 million",
+        "441800000",
         88,
         '2002-07-03',
         FALSE
     ),
     (
         '1379b3cc-e0bf-4f4a-8e90-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Men in Black 3',
@@ -3191,18 +2997,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '0ec5c120-3801-46e7-a3f5-86dc7b3175d5',
-        -- Preceded by Men in Black II
-        'f02a5d7f-9a43-43cc-8a89-19b29d051c2e',
-        -- Followed by Men in Black: International
-        "624 million",
+        "624000000",
         106,
         '2028-02-15',
         FALSE
     ),
     (
         'f02a5d7f-9a43-43cc-8a89-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Men in Black: International',
@@ -3213,11 +3017,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        '1379b3cc-e0bf-4f4a-8e90-77d3df47f9c3',
-        -- Preceded by Men in Black 3
-        NULL,
-        -- No sequel planned for Men in Black: International
-        "253.9 million",
+        "253900000",
         115,
         '2019-06-14',
         TRUE
@@ -3225,7 +3025,9 @@ VALUES (
 --Die Hard
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3236,8 +3038,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3245,7 +3045,9 @@ INSERT INTO film (
     )
 VALUES (
         'b2e09126-7f86-493d-9d0b-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Die Hard',
@@ -3256,18 +3058,16 @@ VALUES (
         'R',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Die Hard
-        '86e9933b-7089-4a09-8c3d-86dc7b3175d5',
-        -- Followed by Die Hard 2
-        "141.5 million",
+        "141500000",
         132,
         '1988-07-15',
         FALSE
     ),
     (
         '86e9933b-7089-4a09-8c3d-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Die Hard 2',
@@ -3278,18 +3078,16 @@ VALUES (
         'R',
         NULL,
         '2023-03-15',
-        'b2e09126-7f86-493d-9d0b-549b84d4b019',
-        -- Preceded by Die Hard
-        '55c7914b-86bf-43a5-9a67-77d3df47f9c3',
-        -- Followed by Die Hard with a Vengeance
-        "240 million",
+        "240000000",
         124,
         '1990-07-04',
         FALSE
     ),
     (
         '55c7914b-86bf-43a5-9a67-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Die Hard with a Vengeance',
@@ -3300,18 +3098,16 @@ VALUES (
         'R',
         NULL,
         '2023-04-15',
-        '86e9933b-7089-4a09-8c3d-86dc7b3175d5',
-        -- Preceded by Die Hard 2
-        '7e0ab380-8268-4a1b-a09b-19b29d051c2e',
-        -- Followed by Live Free or Die Hard
-        "366.1 million",
+        "366100000",
         128,
         '1995-05-19',
         FALSE
     ),
     (
         '7e0ab380-8268-4a1b-a09b-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Live Free or Die Hard',
@@ -3322,18 +3118,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        '55c7914b-86bf-43a5-9a67-77d3df47f9c3',
-        -- Preceded by Die Hard with a Vengeance
-        '0da847d9-3c29-452e-b0d7-86dc7b3175d5',
-        -- Followed by A Good Day to Die Hard
-        "383.5 million",
+        "383500000",
         128,
         '2028-02-15',
         FALSE
     ),
     (
         '0da847d9-3c29-452e-b0d7-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'A Good Day to Die Hard',
@@ -3344,11 +3138,7 @@ VALUES (
         'R',
         NULL,
         '2023-06-15',
-        '7e0ab380-8268-4a1b-a09b-19b29d051c2e',
-        -- Preceded by Live Free or Die Hard
-        NULL,
-        -- No sequel planned for A Good Day to Die Hard
-        "304.7 million",
+        "304700000",
         98,
         '2013-02-14',
         TRUE
@@ -3356,7 +3146,9 @@ VALUES (
 --Rush Hour
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3367,8 +3159,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3376,7 +3166,9 @@ INSERT INTO film (
     )
 VALUES (
         '76e7f7d5-6db4-4a32-b0c3-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Rush Hour',
@@ -3387,18 +3179,16 @@ VALUES (
         'PG-13',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Rush Hour
-        '5d22c4d1-af04-4ff5-81bf-86dc7b3175d5',
-        -- Followed by Rush Hour 2
-        "244.4 million",
+        "244400000",
         98,
         '1998-09-18',
         FALSE
     ),
     (
         '5d22c4d1-af04-4ff5-81bf-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Rush Hour 2',
@@ -3409,18 +3199,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-03-15',
-        '76e7f7d5-6db4-4a32-b0c3-549b84d4b019',
-        -- Preceded by Rush Hour
-        '72f35b15-ff76-4971-9f87-77d3df47f9c3',
-        -- Followed by Rush Hour 3
-        "347.3 million",
+        "347300000",
         90,
         '2001-08-03',
         FALSE
     ),
     (
         '72f35b15-ff76-4971-9f87-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Rush Hour 3',
@@ -3431,11 +3219,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        '5d22c4d1-af04-4ff5-81bf-86dc7b3175d5',
-        -- Preceded by Rush Hour 2
-        NULL,
-        -- No sequel planned for Rush Hour 3
-        "258.2 million",
+        "258200000",
         91,
         '2007-08-10',
         TRUE
@@ -3443,7 +3227,9 @@ VALUES (
 --Bring It On
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3454,8 +3240,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3463,7 +3247,9 @@ INSERT INTO film (
     )
 VALUES (
         'a3e2b597-7d4a-414e-af7f-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Bring It On',
@@ -3474,18 +3260,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        NULL,
-        -- No prequel for Bring It On
-        'c96b4164-666b-4fc4-9e1f-86dc7b3175d5',
-        -- Followed by Bring It On Again
-        "90.5 million",
+        "90500000",
         98,
         '2028-02-15',
         FALSE
     ),
     (
         'c96b4164-666b-4fc4-9e1f-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Bring It On Again',
@@ -3496,18 +3280,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-03-15',
-        'a3e2b597-7d4a-414e-af7f-549b84d4b019',
-        -- Preceded by Bring It On
-        'd8a7f0c5-b0d1-4d67-9d53-77d3df47f9c3',
-        -- Followed by Bring It On: All or Nothing
-        "63.5 million",
+        "63500000",
         90,
         '2004-01-13',
         FALSE
     ),
     (
         'd8a7f0c5-b0d1-4d67-9d53-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Bring It On: All or Nothing',
@@ -3518,11 +3300,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        'c96b4164-666b-4fc4-9e1f-86dc7b3175d5',
-        -- Preceded by Bring It On Again
-        NULL,
-        -- No sequel planned for Bring It On: All or Nothing
-        "17.2 million",
+        "17200000",
         99,
         '2006-08-08',
         TRUE
@@ -3530,7 +3308,9 @@ VALUES (
 --Alien
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3541,8 +3321,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3550,7 +3328,9 @@ INSERT INTO film (
     )
 VALUES (
         'e17a30eb-baa1-4b42-9661-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Alien',
@@ -3561,18 +3341,16 @@ VALUES (
         'R',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Alien
-        'b439e110-2a07-4c4b-8c86-86dc7b3175d5',
-        -- Followed by Aliens
-        "104.9 million",
+        "104900000",
         117,
         '1979-05-25',
         FALSE
     ),
     (
         'b439e110-2a07-4c4b-8c86-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Aliens',
@@ -3583,18 +3361,16 @@ VALUES (
         'R',
         NULL,
         NULL,
-        'e17a30eb-baa1-4b42-9661-549b84d4b019',
-        -- Preceded by Alien
-        '7cda4f3e-9cf7-4072-8f1a-77d3df47f9c3',
-        -- Followed by Alien³
-        "131.1 million",
+        "131100000",
         137,
         '1986-07-18',
         FALSE
     ),
     (
         '7cda4f3e-9cf7-4072-8f1a-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Alien³',
@@ -3605,18 +3381,16 @@ VALUES (
         'R',
         NULL,
         NULL,
-        'b439e110-2a07-4c4b-8c86-86dc7b3175d5',
-        -- Preceded by Aliens
-        'ec1e1e48-bf0f-4c8a-84ec-19b29d051c2e',
-        -- Followed by Alien: Resurrection
-        "159.8 million",
+        "159800000",
         114,
         '2028-02-15',
         FALSE
     ),
     (
         'ec1e1e48-bf0f-4c8a-84ec-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Alien: Resurrection',
@@ -3627,11 +3401,7 @@ VALUES (
         'R',
         NULL,
         '2023-05-15',
-        '7cda4f3e-9cf7-4072-8f1a-77d3df47f9c3',
-        -- Preceded by Alien³
-        NULL,
-        -- No sequel planned for Alien: Resurrection
-        "161.4 million",
+        "161400000",
         109,
         '1997-11-26',
         TRUE
@@ -3639,7 +3409,9 @@ VALUES (
 --Star Trek
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3650,8 +3422,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3659,7 +3429,9 @@ INSERT INTO film (
     )
 VALUES (
         '3a2c343a-68db-42aa-9bd4-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Trek: The Motion Picture',
@@ -3670,18 +3442,16 @@ VALUES (
         'PG',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Star Trek: The Motion Picture
-        'b26e4e15-2f86-4d15-abe4-86dc7b3175d5',
-        -- Followed by Star Trek II: The Wrath of Khan
-        "139 million",
+        "139000000",
         132,
         '1979-12-07',
         FALSE
     ),
     (
         'b26e4e15-2f86-4d15-abe4-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Trek II: The Wrath of Khan',
@@ -3692,18 +3462,16 @@ VALUES (
         'PG',
         NULL,
         NULL,
-        '3a2c343a-68db-42aa-9bd4-549b84d4b019',
-        -- Preceded by Star Trek: The Motion Picture
-        'b9ef9e52-15ae-46cd-bd24-77d3df47f9c3',
-        -- Followed by Star Trek III: The Search for Spock
-        "97 million",
+        "97000000",
         113,
         '2028-02-15',
         FALSE
     ),
     (
         'b9ef9e52-15ae-46cd-bd24-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Star Trek III: The Search for Spock',
@@ -3714,18 +3482,16 @@ VALUES (
         'PG',
         NULL,
         '2023-04-15',
-        'b26e4e15-2f86-4d15-abe4-86dc7b3175d5',
-        -- Preceded by Star Trek II: The Wrath of Khan
-        'd6bb8b6d-36a4-4b24-a0eb-19b29d051c2e',
-        -- Followed by Star Trek IV: The Voyage Home
-        "87 million",
+        "87000000",
         105,
         '1984-06-01',
         FALSE
     ),
     (
         'd6bb8b6d-36a4-4b24-a0eb-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Star Trek IV: The Voyage Home',
@@ -3736,11 +3502,7 @@ VALUES (
         'PG',
         NULL,
         '2023-05-15',
-        'b9ef9e52-15ae-46cd-bd24-77d3df47f9c3',
-        -- Preceded by Star Trek III: The Search for Spock
-        NULL,
-        -- No sequel planned for Star Trek IV: The Voyage Home
-        "133 million",
+        "133000000",
         119,
         '1986-11-26',
         TRUE
@@ -3748,7 +3510,9 @@ VALUES (
 --Planet of the Apes
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3759,8 +3523,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3768,7 +3530,9 @@ INSERT INTO film (
     )
 VALUES (
         'f7a9a1b3-ec1d-4df3-a0fe-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Planet of the Apes',
@@ -3779,18 +3543,16 @@ VALUES (
         'G',
         NULL,
         '2028-02-15',
-        NULL,
-        -- No prequel for Planet of the Apes
-        '8c535883-8f99-4c8a-8e9b-86dc7b3175d5',
-        -- Followed by Beneath the Planet of the Apes
-        "32.6 million",
+        "32000000",
         112,
         '1968-04-03',
         FALSE
     ),
     (
         '8c535883-8f99-4c8a-8e9b-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'Beneath the Planet of the Apes',
@@ -3801,18 +3563,16 @@ VALUES (
         'G',
         NULL,
         NULL,
-        'f7a9a1b3-ec1d-4df3-a0fe-549b84d4b019',
-        -- Preceded by Planet of the Apes
-        '6c5cf208-7c74-4212-ba2b-77d3df47f9c3',
-        -- Followed by Escape from the Planet of the Apes
-        "19 million",
+        "19000000",
         95,
         '1970-05-26',
         FALSE
     ),
     (
         '6c5cf208-7c74-4212-ba2b-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Escape from the Planet of the Apes',
@@ -3823,18 +3583,16 @@ VALUES (
         'G',
         NULL,
         NULL,
-        '8c535883-8f99-4c8a-8e9b-86dc7b3175d5',
-        -- Preceded by Beneath the Planet of the Apes
-        '86a06649-2a4a-4e2e-93fc-19b29d051c2e',
-        -- Followed by Conquest of the Planet of the Apes
-        "12.4 million",
+        "12400000",
         98,
         '2028-02-15',
         FALSE
     ),
     (
         '86a06649-2a4a-4e2e-93fc-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Conquest of the Planet of the Apes',
@@ -3845,18 +3603,16 @@ VALUES (
         'PG',
         NULL,
         '2023-05-15',
-        '6c5cf208-7c74-4212-ba2b-77d3df47f9c3',
-        -- Preceded by Escape from the Planet of the Apes
-        'bba13d54-9bd7-4f6b-b963-86dc7b3175d5',
-        -- Followed by Battle for the Planet of the Apes
-        "9.7 million",
+        "9700000",
         88,
         '1972-06-30',
         FALSE
     ),
     (
         'bba13d54-9bd7-4f6b-b963-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Battle for the Planet of the Apes',
@@ -3867,11 +3623,7 @@ VALUES (
         'G',
         NULL,
         '2023-06-15',
-        '86a06649-2a4a-4e2e-93fc-19b29d051c2e',
-        -- Preceded by Conquest of the Planet of the Apes
-        NULL,
-        -- No sequel planned for Battle for the Planet of the Apes
-        "8.8 million",
+        "8800000",
         93,
         '1973-06-15',
         TRUE
@@ -3879,7 +3631,9 @@ VALUES (
 --The Bourne
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -3890,8 +3644,6 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         BOX_OFFICE,
         RUNTIME,
         THEATERS_RELEASE_DATE,
@@ -3899,7 +3651,9 @@ INSERT INTO film (
     )
 VALUES (
         '5de7cbb2-2c65-4212-920e-549b84d4b019',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-05-22',
         'The Bourne Identity',
@@ -3910,18 +3664,16 @@ VALUES (
         'PG-13',
         NULL,
         NULL,
-        NULL,
-        -- No prequel for The Bourne Identity
-        '26f59b9c-1020-4da7-b8e8-86dc7b3175d5',
-        -- Followed by The Bourne Supremacy
-        "214 million",
+        "214000000",
         119,
         '2028-02-15',
         FALSE
     ),
     (
         '26f59b9c-1020-4da7-b8e8-86dc7b3175d5',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Bourne Supremacy',
@@ -3932,18 +3684,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-03-15',
-        '5de7cbb2-2c65-4212-920e-86dc7b3175d5',
-        -- Preceded by The Bourne Identity
-        '748376f5-17ec-4a76-8d32-77d3df47f9c3',
-        -- Followed by The Bourne Ultimatum
-        "290.7 million",
+        "290700000",
         108,
         '2004-07-23',
         FALSE
     ),
     (
         '748376f5-17ec-4a76-8d32-77d3df47f9c3',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Bourne Ultimatum',
@@ -3954,18 +3704,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-04-15',
-        '26f59b9c-1020-4da7-b8e8-86dc7b3175d5',
-        -- Preceded by The Bourne Supremacy
-        '67c7868c-7b6c-4c67-ae71-19b29d051c2e',
-        -- Followed by The Bourne Legacy
-        "442.8 million",
+        "442800000",
         115,
         '2007-08-03',
         FALSE
     ),
     (
         '67c7868c-7b6c-4c67-ae71-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'The Bourne Legacy',
@@ -3976,18 +3724,16 @@ VALUES (
         'PG-13',
         NULL,
         '2023-05-15',
-        '748376f5-17ec-4a76-8d32-77d3df47f9c3',
-        -- Preceded by The Bourne Ultimatum
-        '7e4e3d92-7bc9-4655-b0b2-19b29d051c2e',
-        -- Followed by Jason Bourne
-        "276.1 million",
+        "276100000",
         135,
         '2012-07-30',
         FALSE
     ),
     (
         '7e4e3d92-7bc9-4655-b0b2-19b29d051c2e',
-        1,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        1,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-12-08',
         'Jason Bourne',
@@ -3998,11 +3744,7 @@ VALUES (
         'PG-13',
         NULL,
         '2023-06-15',
-        '67c7868c-7b6c-4c67-ae71-19b29d051c2e',
-        -- Preceded by The Bourne Legacy
-        NULL,
-        -- No sequel planned for Jason Bourne
-        "415.5 million",
+        "415500000",
         123,
         '2016-07-29',
         FALSE
@@ -4011,7 +3753,9 @@ VALUES (
 --breaking bad
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4021,14 +3765,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         'b6c3d9c0-bc6c-4a0f-bc2c-5e1bea20b95d',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Breaking Bad Season 1',
@@ -4039,13 +3783,13 @@ VALUES (
         NULL,
         '2022-01-01',
         NULL,
-        'eda4ed07-06db-4da4-bfa6-3b8f8b601d9a',
-        NULL,
         1
     ),
     (
         'eda4ed07-06db-4da4-bfa6-3b8f8b601d9a',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Breaking Bad Season 2',
@@ -4055,14 +3799,14 @@ VALUES (
         'PG-18',
         NULL,
         '2022-02-01',
-        'b6c3d9c0-bc6c-4a0f-bc2c-5e1bea20b95d',
-        '6d7b6091-c37d-4d23-a3d1-5e12115ecb25',
         NULL,
         2
     ),
     (
         '6d7b6091-c37d-4d23-a3d1-5e12115ecb25',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Breaking Bad Season 3',
@@ -4072,14 +3816,14 @@ VALUES (
         'PG-18',
         NULL,
         '2022-03-01',
-        'eda4ed07-06db-4da4-bfa6-3b8f8b601d9a',
-        'c26da0d8-9d8c-48df-8f5a-c19be5c4ff7d',
         NULL,
         3
     ),
     (
         'c26da0d8-9d8c-48df-8f5a-c19be5c4ff7d',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Breaking Bad Season 4',
@@ -4089,14 +3833,14 @@ VALUES (
         'PG-18',
         NULL,
         '2022-04-01',
-        'c26da0d8-9d8c-48df-8f5a-c19be5c4ff7d',
-        'f0a82e48-29e9-4fb0-9244-fc2a4c9d22e6',
         NULL,
         4
     ),
     (
         'f0a82e48-29e9-4fb0-9244-fc2a4c9d22e6',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Breaking Bad Season 5',
@@ -4106,15 +3850,15 @@ VALUES (
         'PG-18',
         NULL,
         '2022-05-01',
-        'c26da0d8-9d8c-48df-8f5a-c19be5c4ff7d',
-        NULL,
         NULL,
         5
     );
 --chernobyl
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4124,15 +3868,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         'c3a21162-6d67-44d0-af0a-1d493e7f4b61',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Chernobyl',
@@ -4143,15 +3887,15 @@ VALUES (
         NULL,
         '2022-06-01',
         NULL,
-        NULL,
-        NULL,
         1,
         30
     );
 --better call saul
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4161,14 +3905,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         'f04d758d-32ae-42a8-9e5c-44d96a7fb89c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Better Call Saul Season 1',
@@ -4179,13 +3923,13 @@ VALUES (
         NULL,
         '2022-07-01',
         NULL,
-        '1c52e5f3-6c01-4f7f-89f2-e1c1936f51cc',
-        NULL,
         1
     ),
     (
         '1c52e5f3-6c01-4f7f-89f2-e1c1936f51cc',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Better Call Saul Season 2',
@@ -4195,14 +3939,14 @@ VALUES (
         'PG-18',
         NULL,
         '2022-08-01',
-        'f04d758d-32ae-42a8-9e5c-44d96a7fb89c',
-        'a7b41f4e-13b1-4c21-a5db-2093d317e1f9',
         NULL,
         2
     ),
     (
         'a7b41f4e-13b1-4c21-a5db-2093d317e1f9',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Better Call Saul Season 3',
@@ -4212,14 +3956,14 @@ VALUES (
         'PG-18',
         NULL,
         '2022-09-01',
-        '1c52e5f3-6c01-4f7f-89f2-e1c1936f51cc',
-        '268186cc-b927-4c50-9d56-9f78a7d72f24',
         NULL,
         3
     ),
     (
         '268186cc-b927-4c50-9d56-9f78a7d72f24',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Better Call Saul Season 4',
@@ -4229,14 +3973,14 @@ VALUES (
         'PG-18',
         NULL,
         '2022-10-01',
-        'a7b41f4e-13b1-4c21-a5db-2093d317e1f9',
-        'b4e5a85e-96ab-46af-b2a7-809ae7e89f7e',
         NULL,
         4
     ),
     (
         'b4e5a85e-96ab-46af-b2a7-809ae7e89f7e',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Better Call Saul Season 5',
@@ -4246,15 +3990,15 @@ VALUES (
         'PG-18',
         NULL,
         '2022-11-01',
-        '268186cc-b927-4c50-9d56-9f78a7d72f24',
-        NULL,
         NULL,
         5
     );
 --Narcos
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4264,14 +4008,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         'd575487f-c9a2-4d42-b4b9-5c22a7167484',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Narcos Season 1',
@@ -4282,13 +4026,13 @@ VALUES (
         NULL,
         '2023-01-01',
         NULL,
-        '7430c5db-62d1-4387-b699-50b93a68eaab',
-        NULL,
         1
     ),
     (
         '7430c5db-62d1-4387-b699-50b93a68eaab',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Narcos Season 2',
@@ -4298,14 +4042,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'd575487f-c9a2-4d42-b4b9-5c22a7167484',
-        '6d4e91ab-549f-4db1-a8b2-8cfa351f646b',
         NULL,
         2
     ),
     (
         '6d4e91ab-549f-4db1-a8b2-8cfa351f646b',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Narcos Season 3',
@@ -4315,14 +4059,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '7430c5db-62d1-4387-b699-50b93a68eaab',
-        'f319f4ae-36bb-4fc2-9d23-6c7227222c10',
         NULL,
         3
     ),
     (
         'f319f4ae-36bb-4fc2-9d23-6c7227222c10',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Narcos Season 4',
@@ -4332,14 +4076,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '6d4e91ab-549f-4db1-a8b2-8cfa351f646b',
-        'd39d1af7-5f17-45d3-9e21-8d10a10469a9',
         NULL,
         4
     ),
     (
         'd39d1af7-5f17-45d3-9e21-8d10a10469a9',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Narcos Season 5',
@@ -4349,15 +4093,15 @@ VALUES (
         'PG-18',
         NULL,
         '2028-05-01',
-        'f319f4ae-36bb-4fc2-9d23-6c7227222c10',
-        NULL,
         NULL,
         5
     );
 --black mirror
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4367,14 +4111,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         'f7b5e49b-051c-4bda-b2e0-bfb7c4ed11ea',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Black Mirror Season 1',
@@ -4385,13 +4129,13 @@ VALUES (
         NULL,
         '2023-06-01',
         NULL,
-        '8c88d60f-565d-4e85-a68c-efb5b8c92023',
-        NULL,
         1
     ),
     (
         '8c88d60f-565d-4e85-a68c-efb5b8c92023',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Black Mirror Season 2',
@@ -4401,14 +4145,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'f7b5e49b-051c-4bda-b2e0-bfb7c4ed11ea',
-        'a2492d67-231a-4ac3-8a02-bf387cc6a7e5',
         NULL,
         2
     ),
     (
         'a2492d67-231a-4ac3-8a02-bf387cc6a7e5',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Black Mirror Season 3',
@@ -4418,14 +4162,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '8c88d60f-565d-4e85-a68c-efb5b8c92023',
-        '77c40f8b-4b72-4ea9-b0a3-2a9a5dd104bf',
         NULL,
         3
     ),
     (
         '77c40f8b-4b72-4ea9-b0a3-2a9a5dd104bf',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Black Mirror Season 4',
@@ -4435,15 +4179,15 @@ VALUES (
         'PG-18',
         NULL,
         '2028-09-01',
-        'a2492d67-231a-4ac3-8a02-bf387cc6a7e5',
-        NULL,
         NULL,
         4
     );
 --peaky blinders
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4453,14 +4197,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         'cfe41c49-4c5e-4a56-b5cc-99a82b3b3c60',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Peaky Blinders Season 1',
@@ -4471,13 +4215,13 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        '6b4824f1-c55c-45d2-a5b9-040e2ab05ce6',
-        NULL,
         1
     ),
     (
         '6b4824f1-c55c-45d2-a5b9-040e2ab05ce6',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Peaky Blinders Season 2',
@@ -4487,14 +4231,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'cfe41c49-4c5e-4a56-b5cc-99a82b3b3c60',
-        '44b653f4-6269-4cb2-a145-df41ec7bb44f',
         NULL,
         2
     ),
     (
         '44b653f4-6269-4cb2-a145-df41ec7bb44f',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Peaky Blinders Season 3',
@@ -4504,14 +4248,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '6b4824f1-c55c-45d2-a5b9-040e2ab05ce6',
-        '5569c74b-05b0-4c9e-b48a-9d6eac14f354',
         NULL,
         3
     ),
     (
         '5569c74b-05b0-4c9e-b48a-9d6eac14f354',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Peaky Blinders Season 4',
@@ -4521,15 +4265,15 @@ VALUES (
         'PG-18',
         NULL,
         '2028-04-01',
-        '44b653f4-6269-4cb2-a145-df41ec7bb44f',
-        NULL,
         NULL,
         4
     );
 --dr house
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4539,15 +4283,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         'c22f5d36-c2eb-47ef-92c5-8a8e25e0b4eb',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Dr. House Season 1',
@@ -4558,14 +4302,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'c79f2a54-650a-4e2f-bb77-6c34320ccf5f',
-        NULL,
         1,
         0
     ),
     (
         'c79f2a54-650a-4e2f-bb77-6c34320ccf5f',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Dr. House Season 2',
@@ -4575,15 +4319,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'c22f5d36-c2eb-47ef-92c5-8a8e25e0b4eb',
-        '828a7daa-7c15-4bb2-b7b7-20715a9f59b9',
         NULL,
         2,
         0
     ),
     (
         '828a7daa-7c15-4bb2-b7b7-20715a9f59b9',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Dr. House Season 3',
@@ -4593,15 +4337,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'c79f2a54-650a-4e2f-bb77-6c34320ccf5f',
-        '9a5f81e2-19f9-4bf7-8f8b-5a676fe243fb',
         NULL,
         3,
         0
     ),
     (
         '9a5f81e2-19f9-4bf7-8f8b-5a676fe243fb',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Dr. House Season 4',
@@ -4611,8 +4355,6 @@ VALUES (
         'PG-18',
         NULL,
         '2028-08-01',
-        '828a7daa-7c15-4bb2-b7b7-20715a9f59b9',
-        NULL,
         NULL,
         4,
         60
@@ -4620,7 +4362,9 @@ VALUES (
 --the boys
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4630,15 +4374,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         '684319f5-e7b0-4393-9ce3-f6c9dd5ef8f5',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Boys Season 1',
@@ -4649,14 +4393,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'fb80c748-54f0-45cd-a51f-09baf2daaa5d',
-        NULL,
         1,
         0
     ),
     (
         'fb80c748-54f0-45cd-a51f-09baf2daaa5d',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Boys Season 2',
@@ -4666,15 +4410,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '684319f5-e7b0-4393-9ce3-f6c9dd5ef8f5',
-        '6f9b4c6c-964d-4e4a-878f-af0d0d951a12',
         NULL,
         2,
         0
     ),
     (
         '6f9b4c6c-964d-4e4a-878f-af0d0d951a12',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Boys Season 3',
@@ -4684,8 +4428,6 @@ VALUES (
         'PG-18',
         NULL,
         '2024-11-01',
-        'fb80c748-54f0-45cd-a51f-09baf2daaa5d',
-        NULL,
         NULL,
         3,
         30
@@ -4693,7 +4435,9 @@ VALUES (
 --twd
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4703,14 +4447,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         '04a1dab2-3eb4-4ed7-9378-6848b0a6e0cf',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Walking Dead Season 1',
@@ -4721,13 +4465,13 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'cfd09a72-3b72-4a57-9164-694078c9c196',
-        NULL,
         1
     ),
     (
         'cfd09a72-3b72-4a57-9164-694078c9c196',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Walking Dead Season 2',
@@ -4737,14 +4481,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '04a1dab2-3eb4-4ed7-9378-6848b0a6e0cf',
-        'c78fe5f4-5da5-4be7-98b8-7fe06e3f3273',
         NULL,
         2
     ),
     (
         'c78fe5f4-5da5-4be7-98b8-7fe06e3f3273',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Walking Dead Season 3',
@@ -4754,14 +4498,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'cfd09a72-3b72-4a57-9164-694078c9c196',
-        '881b150f-9ad5-44c5-aa9a-414f17424c89',
         NULL,
         3
     ),
     (
         '881b150f-9ad5-44c5-aa9a-414f17424c89',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Walking Dead Season 4',
@@ -4771,14 +4515,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'c78fe5f4-5da5-4be7-98b8-7fe06e3f3273',
-        NULL,
         NULL,
         4
     ),
     (
         'f371b194-38cd-4961-936b-9c913a00e849',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Walking Dead Season 5',
@@ -4788,14 +4532,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '881b150f-9ad5-44c5-aa9a-414f17424c89',
-        'b431dbbf-cd42-4a53-909b-e6a72f28178b',
         NULL,
         5
     ),
     (
         'b431dbbf-cd42-4a53-909b-e6a72f28178b',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Walking Dead Season 6',
@@ -4805,14 +4549,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'f371b194-38cd-4961-936b-9c913a00e849',
-        'e07f64a2-7471-4b19-b042-3d7cb4d2a5d2',
         NULL,
         6
     ),
     (
         'e07f64a2-7471-4b19-b042-3d7cb4d2a5d2',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Walking Dead Season 7',
@@ -4822,14 +4566,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'b431dbbf-cd42-4a53-909b-e6a72f28178b',
-        NULL,
         NULL,
         7
     ),
     (
         '99e7b926-d3ec-46b3-8909-26eb5db31df1',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Walking Dead Season 8',
@@ -4839,14 +4583,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'e07f64a2-7471-4b19-b042-3d7cb4d2a5d2',
-        'ef51b1cf-5970-4a26-8de7-6f176469c2de',
         NULL,
         8
     ),
     (
         'ef51b1cf-5970-4a26-8de7-6f176469c2de',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Walking Dead Season 9',
@@ -4856,14 +4600,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '99e7b926-d3ec-46b3-8909-26eb5db31df1',
-        'aad6d831-ee4d-42d1-82c5-f86f6339619c',
         NULL,
         9
     ),
     (
         'aad6d831-ee4d-42d1-82c5-f86f6339619c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Walking Dead Season 10',
@@ -4873,15 +4617,15 @@ VALUES (
         'PG-18',
         NULL,
         '2025-09-01',
-        'ef51b1cf-5970-4a26-8de7-6f176469c2de',
-        NULL,
         NULL,
         10
     );
 --the office
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -4891,14 +4635,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         'a15d5a1a-3306-4e13-8e8d-9460ac68f2e6',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Office Season 1',
@@ -4909,13 +4653,13 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        '4996a258-2d3e-4d3d-a3ea-8c4bd69c73e3',
-        NULL,
         1
     ),
     (
         '4996a258-2d3e-4d3d-a3ea-8c4bd69c73e3',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Office Season 2',
@@ -4925,14 +4669,14 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        'a15d5a1a-3306-4e13-8e8d-9460ac68f2e6',
-        'c18b6fe7-3f13-4d1c-8299-7556f09742d9',
         NULL,
         2
     ),
     (
         'c18b6fe7-3f13-4d1c-8299-7556f09742d9',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Office Season 3',
@@ -4942,14 +4686,14 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        '4996a258-2d3e-4d3d-a3ea-8c4bd69c73e3',
-        'ab1e3dd0-3c6a-4d06-b5da-4a993d6222b8',
         NULL,
         3
     ),
     (
         'ab1e3dd0-3c6a-4d06-b5da-4a993d6222b8',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Office Season 4',
@@ -4959,14 +4703,14 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        'c18b6fe7-3f13-4d1c-8299-7556f09742d9',
-        'af1de44d-465c-49c0-86db-1dab04f34c31',
         NULL,
         4
     ),
     (
         'af1de44d-465c-49c0-86db-1dab04f34c31',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Office Season 5',
@@ -4976,14 +4720,14 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        'ab1e3dd0-3c6a-4d06-b5da-4a993d6222b8',
-        NULL,
         NULL,
         5
     ),
     (
         '5f5d260d-fffd-4bc7-9f68-3d9d1b450146',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Office Season 6',
@@ -4993,14 +4737,14 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        'af1de44d-465c-49c0-86db-1dab04f34c31',
-        '5a78c864-90da-4aa6-bd89-0195101f9331',
         NULL,
         6
     ),
     (
         '5a78c864-90da-4aa6-bd89-0195101f9331',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Office Season 7',
@@ -5010,14 +4754,14 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        '5f5d260d-fffd-4bc7-9f68-3d9d1b450146',
-        '6b7f1c19-b91e-415f-8d74-f733958b5e8f',
         NULL,
         7
     ),
     (
         '6b7f1c19-b91e-415f-8d74-f733958b5e8f',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Office Season 8',
@@ -5027,14 +4771,14 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        '5a78c864-90da-4aa6-bd89-0195101f9331',
-        '6c917b1c-c96b-4c5d-8439-2b0789386234',
         NULL,
         8
     ),
     (
         '6c917b1c-c96b-4c5d-8439-2b0789386234',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Office Season 9',
@@ -5044,15 +4788,15 @@ VALUES (
         'PG-13',
         NULL,
         '2026-06-01',
-        '6b7f1c19-b91e-415f-8d74-f733958b5e8f',
-        NULL,
         NULL,
         9
     );
 --got
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5062,14 +4806,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         'f05a3c5c-099b-4c1a-8f01-0413f2cc9c6c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Game of Thrones Season 1',
@@ -5080,13 +4824,13 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'f5cc1ec3-c0c5-4f29-99bf-6b012ff876bf',
-        NULL,
         1
     ),
     (
         'f5cc1ec3-c0c5-4f29-99bf-6b012ff876bf',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Game of Thrones Season 2',
@@ -5096,14 +4840,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'f05a3c5c-099b-4c1a-8f01-0413f2cc9c6c',
-        'f3f5b32a-2c1b-4b11-94aa-7a3a156cc4b0',
         NULL,
         2
     ),
     (
         'f3f5b32a-2c1b-4b11-94aa-7a3a156cc4b0',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Game of Thrones Season 3',
@@ -5113,14 +4857,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'f5cc1ec3-c0c5-4f29-99bf-6b012ff876bf',
-        'a82f9cd3-54b8-45d2-b3e3-4df1ecad0c0c',
         NULL,
         3
     ),
     (
         'a82f9cd3-54b8-45d2-b3e3-4df1ecad0c0c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Game of Thrones Season 4',
@@ -5130,14 +4874,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'f3f5b32a-2c1b-4b11-94aa-7a3a156cc4b0',
-        'ed32cb68-6763-4d8a-8f49-b6e7cc633f4b',
         NULL,
         4
     ),
     (
         'ed32cb68-6763-4d8a-8f49-b6e7cc633f4b',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Game of Thrones Season 5',
@@ -5147,14 +4891,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'a82f9cd3-54b8-45d2-b3e3-4df1ecad0c0c',
-        'aff9f4a0-e086-4f44-8ba2-90768f90daa9',
         NULL,
         5
     ),
     (
         'aff9f4a0-e086-4f44-8ba2-90768f90daa9',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Game of Thrones Season 6',
@@ -5164,14 +4908,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'ed32cb68-6763-4d8a-8f49-b6e7cc633f4b',
-        '9935dca3-45b1-4ef6-9d9f-b9501ee3b4ad',
         NULL,
         6
     ),
     (
         '9935dca3-45b1-4ef6-9d9f-b9501ee3b4ad',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Game of Thrones Season 7',
@@ -5181,14 +4925,14 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'aff9f4a0-e086-4f44-8ba2-90768f90daa9',
-        'a218a9e8-5a10-4e89-9b85-3cfedc5a453a',
         NULL,
         7
     ),
     (
         'a218a9e8-5a10-4e89-9b85-3cfedc5a453a',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Game of Thrones Season 8',
@@ -5198,15 +4942,15 @@ VALUES (
         'PG-18',
         NULL,
         '2027-08-01',
-        '9935dca3-45b1-4ef6-9d9f-b9501ee3b4ad',
-        NULL,
         NULL,
         8
     );
 --vikings
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5216,15 +4960,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         '95c9366a-9200-45e3-890f-6e1c28d6f25d',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Vikings Season 1',
@@ -5235,14 +4979,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'ab89d342-2e8e-4a6f-93f5-3ef8c12f6ef6',
-        NULL,
         1,
         0
     ),
     (
         'ab89d342-2e8e-4a6f-93f5-3ef8c12f6ef6',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Vikings Season 2',
@@ -5252,15 +4996,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '95c9366a-9200-45e3-890f-6e1c28d6f25d',
-        '0ff94b49-31eb-4d66-b376-6e06c469c54d',
         NULL,
         2,
         0
     ),
     (
         '0ff94b49-31eb-4d66-b376-6e06c469c54d',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Vikings Season 3',
@@ -5270,15 +5014,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'ab89d342-2e8e-4a6f-93f5-3ef8c12f6ef6',
-        '85863f6d-df96-48fb-b7c4-1be67c05a68c',
         NULL,
         3,
         0
     ),
     (
         '85863f6d-df96-48fb-b7c4-1be67c05a68c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Vikings Season 4',
@@ -5288,15 +5032,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '0ff94b49-31eb-4d66-b376-6e06c469c54d',
-        'a625eeb7-5a79-4d89-8a8b-d2a411d3ef32',
         NULL,
         4,
         0
     ),
     (
         'a625eeb7-5a79-4d89-8a8b-d2a411d3ef32',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Vikings Season 5',
@@ -5306,15 +5050,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '85863f6d-df96-48fb-b7c4-1be67c05a68c',
-        'bd7d9ab2-4193-4142-a31d-37dbd5f35b9d',
         NULL,
         5,
         0
     ),
     (
         'bd7d9ab2-4193-4142-a31d-37dbd5f35b9d',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Vikings Season 6',
@@ -5324,8 +5068,6 @@ VALUES (
         'PG-18',
         NULL,
         '2028-02-01',
-        'a625eeb7-5a79-4d89-8a8b-d2a411d3ef32',
-        NULL,
         NULL,
         6,
         15
@@ -5333,7 +5075,9 @@ VALUES (
 --loki
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5343,15 +5087,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         'f43a8625-1f48-4c5f-8979-228e7fe97421',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Loki Season 1',
@@ -5362,14 +5106,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        '437e8916-4f33-4d20-b4cd-08ed314e5bf5',
-        NULL,
         1,
         0
     ),
     (
         '437e8916-4f33-4d20-b4cd-08ed314e5bf5',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Loki Season 2',
@@ -5379,8 +5123,6 @@ VALUES (
         'PG-13',
         NULL,
         '2028-04-01',
-        'f43a8625-1f48-4c5f-8979-228e7fe97421',
-        NULL,
         NULL,
         2,
         150
@@ -5388,7 +5130,9 @@ VALUES (
 --Reacher
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5398,14 +5142,14 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER
     )
 VALUES (
         '227a1b57-963c-4dd4-8d6d-0f82317fbafc',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Reacher Season 1',
@@ -5416,13 +5160,13 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'b2b2f4cb-79cb-48b9-b39d-ba8f238cf04d',
-        NULL,
         1
     ),
     (
         'b2b2f4cb-79cb-48b9-b39d-ba8f238cf04d',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Reacher Season 2',
@@ -5432,15 +5176,15 @@ VALUES (
         'PG-18',
         NULL,
         '2028-06-01',
-        '227a1b57-963c-4dd4-8d6d-0f82317fbafc',
-        NULL,
         NULL,
         2
     );
 --lucifer
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5450,15 +5194,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         '2352e9c5-0cd3-4b3f-8831-4f8da62cc88c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Lucifer Season 1',
@@ -5469,14 +5213,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'cfd09994-d32e-4903-87a2-86e373906e7c',
-        NULL,
         1,
         0
     ),
     (
         'cfd09994-d32e-4903-87a2-86e373906e7c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Lucifer Season 2',
@@ -5486,15 +5230,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '2352e9c5-0cd3-4b3f-8831-4f8da62cc88c',
-        'c964a0ea-98e3-4bbd-8ff2-5e4a2d4380f3',
         NULL,
         2,
         0
     ),
     (
         'c964a0ea-98e3-4bbd-8ff2-5e4a2d4380f3',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Lucifer Season 3',
@@ -5504,15 +5248,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'cfd09994-d32e-4903-87a2-86e373906e7c',
-        'e1c1fcb8-3da3-4e49-9c17-160f2a7f7ebd',
         NULL,
         3,
         0
     ),
     (
         'e1c1fcb8-3da3-4e49-9c17-160f2a7f7ebd',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Lucifer Season 4',
@@ -5522,15 +5266,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'c964a0ea-98e3-4bbd-8ff2-5e4a2d4380f3',
-        '7d3f2e09-7915-4e87-af8d-c7b5377d8797',
         NULL,
         4,
         0
     ),
     (
         '7d3f2e09-7915-4e87-af8d-c7b5377d8797',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Lucifer Season 5',
@@ -5540,15 +5284,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'e1c1fcb8-3da3-4e49-9c17-160f2a7f7ebd',
-        'c110b6df-e9b5-43b1-b4bb-c03d6d01f167',
         NULL,
         5,
         12
     ),
     (
         'c110b6df-e9b5-43b1-b4bb-c03d6d01f167',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Lucifer Season 6',
@@ -5558,8 +5302,6 @@ VALUES (
         'PG-18',
         NULL,
         '2028-12-01',
-        '7d3f2e09-7915-4e87-af8d-c7b5377d8797',
-        NULL,
         NULL,
         6,
         6
@@ -5567,7 +5309,9 @@ VALUES (
 --the mandalorian
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5577,15 +5321,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         'c597d4ea-6635-4a29-81a7-4ecb0a8b7e8c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Mandalorian Season 1',
@@ -5596,14 +5340,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        'c7d79cc5-89f4-44ae-8d2d-787c0d9370d4',
-        NULL,
         1,
         0
     ),
     (
         'c7d79cc5-89f4-44ae-8d2d-787c0d9370d4',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Mandalorian Season 2',
@@ -5613,15 +5357,15 @@ VALUES (
         'PG-13',
         NULL,
         '2005-10-10',
-        'c597d4ea-6635-4a29-81a7-4ecb0a8b7e8c',
-        '6a5c9630-d8fe-46cd-8d5a-b2086b0a6cd9',
         NULL,
         2,
         0
     ),
     (
         '6a5c9630-d8fe-46cd-8d5a-b2086b0a6cd9',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Mandalorian Season 3',
@@ -5631,8 +5375,6 @@ VALUES (
         'PG-13',
         NULL,
         '2029-03-01',
-        'c7d79cc5-89f4-44ae-8d2d-787c0d9370d4',
-        NULL,
         NULL,
         3,
         63
@@ -5640,7 +5382,9 @@ VALUES (
 --gotham
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5650,15 +5394,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         '128f28e1-7f01-470c-982c-bfd1a7382ef9',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'Gotham Season 1',
@@ -5669,14 +5413,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        '7b1221b8-80e5-442a-b567-6d3baf0592a5',
-        NULL,
         1,
         0
     ),
     (
         '7b1221b8-80e5-442a-b567-6d3baf0592a5',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Gotham Season 2',
@@ -5686,15 +5430,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '128f28e1-7f01-470c-982c-bfd1a7382ef9',
-        'd414a28e-c8b2-48e7-8924-e9488a0be68c',
         NULL,
         2,
         0
     ),
     (
         'd414a28e-c8b2-48e7-8924-e9488a0be68c',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Gotham Season 3',
@@ -5704,15 +5448,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '7b1221b8-80e5-442a-b567-6d3baf0592a5',
-        '04b43156-5b8e-4167-a2c3-7a786f0111d3',
         NULL,
         3,
         0
     ),
     (
         '04b43156-5b8e-4167-a2c3-7a786f0111d3',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Gotham Season 4',
@@ -5722,15 +5466,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'd414a28e-c8b2-48e7-8924-e9488a0be68c',
-        '56f1a542-bcf9-44c8-8d56-f1e18c4bcaeb',
         NULL,
         4,
         0
     ),
     (
         '56f1a542-bcf9-44c8-8d56-f1e18c4bcaeb',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'Gotham Season 5',
@@ -5740,8 +5484,6 @@ VALUES (
         'PG-18',
         NULL,
         '2029-08-01',
-        '04b43156-5b8e-4167-a2c3-7a786f0111d3',
-        NULL,
         NULL,
         5,
         13
@@ -5749,7 +5491,9 @@ VALUES (
 --the last kingdom
 INSERT INTO film (
         id,
-        FILM_TYPE,aspect_ratio,sound_mix,
+        FILM_TYPE,
+        aspect_ratio,
+        sound_mix,
         critics_consensus,
         ADDED_DATE,
         TITTLE,
@@ -5759,15 +5503,15 @@ INSERT INTO film (
         SUITABLE_FOR,
         COOMING_SOON,
         STREAMING_RELEASE_DATE,
-        PREQUEL_ID,
-        SEQUEL_ID,
         SAGA_ID,
         SEASON_NUMBER,
         VIEW_COUNT
     )
 VALUES (
         'a62d0e8b-e40b-4a63-8a2d-3f0e2a7490c8',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Last Kingdom Season 1',
@@ -5778,14 +5522,14 @@ VALUES (
         NULL,
         '2005-10-10',
         NULL,
-        '4ea1a1a9-6d69-4ed4-8f80-52c4a4ee4c14',
-        NULL,
         1,
         0
     ),
     (
         '4ea1a1a9-6d69-4ed4-8f80-52c4a4ee4c14',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Last Kingdom Season 2',
@@ -5795,15 +5539,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        "a62d0e8b-e40b-4a63-8a2d-3f0e2a7490c8",
-        NULL,
         NULL,
         2,
         0
     ),
     (
         'c97f8e7c-1b25-42e9-9670-4ab1a9837e63',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2025-03-12',
         'The Last Kingdom Season 3',
@@ -5813,15 +5557,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        '4ea1a1a9-6d69-4ed4-8f80-52c4a4ee4c14',
-        '8b63d5ea-7c37-43bb-8da4-6a8458db08d5',
         NULL,
         3,
         0
     ),
     (
         '8b63d5ea-7c37-43bb-8da4-6a8458db08d5',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Last Kingdom Season 4',
@@ -5831,15 +5575,15 @@ VALUES (
         'PG-18',
         NULL,
         '2005-10-10',
-        'c97f8e7c-1b25-42e9-9670-4ab1a9837e63',
-        '2be3dbed-3fb7-4f70-a4a3-03b3d4316d97',
         NULL,
         4,
         0
     ),
     (
         '2be3dbed-3fb7-4f70-a4a3-03b3d4316d97',
-        2,'Digital 2.39:1','Dolby Digital, Dolby Atmos',
+        2,
+        'Digital 2.39:1',
+        'Dolby Digital, Dolby Atmos',
         "An engaging cinematic experience that seamlessly blends captivating storytelling, stellar performances, and exceptional cinematography. A must-watch that transcends expectations and leaves a lasting impact on its audience.",
         '2023-09-10',
         'The Last Kingdom Season 5',
@@ -5849,8 +5593,6 @@ VALUES (
         'PG-18',
         NULL,
         '2030-01-01',
-        '8b63d5ea-7c37-43bb-8da4-6a8458db08d5',
-        NULL,
         NULL,
         5,
         30

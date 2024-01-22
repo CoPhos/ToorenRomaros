@@ -5,15 +5,16 @@ import { useQueryClient } from 'react-query'
 
 import FilmDetailsContainer from './FilmDetailsContainer'
 import FilmMainInfoContainer from './FilmMainInfoContainer'
+import ReviewContainer from '../review/ReviewContainer'
 import { useQuery } from 'react-query'
 
 function FilmManager() {
     const params = useParams()
-      const queryClient = useQueryClient()
-    const FILM_URL = '/films'
+    const queryClient = useQueryClient()
+    const FILM_URL = '/films' 
 
     const getFilm = useQuery({
-        queryKey: ['getFilmById'],
+        queryKey: ['getFilmById', params.uuid],
         queryFn: async () => {
             try {
                 return axios.get(FILM_URL + `/${params.uuid}`)
@@ -29,7 +30,7 @@ function FilmManager() {
         },
     })
     const getAllStaffFromFilm = useQuery({
-        queryKey: ['getAllStaffFromFilm'],
+        queryKey: ['getAllStaffFromFilm', params.uuid],
         queryFn: async () => {
             try {
                 return axios.get(FILM_URL + `/${params.uuid}/staffs`)
@@ -45,7 +46,7 @@ function FilmManager() {
         },
     })
     const getProfileImageFromStaffByFilmId = useQuery(
-        ['getProfileImageFromStaffByFilmId'],
+        ['getProfileImageFromStaffByFilmId', params.uuid],
         async () => {
             if (!getAllStaffFromFilm.data) {
                 return []
@@ -76,6 +77,7 @@ function FilmManager() {
                 queryClient.setQueryData(['getAllStaffFromFilm'], {
                     data: { response: staffWithImages },
                 })
+                console.log(staffWithImages)
                 return staffWithImages
             } catch (error) {
                 return error
@@ -89,7 +91,7 @@ function FilmManager() {
         }
     )
     const getAllGenresFromFilm = useQuery({
-        queryKey: ['getAllGenresFromFilm'],
+        queryKey: ['getAllGenresFromFilm', params.uuid],
         queryFn: async () => {
             try {
                 return axios.get(FILM_URL + `/${params.uuid}/genres`)
@@ -105,7 +107,7 @@ function FilmManager() {
         },
     })
     const getRatingFromFilm = useQuery({
-        queryKey: ['getRatingByFilmIdAndRatingType'],
+        queryKey: ['getRatingFromFilm', params.uuid],
         queryFn: async () => {
             try {
                 return axios.get(FILM_URL + `/${params.uuid}` + '/ratings')
@@ -120,9 +122,8 @@ function FilmManager() {
             console.log(error)
         },
     })
-
     const getStreamSitesFromFilm = useQuery({
-        queryKey: ['getStreamSitesFromFilm'],
+        queryKey: ['getStreamSitesFromFilm', params.uuid],
         queryFn: async () => {
             try {
                 return axios.get(
@@ -139,89 +140,116 @@ function FilmManager() {
             console.log(error)
         },
     })
-     const getImageFromStreamsiteByFilmId = useQuery(
-         ['getImageFromStreamsiteByFilmId'],
-         async () => {
-             if (!getStreamSitesFromFilm.data) {
-                 return []
-             }
-             try {
-                 const imageResponses = await axios.get(
-                     FILM_URL +
-                         `/${params.uuid}/streamsites/media/images?imageType=STREAMSITE_MAIN`
-                 )
-                 const streamsiteWithImages =
-                     getStreamSitesFromFilm.data.data.response.map((item) => {
-                         const correspondingImageKey = Object.keys(
-                             imageResponses.data
-                         ).find(
-                             (key) =>
-                                 imageResponses.data[key].owner ===
-                                 item.streamsiteId
-                         )
+    const getImageFromStreamsiteByFilmId = useQuery(
+        ['getImageFromStreamsiteByFilmId', params.uuid],
+        async () => {
+            if (
+                !getStreamSitesFromFilm.data ||
+                !getStreamSitesFromFilm.data.data.response.length > 0
+            ) {
+                return []
+            }
+            try {
+                const imageResponses = await axios.get(
+                    FILM_URL +
+                        `/${params.uuid}/streamsites/media/images?imageType=STREAMSITE_MAIN`
+                )
+                const streamsiteWithImages =
+                    getStreamSitesFromFilm.data.data.response.map((item) => {
+                        const correspondingImageKey = Object.keys(
+                            imageResponses.data
+                        ).find(
+                            (key) =>
+                                imageResponses.data[key].owner ===
+                                item.streamsiteId
+                        )
 
-                         return correspondingImageKey
-                             ? {
-                                   ...item,
-                                   images: imageResponses.data[
-                                       correspondingImageKey
-                                   ],
-                               }
-                             : item
-                     })
-                 queryClient.setQueryData(['getStreamSitesFromFilm'], {
-                     data: { response: streamsiteWithImages },
-                 })
-                 return streamsiteWithImages
-             } catch (error) {
-                 return error
-             }
-         },
-         { enabled: !!getStreamSitesFromFilm.data },
-         {
-             onError: (error) => {
-                 console.log(error)
-             },
-         }
-     )
+                        return correspondingImageKey
+                            ? {
+                                  ...item,
+                                  images: imageResponses.data[
+                                      correspondingImageKey
+                                  ],
+                              }
+                            : item
+                    })
+                queryClient.setQueryData(['getStreamSitesFromFilm'], {
+                    data: { response: streamsiteWithImages },
+                })
+                return streamsiteWithImages
+            } catch (error) {
+                return error
+            }
+        },
+        { enabled: !!getStreamSitesFromFilm.data },
+        {
+            onError: (error) => {
+                console.log(error)
+            },
+        }
+    )
 
-    if (
+    const isLoading =
         getFilm.isLoading ||
         getRatingFromFilm.isLoading ||
         getProfileImageFromStaffByFilmId.isLoading ||
         getAllGenresFromFilm.isLoading ||
         getStreamSitesFromFilm.isLoading ||
-        getRatingFromFilm.isLoading
-    ) {
-        return <p></p>
-    }
+        getImageFromStreamsiteByFilmId.isLoading
+        
 
-    return getFilm.error ||
+    const hasError =
+        getFilm.error ||
         getRatingFromFilm.error ||
         getProfileImageFromStaffByFilmId.error ||
         getAllGenresFromFilm.error ||
         getStreamSitesFromFilm.error ||
-        getRatingFromFilm.error ? (
-        <div>
-            <p>
-                Oops! Something went wrong while fetching the data.
-                <br></br>
-            </p>
-        </div>
-    ) : (
-        <Fragment>
-            <FilmMainInfoContainer
-                data={getFilm.data.data.response}
-                ratings={getRatingFromFilm.data.data.response}
-            ></FilmMainInfoContainer>
-            <FilmDetailsContainer
-                data={getFilm.data.data.response}
-                staff={getProfileImageFromStaffByFilmId.data}
-                genre={getAllGenresFromFilm.data.data.response}
-                streamSites={getImageFromStreamsiteByFilmId.data}
-            ></FilmDetailsContainer>
-        </Fragment>
-    )
+        getImageFromStreamsiteByFilmId.error
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
+
+    if (hasError) {
+        return (
+            <div>
+                <p>
+                    Oops! Something went wrong while fetching the data.
+                    <br />
+                </p>
+            </div>
+        )
+    }
+
+   const filmData = getFilm.data?.data?.response
+   const ratingData = getRatingFromFilm.data?.data?.response
+   const staffData = getProfileImageFromStaffByFilmId.data
+   const genreData = getAllGenresFromFilm.data?.data?.response
+   const streamSitesData = getImageFromStreamsiteByFilmId.data
+   
+   return (
+       <Fragment>
+           {filmData && ratingData && (
+               <FilmMainInfoContainer
+                   data={filmData}
+                   ratings={ratingData}
+               ></FilmMainInfoContainer>
+           )}
+           {filmData && staffData && genreData && streamSitesData && (
+               <FilmDetailsContainer
+                   data={filmData}
+                   staff={staffData}
+                   genre={genreData}
+                   streamSites={streamSitesData}
+               ></FilmDetailsContainer>
+           )}
+           {ratingData && filmData && (
+               <ReviewContainer
+                   rating={ratingData}
+                   filmData={filmData}
+               ></ReviewContainer>
+           )}
+       </Fragment>
+   )
 }
 
 export default FilmManager

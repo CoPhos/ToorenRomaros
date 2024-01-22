@@ -45,12 +45,6 @@ public class FilmEntity {
     private int averageSuperRating;
     @Column(name = "AVERAGE_USER_RATING", columnDefinition = "TINYINT DEFAULT 0")
     private int averageUserRating;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "PREQUEL_ID", referencedColumnName = "id")
-    private FilmEntity prequel;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "SEQUEL_ID", referencedColumnName = "id")
-    private FilmEntity sequel;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "saga_id")
     SagaEntity saga;
@@ -67,7 +61,7 @@ public class FilmEntity {
     public FilmEntity() {
     }
 
-    public FilmEntity(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, int averageSuperRating, int averageUserRating, FilmEntity prequel, FilmEntity sequel, SagaEntity saga, Long viewCount, LocalDate addedDate) {
+    public FilmEntity(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, int averageSuperRating, int averageUserRating, SagaEntity saga, Long viewCount, String aspectRatio, String soundMix, String criticsConsensus, LocalDate addedDate) {
         this.filmType = filmType;
         this.id = id;
         this.tittle = tittle;
@@ -79,10 +73,11 @@ public class FilmEntity {
         this.coomingSoon = coomingSoon;
         this.averageSuperRating = averageSuperRating;
         this.averageUserRating = averageUserRating;
-        this.prequel = prequel;
-        this.sequel = sequel;
         this.saga = saga;
         this.viewCount = viewCount;
+        this.aspectRatio = aspectRatio;
+        this.soundMix = soundMix;
+        this.criticsConsensus = criticsConsensus;
         this.addedDate = addedDate;
     }
 
@@ -124,18 +119,6 @@ public class FilmEntity {
     }
     public LocalDate getStreamingReleaseDate() {
         return streamingReleaseDate;
-    }
-    public FilmEntity getPrequel() {
-        return prequel;
-    }
-    public void setPrequel(FilmEntity prequel) {
-        this.prequel = prequel;
-    }
-    public FilmEntity getSequel() {
-        return sequel;
-    }
-    public void setSequel(FilmEntity sequel) {
-        this.sequel = sequel;
     }
     public void setStreamingReleaseDate(LocalDate streamingReleaseDate) {
         this.streamingReleaseDate = streamingReleaseDate;
@@ -188,19 +171,15 @@ public class FilmEntity {
     public void setCriticsConsensus(String criticsConsensus) {
         this.criticsConsensus = criticsConsensus;
     }
-
     public String getAspectRatio() {
         return aspectRatio;
     }
-
     public void setAspectRatio(String aspectRatio) {
         this.aspectRatio = aspectRatio;
     }
-
     public String getSoundMix() {
         return soundMix;
     }
-
     public void setSoundMix(String soundMix) {
         this.soundMix = soundMix;
     }

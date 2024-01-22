@@ -11,8 +11,8 @@ public class Serie extends FilmEntity {
     @Column(name = "SEASON_NUMBER", columnDefinition = "VARCHAR(4)")
     private String seasonNumber;
 
-    public Serie(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, int averageSuperRating, int averageUserRating, FilmEntity prequel, FilmEntity sequel, SagaEntity saga, Long viewCount, LocalDate addedDate, String seasonNumber) {
-        super(filmType, id, tittle, synopsis, originalLanguage, distributor, suitableFor, streamingReleaseDate, coomingSoon, averageSuperRating, averageUserRating, prequel, sequel, saga, viewCount, addedDate);
+    public Serie(int filmType, UUID id, String tittle, String synopsis, String originalLanguage, String distributor, String suitableFor, LocalDate streamingReleaseDate, LocalDate coomingSoon, int averageSuperRating, int averageUserRating, SagaEntity saga, Long viewCount, String aspectRatio, String soundMix, String criticsConsensus, LocalDate addedDate, String seasonNumber) {
+        super(filmType, id, tittle, synopsis, originalLanguage, distributor, suitableFor, streamingReleaseDate, coomingSoon, averageSuperRating, averageUserRating, saga, viewCount, aspectRatio, soundMix, criticsConsensus, addedDate);
         this.seasonNumber = seasonNumber;
     }
 

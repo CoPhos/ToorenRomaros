@@ -32,8 +32,6 @@ public class FilmDto {
     private String suitableFor;
     private LocalDate coomingSoon;
     private LocalDate streamingReleaseDate;
-    private String prequel;
-    private String sequel;
     private Integer filmType;
     private String sagaId;
     private Float averageSuperRating;
@@ -41,7 +39,8 @@ public class FilmDto {
     private String criticsConsensus;
     private String aspectRatio;
     private String soundMix;
-
+    private Long viewCount;
+    private LocalDate addedDate;
     public Integer getFilmType() {
         return filmType;
     }
@@ -90,18 +89,6 @@ public class FilmDto {
     public void setStreamingReleaseDate(LocalDate streamingReleaseDate) {
         this.streamingReleaseDate = streamingReleaseDate;
     }
-    public String getPrequel() {
-        return prequel;
-    }
-    public void setPrequel(String prequel) {
-        this.prequel = prequel;
-    }
-    public String getSequel() {
-        return sequel;
-    }
-    public void setSequel(String sequel) {
-        this.sequel = sequel;
-    }
     public String getSagaId() {
         return sagaId;
     }
@@ -143,6 +130,18 @@ public class FilmDto {
     }
     public void setSoundMix(String soundMix) {
         this.soundMix = soundMix;
+    }
+    public Long getViewCount() {
+        return viewCount;
+    }
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
+    public LocalDate getAddedDate() {
+        return addedDate;
+    }
+    public void setAddedDate(LocalDate addedDate) {
+        this.addedDate = addedDate;
     }
 
     @Override

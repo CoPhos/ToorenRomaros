@@ -67,16 +67,12 @@ public class MapperConfig {
         TypeMap<Movie, MovieDto> propertyMapperMoviePrequelSequel = modelMapper.createTypeMap(Movie.class, MovieDto.class);
         propertyMapperMoviePrequelSequel.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getPrequel().getTittle(), MovieDto::setPrequel);
-                    mapper.map(src -> src.getSequel().getTittle(), MovieDto::setSequel);
                     mapper.map(src -> src.getSaga().getName(), MovieDto::setSagaId);
                 }
         );
         TypeMap<Serie, SerieDto> propertyMapperSeriePrequelSequel = modelMapper.createTypeMap(Serie.class, SerieDto.class);
         propertyMapperSeriePrequelSequel.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getPrequel().getTittle(), SerieDto::setPrequel);
-                    mapper.map(src -> src.getSequel().getTittle(), SerieDto::setSequel);
                     mapper.map(src -> src.getSaga().getName(), SerieDto::setSagaId);
                 }
         );

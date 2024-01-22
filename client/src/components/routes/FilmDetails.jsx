@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 
-import ReviewManager from '../review/ReviewManager';
 import TittleCard from '../cards/tittle/TittleCard';
 import VideosTopManager from '../videosTop/VideosTopManager';
 import BlogTopManager from '../blogTop/BlogTopManager';
@@ -12,9 +11,7 @@ function FilmDetails() {
   return (
       <Fragment> 
          <FilmManager></FilmManager>
-          
-          <ReviewManager></ReviewManager>
-
+ {/*
           <TittleCard
               tittle={'PHOTOS'}
               to={'/adasd'}
@@ -41,7 +38,7 @@ function FilmDetails() {
               to={'/adasd'}
               linkText={null}
           ></TittleCard>
-          <BlogTopManager></BlogTopManager>
+          <BlogTopManager></BlogTopManager> */}
       </Fragment>
   )
 }
