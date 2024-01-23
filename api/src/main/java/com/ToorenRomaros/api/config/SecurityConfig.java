@@ -92,6 +92,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/v1/**/image").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/films/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/posts/images/**").permitAll()
                 .antMatchers(HttpMethod.GET, FILMS_URL).permitAll()
                 .antMatchers(H2_URL_PREFIX).permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/v1/admin/**")

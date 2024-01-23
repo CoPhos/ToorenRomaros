@@ -1,11 +1,14 @@
 package com.ToorenRomaros.api.entities.publication;
 
+import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.tag.TagEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -39,13 +42,23 @@ public class PostEntity {
     private PostStatusEnum status;
     @Column(name = "HEADLINE", columnDefinition = "VARCHAR(255)")
     private String headline;
+    @Column(name = "RATING", columnDefinition = "FLOAT")
+    @NotNull(message = "Rating can not be null")
+    @Min(value=0, message = "Rating can not be less than 0")
+    @Max(value = 100, message = "Rating can not be bigger than 100")
+    private float rating;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "film_id")
+    private FilmEntity film;
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private TagEntity tag;
 
     public PostEntity() {
     }
-
     public PostEntity(UUID id, String tittle, LocalDateTime publicationDateTime, int likeCount, String headline, UserEntity user) {
         this.id = id;
         this.publicationDateTime = publicationDateTime;
@@ -56,9 +69,6 @@ public class PostEntity {
     }
     //@Formula("()")
     //private String discussCount;
-
-
-
     public UUID getId() {
         return id;
     }
@@ -118,5 +128,23 @@ public class PostEntity {
     }
     public void setReview(boolean review) {
         isReview = review;
+    }
+    public float getRating() {
+        return rating;
+    }
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+    public FilmEntity getFilm() {
+        return film;
+    }
+    public void setFilm(FilmEntity film) {
+        this.film = film;
+    }
+    public TagEntity getTag() {
+        return tag;
+    }
+    public void setTag(TagEntity tag) {
+        this.tag = tag;
     }
 }

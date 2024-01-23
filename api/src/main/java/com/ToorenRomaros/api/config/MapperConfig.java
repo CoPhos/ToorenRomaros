@@ -9,7 +9,6 @@ import com.ToorenRomaros.api.dto.publication.*;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
-import com.ToorenRomaros.api.dto.tag.TagPostDto;
 import com.ToorenRomaros.api.dto.user.RefreshTokenDto;
 import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.dto.watchList.WatchListDto;
@@ -23,7 +22,6 @@ import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
 import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
 import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
-import com.ToorenRomaros.api.entities.tag.TagPostEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.entities.watchList.WatchListEntity;
@@ -132,15 +130,6 @@ public class MapperConfig {
                 }
         );
 
-        //Episode
-        TypeMap<RatingEntity, RatingDto> propertyMapperRatingDto = modelMapper.createTypeMap(RatingEntity.class, RatingDto.class);
-        propertyMapperRatingDto.addMappings(
-                mapper -> {
-                    mapper.map(src -> src.getFilm().getId(), RatingDto::setFilmId);
-                    mapper.map(src -> src.getUser().getId(), RatingDto::setUserId);
-                }
-        );
-
         //Comment
         TypeMap<CommentEntity, CommentDto> propertyMapperCommentDto = modelMapper.createTypeMap(CommentEntity.class, CommentDto.class);
         propertyMapperCommentDto.addMappings(
@@ -181,15 +170,6 @@ public class MapperConfig {
         propertyMapperRefreshTokenDto.addMappings(
                 mapper -> {
                     mapper.map(UserEntity::getId, RefreshTokenDto::setUser);
-                }
-        );
-
-        //TagPost
-        TypeMap<TagPostEntity, TagPostDto> propertyMapperTagPostDto = modelMapper.createTypeMap(TagPostEntity.class, TagPostDto.class);
-        propertyMapperTagPostDto.addMappings(
-                mapper -> {
-                    mapper.map(TagPostEntity::getPost, TagPostDto::setPost);
-                    mapper.map(TagPostEntity::getTag, TagPostDto::setTag);
                 }
         );
 

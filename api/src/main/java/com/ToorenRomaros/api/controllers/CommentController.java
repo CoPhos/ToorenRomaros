@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -50,6 +51,13 @@ public class CommentController {
                                                               @RequestParam(defaultValue = "false") Boolean reported) throws Exception {
         Map<String, Object> response = new HashMap<>();
         response.put("response", commentService.getAllCommentByFilmId(UUID.fromString(id), reported));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/films/{id}/comments/ratings")
+    ResponseEntity<Map<String, Object>> getTotalRatingByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+                                                              @RequestParam(defaultValue = "false") Boolean reported) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", commentService.getTotalRatingByFilmId(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PutMapping("/comments/{id}")

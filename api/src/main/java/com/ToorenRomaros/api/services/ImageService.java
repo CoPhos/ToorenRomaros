@@ -42,7 +42,7 @@ public interface ImageService {
         }
 
         if (width > 0 && height > 0) {
-            BufferedImage resizedImage = Scalr.resize(bufferedImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, width, height, Scalr.OP_ANTIALIAS);
+            BufferedImage resizedImage = Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, width, height, Scalr.OP_ANTIALIAS);
             ImageIO.write(resizedImage, "jpg", new File(filePath));
         } else {
             ImageIO.write(bufferedImage, "jpg", new File(filePath));

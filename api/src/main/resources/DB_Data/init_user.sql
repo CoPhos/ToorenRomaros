@@ -228,7 +228,7 @@ VALUES
         80,
         60,
         'katherine.critic@email.com',
-        'hashed_password',
+        '{bcrypt}$2a$10$neR0EcYY5./tLVp4litNyuBy/kfrTsqEv8hiyqEKX0TXIQQwC/5Rm',
         'CRITIC',
         'ACTIVE'
     ),
@@ -241,7 +241,7 @@ VALUES
         70,
         50,
         'michael.reviewer@email.com',
-        'hashed_password',
+        '{bcrypt}$2a$10$neR0EcYY5./tLVp4litNyuBy/kfrTsqEv8hiyqEKX0TXIQQwC/5Rm',
         'CRITIC',
         'ACTIVE'
     ),
@@ -254,7 +254,7 @@ VALUES
         90,
         70,
         'grace.opinionator@email.com',
-        'hashed_password',
+        '{bcrypt}$2a$10$neR0EcYY5./tLVp4litNyuBy/kfrTsqEv8hiyqEKX0TXIQQwC/5Rm',
         'CRITIC',
         'ACTIVE'
     ),
@@ -267,7 +267,7 @@ VALUES
         100,
         80,
         'peter.critique@email.com',
-        'hashed_password',
+        '{bcrypt}$2a$10$neR0EcYY5./tLVp4litNyuBy/kfrTsqEv8hiyqEKX0TXIQQwC/5Rm',
         'CRITIC',
         'ACTIVE'
     ),
@@ -280,7 +280,7 @@ VALUES
         110,
         90,
         'natalie.critique@email.com',
-        'hashed_password',
+        '{bcrypt}$2a$10$neR0EcYY5./tLVp4litNyuBy/kfrTsqEv8hiyqEKX0TXIQQwC/5Rm',
         'CRITIC',
         'ACTIVE'
     );

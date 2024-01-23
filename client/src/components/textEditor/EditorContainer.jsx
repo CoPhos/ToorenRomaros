@@ -1,9 +1,8 @@
 import React from 'react'
 
-import styled from 'styled-components'
-
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
+import { convertToRaw } from 'draft-js'
 
 
 function EditorContainer(props) {
@@ -19,11 +18,11 @@ function EditorContainer(props) {
 
 
   return (
-      <Wrapper>
-          <ContainerForm onSubmit={(e) => handleSubmit(e)}>
-              <ContainerInputs>
+      <div>
+          {/* <form onSubmit={(e) => handleSubmit(e)}>
+              <div>
                   <label htmlFor="fname">Tittle *</label>
-                  <StyledInput
+                  <input
                       value={props.postInfo.tittle}
                       id="fname"
                       type="text"
@@ -32,7 +31,7 @@ function EditorContainer(props) {
                   />
 
                   <label htmlFor="fheadline">Headline *</label>
-                  <StyledInput
+                  <input
                       value={props.postInfo.headline}
                       id="fheadline"
                       type="text"
@@ -41,7 +40,7 @@ function EditorContainer(props) {
                   />
 
                   <label htmlFor="fimage">Front image *</label>
-                  <StyledInput
+                  <input
                       id="fimage"
                       type="file"
                       accept="image/jpeg"
@@ -50,16 +49,16 @@ function EditorContainer(props) {
                   />
 
                   <label htmlFor="fsynthesis">Synthesis *</label>
-                  <StyledInput
+                  <input
                       value={props.postInfo.synthesis}
                       id="fsynthesis"
                       type="text"
                       required
                       onChange={(e) => props.handleOnChange(e, 'synthesis')}
                   />
-              </ContainerInputs>
-          </ContainerForm>
-          <ContainerEditor>
+              </div>
+          </form> */}
+          <div>
               <Editor
                   editorStyle={{ border: '1px solid #F1F1F1' }}
                   editorState={props.editorState}
@@ -88,114 +87,34 @@ function EditorContainer(props) {
                       ],
                   }}
               />
-          </ContainerEditor>
-          <ContainerButtons>
-              <ContainerSaveDiscard>
-                  <SaveButton
+          </div>
+          {/* <div>
+              <div>
+                  <button
                       onClick={(e) => props.savePost('draft')}
                       formnovalidate
                   >
                       Save Draft
-                  </SaveButton>
-                  <DiscardButton
-                      onClick={(e) => props.discardPost()}
-                      formnovalidate
-                  >
+                  </button>
+                  <button onClick={(e) => props.discardPost()} formnovalidate>
                       Discard
-                  </DiscardButton>
-              </ContainerSaveDiscard>
-              <PostButton onClick={(e) => props.savePost('completed')}>
-                  Post
-              </PostButton>
-          </ContainerButtons>
-      </Wrapper>
+                  </button>
+              </div>
+              <button onClick={(e) => props.savePost('completed')}>Post</button>
+          </div> */}
+          <button
+              onClick={(e) => {
+                  console.log(
+                      JSON.stringify(
+                          convertToRaw(props.editorState.getCurrentContent())
+                      )
+                  )
+              }}
+          >
+              print to console
+          </button>
+      </div>
   )
 }
-
-const Wrapper = styled.form`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-`
-
-const ContainerEditor = styled.div`
-    width: 80%;
-    margin: 16px 0;
-`
-const ContainerForm = styled.div`
-    width: 80%;
-    margin-top: 8px;
-`
-
-const ContainerInputs = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: start;
-    width: 100%;
-    gap: 8px;
-`
-
-const StyledInput = styled.input`
-    width: 100%;
-    border: 1px solid #f1f1f1;
-    padding: 8px 8px;
-    outline: none;
-    &:focus {
-        border: 2px solid #bfbfbf;
-    }
-`
-
-const ContainerButtons = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    aling-items: center;
-    justify-content: flex-start;
-    width: 80%;
-`
-
-const ContainerSaveDiscard = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
-`
-
-const PostButton = styled.button`
-    width: 100%;
-    height: 32px;
-    background-color: ${(props) => props.theme.colors.secondary};
-    border: none;
-    color: white;
-    border-radius: 4px;
-    &:hover {
-        cursor: pointer;
-        background-color: ${(props) => props.theme.colors.secondaryHover};
-    }
-`
-const SaveButton = styled.button`
-    height: 32px;
-    padding: 0 16px;
-    background-color: ${(props) => props.theme.colors.green};
-    border: none;
-    color: white;
-    border-radius: 4px;
-    &:hover {
-        cursor: pointer;
-        background-color: ${(props) => props.theme.colors.greenHover};
-    }
-`
-const DiscardButton = styled(SaveButton)`
-    background-color: ${(props) => props.theme.colors.red};
-    &:hover {
-        
-        background-color: ${(props) => props.theme.colors.redHover};
-    }
-`
-
 
 export default EditorContainer

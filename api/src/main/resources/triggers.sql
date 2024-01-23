@@ -3,56 +3,55 @@ DROP TRIGGER IF EXISTS CalculateAverageUserRatingSuperInsert;//
 DROP TRIGGER IF EXISTS CalculateAverageUserRatingUserUpdate;//
 DROP TRIGGER IF EXISTS CalculateAverageUserRatingSuperUpdate;//
 //
-CREATE TRIGGER CalculateAverageUserRatingUserInsert
+CREATE TRIGGER CalculateAverageSuperRatingSuperInsert
 AFTER INSERT
-ON rating FOR EACH ROW
+ON post FOR EACH ROW
 BEGIN
     DECLARE film_id VARCHAR(36);
     DECLARE average_rating TINYINT;
 
     SELECT NEW.film_id INTO film_id;
-    SELECT AVG(r.rating) INTO average_rating FROM rating r WHERE r.film_id = film_id AND r.super_rating = false;
-
-    UPDATE film SET average_user_rating = average_rating WHERE id = film_id;
-END//
-
-//
-CREATE TRIGGER CalculateAverageUserRatingSuperInsert
-AFTER INSERT
-ON rating FOR EACH ROW
-BEGIN
-    DECLARE film_id VARCHAR(36);
-    DECLARE average_rating TINYINT;
-
-    SELECT NEW.film_id INTO film_id;
-    SELECT AVG(r.rating) INTO average_rating FROM rating r WHERE r.film_id = film_id AND r.super_rating = true;
+    SELECT AVG(r.rating) INTO average_rating FROM post r WHERE r.film_id = film_id AND r.is_review = true;
 
     UPDATE film SET average_super_rating = average_rating WHERE id = film_id;
 END//
+//
+CREATE TRIGGER CalculateAverageSuperRatingSuperUpdate
+AFTER UPDATE
+ON post FOR EACH ROW
+BEGIN
+    DECLARE film_id VARCHAR(36);
+    DECLARE average_rating TINYINT;
 
+    SELECT NEW.film_id INTO film_id;
+    SELECT AVG(r.rating) INTO average_rating FROM post r WHERE r.film_id = film_id AND r.is_review = true;
+
+    UPDATE film SET average_super_rating = average_rating WHERE id = film_id;
+END//
+//
+CREATE TRIGGER CalculateAverageUserRatingUserInsert
+AFTER INSERT
+ON comment FOR EACH ROW
+BEGIN
+    DECLARE film_id VARCHAR(36);
+    DECLARE average_rating TINYINT;
+
+    SELECT NEW.film_id INTO film_id;
+    SELECT AVG(r.rating) INTO average_rating FROM comment r WHERE r.film_id = film_id AND r.reported = false;
+
+    UPDATE film SET average_user_rating = average_rating WHERE id = film_id;
+END//
 //
 CREATE TRIGGER CalculateAverageUserRatingUserUpdate
 AFTER UPDATE
-ON rating FOR EACH ROW
+ON comment FOR EACH ROW
 BEGIN
     DECLARE film_id VARCHAR(36);
     DECLARE average_rating TINYINT;
 
     SELECT NEW.film_id INTO film_id;
-    SELECT AVG(r.rating) INTO average_rating FROM rating r WHERE r.film_id = film_id AND r.super_rating = false;
+    SELECT AVG(r.rating) INTO average_rating FROM comment r WHERE r.film_id = film_id AND r.reported = false;
 
     UPDATE film SET average_user_rating = average_rating WHERE id = film_id;
 END//
-//
-CREATE TRIGGER CalculateAverageUserRatingSuperUpdate
-AFTER UPDATE
-ON rating FOR EACH ROW
-BEGIN
-    DECLARE film_id VARCHAR(36);
-    DECLARE average_rating TINYINT;
 
-    SELECT NEW.film_id INTO film_id;
-    SELECT AVG(r.rating) INTO average_rating FROM rating r WHERE r.film_id = film_id AND r.super_rating = true;
-
-    UPDATE film SET average_super_rating = average_rating WHERE id = film_id;
-END//

@@ -4,6 +4,7 @@ import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface CommentService {
@@ -12,5 +13,6 @@ public interface CommentService {
     List<CommentDto> getAllCommentByUserId(UUID id, String reported);
     List<CommentDto> getAllCommentByFilmId(UUID id, Boolean reported);
     CommentDto updateComment(UUID id, CommentDto commentDto);
+    Map<String, Object> getTotalRatingByFilmId(UUID id);
     void deleteComment(UUID id);
 }

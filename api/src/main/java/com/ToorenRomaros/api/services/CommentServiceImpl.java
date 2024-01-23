@@ -13,7 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,7 +33,18 @@ public class CommentServiceImpl implements CommentService{
         this.commentRepository = commentRepository;
         this.modelMapper = modelMapper;
     }
-
+    @Override
+    public Map<String, Object>getTotalRatingByFilmId(UUID id) {
+        List<Object[]> ratings = commentRepository.getotalRatingsByFilmId(String.valueOf(id));
+        if(ratings.isEmpty()){
+            throw new ResourceNotFoundException("No ratings found for film:" + id);
+        }
+        Map<String, Object> values = new HashMap<>();
+        values.put("positive", ratings.get(0)[0]);
+        values.put("neutral", ratings.get(0)[1]);
+        values.put("negative", ratings.get(0)[2]);
+        return values;
+    }
     @Override
     public CommentDto createComment(CommentDto commentDto) {
         CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);

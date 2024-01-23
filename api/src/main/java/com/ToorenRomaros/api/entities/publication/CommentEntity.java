@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -31,6 +32,11 @@ public class CommentEntity{
     private int likeCount;
     @Column(name = "REPORTED", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean reported;
+    @Column(name = "RATING", columnDefinition = "FLOAT")
+    @NotNull(message = "Rating can not be null")
+    @Min(value=0, message = "Rating can not be less than 0")
+    @Max(value = 100, message = "Rating can not be bigger than 100")
+    private float rating;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
