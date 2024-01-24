@@ -47,8 +47,8 @@ public class ImageServicePostImpl extends ImageServiceDefaultImpl{
 
            Map<String, String> data = new HashMap<>();
            data.put("original", processImage("posts/"+ownerId+"/original_", bufferedImage, 0, 0, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.THREE_DPI, this.imageRepostiroy));
-           data.put("960x880", processImage( "posts/"+ownerId+"/960x880_", bufferedImage, 760, 680, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.TWO_DPI, this.imageRepostiroy));
-           data.put("660x580", processImage( "posts/"+ownerId+"/660x580_", bufferedImage, 460, 380, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType),  ImageSizeEnum.ONE_DPI,this.imageRepostiroy));
+           data.put("960x880", processImage( "posts/"+ownerId+"/960x880_", bufferedImage, 960, 880, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.TWO_DPI, this.imageRepostiroy));
+           data.put("660x580", processImage( "posts/"+ownerId+"/660x580_", bufferedImage, 660, 580, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType),  ImageSizeEnum.ONE_DPI,this.imageRepostiroy));
            return data;
        }catch (Exception e){
          log.info(e.getMessage());

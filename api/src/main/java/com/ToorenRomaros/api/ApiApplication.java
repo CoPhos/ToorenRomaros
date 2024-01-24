@@ -1,13 +1,7 @@
 package com.ToorenRomaros.api;
 
-import com.ToorenRomaros.api.entities.user.UserEntity;
-import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
-import com.ToorenRomaros.api.repositories.user.UserFollowerRepository;
-import com.ToorenRomaros.api.repositories.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,8 +11,6 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import javax.sql.DataSource;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 @SpringBootApplication
 public class ApiApplication {
@@ -43,7 +35,8 @@ public class ApiApplication {
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_social.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_streamSite.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_episode.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-tvshows.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-movies.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_tag.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_image.sql"));
 			resourceDatabasePopulator.execute(dataSource);

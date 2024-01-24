@@ -33,7 +33,7 @@ public class PostEntity {
     private String tittle;
     @Column(name = "SYNTHESIS", columnDefinition = "TEXT")
     private String synthesis;
-    @Column(name = "CONTENT", columnDefinition = "MEDIUMTEXT")
+    @Column(name = "CONTENT", columnDefinition = "LONGTEXT")
     private String content;
     @Column(name = "IS_REVIEW", columnDefinition = "Boolean")
     private boolean isReview=true;
