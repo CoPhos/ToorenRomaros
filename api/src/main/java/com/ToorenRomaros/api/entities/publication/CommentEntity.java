@@ -86,4 +86,20 @@ public class CommentEntity{
     public void setFilm(FilmEntity film) {
         this.film = film;
     }
+
+    public LocalDateTime getPostDateTime() {
+        return postDateTime;
+    }
+
+    public void setPostDateTime(LocalDateTime postDateTime) {
+        this.postDateTime = postDateTime;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 }

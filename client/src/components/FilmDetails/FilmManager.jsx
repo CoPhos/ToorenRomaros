@@ -106,11 +106,31 @@ function FilmManager() {
             console.log(error)
         },
     })
-    const getRatingFromFilm = useQuery({
-        queryKey: ['getRatingFromFilm', params.uuid],
+    const getCommonRatingFromFilm = useQuery({
+        queryKey: ['getCommonRatingFromFilm', params.uuid],
         queryFn: async () => {
             try {
-                return axios.get(FILM_URL + `/${params.uuid}` + '/ratings')
+                return axios.get(
+                    FILM_URL + `/${params.uuid}` + '/comments/ratings'
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            //console.log(data?.data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+    const getSuperRatingFromFilm = useQuery({
+        queryKey: ['getSuperRatingFromFilm', params.uuid],
+        queryFn: async () => {
+            try {
+                return axios.get(
+                    FILM_URL + `/${params.uuid}` + '/posts/ratings'
+                )
             } catch (error) {
                 return error
             }
@@ -189,10 +209,49 @@ function FilmManager() {
         }
     )
 
+    const getSuperReviews = useQuery({
+        queryKey: ['getSuperReviews', params.uuid],
+        queryFn: async () => {
+            try {
+                return axios.get(
+                    FILM_URL + `/${params.uuid}` + '/posts/reviews'
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data?.data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+
+    const getCommonReviews = useQuery({
+        queryKey: ['getCommonReviews', params.uuid],
+        queryFn: async () => {
+            try {
+                return axios.get(FILM_URL + `/${params.uuid}` + '/comments')
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data?.data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+
     const isLoading =
         getFilm.isLoading ||
-        getRatingFromFilm.isLoading ||
+        getCommonRatingFromFilm.isLoading ||
+        getSuperReviews.isLoading ||
+        getCommonReviews.isLoading ||
         getProfileImageFromStaffByFilmId.isLoading ||
+        getSuperRatingFromFilm.isLoading ||
         getAllGenresFromFilm.isLoading ||
         getStreamSitesFromFilm.isLoading ||
         getImageFromStreamsiteByFilmId.isLoading
@@ -200,8 +259,11 @@ function FilmManager() {
 
     const hasError =
         getFilm.error ||
-        getRatingFromFilm.error ||
+        getCommonRatingFromFilm.error ||
         getProfileImageFromStaffByFilmId.error ||
+        getSuperReviews.error ||
+        getCommonReviews.error ||
+        getSuperRatingFromFilm.error ||
         getAllGenresFromFilm.error ||
         getStreamSitesFromFilm.error ||
         getImageFromStreamsiteByFilmId.error
@@ -221,17 +283,21 @@ function FilmManager() {
     }
 
    const filmData = getFilm.data?.data?.response
-   const ratingData = getRatingFromFilm.data?.data?.response
+   const commonRatingData = getCommonRatingFromFilm.data?.data?.response
+   const superRatingData = getSuperRatingFromFilm.data?.data?.response
    const staffData = getProfileImageFromStaffByFilmId.data
    const genreData = getAllGenresFromFilm.data?.data?.response
    const streamSitesData = getImageFromStreamsiteByFilmId.data
-   
+   const reviewsData = getSuperReviews.data?.data?.response?.content
+   const commentsData = getCommonReviews.data?.data?.response?.content
+
    return (
        <Fragment>
-           {filmData && ratingData && (
+           {filmData && commonRatingData && superRatingData && (
                <FilmMainInfoContainer
                    data={filmData}
-                   ratings={ratingData}
+                   commonRatings={commonRatingData}
+                   superRatings={superRatingData}
                ></FilmMainInfoContainer>
            )}
            {filmData && staffData && genreData && streamSitesData && (
@@ -242,12 +308,19 @@ function FilmManager() {
                    streamSites={streamSitesData}
                ></FilmDetailsContainer>
            )}
-           {ratingData && filmData && (
-               <ReviewContainer
-                   rating={ratingData}
-                   filmData={filmData}
-               ></ReviewContainer>
-           )}
+           {reviewsData &&
+               commentsData &&
+               commonRatingData &&
+               superRatingData &&
+               filmData && (
+                   <ReviewContainer
+                       commonRatings={commonRatingData}
+                       superRatings={superRatingData}
+                       filmData={filmData}
+                       reviews={reviewsData}
+                       comments={commentsData}
+                   ></ReviewContainer>
+               )}
        </Fragment>
    )
 }

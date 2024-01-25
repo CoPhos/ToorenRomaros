@@ -1,9 +1,9 @@
 import React, { useState, Fragment } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import ReviewCard from '../cards/filmData/ReviewCard'
 
-function ReviewPanel({expand, to}) {
+function ReviewPanel({ expand, to, data, critic}) {
     const [active, setactive] = useState(1)
     const baseClassesButton =
         'text-white-300 text-small-m-400 lg:text-small-d-400 border-[none] hover:cursor-pointer py-2 px-1'
@@ -11,10 +11,19 @@ function ReviewPanel({expand, to}) {
     const notFocus = 'border-[none]'
     const show = 'flex flex-col items-center justify-start gap-2'
     const notShow = 'hidden'
-    const dynamicClassButton =""
+    const dynamicClassButton = ''
+    const filteredData = (requirement) => {
+        if (requirement == 'positive') {
+            return data.filter((item) => item.rating >= 70)
+        } else if (requirement == 'neutral') {
+            return data.filter((item) => item.rating >= 40 && item.rating < 70)
+        } else if (requirement == 'negative') {
+            return data.filter((item) => item.rating < 40)
+        } else return data
+    }
     return (
         <Fragment>
-            <div className="w-full mb-2">
+            <div className="grow mb-2">
                 <div className="flex flex-row items-center justify-around w-full">
                     <button
                         onClick={() => setactive(1)}
@@ -51,26 +60,47 @@ function ReviewPanel({expand, to}) {
                 </div>
             </div>
             <div className={`${active === 1 ? show : notShow}`}>
-                <ReviewCard expand={expand}></ReviewCard>
-                <ReviewCard expand={expand}></ReviewCard>
-                <ReviewCard expand={expand}></ReviewCard>
-                <ReviewCard expand={expand}></ReviewCard>
-                <ReviewCard expand={expand}></ReviewCard>
+                {filteredData('all').map((item) => (
+                    <ReviewCard
+                        key={item.id}
+                        expand={expand}
+                        data={item}
+                        critic={critic}
+                    ></ReviewCard>
+                ))}
             </div>
 
             <div className={`${active === 2 ? show : notShow}`}>
-                <ReviewCard expand={expand}></ReviewCard>
-                <ReviewCard expand={expand}></ReviewCard>
-                <ReviewCard expand={expand}></ReviewCard>
+                {filteredData('positive').map((item) => (
+                    <ReviewCard
+                        key={item.id}
+                        expand={expand}
+                        data={item}
+                        critic={critic}
+                    ></ReviewCard>
+                ))}
             </div>
 
             <div className={`${active === 3 ? show : notShow}`}>
-                <ReviewCard expand={expand}></ReviewCard>
-                <ReviewCard expand={expand}></ReviewCard>
+                {filteredData('neutral').map((item) => (
+                    <ReviewCard
+                        key={item.id}
+                        expand={expand}
+                        data={item}
+                        critic={critic}
+                    ></ReviewCard>
+                ))}
             </div>
 
             <div className={`${active === 4 ? show : notShow}`}>
-                <ReviewCard expand={expand}></ReviewCard>
+                {filteredData('negative').map((item) => (
+                    <ReviewCard
+                        key={item.id}
+                        expand={expand}
+                        data={item}
+                        critic={critic}
+                    ></ReviewCard>
+                ))}
             </div>
 
             <Link

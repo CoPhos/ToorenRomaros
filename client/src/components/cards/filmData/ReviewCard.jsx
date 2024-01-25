@@ -1,10 +1,10 @@
 import React, { useState, createRef, useEffect, Fragment } from 'react'
 import {Link} from 'react-router-dom'
 
-function ReviewCard({expand}) {
+function ReviewCard({ expand, data, critic }) {
     const [height, setHeight] = useState(0)
     const [show, setshow] = useState(false)
-    
+
     const toggle = () => {
         setshow(!show)
     }
@@ -14,53 +14,40 @@ function ReviewCard({expand}) {
         setHeight(elementRef.current.offsetHeight)
     }, [])
 
-    const text = `styled-components utilises tagged template literals to style your
-              components. It removes the mapping between components and styles.
-              This means that when you're defining your styles, you're actually
-              creating a normal React component, that has your styles attached
-              to it. This example creates two simple components, a wrapper and a
-              title, with some styles attached to it:styled-components utilises tagged template literals to style your
-              components. It removes the mapping between components and styles.
-              This means that when you're defining your styles, you're actually
-              creating a normal React component, that has your styles attached
-              to it. This example creates two simple components, a wrapper and a
-              title, with some styles attached to it:`
-
-    const data = 99
     const baseClassesRating =
         'flex items-center justify-center rounded-xl h-[56px] w-[56px]'
     const dynamicClasses =
-        data.value <= 40
+        data.rating <= 40
             ? 'bg-red-500'
-            : data.value < 70 && data.value > 40
+            : data.rating < 70 && data.rating > 40
             ? 'bg-[#ffbd3f]'
             : 'bg-green-600'
 
     const baseClassesText = 'text-small-m-400 lg:text-small-d-400 break-words'
-    const dynamicClassesText = 
-    show
+    const dynamicClassesText = show
         ? 'line-clamp-[unset]'
         : ' overflow-hidden text-ellipsis line-clamp-4'
 
+    const dateObject = new Date(data.publicationDateTime)
     let textComponent
-       if (height > 85 && expand) {
-         textComponent = (
-             <div className="flex flex-col items-start justify-center">
-                 <p
-                     ref={elementRef}
-                     className={`${baseClassesText} ${dynamicClassesText}`}
-                 >
-                     {text}
-                 </p>
-                 <button
-                     onClick={toggle}
-                     className="self-start bg-transparent max-w-[80px] border-none hover:cursor-pointer text-small-m-700 lg:text-small-d-700"
-                 >
-                     {show ? 'Collapse' : 'Expand'}
-                 </button>
-             </div>
-         )
-     } else {
+    if (height > 85 && expand) {
+        textComponent = (
+            <div className="flex flex-col items-start justify-center">
+                <p
+                    ref={elementRef}
+                    className={`${baseClassesText} ${dynamicClassesText}`}
+                >
+                    {critic ? data.synthesis : data.body}
+                </p>
+                <button
+                    onClick={toggle}
+                    className="self-start bg-transparent max-w-[80px] border-none hover:cursor-pointer text-small-m-700 lg:text-small-d-700"
+                >
+                    {show ? 'Collapse' : 'Expand'}
+                </button>
+            </div>
+        )
+    } else {
         textComponent = (
             <p
                 ref={elementRef}
@@ -68,10 +55,10 @@ function ReviewCard({expand}) {
                     'text-small-m-400 lg:text-small-d-400 break-words overflow-hidden text-ellipsis line-clamp-6'
                 }
             >
-                {text}
+                {critic ? data.synthesis : data.body}
             </p>
         )
-     }
+    }
 
     const fullReviewDiv = (
         <Link
@@ -120,7 +107,7 @@ function ReviewCard({expand}) {
             </button>
         </div>
     )
-        
+
     return (
         <div className="flex flex-col items-start justify-between min-h-[300px] py-2 rounded-md bg-[#f2f2f2] w-full">
             <div className="flex flex-col items-start justify-start gap-2 px-2">
@@ -130,15 +117,20 @@ function ReviewCard({expand}) {
                 >
                     <div className={`${baseClassesRating} ${dynamicClasses}`}>
                         <p className="text-[36px] font-bold text-white-50">
-                            {data}
+                            {parseInt(data.rating, 10)}
                         </p>
                     </div>
                     <div className="flex flex-col items-start justify-center">
                         <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
-                            Username123uwu
+                            {critic ? data.user : data.username}
                         </p>
                         <p className="text-tiny-m-400 lg:text-tiny-d-400  group-hover:text-red-600">
-                            Augs 8, 2023
+                            {dateObject.getDate() +
+                                '-' +
+                               ( dateObject.getMonth() +
+                                1 )+
+                                '-' +
+                                dateObject.getFullYear()}
                         </p>
                     </div>
                 </Link>

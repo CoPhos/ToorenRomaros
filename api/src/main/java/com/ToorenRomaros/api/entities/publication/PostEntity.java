@@ -59,6 +59,14 @@ public class PostEntity {
 
     public PostEntity() {
     }
+    public PostEntity(UUID id, float rating, LocalDateTime publicationDateTime, String synthesis, UserEntity user) {
+        this.id = id;
+        this.publicationDateTime = publicationDateTime;
+        this.synthesis = synthesis;
+        this.rating = rating;
+        this.user = user;
+    }
+
     public PostEntity(UUID id, String tittle, LocalDateTime publicationDateTime, int likeCount, String headline, UserEntity user) {
         this.id = id;
         this.publicationDateTime = publicationDateTime;
@@ -69,81 +77,107 @@ public class PostEntity {
     }
     //@Formula("()")
     //private String discussCount;
+
     public UUID getId() {
         return id;
     }
+
     public void setId(UUID id) {
         this.id = id;
     }
+
     public LocalDateTime getPublicationDateTime() {
         return publicationDateTime;
     }
+
     public void setPublicationDateTime(LocalDateTime publicationDateTime) {
         this.publicationDateTime = publicationDateTime;
     }
+
     public int getLikeCount() {
         return likeCount;
     }
+
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
+
     public String getTittle() {
         return tittle;
     }
+
     public void setTittle(String tittle) {
         this.tittle = tittle;
     }
+
     public String getSynthesis() {
         return synthesis;
     }
+
     public void setSynthesis(String synthesis) {
         this.synthesis = synthesis;
     }
+
     public String getContent() {
         return content;
     }
+
     public void setContent(String content) {
         this.content = content;
     }
-    public UserEntity getUser() {
-        return user;
-    }
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-    public PostStatusEnum getStatus() {
-        return status;
-    }
-    public void setStatus(PostStatusEnum status) {
-        this.status = status;
-    }
-    public String getHeadline() {
-        return headline;
-    }
-    public void setHeadline(String headline) {
-        this.headline = headline;
-    }
+
     public boolean isReview() {
         return isReview;
     }
+
     public void setReview(boolean review) {
         isReview = review;
     }
+
+    public PostStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(PostStatusEnum status) {
+        this.status = status;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
+    }
+
     public float getRating() {
         return rating;
     }
+
     public void setRating(float rating) {
         this.rating = rating;
     }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
     public FilmEntity getFilm() {
         return film;
     }
+
     public void setFilm(FilmEntity film) {
         this.film = film;
     }
+
     public TagEntity getTag() {
         return tag;
     }
+
     public void setTag(TagEntity tag) {
         this.tag = tag;
     }

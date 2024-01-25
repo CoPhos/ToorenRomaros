@@ -27,7 +27,6 @@ public class ApiApplication {
 			triggersPopulator.execute(dataSource);
 
 			ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, StandardCharsets.UTF_8.toString(), new ClassPathResource("/DB_Data/init_user.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_comment.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_film.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_genre.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_staff.sql"));
@@ -38,6 +37,7 @@ public class ApiApplication {
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-tvshows.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-movies.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_tag.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_comment.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_image.sql"));
 			resourceDatabasePopulator.execute(dataSource);
 		};

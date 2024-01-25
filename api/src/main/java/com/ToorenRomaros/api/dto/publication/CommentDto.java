@@ -18,8 +18,26 @@ public class CommentDto {
     private boolean reported;
     @NotNull(message = "User id can not be null")
     private String userId;
+    private String username;
     @NotNull(message = "Film id can not be null")
     private String filmId;
+    private float rating;
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public UUID getId() {
         return id;

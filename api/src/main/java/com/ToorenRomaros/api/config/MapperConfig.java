@@ -136,8 +136,17 @@ public class MapperConfig {
                 mapper -> {
                     mapper.map(src -> src.getFilm().getId(), CommentDto::setFilmId);
                     mapper.map(src -> src.getUser().getId(), CommentDto::setUserId);
+                    mapper.map(src -> src.getUser().getUsername(), CommentDto::setUsername);
                 }
         );
+
+        TypeMap<PostEntity, PostDetailsDto> propertyMapperPostDetailsDto = modelMapper.createTypeMap(PostEntity.class, PostDetailsDto.class);
+        propertyMapperPostDetailsDto.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getUser().getUsername(), PostDetailsDto::setUser);
+                }
+        );
+
 
         //Discuss
         TypeMap<DiscussEntity, DiscussDto> propertyMapperDiscussDto = modelMapper.createTypeMap(DiscussEntity.class, DiscussDto.class);

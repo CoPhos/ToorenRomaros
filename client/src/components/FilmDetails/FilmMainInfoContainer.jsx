@@ -5,7 +5,7 @@ import MainRatingScore from '../cards/mainRatingScore/MainRatingScore'
 import PostRatingManager from '../postRating/PostRatingManager'
 import TittleCard from '../cards/tittle/TittleCard'
 
-function FilmMainInfoContainer({ data, ratings }) {
+function FilmMainInfoContainer({ data, commonRatings, superRatings }) {
     const location = useLocation()
     const pathname = location.pathname
     const component = (
@@ -40,11 +40,11 @@ function FilmMainInfoContainer({ data, ratings }) {
                 </div>
 
                 <MainRatingScore
-                    data={ratings.SuperRatings}
+                    data={superRatings}
                     totalScore={data.averageSuperRating}
                 ></MainRatingScore>
                 <MainRatingScore
-                    data={ratings.CommonRatings}
+                    data={commonRatings}
                     totalScore={data.averageUserRating}
                 ></MainRatingScore>
 

@@ -1,6 +1,7 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.publication.CommentDto;
+import com.ToorenRomaros.api.dto.publication.PostDetailsDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.publication.CommentEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
@@ -10,7 +11,11 @@ import com.ToorenRomaros.api.repositories.publication.CommentRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -26,6 +31,7 @@ public class CommentServiceImpl implements CommentService{
     private final FilmRepository filmRepository;
     private final CommentRepository commentRepository;
     private final ModelMapper modelMapper;
+    private static final Logger log = LoggerFactory.getLogger(CommentServiceImpl.class);
 
     public CommentServiceImpl(UserRepository userRepository, FilmRepository filmRepository, CommentRepository commentRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
@@ -74,14 +80,18 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<CommentDto> getAllCommentByFilmId(UUID id, Boolean reported) {
-        List<CommentEntity> commentEntities = commentRepository.getAllCommentsByFilmIdAndReported(id.toString(), reported);
-        if(commentEntities.isEmpty()){
-            throw new ResourceNotFoundException("No comments found for film: " + id);
+    public Page<CommentDto> getAllCommentByFilmId(UUID id, Boolean reported, Pageable pageable) {
+        try {
+            Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByFilmIdAndReported(id, reported, pageable);
+            if(commentEntities.isEmpty()){
+                throw new ResourceNotFoundException("No comments found for film: " + id);
+            }
+            return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
+        }catch (Exception e){
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCause()));
         }
-        return commentEntities.stream().map(commentEntity -> {
-            return modelMapper.map(commentEntity, CommentDto.class);
-        }).collect(Collectors.toList());
+        return null;
     }
 
     @Override

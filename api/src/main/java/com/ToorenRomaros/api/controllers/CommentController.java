@@ -3,6 +3,9 @@ package com.ToorenRomaros.api.controllers;
 import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.services.CommentService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,9 +51,13 @@ public class CommentController {
     }
     @GetMapping("/films/{id}/comments")
     ResponseEntity<Map<String, Object>> getAllCommentByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
-                                                              @RequestParam(defaultValue = "false") Boolean reported) throws Exception {
+                                                              @RequestParam(defaultValue = "false") Boolean reported,
+                                                              @RequestParam(defaultValue = "0") int page,
+                                                              @RequestParam(defaultValue = "8") int size) throws Exception {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("postDateTime"));
         Map<String, Object> response = new HashMap<>();
-        response.put("response", commentService.getAllCommentByFilmId(UUID.fromString(id), reported));
+        response.put("response", commentService.getAllCommentByFilmId(UUID.fromString(id), reported, pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/films/{id}/comments/ratings")

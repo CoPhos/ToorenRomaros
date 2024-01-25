@@ -3,6 +3,9 @@ package com.ToorenRomaros.api.controllers;
 import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.dto.publication.PostDto;
 import com.ToorenRomaros.api.services.PostService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +66,25 @@ public class PostController {
         PostDto updatedPost = postService.updatePostById(UUID.fromString(id), postDto);
         Map<String, Object> response = new HashMap<>();
         response.put("updated", updatedPost);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/films/{id}/posts/ratings")
+    ResponseEntity<Map<String, Object>> getTotalRatingByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+                                                               @RequestParam(defaultValue = "false") Boolean reported) throws Exception {
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", postService.getTotalRatingByFilmId(UUID.fromString(id)));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/films/{id}/posts/reviews")
+    ResponseEntity<Map<String, Object>> getReviewPostsByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+                                                               @RequestParam(defaultValue = "false") Boolean reported,
+                                                               @RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "8") int size) throws Exception {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("publicationDateTime"));
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", postService.getReviewPostsByFilmId(UUID.fromString(id), pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
