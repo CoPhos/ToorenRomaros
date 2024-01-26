@@ -11,7 +11,6 @@ function NavbarManager() {
             'Coming Soon to Theaters',
             'Best Movies This Year',
             'Best Movies of All Time',
-            'Best Movies on',
             'Best Movies on Netflix',
             'Best Movies on Hulu',
             'Best Movies on Prime Vide',

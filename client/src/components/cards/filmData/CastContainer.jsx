@@ -4,7 +4,7 @@ import Cast from './Cast'
 function CastContainer({ staff }) {
     const [show, setshow] = useState(false)
     const baseClasses =
-        'flex flex-row items-center justify-start gap-2 flex-wrap overflow-hidden'
+        'flex flex-row items-start justify-between gap-2 flex-wrap overflow-hidden'
 
     const dynamicClass = show ? 'max-h-max' : 'max-h-[250px]'
 

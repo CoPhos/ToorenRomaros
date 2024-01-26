@@ -76,15 +76,29 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/films/{id}/posts/reviews")
-    ResponseEntity<Map<String, Object>> getReviewPostsByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
-                                                               @RequestParam(defaultValue = "false") Boolean reported,
-                                                               @RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "8") int size) throws Exception {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("publicationDateTime"));
+//    @GetMapping("/films/{id}/posts/reviews")
+//    ResponseEntity<Map<String, Object>> getReviewPostsByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+//                                                               @RequestParam(defaultValue = "false") Boolean reported,
+//                                                               @RequestParam(defaultValue = "0") int page,
+//                                                               @RequestParam(defaultValue = "8") int size) throws Exception {
+//
+//        Pageable pageable = PageRequest.of(page, size, Sort.by("publicationDateTime"));
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("response", postService.getReviewPostsByFilmId(UUID.fromString(id), pageable));
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
+    @GetMapping("/films/{id}/posts/reviews")
+    ResponseEntity<Map<String, Object>> getReviewPostsByFilmIdAndRatingOrderByField(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+                                                               @RequestParam(defaultValue = "false") Boolean reported,
+                                                               @RequestParam(defaultValue = "all") String rating,
+                                                               @RequestParam(defaultValue = "publicationDateTime") String order,
+                                                               @RequestParam(defaultValue = "0") int page,
+                                                               @RequestParam(defaultValue = "15") int size) throws Exception {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(order));
         Map<String, Object> response = new HashMap<>();
-        response.put("response", postService.getReviewPostsByFilmId(UUID.fromString(id), pageable));
+        response.put("response", postService.getReviewPostsByFilmIdAndRatingOrderByField(UUID.fromString(id),rating, pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

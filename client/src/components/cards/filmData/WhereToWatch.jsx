@@ -6,7 +6,7 @@ function WhereToWatch({ data }) {
         <a
             href={`${data.url}`}
             target="_blank"
-            className="flex flex-col items-center justify-start gap-1 hover:cursor-pointer group h-[150px]"
+            className="flex flex-col items-center justify-start gap-1 hover:cursor-pointer group h-[150px] mx-auto"
         >
             <img
                 className="rounded-[50%] object-cover object-center w-[70px] h-[70px]"

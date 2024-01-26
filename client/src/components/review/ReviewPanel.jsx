@@ -9,7 +9,7 @@ function ReviewPanel({ expand, to, data, critic}) {
         'text-white-300 text-small-m-400 lg:text-small-d-400 border-[none] hover:cursor-pointer py-2 px-1'
     const focus = 'text-white-900 border-t-[1px] border-white-950'
     const notFocus = 'border-[none]'
-    const show = 'flex flex-col items-center justify-start gap-2'
+    const show = 'flex flex-col items-center justify-start gap-2 w-full'
     const notShow = 'hidden'
     const dynamicClassButton = ''
     const filteredData = (requirement) => {
@@ -23,7 +23,7 @@ function ReviewPanel({ expand, to, data, critic}) {
     }
     return (
         <Fragment>
-            <div className="grow mb-2">
+            <div className="grow mb-2 w-full">
                 <div className="flex flex-row items-center justify-around w-full">
                     <button
                         onClick={() => setactive(1)}

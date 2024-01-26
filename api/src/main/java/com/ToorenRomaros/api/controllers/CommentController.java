@@ -49,15 +49,29 @@ public class CommentController {
         response.put("created", commentService.getAllCommentByUserId(UUID.fromString(id), reported));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/films/{id}/comments")
-    ResponseEntity<Map<String, Object>> getAllCommentByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
-                                                              @RequestParam(defaultValue = "false") Boolean reported,
-                                                              @RequestParam(defaultValue = "0") int page,
-                                                              @RequestParam(defaultValue = "8") int size) throws Exception {
+//    @GetMapping("/films/{id}/comments")
+//    ResponseEntity<Map<String, Object>> getAllCommentByFilmId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+//                                                              @RequestParam(defaultValue = "false") Boolean reported,
+//                                                              @RequestParam(defaultValue = "0") int page,
+//                                                              @RequestParam(defaultValue = "8") int size) throws Exception {
+//
+//        Pageable pageable = PageRequest.of(page, size, Sort.by("postDateTime"));
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("response", commentService.getAllCommentByFilmId(UUID.fromString(id), reported, pageable));
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("postDateTime"));
+    @GetMapping("/films/{id}/comments")
+    ResponseEntity<Map<String, Object>> getAllCommentByFilmIdAndRatingOrderByField(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
+                                                              @RequestParam(defaultValue = "false") Boolean reported,
+                                                              @RequestParam(defaultValue = "all") String rating,
+                                                              @RequestParam(defaultValue = "publicationDateTime") String order,
+                                                              @RequestParam(defaultValue = "0") int page,
+                                                              @RequestParam(defaultValue = "15") int size) throws Exception {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(order));
         Map<String, Object> response = new HashMap<>();
-        response.put("response", commentService.getAllCommentByFilmId(UUID.fromString(id), reported, pageable));
+        response.put("response", commentService.getAllCommentByFilmIdAndRatingOrderByField(UUID.fromString(id), reported, rating, pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/films/{id}/comments/ratings")

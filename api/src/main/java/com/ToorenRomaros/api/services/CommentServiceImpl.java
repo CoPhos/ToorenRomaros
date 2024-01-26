@@ -51,6 +51,41 @@ public class CommentServiceImpl implements CommentService{
         values.put("negative", ratings.get(0)[2]);
         return values;
     }
+
+    @Override
+    public Page<CommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating,  Pageable pageable) {
+        try{
+            int maxRating;
+            int lowRating;
+            switch (rating){
+                case "positive":
+                    maxRating=100;
+                    lowRating=70;
+                    break;
+                case "neutral":
+                    maxRating=69;
+                    lowRating=40;
+                    break;
+                case "negative":
+                    maxRating=39;
+                    lowRating=0;
+                    break;
+                default:
+                    maxRating=100;
+                    lowRating=0;
+            }
+            Page<CommentEntity> commentEntities = commentRepository.getAllCommentByFilmIdAndRatingOrderByField(id, reported, maxRating, lowRating, pageable);
+            if(commentEntities.isEmpty()){
+                throw new ResourceNotFoundException("No comments found for film: " + id);
+            }
+            return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
+        }catch (Exception e){
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCause()));
+        }
+        return null;
+    }
+
     @Override
     public CommentDto createComment(CommentDto commentDto) {
         CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);

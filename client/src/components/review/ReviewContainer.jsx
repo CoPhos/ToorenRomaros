@@ -9,38 +9,41 @@ function ReviewContainer({
     superRatings,
     reviews,
     comments,
+    uuid
 }) {
     return (
-        <div className="flex flex-col items-start justify-start gap-4 py-2 md:flex-row mt-4 px-1 lg:px-[0px]">
+        <div className="grid py-2 mt-4 px-1 items-start grid-cols-1 md:grid-cols-2 md:gap-4 lg:px-[0px]">
             <div className="flex flex-col items-start justify-center gap-2 grow">
-                <div className="flex flex-col items-start justify-center">
+                <div className="flex flex-col items-start justify-center w-full">
                     <ReviewRating
                         tittle={'Super Reviews'}
                         totalScore={filmData.averageSuperRating}
                         data={superRatings}
                         viewAll={true}
+                        to={'reviews?super=true'}
                     ></ReviewRating>
 
                     <ReviewPanel
                         expand={false}
-                        to={'/reviews/critic'}
+                        to={'reviews?super=true'}
                         data={reviews}
                         critic={true}
                     ></ReviewPanel>
                 </div>
             </div>
             <div className="flex flex-col items-start justify-center gap-2 grow">
-                <div className="flex flex-col items-start justify-center">
+                <div className="flex flex-col items-start justify-center w-full">
                     <ReviewRating
                         tittle={'User Reviews'}
                         totalScore={filmData.averageUserRating}
                         data={commonRatings}
                         viewAll={true}
+                        to={'reviews?super=false'}
                     ></ReviewRating>
 
                     <ReviewPanel
                         expand={true}
-                        to={'/reviews/user'}
+                        to={'reviews?super=false'}
                         data={comments}
                         critic={false}
                     ></ReviewPanel>

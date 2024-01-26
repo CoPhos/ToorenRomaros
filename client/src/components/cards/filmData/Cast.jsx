@@ -6,7 +6,7 @@ function Cast({data}) {
   return (
       <Link
           to="/asdhasd"
-          className="flex flex-col items-start h-[205px] justify-start max-w-[120px] mt-2 group"
+          className="flex flex-col items-start h-[205px] justify-start max-w-[120px] mt-2 group mx-auto"
       >
           <img
               //srcset="https://small 480w, https://medium 800w, https://large 1100w"

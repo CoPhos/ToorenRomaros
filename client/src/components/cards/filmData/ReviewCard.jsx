@@ -30,7 +30,7 @@ function ReviewCard({ expand, data, critic }) {
 
     const dateObject = new Date(data.publicationDateTime)
     let textComponent
-    if (height > 85 && expand) {
+    if (height > 98 && expand) {
         textComponent = (
             <div className="flex flex-col items-start justify-center">
                 <p

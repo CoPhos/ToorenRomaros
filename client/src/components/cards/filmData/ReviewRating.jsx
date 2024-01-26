@@ -2,11 +2,11 @@ import React, { Fragment } from 'react'
 import {Link} from 'react-router-dom'
 import RatingBar from './RatingBar';
 
-function ReviewRating({ tittle, totalScore, data, viewAll }) {
-     const total = data.positive + data.negative + data.neutral
-     const greenBar = Math.round((data.positive * 100) / total) + '%'
-     const yellowBar = Math.round((data.neutral * 100) / total) + '%'
-     const redBar = Math.round((data.negative * 100) / total) + '%'
+function ReviewRating({ tittle, totalScore, data, viewAll, to }) {
+    const total = data.positive + data.negative + data.neutral
+    const greenBar = Math.round((data.positive * 100) / total) + '%'
+    const yellowBar = Math.round((data.neutral * 100) / total) + '%'
+    const redBar = Math.round((data.negative * 100) / total) + '%'
 
     let dynamicClasses
     let totalScoreText
@@ -28,7 +28,7 @@ function ReviewRating({ tittle, totalScore, data, viewAll }) {
                 <p className="text-h3-m-700 lg:text-h3-d-700">{tittle}</p>
                 {viewAll ? (
                     <Link
-                        to="/allreviews"
+                        to={to}
                         className="text-small-m-400 lg:text-small-d-400 text-blue-800 hover:text-blue-600"
                     >
                         VIEW ALL
@@ -42,7 +42,7 @@ function ReviewRating({ tittle, totalScore, data, viewAll }) {
                 <div className="w-full">
                     <div className="flex flex-row items-center justify-start gap-2 w-full">
                         <Link
-                            to="/allratings"
+                            to={to}
                             className={`${baseClassesRating} ${dynamicClasses}`}
                         >
                             <p className="text-[36px] font-bold text-white-50">
@@ -58,7 +58,7 @@ function ReviewRating({ tittle, totalScore, data, viewAll }) {
                                 {totalScoreText}
                             </p>
                             <Link
-                                to="/allratings"
+                                to={to}
                                 className="text-small-m-400 lg:text-small-d-400 hover:text-red-600 hover:cursor-pointer"
                             >
                                 Based on {total + ' ' + tittle}
@@ -75,6 +75,7 @@ function ReviewRating({ tittle, totalScore, data, viewAll }) {
                                 keyValue={key}
                                 value={value}
                                 barValues={{ greenBar, yellowBar, redBar }}
+                                to={to}
                             ></RatingBar>
                         )
                     })}

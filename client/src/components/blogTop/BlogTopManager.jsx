@@ -15,7 +15,7 @@ function BlogTopManager() {
         3: {
             text: 'Spring/SpringBoot Interview Questions and Answers Series 2',
         },
-    }
+    } 
   return (
     <BlogTopContainer data={data}></BlogTopContainer>
   )

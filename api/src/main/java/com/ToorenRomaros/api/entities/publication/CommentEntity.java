@@ -26,7 +26,7 @@ public class CommentEntity{
     @NotNull(message = "Body can not be null")
     private String body;
     @Column(name = "PUBLICATION_DATETIME", columnDefinition = "DATETIME")
-    private LocalDateTime postDateTime;
+    private LocalDateTime publicationDateTime;
     @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10) DEFAULT 0")
     @Min(value = 0, message = "Like count can not be negative")
     private int likeCount;
@@ -36,7 +36,7 @@ public class CommentEntity{
     @NotNull(message = "Rating can not be null")
     @Min(value=0, message = "Rating can not be less than 0")
     @Max(value = 100, message = "Rating can not be bigger than 100")
-    private float rating;
+    private int rating;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -57,10 +57,10 @@ public class CommentEntity{
         this.body = body;
     }
     public LocalDateTime getPublicationDateTime() {
-        return postDateTime;
+        return publicationDateTime;
     }
-    public void setPublicationDateTime(LocalDateTime postDateTime) {
-        this.postDateTime = postDateTime;
+    public void setPublicationDateTime(LocalDateTime publicationDateTime) {
+        this.publicationDateTime = publicationDateTime;
     }
     public int getLikeCount() {
         return likeCount;
@@ -87,19 +87,11 @@ public class CommentEntity{
         this.film = film;
     }
 
-    public LocalDateTime getPostDateTime() {
-        return postDateTime;
-    }
-
-    public void setPostDateTime(LocalDateTime postDateTime) {
-        this.postDateTime = postDateTime;
-    }
-
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 }

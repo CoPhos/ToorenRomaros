@@ -9,9 +9,9 @@ import FilmManager from '../FilmDetails/FilmManager';
 
 function FilmDetails() {
   return (
-      <Fragment> 
-         <FilmManager></FilmManager>
- {/*
+      <Fragment>
+          <FilmManager></FilmManager>
+          {/*
           <TittleCard
               tittle={'PHOTOS'}
               to={'/adasd'}
@@ -24,21 +24,27 @@ function FilmDetails() {
               to={'/adasd'}
               linkText={'View all'}
           ></TittleCard>
-          <VideosTopManager></VideosTopManager>
+          <VideosTopManager></VideosTopManager>*/}
 
           <TittleCard
               tittle={'RELATED'}
               to={'/adasd'}
               linkText={null}
           ></TittleCard>
-          <RegularCarouselManager></RegularCarouselManager>
+          <RegularCarouselManager
+              parameters={
+                  '?filmType=1&orderBy=average_super_rating-desc,view_count-desc&page=0&size=15'
+              }
+              queryName={'latestCertified'}
+              promiseName={'latestCertifiedImages'}
+          ></RegularCarouselManager>
 
           <TittleCard
               tittle={'FROM OUR BLOG'}
               to={'/adasd'}
               linkText={null}
           ></TittleCard>
-          <BlogTopManager></BlogTopManager> */}
+          <BlogTopManager></BlogTopManager>
       </Fragment>
   )
 }

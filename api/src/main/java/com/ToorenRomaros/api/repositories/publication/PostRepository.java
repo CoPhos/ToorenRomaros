@@ -26,4 +26,9 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID>, PostRep
             "FROM PostEntity as p " +
             "where p.film.id=?1 and p.isReview=TRUE and p.status='PUBLISHED'")
     Page<PostEntity> getReviewPostsByFilmId(UUID id, Pageable pageable);
+
+    @Query("select new com.ToorenRomaros.api.entities.publication.PostEntity(p.id, p.rating, p.publicationDateTime, p.synthesis, p.user) " +
+            "FROM PostEntity as p " +
+            "where p.film.id=?1 and p.isReview=TRUE and p.status='PUBLISHED' and p.rating<=?2 and p.rating>=?3 ")
+    Page<PostEntity> getReviewPostsByFilmIdAndRatingOrderByField(UUID id, int maxRating, int lowRating, Pageable pageable);
 }

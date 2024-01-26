@@ -10,7 +10,7 @@ function BlogTopContainer({data}) {
           {Object.values(Object.values(data)).map((value, index) => {
               return <BlogCard key={index} text={value.text}></BlogCard>
           })}
-      </div>
+      </div> 
   )
 }
 

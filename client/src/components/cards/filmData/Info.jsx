@@ -18,7 +18,7 @@ function Info({ data, staff, genre }) {
                     {data.suitableFor}
                 </p>
             </div>
-            <div className="flex flex-row items-center justify-start">
+            <div className="flex flex-row items-center justify-start flex-wrap">
                 <p className="text-small-m-700 lg:text-small-d-700">Genre:</p>
                 &nbsp;
                 {genre.map((element, index) => (

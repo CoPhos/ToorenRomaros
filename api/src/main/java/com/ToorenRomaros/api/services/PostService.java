@@ -15,6 +15,7 @@ public interface PostService {
     PostDto updatePostById(UUID id, PostDto postDto);
     Map<String, Object>getTotalRatingByFilmId(UUID id);
     Page<PostDetailsDto> getReviewPostsByFilmId(UUID id, Pageable pageable);
+    Page<PostDetailsDto> getReviewPostsByFilmIdAndRatingOrderByField(UUID id, String rating, Pageable pageable);
     Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, int page, int size);
     void deletePostById(UUID id);
 }

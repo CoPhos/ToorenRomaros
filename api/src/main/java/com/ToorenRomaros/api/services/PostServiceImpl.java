@@ -85,6 +85,40 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    public Page<PostDetailsDto> getReviewPostsByFilmIdAndRatingOrderByField(UUID id, String rating, Pageable pageable) {
+        try {
+        int maxRating;
+        int lowRating;
+        switch (rating){
+            case "positive":
+                maxRating=100;
+                lowRating=70;
+                break;
+            case "neutral":
+                maxRating=69;
+                lowRating=40;
+                break;
+            case "negative":
+                maxRating=39;
+                lowRating=0;
+                break;
+            default:
+                maxRating=100;
+                lowRating=0;
+        }
+        Page<PostEntity> postEntities = postRepository.getReviewPostsByFilmIdAndRatingOrderByField(id,maxRating, lowRating, pageable);
+        if (postEntities == null) {
+            throw new ResourceNotFoundException("No results");
+        }
+        return postEntities.map(postEntity -> modelMapper.map(postEntity, PostDetailsDto.class));
+    }catch (Exception e){
+        log.info(e.getMessage());
+        log.info(String.valueOf(e.getCause()));
+    }
+        return null;
+    }
+
+    @Override
     public Page<PostDetailsDto> getReviewPostsByFilmId(UUID id, Pageable pageable) {
        try{
            Page<PostEntity> postEntities = postRepository.getReviewPostsByFilmId(id, pageable);

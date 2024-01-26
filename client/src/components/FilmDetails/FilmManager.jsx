@@ -214,7 +214,7 @@ function FilmManager() {
         queryFn: async () => {
             try {
                 return axios.get(
-                    FILM_URL + `/${params.uuid}` + '/posts/reviews'
+                    FILM_URL + `/${params.uuid}` + '/posts/reviews?size=8'
                 )
             } catch (error) {
                 return error
@@ -232,7 +232,9 @@ function FilmManager() {
         queryKey: ['getCommonReviews', params.uuid],
         queryFn: async () => {
             try {
-                return axios.get(FILM_URL + `/${params.uuid}` + '/comments')
+                return axios.get(
+                    FILM_URL + `/${params.uuid}` + '/comments?size=8'
+                )
             } catch (error) {
                 return error
             }
@@ -318,6 +320,7 @@ function FilmManager() {
                        superRatings={superRatingData}
                        filmData={filmData}
                        reviews={reviewsData}
+                       uuid={params.uuid}
                        comments={commentsData}
                    ></ReviewContainer>
                )}

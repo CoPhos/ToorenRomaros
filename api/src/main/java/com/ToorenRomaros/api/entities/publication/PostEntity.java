@@ -46,7 +46,7 @@ public class PostEntity {
     @NotNull(message = "Rating can not be null")
     @Min(value=0, message = "Rating can not be less than 0")
     @Max(value = 100, message = "Rating can not be bigger than 100")
-    private float rating;
+    private int rating;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -59,7 +59,7 @@ public class PostEntity {
 
     public PostEntity() {
     }
-    public PostEntity(UUID id, float rating, LocalDateTime publicationDateTime, String synthesis, UserEntity user) {
+    public PostEntity(UUID id, int rating, LocalDateTime publicationDateTime, String synthesis, UserEntity user) {
         this.id = id;
         this.publicationDateTime = publicationDateTime;
         this.synthesis = synthesis;
@@ -150,11 +150,11 @@ public class PostEntity {
         this.headline = headline;
     }
 
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

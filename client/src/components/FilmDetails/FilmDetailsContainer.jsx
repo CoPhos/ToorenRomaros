@@ -10,7 +10,7 @@ function FilmDetailsContainer({
     genre,
     streamSites,
 }) {    
-   
+    console.log(genre)
  
     return (
         <div className="flex flex-col items-start justify-center ml-1">
@@ -32,7 +32,7 @@ function FilmDetailsContainer({
                 to={null}
                 linkText={''}
             ></TittleCard>
-            <div className="flex flex-row items-center justify-start flex-wrap gap-2 mt-2">
+            <div className="flex flex-row items-start justify-between flex-wrap gap-2 mt-2">
                 {streamSites.map((item) => {
                     return (
                         <WhereToWatch key={item.id} data={item}></WhereToWatch>
@@ -42,7 +42,7 @@ function FilmDetailsContainer({
                     <a
                         href="https://www.google.com/"
                         target="_blank"
-                        className="flex flex-col items-center justify-start gap-1 hover:cursor-pointer group h-[150px]"
+                        className="flex flex-col items-center justify-start gap-1 hover:cursor-pointer group h-[150px] mx-auto"
                     >
                         <div className="rounded-[50%] w-[70px] h-[70px]">
                             <svg

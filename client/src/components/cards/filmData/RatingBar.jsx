@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-function RatingBar({ keyValue, value, barValues }) {
+function RatingBar({ keyValue, value, barValues, to }) {
     const bgColor =
         keyValue == 'positive'
             ? 'bg-green-600'
@@ -20,7 +20,7 @@ function RatingBar({ keyValue, value, barValues }) {
 
     return (
         <Link
-            to="/allratings"
+            to={to}
             className="flex flex-col items-start justify-center w-full hover:cursor-pointer group"
         >
             <div className="flex flex-row items-center justify-between w-full">

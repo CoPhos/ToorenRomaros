@@ -21,13 +21,13 @@ public class CommentDto {
     private String username;
     @NotNull(message = "Film id can not be null")
     private String filmId;
-    private float rating;
+    private int rating;
 
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

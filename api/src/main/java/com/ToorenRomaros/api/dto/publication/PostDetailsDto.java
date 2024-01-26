@@ -15,7 +15,7 @@ public class PostDetailsDto {
     private String synthesis;
     private String headline;
     private boolean isReview;
-    private String rating;
+    private int rating;
     private String user;
 
     public String getUser() {
@@ -82,11 +82,11 @@ public class PostDetailsDto {
         isReview = review;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 }
