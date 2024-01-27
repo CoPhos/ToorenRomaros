@@ -208,7 +208,6 @@ function FilmManager() {
             },
         }
     )
-
     const getSuperReviews = useQuery({
         queryKey: ['getSuperReviews', params.uuid],
         queryFn: async () => {
@@ -227,7 +226,6 @@ function FilmManager() {
             console.log(error)
         },
     })
-
     const getCommonReviews = useQuery({
         queryKey: ['getCommonReviews', params.uuid],
         queryFn: async () => {

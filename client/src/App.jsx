@@ -62,7 +62,8 @@ export default function App() {
                             element={<RequiredAuth allowedRoles={['USER']} />}
                         >
                             <Route
-                                path="/profile"
+                                exact
+                                path="/profile/:uuid/"
                                 element={<ProfileManager />}
                             />
                         </Route>

@@ -30,17 +30,16 @@ public class WatchListController {
     public WatchListController(WatchListService watchListService) {
         this.watchListService = watchListService;
     }
-    @GetMapping("users/{id}/watchLists/{type}")
+    @GetMapping("users/{id}/watchLists")
     ResponseEntity<Map<String, Object>> getWatchListFromUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
                                                              @RequestParam(defaultValue = "0") int page,
-                                                             @RequestParam(defaultValue = "10") int size,
-                                                             @PathVariable String type)
+                                                             @RequestParam(defaultValue = "10") int size)
                                                              throws Exception {
 
             Pageable pageRequest = PageRequest.of(page, size);
-            Page<WatchListDto> pageWatchList = watchListService.getWatchListFromUserByFilmType(UUID.fromString(id), type, pageRequest);
+            Page<WatchListDto> pageWatchList = watchListService.getWatchListFromUserByFilmType(UUID.fromString(id), "1", pageRequest);
             Map<String, Object> response = new HashMap<>();
-            response.put(type, pageWatchList.getContent());
+            response.put("content", pageWatchList.getContent());
             response.put("currentPage", pageWatchList.getNumber());
             response.put("totalItems", pageWatchList.getNumberOfElements());
             response.put("totalPages", pageWatchList.getTotalPages());

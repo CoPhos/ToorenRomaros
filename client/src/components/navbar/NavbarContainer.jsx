@@ -7,7 +7,7 @@ import LinksPanel from './LinksPanel';
 import LoginManager from '../login/LoginManager';
 import SignUpManager from '../signup/SignUpManager';
 
-function Navbar({ user, data1, data2 }) {
+function Navbar({ user, data1, data2,id }) {
     const { isPopupOpen, setisPopupOpen } = useContext(LoginPopUpContext)
     const [active, setactive] = useState(1)
 
@@ -65,7 +65,7 @@ function Navbar({ user, data1, data2 }) {
                     </Link>
                     {user ? (
                         <Link
-                            to="/profile"
+                            to={`/profile/${id}`}
                             className="flex flex-row items-center justify-start gap-1 hover:cursor-pointer group"
                         >
                             <img
@@ -161,7 +161,7 @@ function Navbar({ user, data1, data2 }) {
                         </div>
                         {user ? (
                             <Link
-                                to="/profile"
+                                to={`/profile/${id}`}
                                 className="flex flex-row items-center justify-start gap-1 hover:cursor-pointer group"
                             >
                                 <img

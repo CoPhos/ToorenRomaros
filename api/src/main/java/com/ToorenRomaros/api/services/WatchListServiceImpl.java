@@ -39,29 +39,30 @@ public class WatchListServiceImpl implements WatchListService{
     }
     @Override
     public WatchListDto createWatchList(WatchListDto watchListDto) {
-        try{
+
         WatchListEntity watchListEntity = modelMapper.map(watchListDto, WatchListEntity.class);
         UserEntity userEntity = userRepository.findById(UUID.fromString(watchListDto.getUser())).orElseThrow(() -> new UserNotFoundException("'" + watchListDto.getUser() + "'"));
         FilmEntity filmEntity = filmRepository.findById(UUID.fromString(watchListDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("'" + watchListDto.getFilm() + "'"));
         watchListEntity.setUser(userEntity);
         watchListEntity.setFilm(filmEntity);
-        return modelMapper.map(watchListRepository.save(watchListEntity), WatchListDto.class);}
-        catch (Exception e){
-            log.info(e.getMessage());
-        }
-        return null;
+        return modelMapper.map(watchListRepository.save(watchListEntity), WatchListDto.class);
+
     }
 
     @Override
     public Page<WatchListDto> getWatchListFromUserByFilmType(UUID id, String filmType, Pageable pageRequest) {
-        List<WatchListEntity> allFilms = watchListRepository.findWatchListByUserAndFilmType(String.valueOf(id), filmType, pageRequest);
-        assert allFilms != null;
-        List<WatchListDto> watchListDtos = allFilms.stream().map(film -> {return modelMapper.map(film, WatchListDto.class);}).collect(Collectors.toList());
-        int start = (int) pageRequest.getOffset();
-        int end = Math.min((start + pageRequest.getPageSize()), watchListDtos.size());
-        List<WatchListDto> pageContent = watchListDtos.subList(start, end);
 
-        return new PageImpl<>(pageContent, pageRequest, watchListDtos.size());
+            List<WatchListEntity> allFilms = watchListRepository.findWatchListByUserAndFilmType(String.valueOf(id), filmType, pageRequest);
+            if(allFilms.isEmpty()){
+                throw new ResourceNotFoundException("No films found");
+            }
+            List<WatchListDto> watchListDtos = allFilms.stream().map(film -> {return modelMapper.map(film, WatchListDto.class);}).collect(Collectors.toList());
+            int start = (int) pageRequest.getOffset();
+            int end = Math.min((start + pageRequest.getPageSize()), watchListDtos.size());
+            List<WatchListDto> pageContent = watchListDtos.subList(start, end);
+
+            return new PageImpl<>(pageContent, pageRequest, watchListDtos.size());
+
     }
 
     @Override

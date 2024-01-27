@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Page<CommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating,  Pageable pageable) {
-        try{
+
             int maxRating;
             int lowRating;
             switch (rating){
@@ -79,11 +79,7 @@ public class CommentServiceImpl implements CommentService{
                 throw new ResourceNotFoundException("No comments found for film: " + id);
             }
             return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
-        }catch (Exception e){
-            log.info(e.getMessage());
-            log.info(String.valueOf(e.getCause()));
-        }
-        return null;
+
     }
 
     @Override

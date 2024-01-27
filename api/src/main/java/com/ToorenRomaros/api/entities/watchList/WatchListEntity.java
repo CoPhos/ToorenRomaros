@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 @Entity
-@Table(name = "watch_list")
+@Table(name = "watch_list",uniqueConstraints = @UniqueConstraint(columnNames = {"film_id", "user_id"}))
 public class WatchListEntity {
     @Id
     @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
