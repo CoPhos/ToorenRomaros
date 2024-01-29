@@ -20,12 +20,12 @@ function ReviewContainer({
                         totalScore={filmData.averageSuperRating}
                         data={superRatings}
                         viewAll={true}
-                        to={'reviews?super=true'}
+                        to={'reviews?super=true&rating=all&order=rating'}
                     ></ReviewRating>
 
                     <ReviewPanel
                         expand={false}
-                        to={'reviews?super=true'}
+                        to={'reviews?super=true&rating=all&order=rating'}
                         data={reviews}
                         critic={true}
                     ></ReviewPanel>
@@ -38,12 +38,12 @@ function ReviewContainer({
                         totalScore={filmData.averageUserRating}
                         data={commonRatings}
                         viewAll={true}
-                        to={'reviews?super=false'}
+                        to={'reviews?super=false&rating=all&order=rating'}
                     ></ReviewRating>
 
                     <ReviewPanel
                         expand={true}
-                        to={'reviews?super=false'}
+                        to={'reviews?super=false&rating=all&order=rating'}
                         data={comments}
                         critic={false}
                     ></ReviewPanel>

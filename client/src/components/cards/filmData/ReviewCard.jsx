@@ -17,9 +17,9 @@ function ReviewCard({ expand, data, critic }) {
     const baseClassesRating =
         'flex items-center justify-center rounded-xl h-[56px] w-[56px]'
     const dynamicClasses =
-        data.rating <= 40
+        data.rating < 40
             ? 'bg-red-500'
-            : data.rating < 70 && data.rating > 40
+            : data.rating < 70 && data.rating >= 40
             ? 'bg-[#ffbd3f]'
             : 'bg-green-600'
 

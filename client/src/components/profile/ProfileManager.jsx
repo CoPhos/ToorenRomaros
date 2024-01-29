@@ -1,9 +1,8 @@
-import React, { useState, useEffect, Fragment} from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import axios from '../../utils/constants'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 import ProfileContainer from './ProfileContainer'
@@ -14,8 +13,6 @@ function ProfileManager() {
     const axiosPrivate = useAxiosPrivate()
     const { logout, auth } = useAuth()
     const navigate = useNavigate()
-    const params = useParams()
-    
 
     const mutation = useMutation(
         async () => {
@@ -48,10 +45,10 @@ function ProfileManager() {
     }
 
     const getWatchListByUser = useQuery({
-        queryKey: ['getWatchListByUser', params.uuid],
+        queryKey: ['getWatchListByUser', auth.id],
         queryFn: async () => {
             try {
-                return axiosPrivate.get(`users/${params.uuid}/watchLists`)
+                return axiosPrivate.get(`users/${auth.id}/watchLists`)
             } catch (error) {
                 return error
             }
@@ -61,12 +58,12 @@ function ProfileManager() {
         },
         onError: (error) => {
             console.log(error)
-        },
+        }
     })
 
     const getFilmsFromWatchlist = useQuery(
         ['getFilmsFromWatchlist'],
-        
+
         async () => {
             if (
                 !getWatchListByUser.data ||
@@ -104,19 +101,20 @@ function ProfileManager() {
         {
             enabled: !!getWatchListByUser.data,
             onSuccess: (data) => {
-                console.log("refecthed")
-                queryClient.setQueryData(['getWatchListByUser', params.uuid], {
+                console.log('refecthed')
+                queryClient.setQueryData(['getWatchListByUser', auth.id], {
                     data: { content: data },
                 })
             },
             onError: (error) => {
                 console.log(error)
             },
-        },
+           
+        }
     )
 
     const getAllImagesFromWatchlist = useQuery(
-        ['getAllImagesFromWatchlist', params.uuid],
+        ['getAllImagesFromWatchlist', auth.id],
         async () => {
             if (
                 !getWatchListByUser.data ||
@@ -151,10 +149,10 @@ function ProfileManager() {
             }
         },
         {
-            enabled: !!getFilmsFromWatchlist.data,
+            enabled: !!getWatchListByUser.data,
             onSuccess: (data) => {
                 console.log('refecthed')
-                queryClient.setQueryData(['getWatchListByUser', params.uuid], {
+                queryClient.setQueryData(['getWatchListByUser', auth.id], {
                     data: { content: data },
                 })
             },
@@ -167,7 +165,7 @@ function ProfileManager() {
     const isLoading =
         getWatchListByUser.isLoading ||
         getFilmsFromWatchlist.isLoading ||
-        getAllImagesFromWatchlist.isLoading 
+        getAllImagesFromWatchlist.isLoading
 
     const hasError =
         getWatchListByUser.error ||
@@ -189,13 +187,16 @@ function ProfileManager() {
     }
 
     const watchlistdata = getWatchListByUser.data?.data?.content
+    const filmData = getFilmsFromWatchlist.data
+    const imagesData = getAllImagesFromWatchlist.data
 
     return (
         <Fragment>
-            {watchlistdata && (
+            {watchlistdata && filmData && imagesData && (
                 <ProfileContainer
                     handleLogout={handleLogout}
-                    watchlistdata={watchlistdata}
+                    watchlistdata={filmData}
+                    imagesData={imagesData}
                 ></ProfileContainer>
             )}
         </Fragment>
@@ -204,19 +205,19 @@ function ProfileManager() {
 
 export default ProfileManager
 
-    //   const getReviewsByUser = useQuery({
-    //       queryKey: ['getReviewsByUser',params.uuid],
-    //       queryFn: async () => {
-    //           try {
-    //               return axios.get(`users/${params.uuid}/watchLists`)
-    //           } catch (error) {
-    //               return error
-    //           }
-    //       },
-    //       onSuccess: (data) => {
-    //           console.log(data?.data)
-    //       },
-    //       onError: (error) => {
-    //           console.log(error)
-    //       },
-    //   })
+//   const getReviewsByUser = useQuery({
+//       queryKey: ['getReviewsByUser',auth.id],
+//       queryFn: async () => {
+//           try {
+//               return axios.get(`users/${auth.id}/watchLists`)
+//           } catch (error) {
+//               return error
+//           }
+//       },
+//       onSuccess: (data) => {
+//           console.log(data?.data)
+//       },
+//       onError: (error) => {
+//           console.log(error)
+//       },
+//   })

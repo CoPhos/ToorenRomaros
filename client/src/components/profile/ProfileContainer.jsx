@@ -1,23 +1,20 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 import Carousel from 'react-elastic-carousel'
 import TittleCard from '../cards/tittle/TittleCard'
 import MovieCard from '../cards/movieCard/MovieCard'
 
-function ProfileContainer({ handleLogout, watchlistdata,  }) {
-     const breakPointsMovie = [
-         { width: 1, itemsToShow: 2, itemsToScroll: 2 },
-         { width: 408, itemsToShow: 3, itemsToScroll: 3 },
-         { width: 550, itemsToShow: 4, itemsToScroll: 3 },
-         { width: 672, itemsToShow: 5, itemsToScroll: 3 },
-         { width: 768, itemsToShow: 4, itemsToScroll: 4 },
-         { width: 880, itemsToShow: 5, itemsToScroll: 3 },
-         { width: 1070, itemsToShow: 6, itemsToScroll: 5 },
-     ]
-    console.log(watchlistdata)
+function ProfileContainer({ handleLogout, watchlistdata, imagesData }) {
+    const breakPointsMovie = [
+        { width: 1, itemsToShow: 2, itemsToScroll: 2 },
+        { width: 408, itemsToShow: 3, itemsToScroll: 3 },
+        { width: 700, itemsToShow: 4, itemsToScroll: 3 },
+    ]
+    const { auth } = useAuth()
     return (
         <div className="flex flex-col items-start justify-start w-full min-[880px]:flex-row min-[880px]:items-start min-[880px]:justify-start min-[880px]:gap-3 px-1">
-            {/* <div className="w-full min-[880px]:w-[320px] mt-4 min-[880px]:border min-[880px]:rounded-md min-[880px]:border-white-200 min-[880px]:p-2">
+            <div className="w-full min-[880px]:w-[320px] mt-4 min-[880px]:border min-[880px]:rounded-md min-[880px]:border-white-200 min-[880px]:p-2">
                 <TittleCard
                     tittle={'Profile'}
                     to={null}
@@ -25,7 +22,7 @@ function ProfileContainer({ handleLogout, watchlistdata,  }) {
                     mt={'mt-[0px]'}
                 ></TittleCard>
                 <div className="flex flex-col items-start justify-start gap-2 mt-2 w-full min-[880px]:mt-[0px]">
-                    <div className="flex flex-row items-center justify-start gap-2 pb-2 border-b border-white-200 w-full">
+                    <div className="flex flex-row items-center justify-start gap-2 pb-4 border-b border-white-200 w-full">
                         <img
                             //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                             src="https://image.tmdb.org/t/p/w235_and_h235_face/3dxEx32JnxUO34Wx0Y8tulUwlyh.jpg"
@@ -34,10 +31,10 @@ function ProfileContainer({ handleLogout, watchlistdata,  }) {
                         />
                         <div className="flex flex-col items-start justify-start">
                             <p className="text-body-m-700 lg:text-body-d-700">
-                                Ruka_Inaba1932
+                                {auth.user}
                             </p>
                             <p className="text-body-m-400 lg:text-body-d-400">
-                                testEmail@gmail.com
+                                {auth.email}
                             </p>
                         </div>
                     </div>
@@ -74,12 +71,12 @@ function ProfileContainer({ handleLogout, watchlistdata,  }) {
                                 pagination={false}
                                 breakPoints={breakPointsMovie}
                             >
-                                {watchlistdata.map((item) => {
+                                {watchlistdata.map((item, index) => {
                                     return (
                                         <MovieCard
                                             key={item.id}
                                             data={item.filmDetails}
-                                            images={item.images}
+                                            images={imagesData[index].images}
                                             handleAddWatchList={null}
                                         />
                                     )
@@ -199,7 +196,7 @@ function ProfileContainer({ handleLogout, watchlistdata,  }) {
                         </p>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </div>
     )
 }

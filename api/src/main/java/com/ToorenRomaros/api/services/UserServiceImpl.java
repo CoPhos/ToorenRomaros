@@ -5,14 +5,12 @@ import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserTokenEntity;
 import com.ToorenRomaros.api.exeptions.GenericAlreadyExistsException;
 import com.ToorenRomaros.api.exeptions.InvalidRefreshTokenException;
-import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.repositories.user.UserTokenRepository;
 import com.ToorenRomaros.api.security.CustomUserDetails;
 import com.ToorenRomaros.api.security.JwtManager;
 import com.ToorenRomaros.api.utils.Utils;
-import org.apache.logging.log4j.util.Strings;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,20 +76,17 @@ public class UserServiceImpl implements UserService {
                     throw new UserNotFoundException("'" + id + "'");
                 });
     }
+
     @Override
     public UserSignedInDto signin(SignInDto signInDto) {
-        try {
-            UserEntity userEntity = userRepository.findByUsername(signInDto.getUsername()).orElseThrow(() -> new UsernameNotFoundException(String.format("Given user(%s) not found.", signInDto.getUsername())));
-            if (passwordEncoder.matches(signInDto.getPassword(), userEntity.getPassword())) {
-                return getSignedInUser(userEntity);
-            }else{
-                throw new InsufficientAuthenticationException("Unauthorized.");
-            }
-        }catch (Exception e){
-            log.info(e.getMessage());
+        UserEntity userEntity = userRepository.findByUsername(signInDto.getUsername()).orElseThrow(() -> new UsernameNotFoundException(String.format("Given user(%s) not found.", signInDto.getUsername())));
+        if (passwordEncoder.matches(signInDto.getPassword(), userEntity.getPassword())) {
+            return getSignedInUser(userEntity);
+        } else {
+            throw new InsufficientAuthenticationException("Unauthorized.");
         }
-        return null;
     }
+
     @Override
     @Transactional
     public Optional<UserSignedInDto> createUser(CreateUserDto createUserDto) {
@@ -154,7 +149,7 @@ public class UserServiceImpl implements UserService {
                 userEntity.getPassword(),
                 Objects.nonNull(userEntity.getRole()) ? userEntity.getRole().name() : ""));
 
-        return new UserSignedInDto(userEntity.getUsername(), token, userEntity.getId().toString());
+        return new UserSignedInDto(userEntity.getUsername(), token,userEntity.getEmail(), userEntity.getId().toString());
     }
 
     private String createRefreshToken(UserEntity user) {

@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.publication.CommentDto;
-import com.ToorenRomaros.api.dto.publication.PostDetailsDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.publication.CommentEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
@@ -25,7 +24,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final UserRepository userRepository;
     private final FilmRepository filmRepository;
@@ -39,10 +38,11 @@ public class CommentServiceImpl implements CommentService{
         this.commentRepository = commentRepository;
         this.modelMapper = modelMapper;
     }
+
     @Override
-    public Map<String, Object>getTotalRatingByFilmId(UUID id) {
+    public Map<String, Object> getTotalRatingByFilmId(UUID id) {
         List<Object[]> ratings = commentRepository.getotalRatingsByFilmId(String.valueOf(id));
-        if(ratings.isEmpty()){
+        if (ratings.isEmpty()) {
             throw new ResourceNotFoundException("No ratings found for film:" + id);
         }
         Map<String, Object> values = new HashMap<>();
@@ -53,40 +53,38 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Page<CommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating,  Pageable pageable) {
-
-            int maxRating;
-            int lowRating;
-            switch (rating){
-                case "positive":
-                    maxRating=100;
-                    lowRating=70;
-                    break;
-                case "neutral":
-                    maxRating=69;
-                    lowRating=40;
-                    break;
-                case "negative":
-                    maxRating=39;
-                    lowRating=0;
-                    break;
-                default:
-                    maxRating=100;
-                    lowRating=0;
-            }
-            Page<CommentEntity> commentEntities = commentRepository.getAllCommentByFilmIdAndRatingOrderByField(id, reported, maxRating, lowRating, pageable);
-            if(commentEntities.isEmpty()){
-                throw new ResourceNotFoundException("No comments found for film: " + id);
-            }
-            return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
-
+    public Page<CommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, Pageable pageable) {
+        int maxRating;
+        int lowRating;
+        switch (rating) {
+            case "positive":
+                maxRating = 100;
+                lowRating = 70;
+                break;
+            case "neutral":
+                maxRating = 69;
+                lowRating = 40;
+                break;
+            case "negative":
+                maxRating = 39;
+                lowRating = 0;
+                break;
+            default:
+                maxRating = 100;
+                lowRating = 0;
+        }
+        Page<CommentEntity> commentEntities = commentRepository.getAllCommentByFilmIdAndRatingOrderByField(id, reported, maxRating, lowRating, pageable);
+        if (commentEntities.isEmpty()) {
+            throw new ResourceNotFoundException("No comments found for film: " + id);
+        }
+        return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
     }
 
     @Override
     public CommentDto createComment(CommentDto commentDto) {
         CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
-        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() +  " not found"));
-        UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() +  " not found"));
+        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() + " not found"));
+        UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() + " not found"));
         commentEntity.setFilm(filmEntity);
         commentEntity.setUser(userEntity);
         CommentEntity savedComment = commentRepository.save(commentEntity);
@@ -95,14 +93,14 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public CommentDto getCommentById(UUID id) {
-        CommentEntity comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id +  " not found"));
+        CommentEntity comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
         return modelMapper.map(comment, CommentDto.class);
     }
 
     @Override
     public List<CommentDto> getAllCommentByUserId(UUID id, String reported) {
         List<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReported(id.toString(), reported);
-        if(commentEntities.isEmpty()){
+        if (commentEntities.isEmpty()) {
             throw new ResourceNotFoundException("No comments found for user: " + id);
         }
         return commentEntities.stream().map(commentEntity -> {
@@ -114,11 +112,11 @@ public class CommentServiceImpl implements CommentService{
     public Page<CommentDto> getAllCommentByFilmId(UUID id, Boolean reported, Pageable pageable) {
         try {
             Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByFilmIdAndReported(id, reported, pageable);
-            if(commentEntities.isEmpty()){
+            if (commentEntities.isEmpty()) {
                 throw new ResourceNotFoundException("No comments found for film: " + id);
             }
             return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             log.info(String.valueOf(e.getCause()));
         }
@@ -131,12 +129,12 @@ public class CommentServiceImpl implements CommentService{
         CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
         BeanUtils.copyProperties(commentEntity, newCommentEntity, Utils.getNullPropertyNames(commentEntity));
 
-        if(commentDto.getUserId() != null){
-            UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() +  " not found"));
+        if (commentDto.getUserId() != null) {
+            UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() + " not found"));
             newCommentEntity.setUser(userEntity);
         }
-        if(commentDto.getFilmId() != null){
-            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() +  " not found"));
+        if (commentDto.getFilmId() != null) {
+            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() + " not found"));
             newCommentEntity.setFilm(filmEntity);
         }
 
@@ -146,7 +144,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void deleteComment(UUID id) {
-        commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id +  " not found"));
+        commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
         commentRepository.deleteById(id);
     }
 }

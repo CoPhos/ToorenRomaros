@@ -77,18 +77,19 @@ function FilmManager() {
                 queryClient.setQueryData(['getAllStaffFromFilm'], {
                     data: { response: staffWithImages },
                 })
-                console.log(staffWithImages)
                 return staffWithImages
             } catch (error) {
                 return error
             }
         },
-        { enabled: !!getAllStaffFromFilm.data },
         {
+            enabled: !!getAllStaffFromFilm.data,
             onError: (error) => {
                 console.log(error)
             },
-        }
+            onSuccess: (data) => {
+            },
+        },
     )
     const getAllGenresFromFilm = useQuery({
         queryKey: ['getAllGenresFromFilm', params.uuid],
@@ -220,7 +221,7 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            console.log(data?.data)
+           // console.log(data?.data)
         },
         onError: (error) => {
             console.log(error)
@@ -238,7 +239,7 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            console.log(data?.data)
+            //console.log(data?.data)
         },
         onError: (error) => {
             console.log(error)

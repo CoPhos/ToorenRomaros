@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 
-function MainRatingScore({ data, totalScore }) {
+function MainRatingScore({ data, totalScore,to }) {
     const location = useLocation()
     const pathname = location.pathname
     const total = data.positive + data.negative + data.neutral
@@ -38,7 +38,7 @@ function MainRatingScore({ data, totalScore }) {
                         {totalScoreText}
                     </p>
                     <Link
-                        to={`${pathname}/reviews`}
+                        to={to}
                         className="text-small-d-400 lg:text-small-d-400 underline hover:cursor-pointer hover:text-blue-800"
                     >
                         Based on {total} Critic Reviews

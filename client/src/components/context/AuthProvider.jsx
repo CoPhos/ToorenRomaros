@@ -6,8 +6,16 @@ export const AuthProvider = ({children}) => {
   const [auth, setauth] = useState({})
   const [isAuthenticated, setisAuthenticated] = useState(false)
   
-  const login = ( id, user, password, roles, accessToken, refreshToken ) => {
-      setauth({ id, user, password, roles, accessToken, refreshToken })
+  const login = (
+      id,
+      user,
+      password,
+      roles,
+      accessToken,
+      refreshToken,
+      email
+  ) => {
+      setauth({ id, user, password, roles, accessToken, refreshToken, email })
       setisAuthenticated(true)
   }
 

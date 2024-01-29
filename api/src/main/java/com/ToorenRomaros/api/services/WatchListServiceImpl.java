@@ -51,11 +51,7 @@ public class WatchListServiceImpl implements WatchListService{
 
     @Override
     public Page<WatchListDto> getWatchListFromUserByFilmType(UUID id, String filmType, Pageable pageRequest) {
-
             List<WatchListEntity> allFilms = watchListRepository.findWatchListByUserAndFilmType(String.valueOf(id), filmType, pageRequest);
-            if(allFilms.isEmpty()){
-                throw new ResourceNotFoundException("No films found");
-            }
             List<WatchListDto> watchListDtos = allFilms.stream().map(film -> {return modelMapper.map(film, WatchListDto.class);}).collect(Collectors.toList());
             int start = (int) pageRequest.getOffset();
             int end = Math.min((start + pageRequest.getPageSize()), watchListDtos.size());

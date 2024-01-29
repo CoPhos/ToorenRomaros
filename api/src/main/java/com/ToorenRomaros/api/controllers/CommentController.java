@@ -3,6 +3,8 @@ package com.ToorenRomaros.api.controllers;
 import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.services.CommentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,6 +25,7 @@ import java.util.UUID;
 public class CommentController {
     private static final String uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
     private final CommentService commentService;
+    private static final Logger log = LoggerFactory.getLogger(CommentController.class);
 
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
@@ -68,8 +71,8 @@ public class CommentController {
                                                               @RequestParam(defaultValue = "publicationDateTime") String order,
                                                               @RequestParam(defaultValue = "0") int page,
                                                               @RequestParam(defaultValue = "15") int size) throws Exception {
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by(order));
+        log.info(order);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, order));
         Map<String, Object> response = new HashMap<>();
         response.put("response", commentService.getAllCommentByFilmIdAndRatingOrderByField(UUID.fromString(id), reported, rating, pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -18,7 +18,7 @@ function FilmMainInfoContainer({ data, commonRatings, superRatings }) {
             <p className="mt-1 text-small-m-400 lg:text-small-d-400">
                 {data.criticsConsensus}&nbsp;
                 <Link
-                    to={`${pathname}/reviews`}
+                    to={`${pathname}/reviews?super=false&rating=all&order=rating`}
                     className="hover:cursor-pointer text-blue-800 hover:text-blue-600"
                 >
                     Read critic reviews
@@ -42,10 +42,12 @@ function FilmMainInfoContainer({ data, commonRatings, superRatings }) {
                 <MainRatingScore
                     data={superRatings}
                     totalScore={data.averageSuperRating}
+                    to={'reviews?super=true&rating=all&order=rating'}
                 ></MainRatingScore>
                 <MainRatingScore
                     data={commonRatings}
                     totalScore={data.averageUserRating}
+                    to={'reviews?super=false&rating=all&order=rating'}
                 ></MainRatingScore>
 
                 <PostRatingManager></PostRatingManager>

@@ -10,8 +10,6 @@ function FilmDetailsContainer({
     genre,
     streamSites,
 }) {    
-    console.log(genre)
- 
     return (
         <div className="flex flex-col items-start justify-center ml-1">
             <TittleCard

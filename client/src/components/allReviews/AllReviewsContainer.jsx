@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSearchParams } from 'react-router-dom'
-
+import { BASE_URL } from '../../utils/constants'
 import ReviewRating from '../cards/filmData/ReviewRating'
 import ReviewCard from '../cards/filmData/ReviewCard'
 
@@ -15,6 +15,10 @@ function AllReviewsContainer({
     handleSelectedSuperChange,
     filmData,
     data,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    filmImageData,
 }) {
     const [searchParams, setSearchParams] = useSearchParams()
     const superReview = searchParams.get('super')
@@ -23,22 +27,39 @@ function AllReviewsContainer({
         superRatings.positive + superRatings.negative + superRatings.neutral
     const totalCommon =
         commonRatings.positive + commonRatings.negative + commonRatings.neutral
-
     const baseClassesButton =
         'text-white-300 text-small-m-400 lg:text-small-d-400 border-[none] hover:cursor-pointer py-2 px-1'
     const focus = 'text-white-900 border-t-[1px] border-white-950'
     const notFocus = 'border-[none]'
     const show = 'flex flex-col items-center justify-start gap-2'
     const notShow = 'hidden'
+    useEffect(() => {
+        const handleScroll = () => {
+            const { scrollTop, scrollHeight, clientHeight } =
+                document.documentElement
+            if (
+                scrollHeight - scrollTop === clientHeight &&
+                hasNextPage &&
+                !isFetchingNextPage
+            ) {
+                fetchNextPage()
+            }
+        }
 
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [hasNextPage, isFetchingNextPage, fetchNextPage])
     return (
         <div className="mt-4 px-1">
             <div className="flex flex-row items-center justify-start gap-2">
                 <img
                     //srcset="https://small 480w, https://medium 800w, https://large 1100w"
-                    src="https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p159790_p_v8_ae.jpg"
+                    src={`${BASE_URL}/images/${filmImageData[0].id}`}
                     alt="Elva dressed as a fairy"
-                    className="w-[60px] h-[100px] rounded object-cover object-center"
+                    className="w-[120px] h-[200px] rounded object-cover object-center"
                 />
                 <div className="flex flex-col items-start justify-start gap-1">
                     <p className="text-body-m-700 lg:text-body-d-700">
@@ -93,7 +114,7 @@ function AllReviewsContainer({
 
                 <div className="flex flex-row items-center justify-between flex-wrap">
                     <p className="text-small-m-400 lg:text-small-d-400">
-                        Showing 53 Critic Reviews
+                        {totalSuper + totalCommon} Reviews Available
                     </p>
                     <div className="flex flex-row items-center justify-start gap-2 self-end mt-1 min-[550px]:mt-[0px]">
                         <div>
@@ -101,11 +122,11 @@ function AllReviewsContainer({
                                 name="rating"
                                 id="rating"
                                 value={selectedRating}
-                                onChange={handleSelectedRatingChange}
+                                onChange={(e) => handleSelectedRatingChange(e)}
                                 className="text-small-m-700 lg:text-small-d-700 rounded border border-white-200 w-[175px] px-3 py-1"
                             >
                                 <option value="all">All Reviews</option>
-                                <option value="postive">Postive</option>
+                                <option value="positive">Postive</option>
                                 <option value="neutral">Neutral</option>
                                 <option value="negative">Negative</option>
                             </select>
@@ -115,11 +136,11 @@ function AllReviewsContainer({
                                 name="order"
                                 id="order"
                                 value={selectedOrder}
-                                onChange={handleSelectedOrder}
+                                onChange={(e) => handleSelectedOrder(e)}
                                 className="text-small-m-700 lg:text-small-d-700 rounded border border-white-200 w-[175px] px-3 py-1"
                             >
                                 <option value="rating">Score</option>
-                                <option value="postDateTime">
+                                <option value="publicationDateTime">
                                     Recently Added
                                 </option>
                                 <option value="likeCount">More liked</option>
@@ -129,15 +150,22 @@ function AllReviewsContainer({
                 </div>
 
                 <div className="flex flex-col items-center justify-start gap-2 mt-2">
-                    {data &&
-                        data.map((item) => (
-                            <ReviewCard
-                                key={item.id}
-                                expand={superReview == 'true' ? false : true}
-                                data={item}
-                                critic={superReview == 'true' ? true : false}
-                            ></ReviewCard>
-                        ))}
+                    {data?.map((page, pageIndex) => (
+                        <React.Fragment key={pageIndex}>
+                            {page.data.response.content.map((item) => (
+                                <ReviewCard
+                                    key={item.id}
+                                    expand={
+                                        superReview == 'true' ? false : true
+                                    }
+                                    data={item}
+                                    critic={
+                                        superReview == 'true' ? true : false
+                                    }
+                                ></ReviewCard>
+                            ))}
+                        </React.Fragment>
+                    ))}
                 </div>
             </div>
         </div>

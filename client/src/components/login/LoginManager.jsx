@@ -68,7 +68,16 @@ function LoginManager({ active, closePopup }) {
                 const accessToken = data?.data?.Ok?.accessToken
                 const refreshToken = data?.data?.Ok?.refreshToken
                 const roles = jwtDecode(accessToken).roles || []
-                login(id, user, password, roles, accessToken, refreshToken) 
+                const email = data?.data?.Ok?.email
+                login(
+                    id,
+                    user,
+                    password,
+                    roles,
+                    accessToken,
+                    refreshToken,
+                    email
+                ) 
                 setuser('')
                 setpassword('')
                 seterrorMessage('')

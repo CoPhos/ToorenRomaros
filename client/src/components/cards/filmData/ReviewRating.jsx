@@ -12,10 +12,10 @@ function ReviewRating({ tittle, totalScore, data, viewAll, to }) {
     let totalScoreText
     const baseClassesRating =
         'flex items-center justify-center rounded-xl h-[64px] w-[64px] hover:cursor-pointer'
-    if (totalScore <= 40) {
+    if (totalScore < 40) {
         dynamicClasses = 'bg-red-600'
         totalScoreText = 'Generally Unfavorable'
-    } else if (totalScore < 70 && totalScore > 40) {
+    } else if (totalScore < 70 && totalScore >= 40) {
         dynamicClasses = 'bg-[#ffbd3f]'
         totalScoreText = 'Mixed or Average'
     } else {

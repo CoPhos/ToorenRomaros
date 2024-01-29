@@ -22,6 +22,8 @@ const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             refetchOnWindowFocus: false, 
+            cacheTime: 0,
+            
         },
     },
 })
@@ -63,7 +65,7 @@ export default function App() {
                         >
                             <Route
                                 exact
-                                path="/profile/:uuid/"
+                                path="/profile"
                                 element={<ProfileManager />}
                             />
                         </Route>
