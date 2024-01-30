@@ -72,13 +72,9 @@ function CheckboxPanel({
                                 type="checkbox"
                                 name={element}
                                 className="h-[26px] w-[26px]"
-                                checked={
-                                    checkedCheckboxes[tittle][element]
-                                        ? checkedCheckboxes[tittle][element]
-                                        : false
-                                }
+                                checked={checkedCheckboxes.includes(element)}
                                 onChange={(event) =>
-                                    handleCheckboxChange(event, tittle)
+                                    handleCheckboxChange(event, element)
                                 }
                             />
                         </label>

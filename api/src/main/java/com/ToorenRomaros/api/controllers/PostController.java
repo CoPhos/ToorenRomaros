@@ -96,7 +96,7 @@ public class PostController {
                                                                @RequestParam(defaultValue = "0") int page,
                                                                @RequestParam(defaultValue = "15") int size) throws Exception {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(order));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, order));
         Map<String, Object> response = new HashMap<>();
         response.put("response", postService.getReviewPostsByFilmIdAndRatingOrderByField(UUID.fromString(id),rating, pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);

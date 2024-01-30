@@ -7,7 +7,7 @@ import LinksPanel from './LinksPanel';
 import LoginManager from '../login/LoginManager';
 import SignUpManager from '../signup/SignUpManager';
 
-function Navbar({ user, data1, data2, }) {
+function Navbar({ user, moviesExplore, tvExplore, moviesQuery, tvQuery }) {
     const { isPopupOpen, setisPopupOpen } = useContext(LoginPopUpContext)
     const [active, setactive] = useState(1)
 
@@ -49,7 +49,7 @@ function Navbar({ user, data1, data2, }) {
                     </div>
                 </Link>
                 <div className="flex flex-row items-center justify-between gap-2 lg:hidden">
-                    <Link to="/browse">
+                    <Link to="/search">
                         <svg
                             width="24"
                             height="24"
@@ -94,7 +94,7 @@ function Navbar({ user, data1, data2, }) {
                             <li className="group px-2 hover:bg-white-100 rounded-t-md h-6">
                                 <div className="h-full flex flex-row items-center justify-center">
                                     <Link
-                                        to="/browse/theaters"
+                                        to="/browse?at=theaters"
                                         className="group-hover:cursor-pointer group-hover:text-red-600 text-body-d-700 "
                                     >
                                         Movies
@@ -102,7 +102,13 @@ function Navbar({ user, data1, data2, }) {
                                 </div>
                                 <div className="w-fit h-[550px] absolute bg-white-50 hidden group-hover:flex top-6 left-[0px] rounded-b-md shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]">
                                     <LinksPanel
-                                        data={data1}
+                                        data={moviesExplore}
+                                        filmData={
+                                            moviesQuery.isLoading
+                                                ? []
+                                                : moviesQuery.data?.data
+                                                      ?.response || []
+                                        }
                                         tittle1={'Explore Movies'}
                                         tittle2={'New Movies in Theaters'}
                                     ></LinksPanel>
@@ -111,7 +117,7 @@ function Navbar({ user, data1, data2, }) {
                             <li className="group px-2 hover:bg-white-100 rounded-t-md h-6">
                                 <div className="h-full flex flex-row items-center justify-center">
                                     <Link
-                                        to="/browse/tv"
+                                        to="/browse?at=home"
                                         className="group-hover:cursor-pointer group-hover:text-red-600 text-body-d-700 "
                                     >
                                         Tv Shows
@@ -119,7 +125,13 @@ function Navbar({ user, data1, data2, }) {
                                 </div>
                                 <div className="w-fit h-[550px] absolute bg-white-50 hidden group-hover:flex top-6 left-[0px] rounded-b-md shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]">
                                     <LinksPanel
-                                        data={data2}
+                                        data={tvExplore}
+                                        filmData={
+                                            tvQuery.isLoading
+                                                ? []
+                                                : tvQuery.data?.data
+                                                      ?.response || []
+                                        }
                                         tittle1={'Explore TV'}
                                         tittle2={'New TV Shows'}
                                     ></LinksPanel>

@@ -1,12 +1,15 @@
 import React, {useRef, useEffect} from 'react'
 
 function SortPanel({
+    tittle,
     handleRadioChange,
     selectedRadio,
     panelKey,
     isOpen,
     onClose,
     isPanelOpen,
+    sortRadioButtonData,
+    searchParamsName,
 }) {
     const panelRef = useRef()
 
@@ -27,12 +30,11 @@ function SortPanel({
         'z-20 w-screen absolute top-[42px] left-[0px] min-[665px]:top-[42px] min-[665px]:left-[0] min-[665px]:w-[320px] bg-white-50 px-2 pt-2 pb-3 rounded-md shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]'
     const notShow = 'hidden'
 
-    console.log(isOpen)
     return (
         <div ref={panelRef} className={isOpen ? show : notShow}>
             <div className="flex flex-row items-center justify-center mb-2 ">
                 <p className="w-full uppercase text-center text-small-m-700 lg:text-small-d-700">
-                    sort
+                    {tittle}
                 </p>
                 <button
                     onClick={() => onClose(panelKey)}
@@ -63,86 +65,23 @@ function SortPanel({
                 onSubmit={() => 'hi!'}
                 className="flex flex-col items-start justify-center gap-1 max-w-xl"
             >
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    most popular
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data1'}
-                        onChange={() => handleRadioChange('data1')}
-                    />
-                </label>
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    newest
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data2'}
-                        onChange={() => handleRadioChange('data2')}
-                    />
-                </label>
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    top box office
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data3'}
-                        onChange={() => handleRadioChange('data3')}
-                    />
-                </label>
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    alphabetical
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data4'}
-                        onChange={() => handleRadioChange('data4')}
-                    />
-                </label>
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    critic rating (highest)
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data5'}
-                        onChange={() => handleRadioChange('data5')}
-                    />
-                </label>
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    critic rating (lowest)
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data6'}
-                        onChange={() => handleRadioChange('data6')}
-                    />
-                </label>
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    audience score (highest)
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data7'}
-                        onChange={() => handleRadioChange('data7')}
-                    />
-                </label>
-                <label className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400">
-                    audience score (lowest)
-                    <input
-                        type="radio"
-                        value="option1"
-                        className="h-[26px] w-[26px]"
-                        checked={selectedRadio === 'data8'}
-                        onChange={() => handleRadioChange('data8')}
-                    />
-                </label>
+                {Object.entries(sortRadioButtonData).map(([key, value]) => (
+                    <label
+                        key={key}
+                        className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400"
+                    >
+                        {value.text}
+                        <input
+                            type="radio"
+                            value={value.value}
+                            className="h-[26px] w-[26px]"
+                            checked={selectedRadio === value.value}
+                            onChange={() =>
+                                handleRadioChange(value.value)
+                            }
+                        />
+                    </label>
+                ))}
             </form>
         </div>
     )
