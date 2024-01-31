@@ -1,26 +1,18 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
-import WhereToWatch from '../cards/filmData/WhereToWatch';
-import MovieCard from '../cards/movieCard/MovieCard';
-import SortPanel from '../cards/browse/SortPanel';
-import CheckboxPanel from '../cards/browse/CheckboxPanel';
+import WhereToWatch from '../cards/filmData/WhereToWatch'
+import MovieCard from '../cards/movieCard/MovieCard'
+import SortPanel from '../cards/browse/SortPanel'
+import CheckboxPanel from '../cards/browse/CheckboxPanel'
 
 function BrowseContainer({
-    handleSubmit,
-    handleResetClick,
-    selectedAt,
-    handleButtonChangeAt,
-    handleRadioChangeFilmType,
-    selectedFilmType,
-    handleRadioChangeSortBy,
-    selectedSortBy,
-    handleGenreChange,
-    selectedGenre,
-    handleRatingChange,
-    selectedRating,
-    handleStreamingChange,
-    selectedStreaming,
+    handleCheckboxChange,
+    generateUrl,
+    at,
+    sortBy,
+    filmType,
+    genre,
 }) {
     const [openPanels, setOpenPanels] = useState([])
 
@@ -88,7 +80,6 @@ function BrowseContainer({
         1: { text: 'Movies', value: '1' },
         2: { text: 'TV Shows', value: '2' },
     }
-    console.log(selectedAt)
 
     return (
         <Fragment>
@@ -102,61 +93,61 @@ function BrowseContainer({
             <div className="flex flex-row items-center justify-start gap-3 overflow-x-scroll min-[420px]:overflow-x-hidden mt-2 border-b border-white-300">
                 <div
                     className={`${baseClassesLink} ${
-                        selectedAt == 'theaters'
+                        at == 'theaters'
                             ? selectedClassesLink
                             : notSelectedClassesLink
                     }`}
                 >
-                    <button
+                    <Link
+                        to="/browse?at=theaters"
                         className={
                             'text-small-m-400 lg:text-small-d-400 whitespace-nowrap'
                         }
-                        onClick={(e) => handleButtonChangeAt(e, 'theaters')}
                     >
                         In Theaters
-                    </button>
+                    </Link>
                 </div>
                 <div
                     className={`${baseClassesLink} ${
-                        selectedAt == 'home'
+                        at == 'home'
                             ? selectedClassesLink
                             : notSelectedClassesLink
                     }`}
                 >
-                    <button
+                    <Link
+                        to="/browse?at=home"
                         className="text-small-m-400 lg:text-small-d-400 whitespace-nowrap"
-                        onClick={(e) => handleButtonChangeAt(e, 'home')}
                     >
                         At home
-                    </button>
+                    </Link>
                 </div>
                 <div
                     className={`${baseClassesLink} ${
-                        selectedAt == 'upcoming'
+                        at == 'upcoming'
                             ? selectedClassesLink
                             : notSelectedClassesLink
                     }`}
                 >
-                    <button
+                    <Link
+                        to="/browse?at=upcoming"
                         className="text-small-m-400 lg:text-small-d-400 whitespace-nowrap"
-                        onClick={(e) => handleButtonChangeAt(e, 'upcoming')}
                     >
                         Cooming Soon
-                    </button>
+                    </Link>
                 </div>
                 <div
                     className={`${baseClassesLink} ${
-                        selectedAt == 'streaming'
+                        at == 'tv'
                             ? selectedClassesLink
                             : notSelectedClassesLink
                     }`}
                 >
-                    <button
+                    <Link
+                        to="/browse?at=tv"
                         className="text-small-m-400 lg:text-small-d-400 whitespace-nowrap"
-                        onClick={(e) => handleButtonChangeAt(e, 'streaming')}
                     >
                         TV Shows
-                    </button>
+                    </Link>
                 </div>
             </div>
 
@@ -185,14 +176,14 @@ function BrowseContainer({
                     </div>
                     <SortPanel
                         tittle={'Sort'}
-                        handleRadioChange={handleRadioChangeSortBy}
-                        selectedRadio={selectedSortBy}
                         panelKey="sort"
                         isOpen={isPanelOpen('sort')}
                         isPanelOpen={isPanelOpen}
                         onClose={handlePanelClose}
                         sortRadioButtonData={sortRadioButtonData}
+                        selectedValue={sortBy}
                         searchParamsName={'sortBy'}
+                        generateUrl={generateUrl}
                     ></SortPanel>
                 </div>
 
@@ -222,14 +213,14 @@ function BrowseContainer({
                     </div>
                     <SortPanel
                         tittle={'Film Type'}
-                        handleRadioChange={handleRadioChangeFilmType}
-                        selectedRadio={selectedFilmType}
                         panelKey="filmType"
                         isOpen={isPanelOpen('filmType')}
                         isPanelOpen={isPanelOpen}
                         onClose={handlePanelClose}
                         sortRadioButtonData={filmTypeRadioButtonData}
+                        selectedValue={filmType}
                         searchParamsName={'filmType'}
+                        generateUrl={generateUrl}
                     ></SortPanel>
                 </div>
 
@@ -260,14 +251,15 @@ function BrowseContainer({
                         isOpen={isPanelOpen('genre')}
                         isPanelOpen={isPanelOpen}
                         onClose={handlePanelClose}
-                        handleCheckboxChange={handleGenreChange}
-                        checkedCheckboxes={selectedGenre}
                         elements={genres}
-                        handleResetClick={handleResetClick}
+                        handleCheckboxChange={handleCheckboxChange}
+                        selectedValue={genre}
+                        searchParamsName={'genre'}
+                        generateUrl={generateUrl}
                     ></CheckboxPanel>
                 </div>
 
-                <div className="static min-[665px]:relative">
+                {/* <div className="static min-[665px]:relative">
                     <div
                         onClick={(event) => handleButtonClick('rating', event)}
                         className="flex flex-row items-center justify-start gap-1 px-2 py-[4px] border border-white-300 rounded-[18px] hover:cursor-pointer"
@@ -339,7 +331,7 @@ function BrowseContainer({
                     </div>
                 ) : (
                     ''
-                )}
+                )} */}
             </div>
 
             <Link

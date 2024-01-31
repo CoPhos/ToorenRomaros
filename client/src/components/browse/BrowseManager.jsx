@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import BrowseContainer from './BrowseContainer'
+import constants from '../../utils/constants'
 
 function BrowseManager({}) {
     const pageSize = 10
@@ -13,137 +14,80 @@ function BrowseManager({}) {
         streaming: [],
     }
     const FILM_URL = '/films'
-    const location = useLocation()
-    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const [selectedAt, setselectedAt] = useState(
-        searchParams.get('at') || 'theaters'
-    )
-    const [selectedFilmType, setselectedFilmType] = useState(
-        searchParams.get('filmType') || 'all'
-    )
-    const [selectedSortBy, setselectedSortBy] = useState(
-        searchParams.get('sortBy') || ''
-    )
-    const [selectedGenre, setselectedGenre] = useState(
-        searchParams.get('genre') || []
-    )
-    const [selectedRating, setselectedRating] = useState(
-        searchParams.get('rating') || []
-    )
-    const [selectedStreaming, setselectedStreaming] = useState(
-        searchParams.get('streaming') || []
-    )
+    const at = searchParams.get('at') || 'theaters'
+    const filmType = searchParams.get('filmType') || 'all'
+    const sortBy = searchParams.get('sortBy') || ''
+    const genre = searchParams.getAll('genre') || []
+    const rating = searchParams.getAll('rating') || []
+    const streaming = searchParams.getAll('streaming') || []
 
-    const handleButtonChangeAt = (e, value) => {
-        e.preventDefault()
-        setselectedAt(value)
-        setSearchParams({ at: value })
-        const url = `
-            ?at=${value}
-            ${selectedSortBy ? `&sortBy=${selectedSortBy}` : ''}
-            ${selectedFilmType ? `&filmType=${selectedFilmType}` : ''}
-            ${selectedGenre > 0 ? `&genre=${selectedGenre.join(',')}` : ''}
-            ${selectedRating > 0 ? `&rating=${selectedRating.join(',')}` : ''}
-            ${
-                selectedStreaming > 0
-                    ? `&streaming=${selectedStreaming.join(',')}`
-                    : ''
-            }`
-        console.log(url.replaceAll(/\s/g, ''))
-        navigate(url.replaceAll(/\s/g,''))
-    }
-    const handleRadioChangeFilmType = (value) => {
-        setselectedFilmType(value)
-        handleSearchChange('filmType', value)
-    }
-    const handleRadioChangeSortBy = (value) => {
-        setselectedSortBy(value)
-        handleSearchChange('sortBy', value)
-    }
-
-    const handleGenreChange = (value) => {
-        setselectedGenre((prevState) => {
-            if (prevState.includes(value)) {
-                return prevState.filter((i) => i !== value)
-            } else {
-                return [...prevState, value]
+    const handleCheckboxChange = (event, key) => {
+        const checkboxValue = event.target.value
+        const currentValues = searchParams.getAll('genre')
+        console.log(currentValues)
+        if (event.target.checked) {
+            currentValues.push(checkboxValue)
+        } else {
+            const index = currentValues.indexOf(checkboxValue)
+            if (index !== -1) {
+                currentValues.splice(index, 1)
             }
-        })
-        handleSearchChange('genre', selectedGenre.join(','))
+        }
+        //dont update searchparams every time a checkbox is clicked maybe just create a new url a use it in generateUrl
+        setSearchParams({ 'genre': currentValues })
     }
 
-    const handleRatingChange = (value) => {
-        setselectedRating((prevState) => {
-            if (prevState.includes(value)) {
-                return prevState.filter((i) => i !== value)
-            } else {
-                return [...prevState, value]
-            }
-        })
-        handleSearchChange('rating', selectedRating.join(','))
+    function generateUrl(index, value) {
+        const existingParams = Object.fromEntries(
+            new URLSearchParams(window.location.search).entries()
+        )
+        const updatedParams = { ...defaultParams, ...existingParams }
+        switch (index) {
+            case 'at':
+                updatedParams.at = value
+                break
+            case 'sortBy':
+                updatedParams.sortBy = value
+                break
+            case 'filmType':
+                updatedParams.filmType = value
+                break
+            case 'genre':
+                updatedParams.genre = value
+                break
+            case 'rating':
+                updatedParams.rating = value
+                break
+            case 'streaming':
+                updatedParams.streaming = value
+                break
+            default:
+                updatedParams
+                break
+        }
+
+        const url = Object.entries(updatedParams)
+            .map(([key, val]) =>
+                Array.isArray(val)
+                    ? `&${key}=${val.join(',')}`
+                    : `&${key}=${val}`
+            )
+            .join('')
+
+        return url.replace(/^\s*&/, '')
     }
 
-    const handleStreamingChange = (value) => {
-        setselectedStreaming((prevState) => {
-            if (prevState.includes(value)) {
-                return prevState.filter((i) => i !== value)
-            } else {
-                return [...prevState, value]
-            }
-        })
-        handleSearchChange('streaming', selectedStreaming.join(','))
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        //document.getElementById('myForm').submit()
-    }
-
-    const handleResetClick = (event, group) => {
-        event.preventDefault()
-        setCheckedCheckboxes((prevCheckboxState) => ({
-            ...prevCheckboxState,
-            [group]: {},
-        }))
-    }
-
-    const handleSearchChange = (param, value) => {
-        setSearchParams((prevSearchParams) => {
-            const updatedSearchParams = new URLSearchParams(prevSearchParams)
-            updatedSearchParams.set(param, value)
-            return updatedSearchParams
-        })
-    }
-
-    useEffect(() => {}, [
-        selectedAt,
-        selectedFilmType,
-        selectedSortBy,
-        selectedGenre,
-        selectedRating,
-        selectedStreaming,
-        navigate,
-        setSearchParams,
-    ])
 
     return (
         <BrowseContainer
-            handleSubmit={handleSubmit}
-            handleResetClick={handleResetClick}
-            selectedAt={selectedAt}
-            handleButtonChangeAt={handleButtonChangeAt}
-            handleRadioChangeFilmType={handleRadioChangeFilmType}
-            selectedFilmType={selectedFilmType}
-            handleRadioChangeSortBy={handleRadioChangeSortBy}
-            selectedSortBy={selectedSortBy}
-            handleGenreChange={handleGenreChange}
-            selectedGenre={selectedGenre}
-            handleRatingChange={handleRatingChange}
-            selectedRating={selectedRating}
-            handleStreamingChange={handleStreamingChange}
-            selectedStreaming={selectedStreaming}
+            handleCheckboxChange={handleCheckboxChange}
+            generateUrl={generateUrl}
+            at={at}
+            filmType={filmType}
+            sortBy={sortBy}
+            genre={genre}
         ></BrowseContainer>
     )
 }

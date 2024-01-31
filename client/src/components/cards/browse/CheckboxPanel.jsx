@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 function CheckboxPanel({
     tittle,
@@ -7,16 +8,21 @@ function CheckboxPanel({
     onClose,
     isPanelOpen,
     handleCheckboxChange,
-    checkedCheckboxes,
+    selectedValue,
     elements,
     handleResetClick,
-    left
+    searchParamsName,
+    generateUrl,
 }) {
     const panelRef = useRef()
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (panelRef.current && !panelRef.current.contains(event.target) && isPanelOpen(panelKey)) {
+            if (
+                panelRef.current &&
+                !panelRef.current.contains(event.target) &&
+                isPanelOpen(panelKey)
+            ) {
                 onClose(panelKey)
             }
         }
@@ -72,9 +78,13 @@ function CheckboxPanel({
                                 type="checkbox"
                                 name={element}
                                 className="h-[26px] w-[26px]"
-                                checked={checkedCheckboxes.includes(element)}
+                                value={element}
+                                checked={selectedValue.includes(element)}
                                 onChange={(event) =>
-                                    handleCheckboxChange(event, element)
+                                    handleCheckboxChange(
+                                        event,
+                                        searchParamsName
+                                    )
                                 }
                             />
                         </label>
@@ -87,9 +97,17 @@ function CheckboxPanel({
                     >
                         clear all
                     </button>
-                    <button className="flex flex-row items-center justify-center text-white-50 text-small-m-400 lg:text-small-d-400 rounded bg-[#404040] px-2 py-1 hover:cursor-pointer hover:opacity-50">
+                    <Link
+                        to={{
+                            search: generateUrl(
+                                searchParamsName,
+                                selectedValue
+                            ),
+                        }}
+                        className="flex flex-row items-center justify-center text-white-50 text-small-m-400 lg:text-small-d-400 rounded bg-[#404040] px-2 py-1 hover:cursor-pointer hover:opacity-50"
+                    >
                         Apply
-                    </button>
+                    </Link>
                 </div>
             </form>
         </div>

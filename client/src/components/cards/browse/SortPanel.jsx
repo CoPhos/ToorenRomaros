@@ -1,15 +1,16 @@
 import React, {useRef, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 
 function SortPanel({
     tittle,
-    handleRadioChange,
-    selectedRadio,
     panelKey,
     isOpen,
     onClose,
     isPanelOpen,
     sortRadioButtonData,
     searchParamsName,
+    selectedValue,
+    generateUrl,
 }) {
     const panelRef = useRef()
 
@@ -71,15 +72,21 @@ function SortPanel({
                         className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400"
                     >
                         {value.text}
-                        <input
-                            type="radio"
-                            value={value.value}
-                            className="h-[26px] w-[26px]"
-                            checked={selectedRadio === value.value}
-                            onChange={() =>
-                                handleRadioChange(value.value)
-                            }
-                        />
+                        <Link
+                            to={{
+                                search: generateUrl(
+                                    searchParamsName,
+                                    value.value
+                                ),
+                            }}
+                        >
+                            <input
+                                type="radio"
+                                value={value.value}
+                                className="h-[26px] w-[26px]"
+                                checked={selectedValue === value.value}
+                            />
+                        </Link>
                     </label>
                 ))}
             </form>
