@@ -23,23 +23,42 @@ function BrowseManager({}) {
     const rating = searchParams.getAll('rating') || []
     const streaming = searchParams.getAll('streaming') || []
 
-    const handleCheckboxChange = (event, key) => {
+    const [checkedCheckboxes, setCheckedCheckboxes] = useState({
+        genre: [],
+        rating: [],
+        streaming: [],
+    })
+
+    const handleCheckboxChange = (event, group) => {
         const checkboxValue = event.target.value
-        const currentValues = searchParams.getAll('genre')
-        console.log(currentValues)
-        if (event.target.checked) {
-            currentValues.push(checkboxValue)
-        } else {
-            const index = currentValues.indexOf(checkboxValue)
-            if (index !== -1) {
-                currentValues.splice(index, 1)
+
+        setCheckedCheckboxes((prevCheckboxState) => {
+            const currentGroupState = prevCheckboxState[group] || []
+
+            if (currentGroupState.includes(checkboxValue)) {
+                return {
+                    ...prevCheckboxState,
+                    [group]: currentGroupState.filter(
+                        (item) => item !== checkboxValue
+                    ),
+                }
+            } else {
+                return {
+                    ...prevCheckboxState,
+                    [group]: [...currentGroupState, checkboxValue],
+                }
             }
-        }
-        //dont update searchparams every time a checkbox is clicked maybe just create a new url a use it in generateUrl
-        setSearchParams({ 'genre': currentValues })
+        })
+        console.log(checkedCheckboxes)
+    }
+    const resetCheckboxGroup = (event, group) => {
+        setCheckedCheckboxes((prevCheckboxState) => ({
+            ...prevCheckboxState,
+            [group]: [],
+        }))
     }
 
-    function generateUrl(index, value) {
+    function generateUrl(index, value, filmType) {
         const existingParams = Object.fromEntries(
             new URLSearchParams(window.location.search).entries()
         )
@@ -64,11 +83,23 @@ function BrowseManager({}) {
                 updatedParams.streaming = value
                 break
             default:
-                updatedParams
+                updatedParams.at = value
+                updatedParams.sortBy = ''
+                updatedParams.filmType = filmType
+                updatedParams.genre = []
+                updatedParams.rating = []
+                updatedParams.streaming = []
                 break
         }
 
         const url = Object.entries(updatedParams)
+            .filter(
+                ([key, val]) =>
+                    val !== undefined &&
+                    val !== null &&
+                    val !== '' &&
+                    val.length > 0
+            )
             .map(([key, val]) =>
                 Array.isArray(val)
                     ? `&${key}=${val.join(',')}`
@@ -79,15 +110,18 @@ function BrowseManager({}) {
         return url.replace(/^\s*&/, '')
     }
 
-
     return (
         <BrowseContainer
             handleCheckboxChange={handleCheckboxChange}
+            checkedCheckboxes={checkedCheckboxes}
+            resetCheckboxGroup={resetCheckboxGroup}
             generateUrl={generateUrl}
             at={at}
             filmType={filmType}
             sortBy={sortBy}
             genre={genre}
+            rating={rating}
+            streaming={streaming}
         ></BrowseContainer>
     )
 }

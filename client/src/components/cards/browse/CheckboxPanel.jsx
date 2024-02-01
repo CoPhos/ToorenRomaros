@@ -8,11 +8,11 @@ function CheckboxPanel({
     onClose,
     isPanelOpen,
     handleCheckboxChange,
-    selectedValue,
+    checkedCheckboxes,
     elements,
-    handleResetClick,
     searchParamsName,
     generateUrl,
+    resetCheckboxGroup,
 }) {
     const panelRef = useRef()
 
@@ -75,33 +75,44 @@ function CheckboxPanel({
                         >
                             {element}
                             <input
+                                readOnly={true}
                                 type="checkbox"
                                 name={element}
                                 className="h-[26px] w-[26px]"
                                 value={element}
-                                checked={selectedValue.includes(element)}
+                                checked={
+                                    checkedCheckboxes[panelKey]?.includes(
+                                        element
+                                    ) || false
+                                }
                                 onChange={(event) =>
-                                    handleCheckboxChange(
-                                        event,
-                                        searchParamsName
-                                    )
+                                    handleCheckboxChange(event, panelKey)
                                 }
                             />
                         </label>
                     ))}
                 </div>
                 <div className="flex flex-row items-center justify-between w-full">
-                    <button
-                        onClick={(event) => handleResetClick(event, tittle)}
+                    <Link
+                        onClick={(event) => {
+                            resetCheckboxGroup(event, panelKey)
+                            onClose(panelKey)
+                        }}
+                        to={{
+                            search: generateUrl(searchParamsName, []),
+                        }}
                         className="text-small-d-400 lg:text-small-m-400 text-blue-800 uppercase hover:text-blue-600 hover:cursor-pointer"
                     >
                         clear all
-                    </button>
+                    </Link>
                     <Link
+                        onClick={(event) => {
+                            onClose(panelKey)
+                        }}
                         to={{
                             search: generateUrl(
                                 searchParamsName,
-                                selectedValue
+                                checkedCheckboxes[panelKey]
                             ),
                         }}
                         className="flex flex-row items-center justify-center text-white-50 text-small-m-400 lg:text-small-d-400 rounded bg-[#404040] px-2 py-1 hover:cursor-pointer hover:opacity-50"

@@ -73,6 +73,7 @@ function SortPanel({
                     >
                         {value.text}
                         <Link
+                            onClick={() => onClose(panelKey)}
                             to={{
                                 search: generateUrl(
                                     searchParamsName,
@@ -84,6 +85,7 @@ function SortPanel({
                                 type="radio"
                                 value={value.value}
                                 className="h-[26px] w-[26px]"
+                                readOnly={true}
                                 checked={selectedValue === value.value}
                             />
                         </Link>

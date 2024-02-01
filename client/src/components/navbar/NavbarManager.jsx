@@ -20,13 +20,13 @@ function NavbarManager() {
         },
         3: {
             tittle: 'Best Movies on Netflix',
-            to: '/browse?at=home&Streaming=[netflix]&filmType=1',
+            to: '/browse?at=home&streaming=netflix&filmType=1',
         },
-        4: { tittle: 'Best Movies on Hulu', to: '/browse?at=home&Streaming=[hulu]&filmType=1' },
-        5: { tittle: 'Best Movies on HBO Max', to: '/browse?at=home&Streaming=[hbo]&filmType=1' },
-        6: { tittle: 'Best Movies on Amazon Prime Video', to: '/browse?at=home&Streaming=[amazon]&filmType=1' },
-        7: { tittle: 'Best Movies on Apple TV+', to: '/browse?at=home&Streaming=[apple]&filmType=1' },
-        8: { tittle: 'Best Movies on Disney+', to: '/browse?at=home&Streaming=[disney]&filmType=1' },
+        4: { tittle: 'Best Movies on Hulu', to: '/browse?at=home&streaming=hulu&filmType=1' },
+        5: { tittle: 'Best Movies on HBO Max', to: '/browse?at=home&streaming=hbo&filmType=1' },
+        6: { tittle: 'Best Movies on Amazon Prime Video', to: '/browse?at=home&streaming=amazon&filmType=1' },
+        7: { tittle: 'Best Movies on Apple TV+', to: '/browse?at=home&streaming=apple&filmType=1' },
+        8: { tittle: 'Best Movies on Disney+', to: '/browse?at=home&streaming=disney&filmType=1' },
     }
 
     const tvExplore = {
@@ -37,27 +37,27 @@ function NavbarManager() {
         },
         2: {
             tittle: 'Netflix: New & Upcoming',
-            to: '/browse?at=home&Streaming=[netflix]filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=netflix&filmType=2&sortBy=addedDate-Desc',
         },
         3: {
             tittle: 'Hulu: New & Upcoming',
-            to: '/browse?at=home&Streaming=[hulu]filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=hulu&filmType=2&sortBy=addedDate-Desc',
         },
         4: {
             tittle: 'Amazon Prime Video: New & Upcoming',
-            to: '/browse?at=home&Streaming=[amazon]filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=amazon&filmType=2&sortBy=addedDate-Desc',
         },
         5: {
             tittle: 'Disney+: New & Upcoming',
-            to: '/browse?at=home&Streaming=[disney]filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=disney&filmType=2&sortBy=addedDate-Desc',
         },
         6: {
             tittle: 'Apple TV+: New & Upcoming',
-            to: '/browse?at=home&Streaming=[apple]filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=apple&filmType=2&sortBy=addedDate-Desc',
         },
         7: {
             tittle: 'HBO Max: New & Upcoming',
-            to: '/browse?at=home&Streaming=[hbo]filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=hbo&filmType=2&sortBy=addedDate-Desc',
         },
     }
 
