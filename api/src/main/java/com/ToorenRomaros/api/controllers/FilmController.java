@@ -38,9 +38,9 @@ public class FilmController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/films")
-    ResponseEntity<Map<String, Object>> getFilmByDynamicQuery(@RequestParam(required = false) String streamId,
-                                                    @RequestParam(required = false) List<UUID> genres,
-                                                    @RequestParam(required = false) String suitableFor,
+    ResponseEntity<Map<String, Object>> getFilmByDynamicQuery(@RequestParam(required = false) List<String> streamId,
+                                                    @RequestParam(required = false) List<String> genres,
+                                                    @RequestParam(required = false) List<String> suitableFor,
                                                     @RequestParam(defaultValue = "1") String filmType,
                                                     @RequestParam(required = false) String atTheaters,
                                                     @RequestParam(required = false) String commingSoonStreaming,

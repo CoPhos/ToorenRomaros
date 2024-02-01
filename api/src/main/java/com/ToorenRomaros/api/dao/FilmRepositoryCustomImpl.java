@@ -20,9 +20,9 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
     }
 
     @Override
-    public Map<String, Object> findDinamicQuery(String streamSiteId,
-                                                List<UUID> genres,
-                                                String suitableFor,
+    public Map<String, Object> findDinamicQuery(List<String> streamSites,
+                                                List<String> genres,
+                                                List<String> suitableFor,
                                                 String filmType,
                                                 String atTheaters,
                                                 String atStreaming,
@@ -36,7 +36,9 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
        try {
            StringBuilder queryText = new StringBuilder("SELECT DISTINCT film.* FROM film" +
                    " LEFT JOIN stream_film ON stream_film.film_id=film.id" +
+                   " LEFT JOIN stream ON stream.id=stream_film.stream_id" +
                    " LEFT JOIN genre_film ON genre_film.film_id=film.id" +
+                   " LEFT JOIN genre ON genre.id=genre_film.genre_id" +
                    " WHERE");
            int argumentCounter = 1;
            List<String> providedParameters = new ArrayList<String>();
@@ -47,30 +49,44 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                argumentCounter++;
                providedParameters.add(filmType);
            }
-           if (streamSiteId != null && !streamSiteId.isBlank()) {
-               queryText.append(" and stream_film.stream_id = ?");
+           if (streamSites != null && !streamSites.isEmpty()) {
+               queryText.append(" and stream.name in (?");
                queryText.append(argumentCounter);
                argumentCounter++;
-               providedParameters.add(streamSiteId);
+               providedParameters.add(streamSites.get(0));
+               for (int i = 1; i < streamSites.size(); i++) {
+                   queryText.append(", ?");
+                   queryText.append(argumentCounter);
+                   argumentCounter++;
+                   providedParameters.add(streamSites.get(i));
+               }
+               queryText.append(") ");
            }
            if (genres != null && !genres.isEmpty()) {
-               queryText.append(" and genre_film.genre_id in (?");
+               queryText.append(" and genre.genre in (?");
                queryText.append(argumentCounter);
                argumentCounter++;
-               providedParameters.add(genres.get(0).toString());
+               providedParameters.add(genres.get(0));
                for (int i = 1; i < genres.size(); i++) {
                    queryText.append(", ?");
                    queryText.append(argumentCounter);
                    argumentCounter++;
-                   providedParameters.add(genres.get(i).toString());
+                   providedParameters.add(genres.get(i));
                }
                queryText.append(") ");
            }
-           if (suitableFor != null) {
-               queryText.append(" and film.suitable_for = ?");
+           if (suitableFor != null && !suitableFor.isEmpty()) {
+               queryText.append(" and film.suitable_for in (?");
                queryText.append(argumentCounter);
                argumentCounter++;
-               providedParameters.add(suitableFor);
+               providedParameters.add(suitableFor.get(0));
+               for (int i = 1; i < suitableFor.size(); i++) {
+                   queryText.append(", ?");
+                   queryText.append(argumentCounter);
+                   argumentCounter++;
+                   providedParameters.add(suitableFor.get(i));
+               }
+               queryText.append(") ");
            }
            if (atTheaters != null) {
                queryText.append(" and film.at_theaters = ?");
@@ -78,11 +94,8 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                argumentCounter++;
                providedParameters.add(atTheaters);
            }
-           if (commingSoonStreaming != null) {
-               queryText.append(" and film.STREAMING_RELEASE_DATE > CURDATE()");
-           }
-           if (commingSoonTheaters != null) {
-               queryText.append(" and film.THEATERS_RELEASE_DATE  > CURDATE()");
+           if (commingSoonStreaming != null || commingSoonTheaters != null) {
+               queryText.append(" and (film.STREAMING_RELEASE_DATE > CURDATE() OR film.THEATERS_RELEASE_DATE  > CURDATE())");
            }
            if (Objects.equals(atStreaming, "1")) {
                queryText.append(" and film.streaming_release_date is not null");

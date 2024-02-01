@@ -12,9 +12,9 @@ public interface FilmService {
      List<FilmDto>  getAllFilmsBySagaId(UUID id);
      FilmDto updateFilm(UUID id, FilmDto filmDto);
      void deleteFilm(UUID id);
-     Map<String, Object> getFilmByDynamicQuery(String streamSiteId,
-                                               List<UUID> genres,
-                                               String suitableFor,
+     Map<String, Object> getFilmByDynamicQuery(List<String> streamSites,
+                                               List<String> genres,
+                                               List<String> suitableFor,
                                                String filmType,
                                                String atTheaters,
                                                String atStreaming,

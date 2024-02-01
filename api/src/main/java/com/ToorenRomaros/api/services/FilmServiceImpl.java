@@ -47,9 +47,9 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Map<String, Object> getFilmByDynamicQuery(String streamSiteId,
-                                                     List<UUID> genres,
-                                                     String suitableFor,
+    public Map<String, Object> getFilmByDynamicQuery(List<String> streamSites,
+                                                     List<String> genres,
+                                                     List<String> suitableFor,
                                                      String filmType,
                                                      String atTheaters,
                                                      String atStreaming,
@@ -60,7 +60,7 @@ public class FilmServiceImpl implements FilmService {
                                                      String superRating,
                                                      int page,
                                                      int size) {
-        Map<String, Object> result = filmRepository.findDinamicQuery(streamSiteId, genres, suitableFor,
+        Map<String, Object> result = filmRepository.findDinamicQuery(streamSites, genres, suitableFor,
                 filmType, atTheaters, atStreaming, commingSoonStreaming, commingSoonTheaters, orderBy, userRating, superRating, page, size);
         List<FilmEntity> filmEntities = (List<FilmEntity>) result.get("queryResult");
         if (filmEntities == null) {

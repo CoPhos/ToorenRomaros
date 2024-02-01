@@ -62,20 +62,26 @@ function BrowseContainer({
         'HBO Max',
     ]
     const sortRadioButtonData = {
-        0: { text: 'Most Popular', value: 'viewCount-Desc' },
-        1: { text: 'Newest', value: 'addedDate-Desc' },
-        2: { text: 'Top Box Office', value: 'boxOffice-Desc' },
+        0: { text: 'Most Popular', value: 'view_count-Desc' },
+        1: { text: 'Newest', value: 'added_date-Desc' },
+        2: { text: 'Top Box Office', value: 'box_office-Desc' },
         3: { text: 'Alphabetical', value: 'tittle-Asc' },
         4: {
             text: 'Critic Rating (Highest)',
-            value: 'averageSuperRating-Desc',
+            value: 'average_super_sating-Desc',
         },
-        5: { text: 'Critic Rating (Lowest)', value: 'averageSuperRating-Asc' },
+        5: {
+            text: 'Critic Rating (Lowest)',
+            value: 'average_super_sating-Asc',
+        },
         6: {
             text: 'Audience Score (Highest)',
-            value: 'averageUserRating-Desc',
+            value: 'average_user_rating-Desc',
         },
-        7: { text: 'Audience Score (Lowest)', value: 'averageUserRating-Asc' },
+        7: {
+            text: 'Audience Score (Lowest)',
+            value: 'average_user_rating-Asc',
+        },
     }
     const filmTypeRadioButtonData = {
         0: { text: 'All', value: 'all' },
@@ -336,7 +342,7 @@ function BrowseContainer({
                     <div className="static min-[665px]:relative">
                         <div
                             onClick={(event) =>
-                                handleButtonClick('Streaming', event)
+                                handleButtonClick('streaming', event)
                             }
                             className="flex flex-row items-center justify-start gap-1 px-2 py-[4px] border border-white-300 rounded-[18px] hover:cursor-pointer"
                         >
@@ -358,8 +364,8 @@ function BrowseContainer({
                         </div>
                         <CheckboxPanel
                             tittle={'Streaming'}
-                            panelKey="Streaming"
-                            isOpen={isPanelOpen('Streaming')}
+                            panelKey="streaming"
+                            isOpen={isPanelOpen('streaming')}
                             isPanelOpen={isPanelOpen}
                             onClose={handlePanelClose}
                             elements={streamPlatform}
