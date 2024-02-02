@@ -4,7 +4,7 @@ import { BASE_URL } from '../../../utils/constants'
 
 function MovieCard({ data, images, handleAddWatchList }) {
     const IMAGE_URL = '/images/'
-    const image = BASE_URL + IMAGE_URL + (images?.[0]?.id || '')
+    const image = BASE_URL + IMAGE_URL + (images || '')
     const today = new Date()
     return (
         <div className="max-w-[128px] md:max-w-[170px] min-h-[375px] flex flex-col items-start justify-between">

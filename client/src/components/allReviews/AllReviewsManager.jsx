@@ -19,7 +19,7 @@ function AllReviewsManager() {
     const navigate = useNavigate()
     const params = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
-
+    //TODO: stop using useState, is better to get the values from url
     const [selectedSuper, setselectedSuper] = useState(
         searchParams.get('super') || 'true'
     )

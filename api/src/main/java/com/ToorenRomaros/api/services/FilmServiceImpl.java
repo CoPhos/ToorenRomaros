@@ -1,11 +1,14 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.FilmDto;
+import com.ToorenRomaros.api.dto.film.GetDynamicQyeryFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
+import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.film.SagaRepository;
+import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.utils.FilmMapper;
 import com.ToorenRomaros.api.utils.Utils;
 import org.slf4j.Logger;
@@ -26,12 +29,14 @@ public class FilmServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
     private final SagaRepository sagaRepository;
     private final FilmMapper filmMapper;
+    private final ImageRepostiroy imageRepostiroy;
     private static final Logger log = LoggerFactory.getLogger(FilmServiceImpl.class);
 
-    public FilmServiceImpl(FilmRepository filmRepository, SagaRepository sagaRepository, FilmMapper filmMapper) {
+    public FilmServiceImpl(FilmRepository filmRepository, SagaRepository sagaRepository, FilmMapper filmMapper, ImageRepostiroy imageRepostiroy) {
         this.filmRepository = filmRepository;
         this.sagaRepository = sagaRepository;
         this.filmMapper = filmMapper;
+        this.imageRepostiroy = imageRepostiroy;
     }
 
     @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
@@ -66,18 +71,26 @@ public class FilmServiceImpl implements FilmService {
         if (filmEntities == null) {
             throw new ResourceNotFoundException("Resource not found");
         }
-        result.replace("queryResult", filmEntities.stream().map(filmMapper::mapToGetDynamicQueryFilmDto).collect(Collectors.toList()));
+        result.replace("queryResult", filmEntities.stream().map(filmEntity -> {
+            List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", filmEntity.getId().toString());
+            log.info(imageEntities.get(0).getId().toString());
+            if (!imageEntities.isEmpty()) {
+                GetDynamicQyeryFilmDto filmDto = filmMapper.mapToGetDynamicQueryFilmDto(filmEntity);
+                filmDto.setMainImageId(imageEntities.get(0).getId().toString());
+                return filmDto;
+            } else {
+                return filmMapper.mapToGetDynamicQueryFilmDto(filmEntity);
+            }
+        }).collect(Collectors.toList()));
         return result;
     }
 
     @Override
     @Transactional
     public FilmDto getFilmById(UUID id) {
-
-            filmRepository.incrementViewCount(id.toString());
-            FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
-            return filmMapper.mapToFilmDto(film);
-
+        filmRepository.incrementViewCount(id.toString());
+        FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+        return filmMapper.mapToFilmDto(film);
     }
 
     @Override

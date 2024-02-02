@@ -16,48 +16,63 @@ function NavbarManager() {
         },
         2: {
             tittle: 'Best Movies of All Time',
-            to: '/browse?at=home&filmType=1&sortBy=averageSuperRating-Desc',
+            to: '/browse?at=home&filmType=1&sortBy=average_super_rating-Desc',
         },
         3: {
             tittle: 'Best Movies on Netflix',
-            to: '/browse?at=home&streaming=netflix&filmType=1',
+            to: '/browse?at=home&streaming=Netflix&filmType=1',
         },
-        4: { tittle: 'Best Movies on Hulu', to: '/browse?at=home&streaming=hulu&filmType=1' },
-        5: { tittle: 'Best Movies on HBO Max', to: '/browse?at=home&streaming=hbo&filmType=1' },
-        6: { tittle: 'Best Movies on Amazon Prime Video', to: '/browse?at=home&streaming=amazon&filmType=1' },
-        7: { tittle: 'Best Movies on Apple TV+', to: '/browse?at=home&streaming=apple&filmType=1' },
-        8: { tittle: 'Best Movies on Disney+', to: '/browse?at=home&streaming=disney&filmType=1' },
+        4: {
+            tittle: 'Best Movies on Hulu',
+            to: '/browse?at=home&streaming=Hulu&filmType=1',
+        },
+        5: {
+            tittle: 'Best Movies on HBO Max',
+            to: '/browse?at=home&streaming=HBO Max&filmType=1',
+        },
+        6: {
+            tittle: 'Best Movies on Amazon Prime Video',
+            to: '/browse?at=home&streaming=Amazon Prime Video&filmType=1',
+        },
+        7: {
+            tittle: 'Best Movies on Apple TV+',
+            to: '/browse?at=home&streaming=Apple TV%2B&filmType=1',
+        },
+        8: {
+            tittle: 'Best Movies on Disney+',
+            to: '/browse?at=home&streaming=Disney%2B&filmType=1',
+        },
     }
 
     const tvExplore = {
         0: { tittle: 'TV Home', to: '/browse?at=home&filmType=2' },
         1: {
             tittle: 'Best TV Shows of All Time',
-            to: '/browse?at=home&filmType=2&sortBy=averageSuperRating-Desc',
+            to: '/browse?at=home&filmType=2&sortBy=average_super_rating-Desc',
         },
         2: {
             tittle: 'Netflix: New & Upcoming',
-            to: '/browse?at=home&streaming=netflix&filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=Netflix&filmType=2&sortBy=added_date-Desc',
         },
         3: {
             tittle: 'Hulu: New & Upcoming',
-            to: '/browse?at=home&streaming=hulu&filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=Hulu&filmType=2&sortBy=added_date-Desc',
         },
         4: {
             tittle: 'Amazon Prime Video: New & Upcoming',
-            to: '/browse?at=home&streaming=amazon&filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=Amazon Prime Video&filmType=2&sortBy=added_date-Desc',
         },
         5: {
             tittle: 'Disney+: New & Upcoming',
-            to: '/browse?at=home&streaming=disney&filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=Disney%2B&filmType=2&sortBy=added_date-Desc',
         },
         6: {
             tittle: 'Apple TV+: New & Upcoming',
-            to: '/browse?at=home&streaming=apple&filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=Apple TV%2B&filmType=2&sortBy=added_date-Desc',
         },
         7: {
             tittle: 'HBO Max: New & Upcoming',
-            to: '/browse?at=home&streaming=hbo&filmType=2&sortBy=addedDate-Desc',
+            to: '/browse?at=home&streaming=HBO Max&filmType=2&sortBy=added_date-Desc',
         },
     }
 
@@ -74,7 +89,7 @@ function NavbarManager() {
             }
         },
         onSuccess: (data) => {
-            console.log(data?.data)
+           // console.log(data?.data)
         },
         onError: (error) => {
             console.log(error)
@@ -94,7 +109,7 @@ function NavbarManager() {
             }
         },
         onSuccess: (data) => {
-            console.log(data?.data)
+            //console.log(data?.data)
         },
         onError: (error) => {
             console.log(error)

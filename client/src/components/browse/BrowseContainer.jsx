@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import MovieCard from '../cards/movieCard/MovieCard'
 import SortPanel from '../cards/browse/SortPanel'
@@ -15,7 +15,12 @@ function BrowseContainer({
     rating,
     streaming,
     resetCheckboxGroup,
+    filmData,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
 }) {
+    //console.log(filmData)
     const [openPanels, setOpenPanels] = useState([])
 
     const handleButtonClick = (panelKey, event) => {
@@ -68,11 +73,11 @@ function BrowseContainer({
         3: { text: 'Alphabetical', value: 'tittle-Asc' },
         4: {
             text: 'Critic Rating (Highest)',
-            value: 'average_super_sating-Desc',
+            value: 'average_super_rating-Desc',
         },
         5: {
             text: 'Critic Rating (Lowest)',
-            value: 'average_super_sating-Asc',
+            value: 'average_super_rating-Asc',
         },
         6: {
             text: 'Audience Score (Highest)',
@@ -88,7 +93,25 @@ function BrowseContainer({
         1: { text: 'Movies', value: '1' },
         2: { text: 'TV Shows', value: '2' },
     }
+    useEffect(() => {
+        const handleScroll = () => {
+            const { scrollTop, scrollHeight, clientHeight } =
+                document.documentElement
+            if (
+                scrollHeight - scrollTop === clientHeight &&
+                hasNextPage &&
+                !isFetchingNextPage
+            ) {
+                fetchNextPage()
+            }
+        }
 
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [hasNextPage, isFetchingNextPage, fetchNextPage])
     return (
         <Fragment>
             <p className="text-h3-m-700 lg:text-h3-d-700 mt-2">
@@ -105,9 +128,9 @@ function BrowseContainer({
                 >
                     <Link
                         onClick={(event) => {
-                            resetCheckboxGroup('genre')
-                            resetCheckboxGroup('rating')
-                            resetCheckboxGroup('streaming')
+                            resetCheckboxGroup(event, 'genre')
+                            resetCheckboxGroup(event, 'rating')
+                            resetCheckboxGroup(event, 'streaming')
                         }}
                         to={{
                             search: generateUrl('reset', 'theaters', ''),
@@ -128,9 +151,9 @@ function BrowseContainer({
                 >
                     <Link
                         onClick={(event) => {
-                            resetCheckboxGroup('genre')
-                            resetCheckboxGroup('rating')
-                            resetCheckboxGroup('streaming')
+                            resetCheckboxGroup(event, 'genre')
+                            resetCheckboxGroup(event, 'rating')
+                            resetCheckboxGroup(event, 'streaming')
                         }}
                         to={{
                             search: generateUrl('reset', 'home', 'all'),
@@ -149,9 +172,9 @@ function BrowseContainer({
                 >
                     <Link
                         onClick={(event) => {
-                            resetCheckboxGroup('genre')
-                            resetCheckboxGroup('rating')
-                            resetCheckboxGroup('streaming')
+                            resetCheckboxGroup(event, 'genre')
+                            resetCheckboxGroup(event, 'rating')
+                            resetCheckboxGroup(event, 'streaming')
                         }}
                         to={{
                             search: generateUrl('reset', 'upcoming', 'all'),
@@ -170,9 +193,9 @@ function BrowseContainer({
                 >
                     <Link
                         onClick={(event) => {
-                            resetCheckboxGroup('genre')
-                            resetCheckboxGroup('rating')
-                            resetCheckboxGroup('streaming')
+                            resetCheckboxGroup(event, 'genre')
+                            resetCheckboxGroup(event, 'rating')
+                            resetCheckboxGroup(event, 'streaming')
                         }}
                         to={{
                             search: generateUrl('reset', 'tv', ''),
@@ -384,9 +407,9 @@ function BrowseContainer({
 
             <Link
                 onClick={(event) => {
-                    resetCheckboxGroup('genre')
-                    resetCheckboxGroup('rating')
-                    resetCheckboxGroup('streaming')
+                    resetCheckboxGroup(event, 'genre')
+                    resetCheckboxGroup(event, 'rating')
+                    resetCheckboxGroup(event, 'streaming')
                 }}
                 to="/browse?at=theaters"
                 className="text-small-m-300 lg:text-small-d-300 text-blue-900 hover:cursor-pointer hover:text-blue-600"
@@ -395,29 +418,22 @@ function BrowseContainer({
             </Link>
 
             <div className="flex flex-row items-center justify-around gap-2 flex-wrap mt-2">
-                {/* <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard>
-                <MovieCard></MovieCard> */}
+                {filmData?.map((page, pageIndex) => (
+                    <Fragment key={pageIndex}>
+                        {page.data.response.map((item) => (
+                            <MovieCard
+                                key={item.id}
+                                data={item}
+                                images={item.mainImageId}
+                                //handleAddWatchList={handleAddWatchList}
+                            />
+                        ))}
+                    </Fragment>
+                ))}
+                {(!filmData ||
+                    filmData.every(
+                        (page) => page.data.response.length === 0
+                    )) && <p>No data found</p>}
             </div>
         </Fragment>
     )
