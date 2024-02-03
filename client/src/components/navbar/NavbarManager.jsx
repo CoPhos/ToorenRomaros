@@ -36,11 +36,11 @@ function NavbarManager() {
         },
         7: {
             tittle: 'Best Movies on Apple TV+',
-            to: '/browse?at=home&streaming=Apple TV%2B&filmType=1',
+            to: '/browse?at=home&streaming=Apple TV Plus&filmType=1',
         },
         8: {
             tittle: 'Best Movies on Disney+',
-            to: '/browse?at=home&streaming=Disney%2B&filmType=1',
+            to: '/browse?at=home&streaming=Disney Plus&filmType=1',
         },
     }
 

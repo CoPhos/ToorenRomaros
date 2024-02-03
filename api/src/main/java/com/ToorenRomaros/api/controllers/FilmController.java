@@ -41,7 +41,7 @@ public class FilmController {
     ResponseEntity<Map<String, Object>> getFilmByDynamicQuery(@RequestParam(required = false) List<String> streamId,
                                                     @RequestParam(required = false) List<String> genres,
                                                     @RequestParam(required = false) List<String> suitableFor,
-                                                    @RequestParam(defaultValue = "1") String filmType,
+                                                    @RequestParam(defaultValue = "all") String filmType,
                                                     @RequestParam(required = false) String atTheaters,
                                                     @RequestParam(required = false) String commingSoonStreaming,
                                                     @RequestParam(required = false) String commingSoonTheaters,

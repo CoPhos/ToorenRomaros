@@ -1,9 +1,9 @@
 set foreign_key_checks=0;
 
 INSERT INTO stream(id, name, price) VALUES
-('508f41b8-b418-4bd0-8794-50d18bc2f20a', 'Apple TV+', "12.99"),
+('508f41b8-b418-4bd0-8794-50d18bc2f20a', 'Apple TV Plus', "12.99"),
 ('3e51e7f2-8536-4e87-9079-968d783384b5', 'Amazon Prime Video', "8.99"),
-('4b7c3c16-ecc9-42f4-b858-87ad0d8554a0', 'Disney+', "9.99"),
+('4b7c3c16-ecc9-42f4-b858-87ad0d8554a0', 'Disney Plus', "9.99"),
 ('1a602e14-2edc-4b2b-af63-93819f15ef70', 'Netflix', "7.99"),
 ('4d46ce67-e2a9-4c12-80b2-1e923b8c02eb', 'HBO Max', "12.99"),
 ('2ec91a22-23b2-4b5b-a2ec-26b44860a5f8', 'Hulu', "5.99");

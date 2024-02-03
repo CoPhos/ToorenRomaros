@@ -43,11 +43,13 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
            int argumentCounter = 1;
            List<String> providedParameters = new ArrayList<String>();
 
-           if (filmType != null) {
+           if (filmType != null && (filmType.equals("1") || filmType.equals("2"))) {
                queryText.append(" film.film_type = ?");
                queryText.append(argumentCounter);
                argumentCounter++;
                providedParameters.add(filmType);
+           }else if (filmType != null){
+               queryText.append(" film.film_type in (1,2)");
            }
            if (streamSites != null && !streamSites.isEmpty()) {
                queryText.append(" and stream.name in (?");

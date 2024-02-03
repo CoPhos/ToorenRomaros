@@ -19,6 +19,7 @@ function BrowseContainer({
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
+    handleAddWatchList,
 }) {
     //console.log(filmData)
     const [openPanels, setOpenPanels] = useState([])
@@ -38,34 +39,39 @@ function BrowseContainer({
     const selectedClassesLink = 'border-b-[2px] border-white-500'
     const notSelectedClassesLink = 'text-white-400 border-none'
 
-    const genres = [
-        'Romance',
-        'Horror',
-        'News',
-        'Action',
-        'History',
-        'Animation',
-        'Sci-fi',
-        'War',
-        'Drama',
-        'Fantasy',
-        'Crime',
-        'Comedy',
-        'Sports',
-        'Animation',
-        'Stand up',
-        'Adventure',
-        'Entertainment',
-    ]
-    const ratings = ['PG-13', 'PG-18', 'R', 'G', 'PG']
-    const streamPlatform = [
-        'Netflix',
-        'Hulu',
-        'Apple TV+',
-        'Disney+',
-        'Amazon Prime Video',
-        'HBO Max',
-    ]
+    const genres = {
+        0: { tittle: 'Romance', data: 'Romance' },
+        1: { tittle: 'Horror', data: 'Horror' },
+        2: { tittle: 'News', data: 'News' },
+        3: { tittle: 'Action', data: 'Action' },
+        4: { tittle: 'History', data: 'History' },
+        5: { tittle: 'Animation', data: 'Animation' },
+        6: { tittle: 'Sci-fi', data: 'Sci-fi' },
+        7: { tittle: 'War', data: 'War' },
+        8: { tittle: 'Drama', data: 'Drama' },
+        9: { tittle: 'Fantasy', data: 'Fantasy' },
+        10: { tittle: 'Crime', data: 'Crime' },
+        11: { tittle: 'Comedy', data: 'Comedy' },
+        12: { tittle: 'Sports', data: 'Sports' },
+        13: { tittle: 'Stand up', data: 'Stand up' },
+        14: { tittle: 'Adventure', data: 'Adventure' },
+        15: { tittle: 'Entertainment', data: 'Entertainment' },
+    }
+    const ratings = {
+        0: { tittle: 'PG-13', data: 'PG-13' },
+        1: { tittle: 'PG-18', data: 'PG-18' },
+        2: { tittle: 'R', data: 'R' },
+        3: { tittle: 'G', data: 'G' },
+        4: { tittle: 'PG', data: 'PG' },
+    }
+    const streamPlatform = {
+        0: { tittle: 'Netflix', data: 'Netflix' },
+        1: { tittle: 'Hulu', data: 'Hulu' },
+        2: { tittle: 'Apple TV+', data: 'Apple TV Plus' },
+        3: { tittle: 'Disney+', data: 'Disney Plus' },
+        4: { tittle: 'Amazon Prime Video', data: 'Amazon Prime Video' },
+        5: { tittle: 'HBO Max', data: 'HBO Max' },
+    }
     const sortRadioButtonData = {
         0: { text: 'Most Popular', value: 'view_count-Desc' },
         1: { text: 'Newest', value: 'added_date-Desc' },
@@ -112,6 +118,7 @@ function BrowseContainer({
             window.removeEventListener('scroll', handleScroll)
         }
     }, [hasNextPage, isFetchingNextPage, fetchNextPage])
+
     return (
         <Fragment>
             <p className="text-h3-m-700 lg:text-h3-d-700 mt-2">
@@ -417,7 +424,7 @@ function BrowseContainer({
                 Reset Filters
             </Link>
 
-            <div className="flex flex-row items-center justify-around gap-2 flex-wrap mt-2">
+            <div className="flex flex-row items-center justify-start gap-2 flex-wrap mt-2">
                 {filmData?.map((page, pageIndex) => (
                     <Fragment key={pageIndex}>
                         {page.data.response.map((item) => (
@@ -425,7 +432,7 @@ function BrowseContainer({
                                 key={item.id}
                                 data={item}
                                 images={item.mainImageId}
-                                //handleAddWatchList={handleAddWatchList}
+                                handleAddWatchList={handleAddWatchList}
                             />
                         ))}
                     </Fragment>

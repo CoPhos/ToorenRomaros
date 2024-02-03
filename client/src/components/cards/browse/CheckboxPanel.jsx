@@ -68,21 +68,21 @@ function CheckboxPanel({
             </div>
             <form className="flex flex-col items-start justify-center gap-1 max-w-xl">
                 <div className="flex flex-col items-start justify-start gap-1 max-h-[320px] overflow-y-auto w-full pr-2">
-                    {elements.map((element, index) => (
+                    {Object.entries(elements).map(([key, value]) => (
                         <label
-                            key={index}
+                            key={key}
                             className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400"
                         >
-                            {element}
+                            {value.tittle}
                             <input
                                 readOnly={true}
                                 type="checkbox"
-                                name={element}
+                                name={value.data}
                                 className="h-[26px] w-[26px]"
-                                value={element}
+                                value={value.data}
                                 checked={
                                     checkedCheckboxes[panelKey]?.includes(
-                                        element
+                                        value.data
                                     ) || false
                                 }
                                 onChange={(event) =>

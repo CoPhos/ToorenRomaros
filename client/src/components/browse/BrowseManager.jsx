@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { useSearchParams, useNavigate, useLocation } from 'react-router-dom'
-import { useInfiniteQuery, useQuery } from 'react-query'
+import React, { useState, useEffect, useContext } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { useInfiniteQuery, useMutation } from 'react-query'
 import axios from '../../utils/constants'
 import BrowseContainer from './BrowseContainer'
 import constants from '../../utils/constants'
+import { LoginPopUpContext } from '../context/LoginPopUpProvider'
+import useAuth from '../hooks/useAuth'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
 function BrowseManager({}) {
+    const { auth, isAuthenticated } = useAuth()
+    const { setisPopupOpen } = useContext(LoginPopUpContext)
+    const axiosPrivate = useAxiosPrivate()
     function appendQueryParam(query, key, value) {
         if (value) {
-             query += `&${key}=${value}`
+            query += `&${key}=${value}`
         }
         return query
     }
@@ -16,15 +22,11 @@ function BrowseManager({}) {
         console.log(array)
         if (array && array.length > 0) {
             query += `&${key}=`
-            const encodedArray = array.map((element) =>
-                encodeURIComponent(element)
-            )
-            console.log(encodedArray)
-            query += encodedArray.join(',')
+            query += array.join(',')
         }
         return query
     }
-    
+
     const pageSize = 10
     const defaultParams = {
         at: 'theaters',
@@ -35,6 +37,7 @@ function BrowseManager({}) {
         streaming: [],
     }
     const FILM_URL = '/films'
+    const WATCH_LIST_URL = '/watchLists'
     const [searchParams, setSearchParams] = useSearchParams()
 
     const at = searchParams.get('at') || 'theaters'
@@ -43,7 +46,7 @@ function BrowseManager({}) {
     const genre = searchParams.get('genre') || ''
     const rating = searchParams.get('rating') || ''
     const streaming = searchParams.get('streaming') || ''
-    
+
     const [checkedCheckboxes, setCheckedCheckboxes] = useState({
         genre: genre ? genre.split(',') : [],
         rating: rating ? rating.split(',') : [],
@@ -129,7 +132,13 @@ function BrowseManager({}) {
     }
     const getContentBySearchParams = useInfiniteQuery({
         queryKey: [
-            'getContentBySearchParams'
+            'getContentBySearchParams',
+            at,
+            filmType,
+            sortBy,
+            genre,
+            rating,
+            streaming,
         ],
         queryFn: async ({ pageParam = 0 }) => {
             try {
@@ -198,12 +207,47 @@ function BrowseManager({}) {
                 : null
         },
         onSuccess: (data) => {
-            //console.log(data)
+            console.log(data)
         },
         onError: (error) => {
             console.log(error)
         },
     })
+    const postWatchListItem = useMutation({
+        mutationKey: ['postWatchListItem'],
+        mutationFn: async (formData) => {
+            try {
+                return axiosPrivate.post(WATCH_LIST_URL, formData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (error) {
+                return error
+            }
+        },
+
+        onSuccess: (data) => {
+            console.log(data?.data?.created)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+
+    function handleAddWatchList(e, filmId) {
+        e.preventDefault()
+        if (!isAuthenticated) {
+            setisPopupOpen(true)
+        } else {
+            postWatchListItem.mutate(
+                JSON.stringify({
+                    film: filmId,
+                    user: auth.id,
+                })
+            )
+        }
+    }
 
     useEffect(() => {
         setCheckedCheckboxes({
@@ -214,28 +258,26 @@ function BrowseManager({}) {
         getContentBySearchParams.refetch()
     }, [searchParams])
 
-        const isLoading =
-            getContentBySearchParams.isLoading
+    const isLoading = getContentBySearchParams.isLoading
 
-        const hasError =
-            getContentBySearchParams.error
+    const hasError = getContentBySearchParams.error
 
-        if (isLoading) {
-            return <p>Loading...</p>
-        }
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
-        if (hasError) {
-            return (
-                <div>
-                    <p>
-                        Oops! Something went wrong while fetching the data.
-                        <br />
-                    </p>
-                </div>
-            )
-        }
+    if (hasError) {
+        return (
+            <div>
+                <p>
+                    Oops! Something went wrong while fetching the data.
+                    <br />
+                </p>
+            </div>
+        )
+    }
 
-        const filmData = getContentBySearchParams.data?.pages
+    const filmData = getContentBySearchParams.data?.pages
     return (
         <BrowseContainer
             handleCheckboxChange={handleCheckboxChange}
@@ -252,6 +294,7 @@ function BrowseManager({}) {
             fetchNextPage={getContentBySearchParams.fetchNextPage}
             isFetchingNextPage={getContentBySearchParams.isFetchingNextPage}
             hasNextPage={getContentBySearchParams.hasNextPage}
+            handleAddWatchList={handleAddWatchList}
         ></BrowseContainer>
     )
 }
