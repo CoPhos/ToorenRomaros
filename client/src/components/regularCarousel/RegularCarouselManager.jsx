@@ -21,39 +21,11 @@ function RegularCarouselManager({parameters ,queryName, promiseName}) {
       queryFn: async () => {
           return axios.get(FILM_URL + parameters)
       },
+      onSuccess: (data) => {
+          //console.log(data)
+      },
   })
 
-  const getAllImages = useQuery(
-      promiseName,
-      async () => {
-          if (!getFilms.data) {
-              return []
-          }
-
-          const imageResponses = await Promise.all(
-              getFilms.data.data.response.map(async (item) => {
-                  const response = await axios.get(
-                      `${item.id}/media/images?imageType=FILM_MAIN`
-                  )
-                  return { id: item.id, images: response.data }
-              })
-          )
-
-          const updatedFilms = getFilms.data.data.response.map((item) => {
-              const correspondingImage = imageResponses.find(
-                  (image) => image.id === item.id
-              )
-              return correspondingImage
-                  ? { ...item, images: correspondingImage.images }
-                  : item
-          })
-
-          queryClient.setQueryData([queryName], {
-              data: { response: updatedFilms },
-          })
-      },
-      { enabled: !!getFilms.data }
-  )
   const postWatchListItem = useMutation({
       mutationKey: ['postWatchListItem'],
       mutationFn: async (formData) => {
@@ -69,7 +41,7 @@ function RegularCarouselManager({parameters ,queryName, promiseName}) {
       },
 
       onSuccess: (data) => {
-          console.log(data?.data?.created)
+          //console.log(data?.data?.created)
       },
       onError: (error) => {
           console.log(error)
@@ -92,18 +64,16 @@ function RegularCarouselManager({parameters ,queryName, promiseName}) {
    
   }
   
-  if (getFilms.isLoading || getAllImages.isLoading) {
+  if (getFilms.isLoading) {
       return <p></p>
   }
 
-  return getFilms.error || getAllImages.error ? (
+  return getFilms.error ? (
       <div>
           <p>
               Oops! Something went wrong while fetching the data.
               <br></br>
               {getFilms.error?.message}
-              <br></br>
-              {getAllImages.error?.message}
           </p>
       </div>
   ) : (

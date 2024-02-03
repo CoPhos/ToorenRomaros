@@ -5,7 +5,8 @@ import Carousel from 'react-elastic-carousel'
 import TittleCard from '../cards/tittle/TittleCard'
 import MovieCard from '../cards/movieCard/MovieCard'
 
-function ProfileContainer({ handleLogout, watchlistdata, imagesData }) {
+function ProfileContainer({ handleLogout, watchlistdata }) {
+    console.log(watchlistdata)
     const breakPointsMovie = [
         { width: 1, itemsToShow: 2, itemsToScroll: 2 },
         { width: 408, itemsToShow: 3, itemsToScroll: 3 },
@@ -75,8 +76,9 @@ function ProfileContainer({ handleLogout, watchlistdata, imagesData }) {
                                     return (
                                         <MovieCard
                                             key={item.id}
-                                            data={item.filmDetails}
-                                            images={imagesData[index].images}
+                                            data={item}
+                                            id={item.film}
+                                            images={item.mainImageId}
                                             handleAddWatchList={null}
                                         />
                                     )

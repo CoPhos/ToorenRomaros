@@ -3,6 +3,7 @@ import MovieCard from '../cards/movieCard/MovieCard'
 import Carousel from 'react-elastic-carousel'
 
 function RegularCarouselContainer({ data, handleAddWatchList }) {
+    console.log(data)
     const breakPointsMovie = [
         { width: 1, itemsToShow: 2, itemsToScroll: 2 },
         { width: 408, itemsToShow: 3, itemsToScroll: 3 },
@@ -27,7 +28,8 @@ function RegularCarouselContainer({ data, handleAddWatchList }) {
                         <MovieCard
                             key={item.id}
                             data={item}
-                            images={item.images}
+                            id={item.id}
+                            images={item.mainImageId}
                             handleAddWatchList={handleAddWatchList}
                         />
                     )

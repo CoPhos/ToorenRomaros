@@ -41,6 +41,14 @@ public class FilmDto {
     private String soundMix;
     private Long viewCount;
     private LocalDate addedDate;
+    private String mainImageId;
+
+    public String getMainImageId() {
+        return mainImageId;
+    }
+    public void setMainImageId(String mainImageId) {
+        this.mainImageId = mainImageId;
+    }
     public Integer getFilmType() {
         return filmType;
     }

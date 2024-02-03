@@ -2,14 +2,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { BASE_URL } from '../../../utils/constants'
 
-function MovieCard({ data, images, handleAddWatchList }) {
+function MovieCard({ data, id, images, handleAddWatchList }) {
     const IMAGE_URL = '/images/'
     const image = BASE_URL + IMAGE_URL + (images || '')
     const today = new Date()
+    const targetDate = new Date(data.theatersReleaseDate)
     return (
         <div className="max-w-[128px] md:max-w-[170px] min-h-[375px] flex flex-col items-start justify-between">
             <div className="hover:cursor-pointer group">
-                <Link to={`/film/${data.id}`}>
+                <Link to={`/film/${id}`}>
                     <img
                         src={image}
                         alt="Elva dressed as a fairy"
@@ -938,7 +939,7 @@ function MovieCard({ data, images, handleAddWatchList }) {
                         {data.tittle}
                     </p>
                     <p className="h-[19.19px] text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600">
-                        {data.theatersReleaseDate > today
+                        {targetDate > today
                             ? `Opens:${data.theatersReleaseDate}`
                             : ''}
                     </p>
@@ -947,7 +948,7 @@ function MovieCard({ data, images, handleAddWatchList }) {
             {handleAddWatchList ? (
                 <button
                     className="flex flex-row items-center justify-center gap-1 border border-white-800 rounded-lg px-1 hover:border-white-300 hover:cursor-pointer w-full"
-                    onClick={(e) => handleAddWatchList(e, data.id)}
+                    onClick={(e) => handleAddWatchList(e, id)}
                 >
                     <svg
                         width="16"

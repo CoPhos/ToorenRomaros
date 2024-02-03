@@ -25,11 +25,14 @@ import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.entities.watchList.WatchListEntity;
+import com.ToorenRomaros.api.services.WatchListServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.modelmapper.*;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -37,6 +40,7 @@ import java.lang.reflect.InvocationTargetException;
 
 @Configuration
 public class MapperConfig {
+    private static final Logger log = LoggerFactory.getLogger(MapperConfig.class);
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -188,10 +192,14 @@ public class MapperConfig {
                 mapper -> {
                     mapper.map(src -> src.getFilm().getId(), WatchListDto::setFilm);
                     mapper.map(src -> src.getUser().getId(), WatchListDto::setUser);
+                    mapper.map(src -> src.getFilm().getAverageSuperRating(), WatchListDto::setAverageSuperRating);
+                    mapper.map(src -> src.getFilm().getAverageUserRating(), WatchListDto::setAverageUserRating);
+                    mapper.map(src -> src.getFilm().getTittle(), WatchListDto::setTittle);
+
                 }
         );
 
-        //Watchlist
+        //ImageEntity
         TypeMap<ImageEntity, GetListImagesDto> propertyMapperGetListImagesDto = modelMapper.createTypeMap(ImageEntity.class, GetListImagesDto.class);
         propertyMapperGetListImagesDto.addMappings(
                 mapper -> {

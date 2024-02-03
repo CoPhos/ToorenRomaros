@@ -431,6 +431,7 @@ function BrowseContainer({
                             <MovieCard
                                 key={item.id}
                                 data={item}
+                                id={item.id}
                                 images={item.mainImageId}
                                 handleAddWatchList={handleAddWatchList}
                             />
