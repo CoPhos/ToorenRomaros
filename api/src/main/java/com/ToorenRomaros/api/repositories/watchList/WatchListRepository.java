@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface WatchListRepository extends JpaRepository<WatchListEntity, UUID> {
@@ -15,4 +16,7 @@ public interface WatchListRepository extends JpaRepository<WatchListEntity, UUID
             "ORDER BY ?#{#pageable}",
             countQuery = "select count(distinct wl.id) from watch_list as wl")
     List<WatchListEntity> findWatchListByUserAndFilmType(String id, String filmType, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select wl.* from watch_list as wl where wl.user_id=?1 and wl.film_id=?2")
+    Optional<WatchListEntity> findByUserAndFilm(String user, String film);
 }

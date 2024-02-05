@@ -10,5 +10,5 @@ import java.util.UUID;
 public interface WatchListService {
     WatchListDto createWatchList(WatchListDto watchListDto);
     Page<WatchListDto> getWatchListFromUserByFilmType(UUID id, String filmType, Pageable pageRequest);
-    void deleteWatchList(UUID id);
+    void deleteFromWatchListByUserIdAndFilmId(UUID userId, UUID filmiId);
 }

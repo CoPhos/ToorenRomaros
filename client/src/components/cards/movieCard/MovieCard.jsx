@@ -2,7 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { BASE_URL } from '../../../utils/constants'
 
-function MovieCard({ data, id, images, handleAddWatchList }) {
+function MovieCard({
+    data,
+    id,
+    images,
+    handleAddWatchList,
+    handleRemoveFromWatchList,
+}) {
     const IMAGE_URL = '/images/'
     const image = BASE_URL + IMAGE_URL + (images || '')
     const today = new Date()
@@ -967,6 +973,30 @@ function MovieCard({ data, id, images, handleAddWatchList }) {
                         />
                     </svg>
                     <p className="text-small-d-300 ">WATCHLIST</p>
+                </button>
+            ) : (
+                ''
+            )}
+            {handleRemoveFromWatchList ? (
+                <button
+                    className="flex flex-row items-center justify-center gap-1 border border-white-800 rounded-lg px-1 hover:border-white-300 hover:cursor-pointer w-full"
+                    onClick={(e) => handleRemoveFromWatchList(e, id)}
+                >
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M14 7.5C14 8.35359 13.8319 9.19883 13.5052 9.98744C13.1786 10.7761 12.6998 11.4926 12.0962 12.0962C11.4926 12.6998 10.7761 13.1786 9.98744 13.5052C9.19883 13.8319 8.35359 14 7.5 14C5.77609 14 4.12279 13.3152 2.90381 12.0962C1.68482 10.8772 1 9.22391 1 7.5C1 5.77609 1.68482 4.12279 2.90381 2.90381C4.12279 1.68482 5.77609 1 7.5 1C8.35359 1 9.19883 1.16813 9.98744 1.49478C10.7761 1.82144 11.4926 2.30023 12.0962 2.90381C12.6998 3.50739 13.1786 4.22394 13.5052 5.01256C13.8319 5.80117 14 6.64641 14 7.5ZM13.0082 7.49721C13.0082 6.77398 12.8657 6.05785 12.589 5.38968C12.3122 4.72151 11.9065 4.11439 11.3951 3.603C10.8837 3.09161 10.2766 2.68595 9.60846 2.40918C8.94029 2.13242 8.22415 1.98997 7.50093 1.98997C6.04032 1.98997 4.63953 2.57019 3.60673 3.603C2.57392 4.63581 1.99369 6.03659 1.99369 7.49721C1.99369 8.95782 2.57392 10.3586 3.60673 11.3914C4.63953 12.4242 6.04032 13.0044 7.50093 13.0044C8.22415 13.0044 8.94029 12.862 9.60846 12.5852C10.2766 12.3085 10.8837 11.9028 11.3951 11.3914C11.9065 10.88 12.3122 10.2729 12.589 9.60473C12.8657 8.93657 13.0082 8.22043 13.0082 7.49721Z"
+                            fill="black"
+                        />
+                        <line x1="4" y1="7.5" x2="11" y2="7.5" stroke="black" />
+                    </svg>
+
+                    <p className="text-small-d-300 ">REMOVE</p>
                 </button>
             ) : (
                 ''

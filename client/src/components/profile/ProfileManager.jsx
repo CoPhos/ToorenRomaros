@@ -38,9 +38,34 @@ function ProfileManager() {
         }
     )
 
+    const removeFromWatchList = useMutation(
+        async (id) => {
+            return axiosPrivate.delete(`/watchLists/users/${auth.id}?filmId=${id}`, {
+            })
+        },
+        {
+            onSuccess: (data) => {
+                 for (let i = 0; i < watchlistdata.length; i++) {
+                     if (watchlistdata[i].film === data.data) {
+                         watchlistdata.splice(i, 1)
+                         break
+                     }
+                 }
+            },
+            onError: (error) => {
+                console.log(error)
+            },
+        }
+    )
+
     function handleLogout(e) {
         e.preventDefault()
         mutation.mutate()
+    }
+
+    function handleRemoveFromWatchList(e, id) {
+        e.preventDefault()
+        removeFromWatchList.mutate(id)
     }
 
     const getWatchListByUser = useQuery({
@@ -88,6 +113,7 @@ function ProfileManager() {
                 <ProfileContainer
                     handleLogout={handleLogout}
                     watchlistdata={watchlistdata}
+                    handleRemoveFromWatchList={handleRemoveFromWatchList}
                 ></ProfileContainer>
             )}
         </Fragment>

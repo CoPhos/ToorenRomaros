@@ -57,10 +57,11 @@ public class WatchListController {
         }
         return null;
     }
-    @DeleteMapping("/watchLists/films/{id}")
-    ResponseEntity<String>  deleteFilmFromWatchList(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        watchListService.deleteWatchList(UUID.fromString(id));
+    @DeleteMapping("/watchLists/users/{userId}")
+    ResponseEntity<String>  deleteFilmFromWatchList(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String userId,
+                                                    @RequestParam @NotNull @Pattern(regexp = uuidRegExp) String filmId) throws Exception {
+        watchListService.deleteFromWatchListByUserIdAndFilmId(UUID.fromString(userId), UUID.fromString(filmId));
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body("Film: " + id + " removed successfully");
+                .body(filmId);
     }
 }

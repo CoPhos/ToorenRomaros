@@ -75,10 +75,10 @@ public class WatchListServiceImpl implements WatchListService{
     }
 
     @Override
-    public void deleteWatchList(UUID id) {
-        watchListRepository.findById(id)
+    public void deleteFromWatchListByUserIdAndFilmId(UUID userId, UUID filmId) {
+        watchListRepository.findByUserAndFilm(userId.toString(), filmId.toString())
                 .ifPresentOrElse(watchListRepository::delete, () -> {
-                    throw new ResourceNotFoundException("Invalid id.");
+                    throw new ResourceNotFoundException("Invalid ids.");
                 });
     }
 }
