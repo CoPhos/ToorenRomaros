@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, UUID> {
@@ -15,6 +16,8 @@ public interface CommentRepository extends JpaRepository<CommentEntity, UUID> {
     List<CommentEntity> getAllCommentsByUserIdAndReported(String id, String reported);
     @Query("SELECT c FROM CommentEntity as c WHERE c.film.id = ?1 and c.reported = ?2")
     Page<CommentEntity> getAllCommentsByFilmIdAndReported(UUID id, Boolean reported , Pageable pageable);
+    @Query(nativeQuery = true, value = "select * from comment as c where c.film_id=?1 and c.user_id=?2")
+    Optional<CommentEntity> getCommentByFilmIdAndUserId(String film, String user);
     @Query("SELECT c FROM CommentEntity as c WHERE c.film.id = ?1 and c.reported = ?2 and c.rating<=?3 and c.rating>=?4")
     Page<CommentEntity> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, int maxRating, int lowRating, Pageable pageable);
     @Query(nativeQuery = true, value = "select * from rating r where user_id = ?1")

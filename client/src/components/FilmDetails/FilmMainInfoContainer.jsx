@@ -5,7 +5,11 @@ import MainRatingScore from '../cards/mainRatingScore/MainRatingScore'
 import PostRatingManager from '../postRating/PostRatingManager'
 import TittleCard from '../cards/tittle/TittleCard'
 
-function FilmMainInfoContainer({ data, commonRatings, superRatings }) {
+function FilmMainInfoContainer({
+    data,
+    commonRatings,
+    superRatings,
+}) {
     const location = useLocation()
     const pathname = location.pathname
     const component = (
@@ -50,7 +54,9 @@ function FilmMainInfoContainer({ data, commonRatings, superRatings }) {
                     to={'reviews?super=false&rating=all&order=rating'}
                 ></MainRatingScore>
 
-                <PostRatingManager></PostRatingManager>
+                <PostRatingManager
+                    filmdata={data}
+                ></PostRatingManager>
             </div>
 
             <div className="w-full lg:hidden">{component}</div>

@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from '../../utils/constants'
-import { useQueryClient } from 'react-query'
+import { useQueryClient, useQuery } from 'react-query'
 
 import FilmDetailsContainer from './FilmDetailsContainer'
 import FilmMainInfoContainer from './FilmMainInfoContainer'
 import ReviewContainer from '../review/ReviewContainer'
-import { useQuery } from 'react-query'
 
 function FilmManager() {
     const params = useParams()
@@ -268,6 +267,7 @@ function FilmManager() {
         getAllGenresFromFilm.error ||
         getStreamSitesFromFilm.error ||
         getImageFromStreamsiteByFilmId.error
+
     if (isLoading) {
         return <p>Loading...</p>
     }
@@ -294,13 +294,17 @@ function FilmManager() {
 
    return (
        <Fragment>
-           {filmData && commonRatingData && superRatingData && (
-               <FilmMainInfoContainer
-                   data={filmData}
-                   commonRatings={commonRatingData}
-                   superRatings={superRatingData}
-               ></FilmMainInfoContainer>
-           )}
+           {filmData &&
+               commonRatingData &&
+               superRatingData &&
+               (
+                   <FilmMainInfoContainer
+                       data={filmData}
+                       commonRatings={commonRatingData}
+                       superRatings={superRatingData}
+                       
+                   ></FilmMainInfoContainer>
+               )}
            {filmData && staffData && genreData && streamSitesData && (
                <FilmDetailsContainer
                    data={filmData}

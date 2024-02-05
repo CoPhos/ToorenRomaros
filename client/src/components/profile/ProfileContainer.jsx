@@ -115,7 +115,7 @@ function ProfileContainer({ handleLogout, watchlistdata }) {
                             </p>
                             <div className="flex flex-row items-center justify-center ">
                                 <Link
-                                    to="/browse/theaters"
+                                    to="/browse?at=theaters"
                                     className="w-[200px] px-2 mt-2 rounded bg-red-600 py-1 h-full hover:cursor-pointer hover:opacity-50 text-white-50 text-small-m-400 lg:text-small-d-400"
                                 >
                                     Browse Popular Movies
@@ -123,7 +123,7 @@ function ProfileContainer({ handleLogout, watchlistdata }) {
                             </div>
                             <div className="flex flex-row items-center justify-center">
                                 <Link
-                                    to="/browse/tv"
+                                    to="/browse?at=home"
                                     className="w-[200px] px-2 mt-2 rounded bg-red-600 py-1 h-full hover:cursor-pointer hover:opacity-50 text-white-50 text-small-m-400 lg:text-small-d-400"
                                 >
                                     Browse Popular Tv Shows

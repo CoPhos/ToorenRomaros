@@ -940,7 +940,7 @@ function MovieCard({ data, id, images, handleAddWatchList }) {
                     </p>
                     <p className="h-[19.19px] text-tiny-m-400 lg:text-tiny-d-400 group-hover:text-red-600">
                         {targetDate > today
-                            ? `Opens:${data.theatersReleaseDate}`
+                            ? `Opens: ${targetDate.toLocaleDateString()}`
                             : ''}
                     </p>
                 </Link>

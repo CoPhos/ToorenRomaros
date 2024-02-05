@@ -1,34 +1,35 @@
-import React, {Fragment, useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import React, { Fragment, useState, useEffect } from 'react'
 import Carousel from 'react-elastic-carousel'
-
-import gemstone from '../../assests/gemstone.png'
+import { BASE_URL } from '../../utils/constants'
 
 function PostRatingContainer({
+    hoveredIndex,
+    currentIndex,
+    setHoveredIndex,
     handleSubmit,
     handleChange,
     formData,
     handleCheckboxChange,
+    openPopup,
+    closePopup,
+    handleOnClick,
+    userCommentData,
+    filmdata,
+    fomrError,
+    isPopupOpen,
 }) {
-    const [hoveredIndex, setHoveredIndex] = useState(null)
-    const [isPopupOpen, setPopupOpen] = useState(false)
-    const [active, setactive] = useState(1)
+    const date = filmdata.filmdata.theatersReleaseDate
+        ? new Date(filmdata.filmdata.theatersReleaseDate)
+        : filmdata.filmdata.streamingReleaseDate
+        ? new Date(filmdata.filmdata.streamingReleaseDate)
+        : null
 
-    const openPopup = () => {
-        setPopupOpen(true)
-    }
-
-    const closePopup = () => {
-        setPopupOpen(false)
-    }
-
-    function handleOnMouseLeave() {
-        
-         setHoveredIndex(null)
-        
-    }
-    function handleOnClick(index) {
-        setHoveredIndex(index)
+    function handleOnMouseLeave() { 
+        if (!(parseInt(userCommentData.rating, 10) >= 0 || hoveredIndex != null)) {
+           setHoveredIndex(null)
+        } else {
+            setHoveredIndex(currentIndex)
+        }
     }
 
     useEffect(() => {
@@ -87,7 +88,7 @@ function PostRatingContainer({
                 className={`${baseClasses} ${dynamicClasses}`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => handleOnMouseLeave()}
-                onClick={() => handleOnClick(index)}
+                onClick={(e) => handleOnClick(e,index)}
             >
                 <p className="w-fit h-fit text-body-b-700 text-white-50">
                     {(index + 1) * 10}
@@ -181,18 +182,22 @@ function PostRatingContainer({
 
                             <div className="flex flex-row items-center justify-start gap-3 mt-4 w-full pb-3 border-b-[1px] border-white-300">
                                 <img
-                                    //srcset="https://small 480w, https://medium 800w, https://large 1100w"
-                                    src="https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p159790_p_v8_ae.jpg"
+                                    src={`${BASE_URL}/images/${filmdata.filmdata.mainImageId}`}
                                     alt="Elva dressed as a fairy"
                                     className="w-[64px] h-[96px] rounded-sm object-cover object-center"
                                 />
                                 <div className="flex flex-col items-start justify-start gap-2">
                                     <p className="text-small-m-700 lg:text-small-d-700 break-words line-clamp-4">
-                                        Fast and furious: Tokyo drift
+                                        {filmdata.filmdata.tittle}
                                     </p>
-                                    <p className="text-white-400 text-small-m-400 lg:text-small-d-400">
-                                        Realese Data: Dec 15, 2014
-                                    </p>
+                                    {date ? (
+                                        <p className="text-white-400 text-small-m-400 lg:text-small-d-400">
+                                            Realese Data: &nbsp;
+                                            {date.toLocaleDateString()}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                             </div>
 
@@ -240,7 +245,7 @@ function PostRatingContainer({
                                         className="block text-sm text-small-m-400 lg:text-small-d-400"
                                     >
                                         Write a review for &nbsp;
-                                        <b>Fast and furious: Tokyo drift</b>
+                                        <b>{filmdata.filmdata.tittle}</b>
                                     </label>
                                     <textarea
                                         name="text"
@@ -249,9 +254,16 @@ function PostRatingContainer({
                                         rows="5"
                                         value={formData.text}
                                         onChange={handleChange}
-                                        placeholder="Minimum 75 characters..."
+                                        placeholder="Share your thoughts on the movie: What did you like or dislike? Feel free to express your opinions, discuss the plot, characters, and any memorable scenes. Your review can help others discover great films and make informed choices. Write your review here..."
                                         className="rounded p-1 border border-gray-300 text-small-m-400 lg:text-small-d-400 w-full mt-2 bg-[#f8f8f8] focus:bg-white-50"
                                     ></textarea>
+                                    {fomrError && (
+                                        <p className="text-tiny-d-400 text-red-700">
+                                            Reviews must be a minimum of 40
+                                            characters and should not exceed
+                                            5000 characters in length.
+                                        </p>
+                                    )}
                                 </div>
                                 <div className="flex flex-row items-start justify-between w-full">
                                     <div className="flex flex-row items-center justify-start gap-1">
@@ -294,7 +306,6 @@ function PostRatingContainer({
                                     <button
                                         type="submit"
                                         className="flex flex-row items-center justify-center grow mt-2 w-full text-white-50 text-small-m-400 lg:text-small-d-400 rounded bg-[#404040] py-1 h-full hover:cursor-pointer hover:opacity-50"
-                                        disabled={characters < 0 ? true : false}
                                     >
                                         Post
                                     </button>

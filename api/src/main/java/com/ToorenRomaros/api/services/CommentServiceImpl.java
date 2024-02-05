@@ -17,10 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -98,6 +95,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public CommentDto getCommentByFilmIdAndUserId(UUID filmId, UUID userId) {
+        CommentEntity commentEntity = commentRepository.getCommentByFilmIdAndUserId(filmId.toString(), userId.toString()).orElseThrow(() -> new ResourceNotFoundException("No Post Found for User: " + userId));
+        return modelMapper.map(commentEntity, CommentDto.class);
+    }
+
+    @Override
     public List<CommentDto> getAllCommentByUserId(UUID id, String reported) {
         List<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReported(id.toString(), reported);
         if (commentEntities.isEmpty()) {
@@ -125,21 +128,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto updateComment(UUID id, CommentDto commentDto) {
-        CommentEntity newCommentEntity = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
-        CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
-        BeanUtils.copyProperties(commentEntity, newCommentEntity, Utils.getNullPropertyNames(commentEntity));
-
-        if (commentDto.getUserId() != null) {
-            UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() + " not found"));
-            newCommentEntity.setUser(userEntity);
-        }
-        if (commentDto.getFilmId() != null) {
-            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() + " not found"));
-            newCommentEntity.setFilm(filmEntity);
-        }
-
-        CommentEntity updatedComment = commentRepository.save(newCommentEntity);
-        return modelMapper.map(updatedComment, CommentDto.class);
+       try{
+           CommentEntity newCommentEntity = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
+           CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
+           BeanUtils.copyProperties(commentEntity, newCommentEntity, Utils.getNullPropertyNames(commentEntity));
+           CommentEntity updatedComment = commentRepository.save(newCommentEntity);
+           return modelMapper.map(updatedComment, CommentDto.class);
+       }catch (Exception e){
+           log.info(e.getMessage());
+           log.info(String.valueOf(e.getCause()));
+       }
+       return null;
     }
 
     @Override

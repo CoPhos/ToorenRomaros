@@ -90,7 +90,14 @@ public class FilmServiceImpl implements FilmService {
     public FilmDto getFilmById(UUID id) {
         filmRepository.incrementViewCount(id.toString());
         FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
-        return filmMapper.mapToFilmDto(film);
+        FilmDto filmDto = filmMapper.mapToFilmDto(film);
+        List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", id.toString());
+        if (!imageEntities.isEmpty()) {
+            filmDto.setMainImageId(imageEntities.get(0).getId().toString());
+            return filmDto;
+        } else {
+            return filmDto;
+        }
     }
 
     @Override

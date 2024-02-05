@@ -3,12 +3,11 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import axios from '../../utils/constants'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery,  } from 'react-query'
 
 import ProfileContainer from './ProfileContainer'
 
 function ProfileManager() {
-    const queryClient = useQueryClient()
     const LOGOUT_URL = '/auth/token'
     const axiosPrivate = useAxiosPrivate()
     const { logout, auth } = useAuth()
@@ -66,6 +65,7 @@ function ProfileManager() {
 
     const hasError =
         getWatchListByUser.error 
+        
     if (isLoading) {
         return <p>Loading...</p>
     }

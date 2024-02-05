@@ -37,6 +37,8 @@ public class CommentEntity{
     @Min(value=0, message = "Rating can not be less than 0")
     @Max(value = 100, message = "Rating can not be bigger than 100")
     private int rating;
+    @Column(name = "IS_SPOILER", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean spoiler;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -86,11 +88,15 @@ public class CommentEntity{
     public void setFilm(FilmEntity film) {
         this.film = film;
     }
-
+    public boolean isSpoiler() {
+        return spoiler;
+    }
+    public void setSpoiler(boolean spoiler) {
+        this.spoiler = spoiler;
+    }
     public int getRating() {
         return rating;
     }
-
     public void setRating(int rating) {
         this.rating = rating;
     }
