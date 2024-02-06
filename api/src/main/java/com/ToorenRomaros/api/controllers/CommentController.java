@@ -45,11 +45,15 @@ public class CommentController {
         response.put("created", comment);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @GetMapping("/users/{id}/comments")
-    ResponseEntity<Map<String, Object>> getAllCommentByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
-                                                              @RequestParam(defaultValue = "false") String reported) throws Exception {
+    @GetMapping("/users/{userId}/comments")
+    ResponseEntity<Map<String, Object>> getAllCommentByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String userId,
+                                                              @RequestParam(defaultValue = "false") String reported,
+                                                              @RequestParam(defaultValue = "1") String filmType,
+                                                              @RequestParam(defaultValue = "0") int page,
+                                                              @RequestParam(defaultValue = "10") int size) throws Exception {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publication_datetime"));
         Map<String, Object> response = new HashMap<>();
-        response.put("created", commentService.getAllCommentByUserId(UUID.fromString(id), reported));
+        response.put("response", commentService.getAllCommentsByUserIdAndReportedAndFilmType(UUID.fromString(userId), reported, filmType, pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

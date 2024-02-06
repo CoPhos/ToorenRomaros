@@ -12,10 +12,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, UUID> {
-    @Query(nativeQuery = true, value = "SELECT * FROM comment WHERE comment.user_id = ?1 and comment.reported = ?2")
-    List<CommentEntity> getAllCommentsByUserIdAndReported(String id, String reported);
+    @Query(nativeQuery = true, value = " SELECT * FROM comment AS c LEFT JOIN film AS f ON " +
+            "c.film_id=f.id WHERE c.user_id=?1 and c.reported=?2 AND f.film_type=?3")
+    Page<CommentEntity> getAllCommentsByUserIdAndReportedAndFilmType(String id, String reported, String filmType, Pageable pageable);
     @Query("SELECT c FROM CommentEntity as c WHERE c.film.id = ?1 and c.reported = ?2")
-    Page<CommentEntity> getAllCommentsByFilmIdAndReported(UUID id, Boolean reported , Pageable pageable);
+    Page<CommentEntity> getAllCommentsByFilmIdAndReported(UUID id, Boolean reported, Pageable pageable);
     @Query(nativeQuery = true, value = "select * from comment as c where c.film_id=?1 and c.user_id=?2")
     Optional<CommentEntity> getCommentByFilmIdAndUserId(String film, String user);
     @Query("SELECT c FROM CommentEntity as c WHERE c.film.id = ?1 and c.reported = ?2 and c.rating<=?3 and c.rating>=?4")

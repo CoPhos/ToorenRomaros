@@ -1,11 +1,14 @@
 package com.ToorenRomaros.api.services;
 
+import com.ToorenRomaros.api.dto.film.GetDynamicQyeryFilmDto;
 import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.publication.CommentEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
+import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.publication.CommentRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.utils.Utils;
@@ -18,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -26,13 +28,15 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final FilmRepository filmRepository;
     private final CommentRepository commentRepository;
+    private final ImageRepostiroy imageRepostiroy;
     private final ModelMapper modelMapper;
     private static final Logger log = LoggerFactory.getLogger(CommentServiceImpl.class);
 
-    public CommentServiceImpl(UserRepository userRepository, FilmRepository filmRepository, CommentRepository commentRepository, ModelMapper modelMapper) {
+    public CommentServiceImpl(UserRepository userRepository, FilmRepository filmRepository, CommentRepository commentRepository, ImageRepostiroy imageRepostiroy, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.filmRepository = filmRepository;
         this.commentRepository = commentRepository;
+        this.imageRepostiroy = imageRepostiroy;
         this.modelMapper = modelMapper;
     }
 
@@ -74,7 +78,17 @@ public class CommentServiceImpl implements CommentService {
         if (commentEntities.isEmpty()) {
             throw new ResourceNotFoundException("No comments found for film: " + id);
         }
-        return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
+        return commentEntities.map(commentEntity -> {
+            List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
+            if (!imageEntities.isEmpty()) {
+                CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
+                commentDto.setMainImageId(imageEntities.get(0).getId().toString());
+                commentDto.setFilmName(commentEntity.getFilm().getTittle());
+                return commentDto;
+            } else {
+                return modelMapper.map(commentEntity, CommentDto.class);
+            }
+        });
     }
 
     @Override
@@ -101,14 +115,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> getAllCommentByUserId(UUID id, String reported) {
-        List<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReported(id.toString(), reported);
+    public Page<CommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, String reported, String filmType, Pageable pageable) {
+        Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReportedAndFilmType(id.toString(), reported, filmType, pageable);
         if (commentEntities.isEmpty()) {
             throw new ResourceNotFoundException("No comments found for user: " + id);
         }
-        return commentEntities.stream().map(commentEntity -> {
-            return modelMapper.map(commentEntity, CommentDto.class);
-        }).collect(Collectors.toList());
+        return commentEntities.map(commentEntity -> {
+            List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
+            if (!imageEntities.isEmpty()) {
+                CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
+                commentDto.setMainImageId(imageEntities.get(0).getId().toString());
+                commentDto.setFilmName(commentEntity.getFilm().getTittle());
+                return commentDto;
+            } else {
+                return modelMapper.map(commentEntity, CommentDto.class);
+            }
+        });
     }
 
     @Override

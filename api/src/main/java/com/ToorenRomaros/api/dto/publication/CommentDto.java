@@ -23,7 +23,28 @@ public class CommentDto {
     private String filmId;
     private int rating;
     private boolean spoiler;
+    private String filmName;
+    private String mainImageId;
+    private String theatersReleaseDate;
 
+    public String getTheatersReleaseDate() {
+        return theatersReleaseDate;
+    }
+    public void setTheatersReleaseDate(String theatersReleaseDate) {
+        this.theatersReleaseDate = theatersReleaseDate;
+    }
+    public String getFilmName() {
+        return filmName;
+    }
+    public void setFilmName(String filmName) {
+        this.filmName = filmName;
+    }
+    public String getMainImageId() {
+        return mainImageId;
+    }
+    public void setMainImageId(String mainImageId) {
+        this.mainImageId = mainImageId;
+    }
     public boolean isSpoiler() {
         return spoiler;
     }
