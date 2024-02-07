@@ -10,7 +10,6 @@ const useInfiniteScrollX = (
         const handleScrollX = () => {
             const { scrollLeft, scrollWidth, clientWidth } =
                 containerRef.current
-
             if (
                 scrollWidth - scrollLeft === clientWidth &&
                 hasNextPage &&
@@ -19,11 +18,17 @@ const useInfiniteScrollX = (
                 fetchNextPage()
             }
         }
-
-        containerRef.current.addEventListener('scroll', handleScrollX)
+        if (containerRef.current) {
+            containerRef.current.addEventListener('scroll', handleScrollX)
+        }
 
         return () => {
-            containerRef.current.removeEventListener('scroll', handleScrollX)
+            if (containerRef.current) {
+                containerRef.current.removeEventListener(
+                    'scroll',
+                    handleScrollX
+                )
+            }
         }
     }, [containerRef, hasNextPage, isFetchingNextPage, fetchNextPage])
 }

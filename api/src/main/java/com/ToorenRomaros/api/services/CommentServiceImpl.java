@@ -115,22 +115,28 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<CommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, String reported, String filmType, Pageable pageable) {
-        Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReportedAndFilmType(id.toString(), reported, filmType, pageable);
-        if (commentEntities.isEmpty()) {
-            throw new ResourceNotFoundException("No comments found for user: " + id);
-        }
-        return commentEntities.map(commentEntity -> {
-            List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
-            if (!imageEntities.isEmpty()) {
-                CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
-                commentDto.setMainImageId(imageEntities.get(0).getId().toString());
-                commentDto.setFilmName(commentEntity.getFilm().getTittle());
-                return commentDto;
-            } else {
-                return modelMapper.map(commentEntity, CommentDto.class);
+    public Page<CommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, Boolean reported, int filmType, Pageable pageable) {
+        try{
+            Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReportedAndFilmType(id, reported, filmType, pageable);
+            if (commentEntities.isEmpty()) {
+                throw new ResourceNotFoundException("No comments found for user: " + id);
             }
-        });
+            return commentEntities.map(commentEntity -> {
+                List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
+                if (!imageEntities.isEmpty()) {
+                    CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
+                    commentDto.setMainImageId(imageEntities.get(0).getId().toString());
+                    commentDto.setFilmName(commentEntity.getFilm().getTittle());
+                    return commentDto;
+                } else {
+                    return modelMapper.map(commentEntity, CommentDto.class);
+                }
+            });
+        }catch (Exception e){
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCause()));
+        }
+        return null;
     }
 
     @Override

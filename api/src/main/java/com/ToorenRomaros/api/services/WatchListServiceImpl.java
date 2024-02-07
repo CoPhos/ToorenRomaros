@@ -16,22 +16,21 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
-public class WatchListServiceImpl implements WatchListService{
+public class WatchListServiceImpl implements WatchListService {
     private static final Logger log = LoggerFactory.getLogger(WatchListServiceImpl.class);
     private final UserRepository userRepository;
     private final FilmRepository filmRepository;
     private final WatchListRepository watchListRepository;
     private final ImageRepostiroy imageRepostiroy;
     private final ModelMapper modelMapper;
+
     public WatchListServiceImpl(UserRepository userRepository, FilmRepository filmRepository, WatchListRepository watchListRepository, ImageRepostiroy imageRepostiroy, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.filmRepository = filmRepository;
@@ -39,6 +38,7 @@ public class WatchListServiceImpl implements WatchListService{
         this.imageRepostiroy = imageRepostiroy;
         this.modelMapper = modelMapper;
     }
+
     @Override
     public WatchListDto createWatchList(WatchListDto watchListDto) {
 
@@ -53,25 +53,25 @@ public class WatchListServiceImpl implements WatchListService{
 
     @Override
     public Page<WatchListDto> getWatchListFromUserByFilmType(UUID id, String filmType, Pageable pageRequest) {
-            List<WatchListEntity> allFilms = watchListRepository.findWatchListByUserAndFilmType(String.valueOf(id), filmType, pageRequest);
-            List<WatchListDto> watchListDtos = allFilms.stream().map(film -> {
-                List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", film.getFilm().getId().toString());
-                WatchListDto watchListDto = modelMapper.map(film, WatchListDto.class);
-                if (film.getFilm().getFilmType() == 1) {
-                    Movie movie = (Movie) film.getFilm();
+        try{
+            Page<WatchListEntity> allFilms = watchListRepository.findWatchListByUserAndFilmType(id,pageRequest);
+            return allFilms.map(watchListEntity -> {
+                List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", watchListEntity.getFilm().getId().toString());
+                WatchListDto watchListDto = modelMapper.map(watchListEntity, WatchListDto.class);
+                if (watchListEntity.getFilm().getFilmType() == 1) {
+                    Movie movie = (Movie) watchListEntity.getFilm();
                     watchListDto.setTheatersReleaseDate(movie.getTheatersReleaseDate());
                 }
                 if (!imageEntities.isEmpty()) {
                     watchListDto.setMainImageId(imageEntities.get(0).getId().toString());
                 }
                 return watchListDto;
-            }).collect(Collectors.toList());
-            int start = (int) pageRequest.getOffset();
-            int end = Math.min((start + pageRequest.getPageSize()), watchListDtos.size());
-            List<WatchListDto> pageContent = watchListDtos.subList(start, end);
-
-            return new PageImpl<>(pageContent, pageRequest, watchListDtos.size());
-
+            });
+        }catch (Exception e){
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCause()));
+        }
+        return null;
     }
 
     @Override

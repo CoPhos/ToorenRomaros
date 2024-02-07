@@ -12,9 +12,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, UUID> {
-    @Query(nativeQuery = true, value = " SELECT * FROM comment AS c LEFT JOIN film AS f ON " +
-            "c.film_id=f.id WHERE c.user_id=?1 and c.reported=?2 AND f.film_type=?3")
-    Page<CommentEntity> getAllCommentsByUserIdAndReportedAndFilmType(String id, String reported, String filmType, Pageable pageable);
+    @Query(value =  "SELECT c FROM CommentEntity c LEFT JOIN FilmEntity f ON c.film.id=f.id WHERE c.user.id=?1 and c.reported=?2 and f.filmType=?3")
+    Page<CommentEntity> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, Boolean reported, int filmType, Pageable pageable);
     @Query("SELECT c FROM CommentEntity as c WHERE c.film.id = ?1 and c.reported = ?2")
     Page<CommentEntity> getAllCommentsByFilmIdAndReported(UUID id, Boolean reported, Pageable pageable);
     @Query(nativeQuery = true, value = "select * from comment as c where c.film_id=?1 and c.user_id=?2")

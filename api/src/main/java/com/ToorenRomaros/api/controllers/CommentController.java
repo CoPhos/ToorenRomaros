@@ -47,11 +47,11 @@ public class CommentController {
     }
     @GetMapping("/users/{userId}/comments")
     ResponseEntity<Map<String, Object>> getAllCommentByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String userId,
-                                                              @RequestParam(defaultValue = "false") String reported,
-                                                              @RequestParam(defaultValue = "1") String filmType,
+                                                              @RequestParam(defaultValue = "false") Boolean reported,
+                                                              @RequestParam(defaultValue = "1") int filmType,
                                                               @RequestParam(defaultValue = "0") int page,
                                                               @RequestParam(defaultValue = "10") int size) throws Exception {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publication_datetime"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publicationDateTime"));
         Map<String, Object> response = new HashMap<>();
         response.put("response", commentService.getAllCommentsByUserIdAndReportedAndFilmType(UUID.fromString(userId), reported, filmType, pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);

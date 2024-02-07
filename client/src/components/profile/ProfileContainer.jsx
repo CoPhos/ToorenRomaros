@@ -2,13 +2,15 @@ import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { BASE_URL } from '../../utils/constants'
-import Carousel from 'react-elastic-carousel'
 import TittleCard from '../cards/tittle/TittleCard'
 import MovieCard from '../cards/movieCard/MovieCard'
 import EditCommentCard from '../cards/editCommentCard/EditCommentCard'
 import useInfiniteScrollX from '../hooks/useInfiniteScrollX'
 
 function ProfileContainer({
+    getWatchListByUser,
+    getLatestMoviesCommentsByUserId,
+    getLatestSeriesCommentsByUserId,
     handleLogout,
     watchlistdata,
     handleRemoveFromWatchList,
@@ -32,6 +34,7 @@ function ProfileContainer({
 }) {
     const container1Ref = useRef(null)
     const container2Ref = useRef(null)
+    const container3Ref = useRef(null)
     const { auth } = useAuth()
     const [filmData, setfilmData] = useState({
         filmdata: { tittle: '', mainImageId: '' },
@@ -42,11 +45,6 @@ function ProfileContainer({
         { width: 290, itemsToShow: 6 },
         { width: 410, itemsToShow: 8 },
         { width: 545, itemsToShow: 10 },
-    ]
-    const breakPointsMovie = [
-        { width: 1, itemsToShow: 2, itemsToScroll: 2 },
-        { width: 408, itemsToShow: 3, itemsToScroll: 3 },
-        { width: 700, itemsToShow: 4, itemsToScroll: 3 },
     ]
     const baseClassesRating =
         'flex items-center justify-center rounded-xl h-[64px] w-[64px]'
@@ -103,6 +101,19 @@ function ProfileContainer({
             setHoveredIndex(currentIndex)
         }
     }
+    const renderWathcList =
+        watchlistdata &&
+        watchlistdata.every((page) => page.data.response.content.length > 0)
+    const renderMoviesComments =
+        moviesCommentsData &&
+        moviesCommentsData.every(
+            (page) => page.data.response.content.length > 0
+        )
+    const renderSeriesComments =
+        seriesCommentsData &&
+        seriesCommentsData.every(
+            (page) => page.data.response.content.length > 0
+        )
 
     useEffect(() => {
         if (isPopupOpen) {
@@ -111,7 +122,24 @@ function ProfileContainer({
             document.body.style.overflow = 'auto'
         }
     }, [isPopupOpen])
-
+    useInfiniteScrollX(
+        container1Ref,
+        getWatchListByUser.hasNextPage,
+        getWatchListByUser.isFetchingNextPage,
+        getWatchListByUser.fetchNextPage
+    )
+    useInfiniteScrollX(
+        container2Ref,
+        getLatestMoviesCommentsByUserId.hasNextPage,
+        getLatestMoviesCommentsByUserId.isFetchingNextPage,
+        getLatestMoviesCommentsByUserId.fetchNextPage
+    )
+    useInfiniteScrollX(
+        container3Ref,
+        getLatestSeriesCommentsByUserId.hasNextPage,
+        getLatestSeriesCommentsByUserId.isFetchingNextPage,
+        getLatestSeriesCommentsByUserId.fetchNextPage
+    )
     return (
         <Fragment>
             <div className="grid py-2 mt-4 items-start grid-cols-1 min-[880px]:grid-cols-4 min-[880px]:gap-4 lg:px-[0px]">
@@ -163,30 +191,30 @@ function ProfileContainer({
                             linkText={''}
                             mt={'mt-[0px]'}
                         ></TittleCard>
-                        {watchlistdata.length > 0 ? (
-                            <div className="relative mt-2 mb-4">
-                                <Carousel
-                                    disableArrowsOnEnd={true}
-                                    enableMouseSwipe={false}
-                                    itemPadding={[0, 0, 0, 0]}
-                                    pagination={false}
-                                    breakPoints={breakPointsMovie}
-                                >
-                                    {watchlistdata.map((item, index) => {
-                                        return (
-                                            <MovieCard
-                                                key={item.id}
-                                                data={item}
-                                                id={item.film}
-                                                images={item.mainImageId}
-                                                handleAddWatchList={null}
-                                                handleRemoveFromWatchList={
-                                                    handleRemoveFromWatchList
-                                                }
-                                            />
-                                        )
-                                    })}
-                                </Carousel>
+
+                        {renderWathcList ? (
+                            <div
+                                ref={container1Ref}
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[400px] w-full"
+                            >
+                                {watchlistdata.map((page, pageIndex) => (
+                                    <Fragment key={pageIndex}>
+                                        {page.data.response.content.map(
+                                            (item) => (
+                                                <MovieCard
+                                                    key={item.id}
+                                                    data={item}
+                                                    id={item.film}
+                                                    images={item.mainImageId}
+                                                    handleAddWatchList={null}
+                                                    handleRemoveFromWatchList={
+                                                        handleRemoveFromWatchList
+                                                    }
+                                                />
+                                            )
+                                        )}
+                                    </Fragment>
+                                ))}
                             </div>
                         ) : (
                             <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
@@ -243,90 +271,93 @@ function ProfileContainer({
                             mt={'mt-[0px]'}
                         ></TittleCard>
 
-                        {moviesCommentsData?.map((page, pageIndex) => (
+                        {renderMoviesComments ? (
                             <div
-                                key={pageIndex}
-                                ref={container1Ref}
+                                ref={container2Ref}
                                 className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[220px] w-full"
                             >
-                                {page.data.response.content.map((item) => (
-                                    <div
-                                        key={item.id}
-                                        className="flex flex-row items-center bg-white border border-gray-200 rounded-lg dark:border-gray-100 dark:bg-white-50 min-w-[450px] h-[180px] shadow-md"
-                                    >
-                                        <img
-                                            className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
-                                            src={`${BASE_URL}/images/${item.mainImageId}`}
-                                            alt=""
-                                        />
-                                        <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
-                                            <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words">
-                                                {item.filmName}
-                                            </p>
-                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words">
-                                                {item.body}
-                                            </p>
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                setcommentId(item.id)
-                                                setcurrentIndex(
-                                                    item.rating / 10
-                                                )
-                                                setHoveredIndex(
-                                                    item.rating / 10
-                                                )
-                                                setFormData({
-                                                    text: item.body,
-                                                })
-                                                setfilmData({
-                                                    filmdata: {
-                                                        tittle: item.filmName,
-                                                        mainImageId:
-                                                            item.mainImageId,
-                                                    },
-                                                })
-                                                openPopup()
-                                            }}
-                                            className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
-                                        >
-                                            <svg
-                                                width="16"
-                                                height="16"
-                                                viewBox="0 0 16 16"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <g clipPath="url(#clip0_540_2)">
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        clipRule="evenodd"
-                                                        d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
-                                                        fill="black"
+                                {moviesCommentsData.map((page, pageIndex) => (
+                                    <Fragment key={pageIndex}>
+                                        {page.data.response.content.map(
+                                            (item) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="flex flex-row items-center bg-white border border-gray-200 rounded-lg dark:border-gray-100 dark:bg-white-50 min-w-[450px] h-[180px] shadow-md"
+                                                >
+                                                    <img
+                                                        className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
+                                                        src={`${BASE_URL}/images/${item.mainImageId}`}
+                                                        alt=""
                                                     />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_540_2">
-                                                        <rect
+                                                    <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
+                                                        <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words">
+                                                            {item.filmName}
+                                                        </p>
+                                                        <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words">
+                                                            {item.body}
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => {
+                                                            setcommentId(
+                                                                item.id
+                                                            )
+                                                            setcurrentIndex(
+                                                                item.rating / 10
+                                                            )
+                                                            setHoveredIndex(
+                                                                item.rating / 10
+                                                            )
+                                                            setFormData({
+                                                                text: item.body,
+                                                            })
+                                                            setfilmData({
+                                                                filmdata: {
+                                                                    tittle: item.filmName,
+                                                                    mainImageId:
+                                                                        item.mainImageId,
+                                                                },
+                                                            })
+                                                            openPopup()
+                                                        }}
+                                                        className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
+                                                    >
+                                                        <svg
                                                             width="16"
                                                             height="16"
-                                                            fill="white"
-                                                        />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <p className="text-tiny-d-300">
-                                                Edit
-                                            </p>
-                                        </button>
-                                    </div>
+                                                            viewBox="0 0 16 16"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <g clipPath="url(#clip0_540_2)">
+                                                                <path
+                                                                    fillRule="evenodd"
+                                                                    clipRule="evenodd"
+                                                                    d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
+                                                                    fill="black"
+                                                                />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_540_2">
+                                                                    <rect
+                                                                        width="16"
+                                                                        height="16"
+                                                                        fill="white"
+                                                                    />
+                                                                </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                        <p className="text-tiny-d-300">
+                                                            Edit
+                                                        </p>
+                                                    </button>
+                                                </div>
+                                            )
+                                        )}
+                                    </Fragment>
                                 ))}
                             </div>
-                        ))}
-                        {(!moviesCommentsData ||
-                            moviesCommentsData.every(
-                                (page) => page.data.response.length === 0
-                            )) && (
+                        ) : (
                             <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
                                 <div className="flex flex-row items-center justify-center bg-[#DCDCE6] rounded-[50%] h-[60px] w-[60px]">
                                     <svg
@@ -362,90 +393,94 @@ function ProfileContainer({
                             linkText={''}
                             mt={'mt-[0px]'}
                         ></TittleCard>
-                        {seriesCommentsData?.map((page, pageIndex) => (
+
+                        {renderSeriesComments ? (
                             <div
-                                key={pageIndex}
-                                ref={container2Ref}
+                                ref={container3Ref}
                                 className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[220px] w-full"
                             >
-                                {page.data.response.content.map((item) => (
-                                    <div
-                                        key={item.id}
-                                        className="flex flex-row items-center bg-white border border-gray-200 rounded-lg dark:border-gray-100 dark:bg-white-50 min-w-[450px] h-[180px] shadow-md"
-                                    >
-                                        <img
-                                            className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
-                                            src={`${BASE_URL}/images/${item.mainImageId}`}
-                                            alt=""
-                                        />
-                                        <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
-                                            <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words">
-                                                {item.filmName}
-                                            </p>
-                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words">
-                                                {item.body}
-                                            </p>
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                setcommentId(item.id)
-                                                setcurrentIndex(
-                                                    item.rating / 10
-                                                )
-                                                setHoveredIndex(
-                                                    item.rating / 10
-                                                )
-                                                setFormData({
-                                                    text: item.body,
-                                                })
-                                                setfilmData({
-                                                    filmdata: {
-                                                        tittle: item.filmName,
-                                                        mainImageId:
-                                                            item.mainImageId,
-                                                    },
-                                                })
-                                                openPopup()
-                                            }}
-                                            className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
-                                        >
-                                            <svg
-                                                width="16"
-                                                height="16"
-                                                viewBox="0 0 16 16"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <g clipPath="url(#clip0_540_2)">
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        clipRule="evenodd"
-                                                        d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
-                                                        fill="black"
+                                {seriesCommentsData.map((page, pageIndex) => (
+                                    <Fragment key={pageIndex}>
+                                        {page.data.response.content.map(
+                                            (item) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="flex flex-row items-center bg-white border border-gray-200 rounded-lg dark:border-gray-100 dark:bg-white-50 min-w-[450px] h-[180px] shadow-md"
+                                                >
+                                                    <img
+                                                        className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
+                                                        src={`${BASE_URL}/images/${item.mainImageId}`}
+                                                        alt=""
                                                     />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_540_2">
-                                                        <rect
+                                                    <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
+                                                        <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words">
+                                                            {item.filmName}
+                                                        </p>
+                                                        <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words">
+                                                            {item.body}
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => {
+                                                            setcommentId(
+                                                                item.id
+                                                            )
+                                                            setcurrentIndex(
+                                                                item.rating / 10
+                                                            )
+                                                            setHoveredIndex(
+                                                                item.rating / 10
+                                                            )
+                                                            setFormData({
+                                                                text: item.body,
+                                                            })
+                                                            setfilmData({
+                                                                filmdata: {
+                                                                    tittle: item.filmName,
+                                                                    mainImageId:
+                                                                        item.mainImageId,
+                                                                },
+                                                            })
+                                                            openPopup()
+                                                        }}
+                                                        className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
+                                                    >
+                                                        <svg
                                                             width="16"
                                                             height="16"
-                                                            fill="white"
-                                                        />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <p className="text-tiny-d-300">
-                                                Edit
-                                            </p>
-                                        </button>
-                                    </div>
+                                                            viewBox="0 0 16 16"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <g clipPath="url(#clip0_540_2)">
+                                                                <path
+                                                                    fillRule="evenodd"
+                                                                    clipRule="evenodd"
+                                                                    d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
+                                                                    fill="black"
+                                                                />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_540_2">
+                                                                    <rect
+                                                                        width="16"
+                                                                        height="16"
+                                                                        fill="white"
+                                                                    />
+                                                                </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                        <p className="text-tiny-d-300">
+                                                            Edit
+                                                        </p>
+                                                    </button>
+                                                </div>
+                                            )
+                                        )}
+                                    </Fragment>
                                 ))}
                             </div>
-                        ))}
-                        {(!seriesCommentsData ||
-                            seriesCommentsData.every(
-                                (page) => page.data.response.length === 0
-                            )) && (
+                        ) : (
                             <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
                                 <div className="flex flex-row items-center justify-center bg-[#DCDCE6] rounded-[50%] h-[60px] w-[60px]">
                                     <svg

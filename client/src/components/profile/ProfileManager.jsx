@@ -125,17 +125,28 @@ function ProfileManager() {
             },
         }
     )
-    const getWatchListByUser = useQuery({
+    const getWatchListByUser = useInfiniteQuery({
         queryKey: ['getWatchListByUser', auth.id],
-        queryFn: async () => {
+        queryFn: async ({ pageParam = 0 }) => {
             try {
-                return axiosPrivate.get(`users/${auth.id}/watchLists`)
+                return axiosPrivate.get(
+                    `users/${auth.id}/watchLists?pageSize=${pageSize}&page=${pageParam}`
+                )
             } catch (error) {
                 return error
             }
         },
+        getNextPageParam: (lastPage, pages) => {
+            const hasNextPage =
+                parseInt(lastPage.data.response.number, 10) + 1 <
+                parseInt(lastPage.data.response.totalPages, 10)
+
+            return hasNextPage
+                ? parseInt(lastPage.data.response.number, 10) + 1
+                : null
+        },
         onSuccess: (data) => {
-            console.log(data?.data)
+            console.log(data)
         },
         onError: (error) => {
             console.log(error)
@@ -154,11 +165,10 @@ function ProfileManager() {
         },
         getNextPageParam: (lastPage, pages) => {
             const hasNextPage =
-                parseInt(lastPage.data.currentPage, 10) + 1 <
-                parseInt(lastPage.data.totalPages, 10)
-
+                parseInt(lastPage.data.response.number, 10) + 1 <
+                parseInt(lastPage.data.response.totalPages, 10)
             return hasNextPage
-                ? parseInt(lastPage.data.currentPage, 10) + 1
+                ? parseInt(lastPage.data.response.number, 10) + 1
                 : null
         },
         onSuccess: (data) => {
@@ -181,15 +191,15 @@ function ProfileManager() {
         },
         getNextPageParam: (lastPage, pages) => {
             const hasNextPage =
-                parseInt(lastPage.data.currentPage, 10) + 1 <
-                parseInt(lastPage.data.totalPages, 10)
+                parseInt(lastPage.data.response.number, 10) + 1 <
+                parseInt(lastPage.data.response.totalPages, 10)
 
             return hasNextPage
-                ? parseInt(lastPage.data.currentPage, 10) + 1
+                ? parseInt(lastPage.data.response.number, 10) + 1
                 : null
         },
         onSuccess: (data) => {
-            console.log(data?.data)
+            console.log(data)
         },
         onError: (error) => {
             console.log(error)
@@ -229,7 +239,7 @@ function ProfileManager() {
         )
     }
 
-    const watchlistdata = getWatchListByUser.data?.data?.content
+    const watchlistdata = getWatchListByUser.data?.pages
     const moviesCommentsData =
         getLatestMoviesCommentsByUserId.data?.pages
     const seriesCommentsData = getLatestSeriesCommentsByUserId.data?.pages
@@ -237,6 +247,13 @@ function ProfileManager() {
         <Fragment>
             {watchlistdata && moviesCommentsData && seriesCommentsData && (
                 <ProfileContainer
+                    getLatestMoviesCommentsByUserId={
+                        getLatestMoviesCommentsByUserId
+                    }
+                    getWatchListByUser={getWatchListByUser}
+                    getLatestSeriesCommentsByUserId={
+                        getLatestSeriesCommentsByUserId
+                    }
                     handleLogout={handleLogout}
                     watchlistdata={watchlistdata}
                     moviesCommentsData={moviesCommentsData}

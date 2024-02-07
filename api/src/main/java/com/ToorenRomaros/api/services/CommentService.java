@@ -15,7 +15,7 @@ import java.util.UUID;
 public interface CommentService {
     CommentDto createComment(CommentDto commentDto);
     CommentDto getCommentById(UUID id);
-    Page<CommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, String reported, String filmType, Pageable pageable);
+    Page<CommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, Boolean reported, int filmType, Pageable pageable);
     CommentDto getCommentByFilmIdAndUserId(UUID filmId, UUID userId);
     Page<CommentDto> getAllCommentByFilmId(UUID id, Boolean reported, Pageable pageable);
     Page<CommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, Pageable pageable);
