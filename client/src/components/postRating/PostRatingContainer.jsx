@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import Carousel from 'react-elastic-carousel'
+import useAuth from '../hooks/useAuth'
 import EditCommentCard from '../cards/editCommentCard/EditCommentCard';
 
 function PostRatingContainer({
@@ -18,7 +19,8 @@ function PostRatingContainer({
     fomrError,
     isPopupOpen,
 }) {
-    function handleOnMouseLeave() { 
+    const { auth } = useAuth()
+    function handleOnMouseLeave() {  
         if (!(parseInt(userCommentData.rating, 10) >= 0 || hoveredIndex != null)) {
            setHoveredIndex(null)
         } else {
@@ -122,12 +124,23 @@ function PostRatingContainer({
                         {children}
                     </Carousel>
                 </div>
-                <button
-                    onClick={openPopup}
-                    className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400 hover:border-white-600 hover:text-white-500"
-                >
-                    Add My Review
-                </button>
+                {auth?.roles?.find((item) =>
+                    item =='CRITIC'
+                ) ? (
+                    <Link
+                        to="/createpost"
+                        className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400 hover:border-white-600 hover:text-white-500"
+                    >
+                        Create a Post Review
+                    </Link>
+                ) : (
+                    <button
+                        onClick={openPopup}
+                        className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400 hover:border-white-600 hover:text-white-500"
+                    >
+                        Add My Review
+                    </button>
+                )}
             </div>
             {isPopupOpen && (
                 <EditCommentCard

@@ -276,6 +276,7 @@ function ProfileManager() {
         onError: (error) => {
             console.log(error)
         },
+       
     })
     const getLatestSeriesCommentsByUserId = useInfiniteQuery({
         queryKey: ['getLatestSeriesCommentsByUserId', auth.id],
@@ -303,6 +304,7 @@ function ProfileManager() {
         onError: (error) => {
             console.log(error)
         },
+       
     })
     function handleLogout(e) {
         e.preventDefault()

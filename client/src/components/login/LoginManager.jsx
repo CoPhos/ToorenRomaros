@@ -67,6 +67,7 @@ function LoginManager({ active, closePopup }) {
                 const id = data?.data?.Ok?.userId
                 const accessToken = data?.data?.Ok?.accessToken
                 const refreshToken = data?.data?.Ok?.refreshToken
+                console.log(refreshToken)
                 const roles = jwtDecode(accessToken).roles || []
                 const email = data?.data?.Ok?.email
                 login(

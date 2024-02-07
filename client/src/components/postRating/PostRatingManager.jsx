@@ -108,11 +108,6 @@ function PostRatingManager(filmdata) {
         },
         onSuccess: (data) => {
             console.log(data)
-            
-            setFormData({
-                text: '',
-            })
-            setIsChecked(false)
         },
         onError: (error) => {
             console.log(error)

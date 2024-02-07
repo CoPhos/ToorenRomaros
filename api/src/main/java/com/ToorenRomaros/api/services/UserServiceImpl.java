@@ -112,13 +112,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserSignedInDto> getAccessToken(RefreshTokenDto refreshTokenDto) {
         //TODO: implement time expiration
-        return userTokenRepository.findByRefreshToken(refreshTokenDto.getRefreshToken())
-                .map(userTokenEntity -> {
-                    UserSignedInDto userSignedInDto = createSignedInUser(userTokenEntity.getUser());
-                    userSignedInDto.setRefreshToken(createRefreshToken(userTokenEntity.getUser()));
-                    userTokenRepository.delete(userTokenEntity);
-                    return Optional.of(userSignedInDto).orElseThrow(() -> new InvalidRefreshTokenException("Invalid token."));
-                });
+        try{
+            return userTokenRepository.findByRefreshToken(refreshTokenDto.getRefreshToken())
+                    .map(userTokenEntity -> {
+                        UserSignedInDto userSignedInDto = createSignedInUser(userTokenEntity.getUser());
+                        userSignedInDto.setRefreshToken(createRefreshToken(userTokenEntity.getUser()));
+                        userTokenRepository.delete(userTokenEntity);
+                        return Optional.of(userSignedInDto).orElseThrow(() -> new InvalidRefreshTokenException("Invalid token."));
+                    });
+        }catch (Exception e){
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCause()));
+        }
+        return null;
     }
 
     @Override
