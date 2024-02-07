@@ -21,10 +21,15 @@ function useAxiosPrivate() {
             response => response,
             async (error) => {
                 const prevRequest = error?.config
-                if (error?.response?.statue === 403 && !prevRequest?.sent){
+                if (
+                    (error?.response?.statue === 403 ||
+                    error?.response?.statue === 401) && !prevRequest?.sent
+                ) {
                     prevRequest.sent = true
                     const newAccessToken = await refresh(auth?.refreshToken)
-                    prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`
+                    prevRequest.headers[
+                        'Authorization'
+                    ] = `Bearer ${newAccessToken}`
                     return axiosPrivate(prevRequest)
                 }
                 return Promise.reject(error)

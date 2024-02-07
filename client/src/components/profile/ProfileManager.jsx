@@ -3,11 +3,12 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import axios from '../../utils/constants'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { useMutation, useQuery, useInfiniteQuery } from 'react-query'
+import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query'
 
 import ProfileContainer from './ProfileContainer'
 
 function ProfileManager() {
+    const queryClient = useQueryClient()
     const LOGOUT_URL = '/auth/token'
     const axiosPrivate = useAxiosPrivate()
     const { logout, auth } = useAuth()
@@ -21,9 +22,30 @@ function ProfileManager() {
     const [fomrError, setfomrError] = useState(false)
     const [isPopupOpen, setPopupOpen] = useState(false)
     const [currentIndex, setcurrentIndex] = useState(null)
-    const [oldMovies, setoldMovies] = useState([])
-    const [oldSeries, setoldSeries] = useState([])
 
+    const updateOptimisticComment = (
+        previousData,
+        commentId,
+        updatedCommentData
+    ) => {
+        const updatedData = previousData.pages.map((page) => ({
+            ...page,
+            data: {
+                response: {
+                    content: page.data.response.content.map((comment) =>
+                        comment.id === commentId
+                            ? { ...comment, ...updatedCommentData }
+                            : comment
+                    ),
+                },
+            },
+        }))
+
+        return {
+            ...previousData,
+            pages: updatedData,
+        }
+    }
     const closePopup = () => {
         setPopupOpen(false)
     }
@@ -69,7 +91,7 @@ function ProfileManager() {
         mutationKey: ['updateComment', auth.id],
         mutationFn: async (form) => {
             try {
-                return axiosPrivate.patch(`/commentss/${commentId}`, form, {
+                return axiosPrivate.patch(`/comments/${commentId}`, form, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -78,10 +100,61 @@ function ProfileManager() {
                 return error
             }
         },
-        onSuccess: (data) => {
+        onMutate: async (form) => {
+            // Perform optimistic update for both queries
+            const previousMoviesData = queryClient.getQueryData([
+                'getLatestMoviesCommentsByUserId',
+                auth.id,
+            ])
+            const previousSeriesData = queryClient.getQueryData([
+                'getLatestSeriesCommentsByUserId',
+                auth.id,
+            ])
+
+            const updatedMoviesData = updateOptimisticComment(
+                previousMoviesData,
+                commentId,
+                form
+            )
+            const updatedSeriesData = updateOptimisticComment(
+                previousSeriesData,
+                commentId,
+                form
+            )
+
+            queryClient.setQueryData(
+                ['getLatestMoviesCommentsByUserId', auth.id],
+                updatedMoviesData
+            )
+            queryClient.setQueryData(
+                ['getLatestSeriesCommentsByUserId', auth.id],
+                updatedSeriesData
+            )
+
+            return { previousMoviesData, previousSeriesData }
+        },
+        onSuccess: (data, variables, context) => {
             console.log(data)
         },
-        onError: (error) => {
+        onError: (error, variables, context) => {
+            queryClient.setQueryData(
+                ['getLatestMoviesCommentsByUserId', auth.id],
+                context.previousMoviesData
+            )
+            queryClient.setQueryData(
+                ['getLatestSeriesCommentsByUserId', auth.id],
+                context.previousSeriesData
+            )
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries([
+                'getLatestMoviesCommentsByUserId',
+                auth.id,
+            ])
+            queryClient.invalidateQueries([
+                'getLatestSeriesCommentsByUserId',
+                auth.id,
+            ])
         },
         enabled: false,
     })
@@ -111,15 +184,41 @@ function ProfileManager() {
     )
     const removeFromWatchList = useMutation(
         async (id) => {
-            return axiosPrivate.delete(
-                `/watchLists/users/${auth.id}?filmId=${id}`,
-                {}
-            )
+            const previousData = queryClient.getQueryData([
+                'getWatchListByUser',
+                auth.id,
+            ])
+            queryClient.setQueryData(['getWatchListByUser', auth.id], (old) => {
+                const updatedData = old.pages.map((page) => ({
+                    ...page,
+                    data: {
+                        response: {
+                            content: page.data.response.content.filter(
+                                (item) => item.film !== id
+                            ),
+                        },
+                    },
+                }))
+                return {
+                    ...old,
+                    pages: updatedData,
+                }
+            })
+            try {
+                return axiosPrivate.delete(
+                    `/watchLists/users/${auth.id}?filmId=${id}`,
+                    {}
+                )
+            } catch (error) {
+                queryClient.setQueryData(
+                    ['getWatchListByUser', auth.id],
+                    previousData
+                )
+                return error
+            }
         },
         {
-            onSuccess: (data) => {
-               
-            },
+            onSuccess: (data) => {},
             onError: (error) => {
                 console.log(error)
             },
@@ -240,8 +339,7 @@ function ProfileManager() {
     }
 
     const watchlistdata = getWatchListByUser.data?.pages
-    const moviesCommentsData =
-        getLatestMoviesCommentsByUserId.data?.pages
+    const moviesCommentsData = getLatestMoviesCommentsByUserId.data?.pages
     const seriesCommentsData = getLatestSeriesCommentsByUserId.data?.pages
     return (
         <Fragment>
