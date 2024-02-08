@@ -4,7 +4,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import './index.css'; 
 
 //components
-import MobileNavMenu from './components/navbar/MobileNavMenu'
+
 import Home from './components/routes/Home';
 import FilmDetails from './components/routes/FilmDetails';
 import Browse from './components/routes/Browse';
@@ -17,6 +17,7 @@ import RequiredAuth from './components/routes/RequiredAuth';
 import Unauthorized from './components/routes/Unauthorized';
 import NotFound from './components/routes/NotFound'
 import { LoginPopUpProvider } from '../src/components/context/LoginPopUpProvider'
+import CriticProfileManager from './components/profile/CriticProfileManager';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -57,11 +58,19 @@ export default function App() {
                         <Route
                             element={<RequiredAuth allowedRoles={['CRITIC']} />}
                         >
-                            <Route path="/editor" element={<EditorManager />} />
+                            <Route
+                                exact
+                                path="/editor/:uuid"
+                                element={<EditorManager />}
+                            />
                         </Route>
 
                         <Route
-                            element={<RequiredAuth allowedRoles={['USER']} />}
+                            element={
+                                <RequiredAuth
+                                    allowedRoles={['USER']}
+                                />
+                            }
                         >
                             <Route
                                 exact
@@ -69,27 +78,25 @@ export default function App() {
                                 element={<ProfileManager />}
                             />
                         </Route>
+                        <Route
+                            element={
+                                <RequiredAuth
+                                    allowedRoles={['CRITIC']}
+                                />
+                            }
+                        >
+                            <Route
+                                exact
+                                path="/critic"
+                                element={<CriticProfileManager />}
+                            />
+                        </Route>
 
                         {/* 404 */}
                         <Route path="*" element={<NotFound />} />
                     </Route>
-                    <Route
-                        render={({ location }) => {
-                            const fillColor =
-                                location.pathname === '/'
-                                    ? 'home'
-                                    : location.pathname.includes('/browse')
-                                    ? 'browse'
-                                    : location.pathname === '/blog'
-                                    ? 'blog'
-                                    : location.pathname === '/profile'
-                                    ? 'profile'
-                                    : location.pathname === '/notification'
-                                    ? 'notification'
-                                    : 'default'
-                            return <MobileNavMenu fillColor={fillColor} />
-                        }}
-                    />
+
+                   
                 </Routes>
             </LoginPopUpProvider>
         </QueryClientProvider>
