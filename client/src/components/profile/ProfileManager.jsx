@@ -101,7 +101,6 @@ function ProfileManager() {
             }
         },
         onMutate: async (form) => {
-            // Perform optimistic update for both queries
             const previousMoviesData = queryClient.getQueryData([
                 'getLatestMoviesCommentsByUserId',
                 auth.id,
@@ -237,11 +236,11 @@ function ProfileManager() {
         },
         getNextPageParam: (lastPage, pages) => {
             const hasNextPage =
-                parseInt(lastPage.data.response.number, 10) + 1 <
-                parseInt(lastPage.data.response.totalPages, 10)
+                parseInt(lastPage?.data?.response?.number, 10) + 1 <
+                parseInt(lastPage?.data?.response?.totalPages, 10)
 
             return hasNextPage
-                ? parseInt(lastPage.data.response.number, 10) + 1
+                ? parseInt(lastPage?.data?.response?.number, 10) + 1
                 : null
         },
         onSuccess: (data) => {
@@ -264,10 +263,10 @@ function ProfileManager() {
         },
         getNextPageParam: (lastPage, pages) => {
             const hasNextPage =
-                parseInt(lastPage.data.response.number, 10) + 1 <
-                parseInt(lastPage.data.response.totalPages, 10)
+                parseInt(lastPage?.data?.response?.number, 10) + 1 <
+                parseInt(lastPage?.data?.response?.totalPages, 10)
             return hasNextPage
-                ? parseInt(lastPage.data.response.number, 10) + 1
+                ? parseInt(lastPage?.data?.response?.number, 10) + 1
                 : null
         },
         onSuccess: (data) => {
@@ -291,11 +290,11 @@ function ProfileManager() {
         },
         getNextPageParam: (lastPage, pages) => {
             const hasNextPage =
-                parseInt(lastPage.data.response.number, 10) + 1 <
-                parseInt(lastPage.data.response.totalPages, 10)
+                parseInt(lastPage?.data?.response?.number, 10) + 1 <
+                parseInt(lastPage?.data?.response?.totalPages, 10)
 
             return hasNextPage
-                ? parseInt(lastPage.data.response.number, 10) + 1
+                ? parseInt(lastPage?.data?.response?.number, 10) + 1
                 : null
         },
         onSuccess: (data) => {

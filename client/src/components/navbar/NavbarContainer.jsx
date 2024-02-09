@@ -7,7 +7,7 @@ import LinksPanel from './LinksPanel';
 import LoginManager from '../login/LoginManager';
 import SignUpManager from '../signup/SignUpManager';
 
-function Navbar({ user, moviesExplore, tvExplore, moviesQuery, tvQuery }) {
+function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery }) {
     const { isPopupOpen, setisPopupOpen } = useContext(LoginPopUpContext)
     const [active, setactive] = useState(1)
 
@@ -26,6 +26,11 @@ function Navbar({ user, moviesExplore, tvExplore, moviesQuery, tvQuery }) {
             document.body.style.overflow = 'auto'
         }
     }, [isPopupOpen])
+
+    let toProfile; 
+    if(roles?.includes('USER')){
+        toProfile='/profile'
+    }else if( roles?.includes('CRITIC')){toProfile='/critic' }
 
     const baseClassesButton =
         'text-white-500 text-h3-m-700  lg:text-h3-d-700 border-[none] hover:cursor-pointer py-1 px-1'
@@ -65,7 +70,7 @@ function Navbar({ user, moviesExplore, tvExplore, moviesQuery, tvQuery }) {
                     </Link>
                     {user ? (
                         <Link
-                            to={`/profile`}
+                            to={`${toProfile}`}
                             className="flex flex-row items-center justify-start gap-1 hover:cursor-pointer group"
                         >
                             <img
@@ -173,7 +178,7 @@ function Navbar({ user, moviesExplore, tvExplore, moviesQuery, tvQuery }) {
                         </div>
                         {user ? (
                             <Link
-                                to={`/profile`}
+                                to={`${toProfile}`}
                                 className="flex flex-row items-center justify-start gap-1 hover:cursor-pointer group"
                             >
                                 <img

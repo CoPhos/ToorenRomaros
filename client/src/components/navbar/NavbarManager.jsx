@@ -120,6 +120,7 @@ function NavbarManager() {
         <Fragment>
             <NavbarContainer
                 user={auth?.user}
+                roles={auth?.roles}
                 moviesExplore={moviesExplore}
                 tvExplore={tvExplore}
                 moviesQuery={getNewMovies}

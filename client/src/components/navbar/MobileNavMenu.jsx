@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function MobileNavMenu({ fillColor }) {
+function MobileNavMenu({ fillColor, to }) {
     return (
         <div className="border-t border-white-300 flex flex-row items-center justify-around py-1 sticky bottom-[0px] z-10 lg:hidden bg-white-50">
             <Link
@@ -36,7 +36,7 @@ function MobileNavMenu({ fillColor }) {
             </Link>
 
             <Link
-                to="/browse/theaters"
+                to="/browse?at=theaters"
                 className="flex flex-col items-center justify-center w-5 gap-1"
             >
                 <svg
@@ -109,7 +109,7 @@ function MobileNavMenu({ fillColor }) {
             </Link>
 
             <Link
-                to="/profile"
+                to={`${to}`}
                 className="flex flex-col items-center justify-center w-5 gap-1"
             >
                 <svg
@@ -142,7 +142,7 @@ function MobileNavMenu({ fillColor }) {
             </Link>
 
             <Link
-                to="/notification"
+                to="/notifications"
                 className="flex flex-col items-center justify-center w-5 gap-1"
             >
                 <svg
