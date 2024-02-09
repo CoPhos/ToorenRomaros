@@ -31,7 +31,7 @@ public class PostEntity {
     private int likeCount;
     @Column(name = "TITTLE", columnDefinition = "VARCHAR(255)")
     private String tittle;
-    @Column(name = "SYNTHESIS", columnDefinition = "TEXT")
+    @Column(name = "SYNTHESIS", columnDefinition = "VARCHAR(1000)")
     private String synthesis;
     @Column(name = "CONTENT", columnDefinition = "LONGTEXT")
     private String content;

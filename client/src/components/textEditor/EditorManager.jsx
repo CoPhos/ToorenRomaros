@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect, useContext } from 'react'
+import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
+import useAuth from '../hooks/useAuth'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
 import EditorContainer from './EditorContainer'
-
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
-
 function EditorManager() {
-    const history = useNavigate()
-    const [editorState, setEditorState] = useState(EditorState.createEmpty())
     // const [editorState, setEditorState] = useState(
     //     EditorState.createWithContent(
     //         convertFromRaw({
@@ -797,19 +796,36 @@ function EditorManager() {
     //         })
     //     )
     // )
-    const [isLoading, setIsLoading] = useState(false)
-    const [postId, setpostId] = useState('17625994-a18a-415a-9a1c-71519c943efd')
+     
+    const { auth } = useAuth()
+    const axiosPrivate = useAxiosPrivate()
+    const params = useParams()
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    const [postId, setpostId] = useState(null)
     const [postInfo, setPostInfo] = useState({
         tittle: '',
         headline: '',
         synthesis: '',
         image: '',
+        tag: '',
     })
-    const SERVER_URL = ''
+    const [validtittle, setvalidtittle] = useState(false)
+    const [validheadline, setvalidheadline] = useState(false)
+    const [validsynthesis, setvalidsynthesis] = useState(false)
+    const [validimage, setvalidimage] = useState(false)
 
-    // useEffect(() => {
-    //     createNewPost()
-    // }, [])
+    const edit = searchParams.get('edit') || ''
+
+    function handleDiscardPost(event) {
+        event.preventDefault()
+        discardPost.mutate()
+        navigate('/', { replace: true })
+    }
+
+    //dependent query on postId to get POST_MAIN image if exists
 
     function handleOnChange(e, key) {
         if (key == 'image') {
@@ -817,38 +833,92 @@ function EditorManager() {
         } else {
             setPostInfo({ ...postInfo, [key]: e.target.value })
         }
+        console.log(postInfo)
     }
 
-    // async function createNewPost() {
-    //     setIsLoading(true)
-    //     const demoUserId = 'b7a61937-6f59-4bbb-80a7-08d65d1ad656'
+    const createNewPost = useQuery({
+        queryKey: ['', auth.id],
+        queryFn: async () => {
+            try {
+                return axiosPrivate.post(
+                    `/posts`,
+                    JSON.stringify({
+                        user: auth.id,
+                        film: params.uuid,
+                        status: 'draft',
+                        tag: '20c9127b-79d5-485a-8e59-c14a3dc8a777',
+                        publicationDateTime: new Date().toISOString(),
+                    })
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            setpostId(data?.data?.created?.id)
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
 
-    //     fetch(SERVER_URL + '/posts', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             user: demoUserId,
-    //             publicationDateTime: new Date().toISOString(),
-    //             status: 'inDevelop',
-    //         }),
-    //     })
-    //         .then(async (response) => {
-    //             const data = await response.json()
-    //             if (!response.ok) {
-    //                 //const error = (data && data.message) || response.status
-    //                 //setError(error)
-    //             } else {
-    //                 console.log(data.created.id)
-    //                 setpostId(data.created.id)
-    //                 setIsLoading(false)
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error('There was an error!', error)
-    //         })
-    // }
+    const discardPost = useMutation({
+        mutationKey: ['discardPost', auth.id],
+        mutationFn: async () => {
+            try {
+                return axiosPrivate.delete(`/posts/${postId}`)
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+
+    const savePost = useMutation({
+        mutationKey: ['savePost', auth.id],
+        mutationFn: async (postStatus) => {
+            axiosPrivate.patch(`${SERVER_URL}/posts/${postId}`, {
+                tittle: postInfo.tittle,
+                headline: postInfo.headline,
+                synthesis: postInfo.synthesis,
+                content: JSON.stringify(
+                    convertToRaw(editorState.getCurrentContent())
+                ),
+                status: postStatus,
+            })
+        },
+    })
+
+    const saveImage = useMutation({
+        mutationKey: ['saveImage', auth.id],
+        mutationFn: async (formData) =>{
+              axiosPrivate.post(`${SERVER_URL}/RT/${postId}/image`, formData)
+        }
+    })
+
+   async function handlesavePost(postStatus) {
+       try {
+           const requests = [savePost.mutateAsync(postStatus)]
+           if (postInfo.image instanceof File) {
+            //ask if an image already exists if it does remove it and push the new image
+               const formData = new FormData()
+               formData.append('image', postInfo.image)
+               formData.append('imageType', 'POST_MAIN')
+               requests.push(saveImage.mutateAsync(formData))
+           }
+
+           await Promise.all(requests)
+           history.replace('/')
+       } catch (error) {
+           console.error(error)
+       }
+   }
 
     async function uploadImageCallback(file) {
         return new Promise((resolve, reject) => {
@@ -879,79 +949,85 @@ function EditorManager() {
                     }
                 })
                 .catch((error) => {
-                    console.error('There was an error!', error)
+                    //console.error('There was an error!', error)
                 })
         })
     }
+    useEffect(() => {
+        history.pushState(null, document.title, location.href)
+        const handleBeforeUnload = (event) => {
+            const message = 'Are you sure you want to leave?'
+            event.returnValue = message
+            return message
+        }
 
-    // async function discardPost() {
-    //     fetch(SERVER_URL + '/posts/' + postId, { method: 'DELETE' })
-    //         .then(async (response) => {
-    //             //const data = await response.json()
-    //             if (!response.ok) {
-    //                 //const error = (data && data.message) || response.status
-    //             }
-    //             else{
-    //                 history.replace('/')
-    //             }
+        const handlePopState = (event) => {
+            if (!event.persisted) {
+                const shouldLeave = window.confirm(
+                    'Are you sure you want to leave?'
+                )
+                if (shouldLeave) {
+                    console.log('User is leaving...')
+                    discardPost.mutate()
+                }
+            }
+        }
 
-    //         })
-    //         .catch((error) => {
-    //             console.error('There was an error!', error)
-    //         })
-    // }
+        const handleLinkClick = (event) => {
+            const shouldLeave = window.confirm(
+                'Are you sure you want to leave?'
+            )
+            if (shouldLeave) {
+                discardPost.mutate()
+            } else {
+                event.preventDefault()
+            }
+        }
 
-    // async function savePost(postStatus){
-    //     setIsLoading(true)
+        window.addEventListener('beforeunload', handleBeforeUnload)
+        window.addEventListener('popstate', handlePopState)
 
-    //     let requestPost = fetch(SERVER_URL + '/posts/' + postId, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             tittle: postInfo.tittle,
-    //             headline: postInfo.headline,
-    //             synthesis: postInfo.synthesis,
-    //             content: JSON.stringify(
-    //                 convertToRaw(editorState.getCurrentContent())
-    //             ),
-    //             status: postStatus,
-    //         }),
-    //     });
+        const links = document.querySelectorAll('a')
+        links.forEach((link) => link.addEventListener('click', handleLinkClick))
 
-    //     let requests = [requestPost]
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload)
+            window.removeEventListener('popstate', handlePopState)
 
-    //     if(postInfo.image instanceof File){
-    //         const formData = new FormData()
-    //         formData.append('image', postInfo.image)
-    //         formData.append('imageType', 'postMain')
+            links.forEach((link) =>
+                link.removeEventListener('click', handleLinkClick)
+            )
+        }
+    }, [])
 
-    //         let requestImage = fetch(SERVER_URL + '/RT/' + postId + '/image', {
-    //             method: 'POST',
-    //             body: formData,
-    //         })
+    useEffect(() => {
+        setvalidtittle(postInfo.tittle.length <= 255)
+    }, [postInfo.tittle])
 
-    //         requests.push(requestImage)
-    //     }
+    useEffect(() => {
+        setvalidheadline(postInfo.headline.length <= 255)
+    }, [postInfo.headline])
+    useEffect(() => {
+        setvalidimage(postInfo.image)
+    }, [postInfo.image])
+    useEffect(() => {
+        setvalidsynthesis(postInfo.synthesis.length <= 1000)
+    }, [postInfo.synthesis])
 
-    //     await Promise.all(requests)
-    //         .then(()=>{
-    //             setIsLoading(false)
-    //             history.replace('/')
-    //         })
-    //         .catch((error) => console.error(error))
-    // }
     return (
         <EditorContainer
-            //   isLoading={isLoading}
             editorState={editorState}
             setEditorState={setEditorState}
             uploadImageCallback={uploadImageCallback}
-            //   discardPost={discardPost}
-            //   savePost={savePost}
-            //   postInfo={postInfo}
+            discardPost={discardPost}
+            savePost={savePost}
+            postInfo={postInfo}
             handleOnChange={handleOnChange}
+            validtittle={validtittle}
+            validheadline={validheadline}
+            validimage={validimage}
+            validsynthesis={validsynthesis}
+            handleDiscardPost={handleDiscardPost}
         ></EditorContainer>
     )
 }

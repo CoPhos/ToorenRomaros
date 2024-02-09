@@ -11,13 +11,15 @@ function SortPanel({
     searchParamsName,
     selectedValue,
     generateUrl,
+    link,
+    onchange,
 }) {
     const panelRef = useRef()
 
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (isPanelOpen(panelKey)) {
-                onClose(panelKey)
+                onClose(panelKey, event)
             }
         }
         document.addEventListener('click', handleClickOutside)
@@ -38,7 +40,10 @@ function SortPanel({
                     {tittle}
                 </p>
                 <button
-                    onClick={() => onClose(panelKey)}
+                    onClick={(event) => {
+                        event.stopPropagation()
+                        onClose(panelKey, event)
+                    }}
                     className="text-gray-600 hover:text-gray-800"
                 >
                     <svg
@@ -62,36 +67,45 @@ function SortPanel({
                     </svg>
                 </button>
             </div>
-            <form
-                onSubmit={() => 'hi!'}
-                className="flex flex-col items-start justify-center gap-1 max-w-xl"
-            >
+            <div className="flex flex-col items-start justify-start gap-1 max-w-xl max-h-[300px] overflow-x-auto">
                 {Object.entries(sortRadioButtonData).map(([key, value]) => (
                     <label
                         key={key}
                         className="flex flex-row items-center justify-between w-full pb-1 border-b border-white-200 uppercase text-small-m-400 lg:text-small-d-400"
                     >
                         {value.text}
-                        <Link
-                            onClick={() => onClose(panelKey)}
-                            to={{
-                                search: generateUrl(
-                                    searchParamsName,
-                                    value.value
-                                ),
-                            }}
-                        >
+                        {!link && (
+                            <Link
+                                onClick={() => onClose(panelKey)}
+                                to={{
+                                    search: generateUrl(
+                                        searchParamsName,
+                                        value.value
+                                    ),
+                                }}
+                            >
+                                <input
+                                    type="radio"
+                                    value={value.value}
+                                    className="h-[26px] w-[26px]"
+                                    readOnly={true}
+                                    checked={selectedValue === value.value}
+                                />
+                            </Link>
+                        )}
+                        {link && (
                             <input
                                 type="radio"
                                 value={value.value}
                                 className="h-[26px] w-[26px]"
                                 readOnly={true}
                                 checked={selectedValue === value.value}
+                                onClick={(e) => onchange(e, 'tag')}
                             />
-                        </Link>
+                        )}
                     </label>
                 ))}
-            </form>
+            </div>
         </div>
     )
 }

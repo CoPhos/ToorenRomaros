@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PostRepository extends JpaRepository<PostEntity, UUID>, PostRepositoryCustom {
@@ -26,6 +27,9 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID>, PostRep
             "FROM PostEntity as p " +
             "where p.film.id=?1 and p.isReview=TRUE and p.status='PUBLISHED'")
     Page<PostEntity> getReviewPostsByFilmId(UUID id, Pageable pageable);
+
+    @Query(nativeQuery = true,value = "select * from post where user_id=?1 and film_id=?2 and rating is not null and rating>=0 order by publication_datetime DESC limit 1")
+    Optional<PostEntity> getLatestReviewPostByFilmIdAndUserIdAndRatingNotNull(String userId, String filmId);
 
     @Query("select new com.ToorenRomaros.api.entities.publication.PostEntity(p.id, p.rating, p.publicationDateTime, p.synthesis, p.user) " +
             "FROM PostEntity as p " +

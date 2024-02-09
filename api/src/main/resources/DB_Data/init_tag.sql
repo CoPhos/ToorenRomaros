@@ -1,4 +1,5 @@
 INSERT INTO tag (id, tag) VALUES
+('20c9127b-79d5-485a-8e59-c14a3dc8a777','Draft'),
 ('567bdd9d-1eec-4f5e-936c-f5b0d3a034da','TV Review'),
  ('0c07a145-f977-4cf1-b5de-29fc2fd6aea9','Movie Review'),
  ('97eedacc-796b-40f9-9f48-0eb21565dfca','Actor Spotlight'),

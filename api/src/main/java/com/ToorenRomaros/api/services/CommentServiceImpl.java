@@ -1,6 +1,5 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.film.GetDynamicQyeryFilmDto;
 import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
@@ -20,7 +19,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -43,9 +45,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Map<String, Object> getTotalRatingByFilmId(UUID id) {
         List<Object[]> ratings = commentRepository.getotalRatingsByFilmId(String.valueOf(id));
-        if (ratings.isEmpty()) {
-            throw new ResourceNotFoundException("No ratings found for film:" + id);
-        }
         Map<String, Object> values = new HashMap<>();
         values.put("positive", ratings.get(0)[0]);
         values.put("neutral", ratings.get(0)[1]);
@@ -75,9 +74,7 @@ public class CommentServiceImpl implements CommentService {
                 lowRating = 0;
         }
         Page<CommentEntity> commentEntities = commentRepository.getAllCommentByFilmIdAndRatingOrderByField(id, reported, maxRating, lowRating, pageable);
-        if (commentEntities.isEmpty()) {
-            throw new ResourceNotFoundException("No comments found for film: " + id);
-        }
+
         return commentEntities.map(commentEntity -> {
             List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
             if (!imageEntities.isEmpty()) {
@@ -116,57 +113,33 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<CommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, Boolean reported, int filmType, Pageable pageable) {
-        try{
-            Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReportedAndFilmType(id, reported, filmType, pageable);
-            if (commentEntities.isEmpty()) {
-                throw new ResourceNotFoundException("No comments found for user: " + id);
+        Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReportedAndFilmType(id, reported, filmType, pageable);
+        return commentEntities.map(commentEntity -> {
+            List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
+            if (!imageEntities.isEmpty()) {
+                CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
+                commentDto.setMainImageId(imageEntities.get(0).getId().toString());
+                commentDto.setFilmName(commentEntity.getFilm().getTittle());
+                return commentDto;
+            } else {
+                return modelMapper.map(commentEntity, CommentDto.class);
             }
-            return commentEntities.map(commentEntity -> {
-                List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
-                if (!imageEntities.isEmpty()) {
-                    CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
-                    commentDto.setMainImageId(imageEntities.get(0).getId().toString());
-                    commentDto.setFilmName(commentEntity.getFilm().getTittle());
-                    return commentDto;
-                } else {
-                    return modelMapper.map(commentEntity, CommentDto.class);
-                }
-            });
-        }catch (Exception e){
-            log.info(e.getMessage());
-            log.info(String.valueOf(e.getCause()));
-        }
-        return null;
+        });
     }
 
     @Override
     public Page<CommentDto> getAllCommentByFilmId(UUID id, Boolean reported, Pageable pageable) {
-        try {
-            Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByFilmIdAndReported(id, reported, pageable);
-            if (commentEntities.isEmpty()) {
-                throw new ResourceNotFoundException("No comments found for film: " + id);
-            }
-            return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            log.info(String.valueOf(e.getCause()));
-        }
-        return null;
+        Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByFilmIdAndReported(id, reported, pageable);
+        return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
     }
 
     @Override
     public CommentDto updateComment(UUID id, CommentDto commentDto) {
-       try{
-           CommentEntity newCommentEntity = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
-           CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
-           BeanUtils.copyProperties(commentEntity, newCommentEntity, Utils.getNullPropertyNames(commentEntity));
-           CommentEntity updatedComment = commentRepository.save(newCommentEntity);
-           return modelMapper.map(updatedComment, CommentDto.class);
-       }catch (Exception e){
-           log.info(e.getMessage());
-           log.info(String.valueOf(e.getCause()));
-       }
-       return null;
+        CommentEntity newCommentEntity = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
+        CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
+        BeanUtils.copyProperties(commentEntity, newCommentEntity, Utils.getNullPropertyNames(commentEntity));
+        CommentEntity updatedComment = commentRepository.save(newCommentEntity);
+        return modelMapper.map(updatedComment, CommentDto.class);
     }
 
     @Override

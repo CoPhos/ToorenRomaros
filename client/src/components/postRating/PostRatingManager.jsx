@@ -5,6 +5,7 @@ import PostRatingContainer from './PostRatingContainer'
 import useAuth from '../hooks/useAuth'
 import { useMutation, useQuery } from 'react-query'
 import { LoginPopUpContext } from '../context/LoginPopUpProvider'
+import CriticRating from './CriticRating'
 
 function PostRatingManager(filmdata) {
     const axiosPrivate = useAxiosPrivate()
@@ -16,6 +17,7 @@ function PostRatingManager(filmdata) {
     const [formData, setFormData] = useState({
         text: '',
     })
+    const [criticRating, setcriticRating] = useState(null)
     const [isChecked, setIsChecked] = useState(false)
     const [fomrError, setfomrError] = useState(false)
     const [isPopupOpen, setPopupOpen] = useState(false)
@@ -33,7 +35,7 @@ function PostRatingManager(filmdata) {
                 publicationDateTime: new Date(),
                 rating: (index + 1) * 10,
             })
-             updateComment.mutate(data)
+            updateComment.mutate(data)
         } else {
             setisPopupOpen(true)
         }
@@ -89,6 +91,25 @@ function PostRatingManager(filmdata) {
         },
         enabled: false,
     })
+    const getLatestPostCriticReview = useQuery({
+        queryKey: ['getLatestPostCriticReview', params.uuid, auth.id],
+        queryFn: async () => {
+            try {
+                return axiosPrivate.get(
+                    `/users/${auth.id}/films/${params.uuid}/posts/reviews`
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+        enabled: false,
+    })
     const updateComment = useMutation({
         mutationKey: ['updateComment', params.uuid, auth.id],
         mutationFn: async (form) => {
@@ -116,13 +137,20 @@ function PostRatingManager(filmdata) {
     })
 
     useEffect(() => {
-        if (auth.id) {
-            getCommentByFilmIdAndUserId.refetch()
-        }
+        if (auth) {
+            if (auth.id && auth?.roles?.includes('USUER')) {
+                getCommentByFilmIdAndUserId.refetch()
+            } else if (auth.id && auth.roles.includes('CRITIC')) {
+                getLatestPostCriticReview.refetch()
+            }
+        } 
     }, [])
 
-    const isLoading = getCommentByFilmIdAndUserId.isLoading
-    const hasError = getCommentByFilmIdAndUserId.error
+    const isLoading =
+        getCommentByFilmIdAndUserId.isLoading ||
+        getLatestPostCriticReview.isLoading
+    const hasError =
+        getCommentByFilmIdAndUserId.error || getLatestPostCriticReview.isError
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -140,25 +168,33 @@ function PostRatingManager(filmdata) {
     }
 
     const userCommentData = getCommentByFilmIdAndUserId.data?.data?.response
+    const criticPostData = getLatestPostCriticReview.data?.data?.response
 
     return (
         <Fragment>
-            <PostRatingContainer
-                filmdata={filmdata}
-                currentIndex={currentIndex}
-                hoveredIndex={hoveredIndex}
-                setHoveredIndex={setHoveredIndex}
-                formData={formData}
-                handleOnClick={handleOnClick}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                handleCheckboxChange={handleCheckboxChange}
-                closePopup={closePopup}
-                openPopup={openPopup}
-                isPopupOpen={isPopupOpen}
-                userCommentData={userCommentData ? userCommentData : []}
-                fomrError={fomrError}
-            ></PostRatingContainer>
+            {auth && auth?.roles?.find((item) => item == 'CRITIC') ? (
+                <CriticRating
+                    hoveredIndex={criticPostData?.rating || 0}
+                    filmId={params.uuid}
+                ></CriticRating>
+            ) : (
+                <PostRatingContainer
+                    filmdata={filmdata}
+                    currentIndex={currentIndex}
+                    hoveredIndex={hoveredIndex}
+                    setHoveredIndex={setHoveredIndex}
+                    formData={formData}
+                    handleOnClick={handleOnClick}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    handleCheckboxChange={handleCheckboxChange}
+                    closePopup={closePopup}
+                    openPopup={openPopup}
+                    isPopupOpen={isPopupOpen}
+                    userCommentData={userCommentData ? userCommentData : []}
+                    fomrError={fomrError}
+                ></PostRatingContainer>
+            )}
         </Fragment>
     )
 }

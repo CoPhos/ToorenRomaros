@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Carousel from 'react-elastic-carousel'
 import useAuth from '../hooks/useAuth'
-import EditCommentCard from '../cards/editCommentCard/EditCommentCard';
+import EditCommentCard from '../cards/editCommentCard/EditCommentCard'
 
 function PostRatingContainer({
     hoveredIndex,
@@ -20,9 +21,11 @@ function PostRatingContainer({
     isPopupOpen,
 }) {
     const { auth } = useAuth()
-    function handleOnMouseLeave() {  
-        if (!(parseInt(userCommentData.rating, 10) >= 0 || hoveredIndex != null)) {
-           setHoveredIndex(null)
+    function handleOnMouseLeave() {
+        if (
+            !(parseInt(userCommentData.rating, 10) >= 0 || hoveredIndex != null)
+        ) {
+            setHoveredIndex(null)
         } else {
             setHoveredIndex(currentIndex)
         }
@@ -61,7 +64,6 @@ function PostRatingContainer({
 
     const baseClasses =
         'flex items-center justify-center rounded-[50%] w-[44px] h-[44px] hover:cursor-pointer'
-    
 
     const children = new Array(10).fill(null).map((_, index) => {
         let dynamicClasses = 'child '
@@ -84,7 +86,7 @@ function PostRatingContainer({
                 className={`${baseClasses} ${dynamicClasses}`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => handleOnMouseLeave()}
-                onClick={(e) => handleOnClick(e,index)}
+                onClick={(e) => handleOnClick(e, index)}
             >
                 <p className="w-fit h-fit text-body-b-700 text-white-50">
                     {(index + 1) * 10}
@@ -124,23 +126,13 @@ function PostRatingContainer({
                         {children}
                     </Carousel>
                 </div>
-                {auth?.roles?.find((item) =>
-                    item =='CRITIC'
-                ) ? (
-                    <Link
-                        to="/createpost"
-                        className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400 hover:border-white-600 hover:text-white-500"
-                    >
-                        Create a Post Review
-                    </Link>
-                ) : (
-                    <button
-                        onClick={openPopup}
-                        className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400 hover:border-white-600 hover:text-white-500"
-                    >
-                        Add My Review
-                    </button>
-                )}
+
+                <button
+                    onClick={openPopup}
+                    className="mt-2 rounded-md border-[1px] border-white-200 w-full text-small-m-400 h-[36px] lg:text-small-d-400 hover:border-white-600 hover:text-white-500"
+                >
+                    Add My Review
+                </button>
             </div>
             {isPopupOpen && (
                 <EditCommentCard
