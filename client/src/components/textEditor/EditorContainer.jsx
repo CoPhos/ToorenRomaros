@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, Fragment } from 'react'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
 import { convertToRaw } from 'draft-js'
+import { BASE_URL } from '../../utils/constants'
 
 import SortPanel from '../cards/browse/SortPanel'
 
@@ -67,7 +68,11 @@ function EditorContainer(props) {
         e.preventDefault()
         console.log(props.postInfo)
     }
+    const IMAGE_URL = '/images/'
+    const image = BASE_URL + IMAGE_URL + props.mainImage
 
+    const imageError = !props.validimage && !props.mainImage
+    const currentImage = props.mainImage && !props.validimage
     return (
         <div className="flex flex-col items-start justify-start gap-2 w-full mt-4">
             <form
@@ -106,20 +111,33 @@ function EditorContainer(props) {
                         </p>
                     )}
                 </div>
-                <div className="w-full">
-                    <label htmlFor="fimage">Front image</label>
-                    <input
-                        id="fimage"
-                        type="file"
-                        accept="image/jpeg"
-                        required
-                        onChange={(e) => props.handleOnChange(e, 'image')}
-                        className="overflow-hidden text-ellipsis line-clamp-3 w-full break-words h-[36px] text-small-m-400 lg:text-small-d-400"
-                    />
-                    {!props.validimage && (
-                        <p className="text-tiny-m-400 lg:text-tiny-d-400 text-red-600">
-                            Please select a main image for your post
-                        </p>
+                <div className="flex flex-row items-center justify-between flex-wrap w-full ">
+                    <div>
+                        <label htmlFor="fimage">Front image</label>
+                        <input
+                            id="fimage"
+                            type="file"
+                            accept="image/jpeg"
+                            required
+                            onChange={(e) => props.handleOnChange(e, 'image')}
+                            className="overflow-hidden text-ellipsis line-clamp-3 w-full break-words h-[36px] text-small-m-400 lg:text-small-d-400"
+                        />
+                        {imageError && (
+                            <p className="text-tiny-m-400 lg:text-tiny-d-400 text-red-600">
+                                Please select a main image for your post
+                            </p>
+                        )}
+                    </div>
+                    {currentImage && (
+                        <div className="flex flex-col items-start justify-start gap-1">
+                            <p>Current image</p>
+                            <img
+                                //srcset="https://small 480w, https://medium 800w, https://large 1100w"
+                                src={image}
+                                alt="Elva dressed as a fairy"
+                                className="w-[400px] h-[270px]  object-cover object-center"
+                            />
+                        </div>
                     )}
                 </div>
                 <div>
@@ -165,6 +183,11 @@ function EditorContainer(props) {
                             ></SortPanel>
                         </div>
                     </div>
+                    {!props.validtag && (
+                        <p className="text-tiny-m-400 lg:text-tiny-d-400 text-red-600">
+                            Please select a tag for your post
+                        </p>
+                    )}
                 </div>
                 <div className="w-full">
                     <label htmlFor="fsynthesis">Synthesis</label>
@@ -226,13 +249,13 @@ function EditorContainer(props) {
                     Discard
                 </button>
                 <button
-                    onClick={(e) => props.savePost('draft')}
+                    onClick={(e) => props.handlesavePost('draft')}
                     className="flex flex-row items-center justify-center w-[98px] h-[32px] bg-white-600 rounded hover:bg-white-400 text-white-50 text-small-d-400"
                 >
                     Save Draft
                 </button>
                 <button
-                    onClick={(e) => props.savePost('completed')}
+                    onClick={(e) => props.handlesavePost('completed')}
                     className="flex flex-row items-center justify-center w-[98px] h-[32px] bg-green-700 rounded hover:bg-green-600 text-white-50 text-small-d-400"
                 >
                     Post

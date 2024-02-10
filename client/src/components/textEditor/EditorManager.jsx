@@ -796,7 +796,7 @@ function EditorManager() {
     //         })
     //     )
     // )
-     
+
     const { auth } = useAuth()
     const axiosPrivate = useAxiosPrivate()
     const params = useParams()
@@ -816,16 +816,22 @@ function EditorManager() {
     const [validheadline, setvalidheadline] = useState(false)
     const [validsynthesis, setvalidsynthesis] = useState(false)
     const [validimage, setvalidimage] = useState(false)
+    const [validtag, setvalidtag] = useState(false)
 
-    const edit = searchParams.get('edit') || ''
+    // const edit = searchParams.get('edit') || ''
+    const edit = '0001c2c2-5f7b-49c2-8b07-e952e02cc58e'
+
+    const isValidUUID = (str) => {
+        const uuidRegex =
+            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+        return uuidRegex.test(str)
+    }
 
     function handleDiscardPost(event) {
         event.preventDefault()
         discardPost.mutate()
         navigate('/', { replace: true })
     }
-
-    //dependent query on postId to get POST_MAIN image if exists
 
     function handleOnChange(e, key) {
         if (key == 'image') {
@@ -836,8 +842,38 @@ function EditorManager() {
         console.log(postInfo)
     }
 
+    const getExistingPost = useQuery({
+        queryKey: ['getExistingPost', auth.id],
+        queryFn: async () => {
+            try {
+                return axiosPrivate.get(`/posts/${edit}`)
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            setpostId(edit)
+            setPostInfo({
+                tittle: data?.data?.response?.tittle,
+                headline: data?.data?.response?.headline,
+                synthesis: data?.data?.response?.synthesis,
+                tag: data?.data?.response?.tag,
+            })
+            setEditorState(
+                EditorState.createWithContent(
+                    convertFromRaw(JSON.parse(data?.data?.response?.content))
+                )
+            )
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+        enabled: !!edit && isValidUUID(edit),
+    })
+
     const createNewPost = useQuery({
-        queryKey: ['', auth.id],
+        queryKey: ['createNewPost', auth.id],
         queryFn: async () => {
             try {
                 return axiosPrivate.post(
@@ -861,6 +897,7 @@ function EditorManager() {
         onError: (error) => {
             console.log(error)
         },
+        enabled: !edit,
     })
 
     const discardPost = useMutation({
@@ -883,7 +920,7 @@ function EditorManager() {
     const savePost = useMutation({
         mutationKey: ['savePost', auth.id],
         mutationFn: async (postStatus) => {
-            axiosPrivate.patch(`${SERVER_URL}/posts/${postId}`, {
+            return axiosPrivate.patch(`/posts/${postId}`, {
                 tittle: postInfo.tittle,
                 headline: postInfo.headline,
                 synthesis: postInfo.synthesis,
@@ -891,34 +928,67 @@ function EditorManager() {
                     convertToRaw(editorState.getCurrentContent())
                 ),
                 status: postStatus,
+                tag: postInfo.tag,
             })
+        },
+        onSuccess: (data) => {
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
         },
     })
 
     const saveImage = useMutation({
         mutationKey: ['saveImage', auth.id],
-        mutationFn: async (formData) =>{
-              axiosPrivate.post(`${SERVER_URL}/RT/${postId}/image`, formData)
-        }
+        mutationFn: async (formData) => {
+            console.log(formData)
+            return axiosPrivate.post(`/posts/images`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+        },
+        onSuccess: (data) => {
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
     })
 
-   async function handlesavePost(postStatus) {
-       try {
-           const requests = [savePost.mutateAsync(postStatus)]
-           if (postInfo.image instanceof File) {
-            //ask if an image already exists if it does remove it and push the new image
-               const formData = new FormData()
-               formData.append('image', postInfo.image)
-               formData.append('imageType', 'POST_MAIN')
-               requests.push(saveImage.mutateAsync(formData))
-           }
+    async function handlesavePost(postStatus) {
+        if (
+            validtittle &&
+            validheadline &&
+            validsynthesis &&
+            (validimage || getExistingPost.data?.data?.response?.mainImageId) &&
+            validtag
+        ) {
+            try {
+                const requests = [savePost.mutateAsync(postStatus)]
+                if (postInfo.image instanceof File) {
+                    const formData = new FormData()
+                    formData.append('image', postInfo.image)
+                    formData.append('imageType', 'POST_MAIN')
+                    formData.append('id', postId)
+                    requests.push(saveImage.mutateAsync(formData))
+                }
+                const results = await Promise.all(requests)
+                const allMutationsSucceeded = results.every(
+                    (result) => !result.error
+                )
 
-           await Promise.all(requests)
-           history.replace('/')
-       } catch (error) {
-           console.error(error)
-       }
-   }
+                if (allMutationsSucceeded) {
+                    navigate('/', { replace: true })
+                } else {
+                    console.error('At least one mutation failed')
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    }
 
     async function uploadImageCallback(file) {
         return new Promise((resolve, reject) => {
@@ -1013,6 +1083,9 @@ function EditorManager() {
     useEffect(() => {
         setvalidsynthesis(postInfo.synthesis.length <= 1000)
     }, [postInfo.synthesis])
+    useEffect(() => {
+        setvalidtag(postInfo.tag.length > 1)
+    }, [postInfo.tag])
 
     return (
         <EditorContainer
@@ -1020,14 +1093,16 @@ function EditorManager() {
             setEditorState={setEditorState}
             uploadImageCallback={uploadImageCallback}
             discardPost={discardPost}
-            savePost={savePost}
+            handlesavePost={handlesavePost}
             postInfo={postInfo}
             handleOnChange={handleOnChange}
             validtittle={validtittle}
             validheadline={validheadline}
             validimage={validimage}
             validsynthesis={validsynthesis}
+            validtag={validtag}
             handleDiscardPost={handleDiscardPost}
+            mainImage={getExistingPost.data?.data?.response?.mainImageId || ''}
         ></EditorContainer>
     )
 }

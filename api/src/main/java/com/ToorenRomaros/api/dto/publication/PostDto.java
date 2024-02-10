@@ -24,6 +24,15 @@ public class PostDto {
     private String content;
     private String headline;
     private boolean isReview;
+    private String mainImageId;
+
+    public String getMainImageId() {
+        return mainImageId;
+    }
+
+    public void setMainImageId(String mainImageId) {
+        this.mainImageId = mainImageId;
+    }
 
     public UUID getId() {
         return id;

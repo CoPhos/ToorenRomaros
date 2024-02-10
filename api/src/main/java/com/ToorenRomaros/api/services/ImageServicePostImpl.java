@@ -51,6 +51,7 @@ public class ImageServicePostImpl extends ImageServiceDefaultImpl{
            data.put("660x580", processImage( "posts/"+ownerId+"/660x580_", bufferedImage, 660, 580, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType),  ImageSizeEnum.ONE_DPI,this.imageRepostiroy));
            return data;
        }catch (Exception e){
+           log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
          log.info(e.getMessage());
          log.info(String.valueOf(e.getCause()));
        }

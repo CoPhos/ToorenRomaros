@@ -37,31 +37,20 @@ public class ImageServiceDefaultImpl implements ImageService {
     @Override
     public List<GetListImagesDto> getImageByImageType(String imageType, String ownerId) {
         List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType(imageType, ownerId);
-        if (imageEntities.isEmpty()) {
-            throw new ResourceNotFoundException("No Images Were Found ");
-        } else {
-            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
-        }
+        return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
+
     }
 
     @Override
     public List<GetListImagesDto> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(String imageType, String filmid) {
         List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStreamSiteByImageTypeAndStreamSiteId(imageType, filmid);
-        if (imageEntities.isEmpty()) {
-            throw new ResourceNotFoundException("No Images Were Found ");
-        } else {
-            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
-        }
+        return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid) {
         List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStaffByImageTypeAndFilmid(imageType, filmid);
-        if (imageEntities.isEmpty()) {
-            throw new ResourceNotFoundException("No Images Were Found ");
-        } else {
-            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
-        }
+        return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
     }
 
     @Override

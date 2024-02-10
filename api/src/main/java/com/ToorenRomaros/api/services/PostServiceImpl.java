@@ -4,11 +4,13 @@ import com.ToorenRomaros.api.dto.publication.PostDetailsDto;
 import com.ToorenRomaros.api.dto.publication.PostDto;
 import com.ToorenRomaros.api.dto.publication.UpdatePostDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
+import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.publication.PostEntity;
 import com.ToorenRomaros.api.entities.tag.TagEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
+import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.publication.PostRepository;
 import com.ToorenRomaros.api.repositories.tag.TagRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
@@ -21,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,14 +34,16 @@ public class PostServiceImpl implements PostService{
     private final UserRepository userRepository;
     private final FilmRepository filmRepository;
     private final TagRepository tagRepository;
+    private final ImageRepostiroy imageRepostiroy;
     private static final Logger log = LoggerFactory.getLogger(PostServiceImpl.class);
 
-    public PostServiceImpl(ModelMapper modelMapper, PostRepository postRepository, UserRepository userRepository, FilmRepository filmRepository, TagRepository tagRepository) {
+    public PostServiceImpl(ModelMapper modelMapper, PostRepository postRepository, UserRepository userRepository, FilmRepository filmRepository, TagRepository tagRepository, ImageRepostiroy imageRepostiroy) {
         this.modelMapper = modelMapper;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.filmRepository = filmRepository;
         this.tagRepository = tagRepository;
+        this.imageRepostiroy = imageRepostiroy;
     }
 
     @Override
@@ -57,7 +62,12 @@ public class PostServiceImpl implements PostService{
     @Override
     public PostDto getPostById(UUID id) {
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
-        return modelMapper.map(postEntity, PostDto.class);
+        PostDto postDto = modelMapper.map(postEntity, PostDto.class);
+        List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());
+        if(!imageEntities.isEmpty()){
+            postDto.setMainImageId(imageEntities.get(0).getId().toString());
+        }
+        return postDto;
     }
 
     @Override
@@ -114,15 +124,21 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostDto updatePostById(UUID id, UpdatePostDto postDto) {
-        PostEntity newPostEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
-        PostEntity postEntity = modelMapper.map(postDto, PostEntity.class);
-        BeanUtils.copyProperties(postEntity, newPostEntity, Utils.getNullPropertyNames(postEntity));
-        if(!postDto.getTag().isBlank()){
-            TagEntity tagEntity = tagRepository.findById(UUID.fromString(postDto.getTag())).orElseThrow(() -> new ResourceNotFoundException("Tag: " + postDto.getTag() +  " not found"));
-            postEntity.setTag(tagEntity);
-        }
-        PostEntity updatedPost = postRepository.save(newPostEntity);
-        return modelMapper.map(updatedPost, PostDto.class);
+       try{
+           PostEntity newPostEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
+           PostEntity postEntity = modelMapper.map(postDto, PostEntity.class);
+           BeanUtils.copyProperties(postEntity, newPostEntity, Utils.getNullPropertyNames(postEntity));
+           if(postDto.getTag() !=null && !postDto.getTag().isEmpty()){
+               TagEntity tagEntity = tagRepository.getTagByName(postDto.getTag()).orElseThrow(() -> new ResourceNotFoundException("Tag: " + postDto.getTag() +  " not found"));
+               postEntity.setTag(tagEntity);
+           }
+           PostEntity updatedPost = postRepository.save(newPostEntity);
+           return modelMapper.map(updatedPost, PostDto.class);
+       }catch (Exception e){
+           log.info(e.getMessage());
+           log.info(String.valueOf(e.getCause()));
+       }
+       return null;
     }
 
     @Override
@@ -132,9 +148,11 @@ public class PostServiceImpl implements PostService{
         return modelMapper.map(postEntity, PostDetailsDto.class);
     }
 
+    @Transactional
     @Override
     public void deletePostById(UUID id) {
         postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id +  " not found"));
         postRepository.deleteById(id);
+        imageRepostiroy.deleteByOwnerId(id.toString());
     }
 }

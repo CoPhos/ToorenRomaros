@@ -170,11 +170,13 @@ public class MapperConfig {
                 }
         );
 
-        //ParentChild
+        //PostDto
         TypeMap<PostEntity, PostDto> propertyMapperPostDto = modelMapper.createTypeMap(PostEntity.class, PostDto.class);
         propertyMapperPostDto.addMappings(
                 mapper -> {
                     mapper.map(src -> src.getUser().getId(), PostDto::setUser);
+                    mapper.map(src -> src.getTag().getTag(), PostDto::setTag);
+                    mapper.map(src -> src.getFilm().getId(), PostDto::setFilm);
                 }
         );
 
