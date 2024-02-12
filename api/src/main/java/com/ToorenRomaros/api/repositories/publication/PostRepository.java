@@ -35,4 +35,10 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID>, PostRep
             "FROM PostEntity as p " +
             "where p.film.id=?1 and p.isReview=TRUE and p.status='PUBLISHED' and p.rating<=?2 and p.rating>=?3 ")
     Page<PostEntity> getReviewPostsByFilmIdAndRatingOrderByField(UUID id, int maxRating, int lowRating, Pageable pageable);
+
+    @Query("SELECT p FROM PostEntity p WHERE p.user.id=?1 and p.film.filmType=?2")
+    Page<PostEntity> getLatestReviewsByUserIdAndFilmType(UUID userId, int filmType, Pageable pageable);
+
+    @Query("SELECT p FROM PostEntity p WHERE p.user.id=?1 and p.status='DRAFT'")
+    Page<PostEntity> getLatestDraftsByUserId(UUID userId, Pageable pageable);
 }

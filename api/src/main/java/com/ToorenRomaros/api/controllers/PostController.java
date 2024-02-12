@@ -86,6 +86,27 @@ public class PostController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/users/{userId}/posts")
+    ResponseEntity<Map<String, Object>> getLatestReviewsByUserIdAndFilmType(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String userId,
+                                                                            @RequestParam (defaultValue = "1") int filmType,
+                                                                            @RequestParam(defaultValue = "0") int page,
+                                                                            @RequestParam(defaultValue = "15") int size) throws Exception {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publicationDateTime"));
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", postService.getLatestReviewsByUserIdAndFilmType(UUID.fromString(userId), filmType, pageable));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{userId}/posts/drafts")
+    ResponseEntity<Map<String, Object>> getLatestDraftsByUserId(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String userId,
+                                                                            @RequestParam(defaultValue = "0") int page,
+                                                                            @RequestParam(defaultValue = "15") int size) throws Exception {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publicationDateTime"));
+        Map<String, Object> response = new HashMap<>();
+        response.put("response", postService.getLatestDraftsByUserId(UUID.fromString(userId), pageable));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/films/{id}/posts/reviews")
     ResponseEntity<Map<String, Object>> getReviewPostsByFilmIdAndRatingOrderByField(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
                                                                @RequestParam(defaultValue = "false") Boolean reported,

@@ -818,8 +818,7 @@ function EditorManager() {
     const [validimage, setvalidimage] = useState(false)
     const [validtag, setvalidtag] = useState(false)
 
-    // const edit = searchParams.get('edit') || ''
-    const edit = '0001c2c2-5f7b-49c2-8b07-e952e02cc58e'
+    const edit = searchParams.get('edit') || ''
 
     const isValidUUID = (str) => {
         const uuidRegex =
@@ -929,6 +928,7 @@ function EditorManager() {
                 ),
                 status: postStatus,
                 tag: postInfo.tag,
+                publicationDateTime: new Date()
             })
         },
         onSuccess: (data) => {
@@ -1037,7 +1037,6 @@ function EditorManager() {
                     'Are you sure you want to leave?'
                 )
                 if (shouldLeave) {
-                    console.log('User is leaving...')
                     discardPost.mutate()
                 }
             }

@@ -183,7 +183,7 @@ function ProfileContainer({
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col gap-3 mt-4 max-[880px]:w-full min-[880px]:rounded-md min-[880px]:border min-[880px]:border-white-200 min-[880px]:p-2 min-[880px]:pb-6 min-[880px]:col-start-2 min-[880px]:col-end-5">
+                <div className="flex flex-col gap-6 mt-4 max-[880px]:w-full min-[880px]:rounded-md min-[880px]:border min-[880px]:border-white-200 min-[880px]:p-2 min-[880px]:pb-6 min-[880px]:col-start-2 min-[880px]:col-end-5">
                     <div className="flex flex-col gap-2">
                         <TittleCard
                             tittle={'My Watchlist'}
@@ -195,7 +195,7 @@ function ProfileContainer({
                         {renderWathcList ? (
                             <div
                                 ref={container1Ref}
-                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[400px] w-full"
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[440px] w-full"
                             >
                                 {watchlistdata.map((page, pageIndex) => (
                                     <Fragment key={pageIndex}>
@@ -274,7 +274,7 @@ function ProfileContainer({
                         {renderMoviesComments ? (
                             <div
                                 ref={container2Ref}
-                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[220px] w-full"
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[245px] w-full"
                             >
                                 {moviesCommentsData.map((page, pageIndex) => (
                                     <Fragment key={pageIndex}>
@@ -294,7 +294,7 @@ function ProfileContainer({
                                                         <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words max-w-[100%]">
                                                             {item.filmName}
                                                         </p>
-                                                        <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words max-w-[100%]">
+                                                        <p className="text-tag overflow-hidden text-ellipsis line-clamp-5 break-words max-w-[100%]">
                                                             {item.body}
                                                         </p>
                                                     </div>
@@ -400,7 +400,7 @@ function ProfileContainer({
                         {renderSeriesComments ? (
                             <div
                                 ref={container3Ref}
-                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[220px] w-full"
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[245px] w-full"
                             >
                                 {seriesCommentsData.map((page, pageIndex) => (
                                     <Fragment key={pageIndex}>
@@ -420,7 +420,7 @@ function ProfileContainer({
                                                             <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words ">
                                                                 {item.filmName}
                                                             </p>
-                                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words ">
+                                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-5 break-words ">
                                                                 {item.body}
                                                             </p>
                                                         </div>

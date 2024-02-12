@@ -120,9 +120,100 @@ function CriticProfileManager() {
         },
     })
 
-    const isLoading = getWatchListByUser.isLoading
+    const getLatestMoviesReviews = useInfiniteQuery({
+        queryKey: ['getLatestMoviesReviews', auth.id],
+        queryFn: async ({ pageParam = 0 }) => {
+            try {
+                return axiosPrivate.get(
+                    `users/${auth.id}/posts?filmType=1&pageSize=${pageSize}&page=${pageParam}`
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        getNextPageParam: (lastPage, pages) => {
+            const hasNextPage =
+                parseInt(lastPage?.data?.response?.number, 10) + 1 <
+                parseInt(lastPage?.data?.response?.totalPages, 10)
 
-    const hasError = getWatchListByUser.error
+            return hasNextPage
+                ? parseInt(lastPage?.data?.response?.number, 10) + 1
+                : null
+        },
+        onSuccess: (data) => {
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+
+    const getLatestSeriesReviews = useInfiniteQuery({
+        queryKey: ['getLatestSeriesReviews', auth.id],
+        queryFn: async ({ pageParam = 0 }) => {
+            try {
+                return axiosPrivate.get(
+                    `users/${auth.id}/posts?filmType=2&pageSize=${pageSize}&page=${pageParam}`
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        getNextPageParam: (lastPage, pages) => {
+            const hasNextPage =
+                parseInt(lastPage?.data?.response?.number, 10) + 1 <
+                parseInt(lastPage?.data?.response?.totalPages, 10)
+
+            return hasNextPage
+                ? parseInt(lastPage?.data?.response?.number, 10) + 1
+                : null
+        },
+        onSuccess: (data) => {
+            console.log(data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+
+     const getLatestDrafts = useInfiniteQuery({
+         queryKey: ['getLatestDrafts', auth.id],
+         queryFn: async ({ pageParam = 0 }) => {
+             try {
+                 return axiosPrivate.get(
+                     `users/${auth.id}/posts/drafts?pageSize=${pageSize}&page=${pageParam}`
+                 )
+             } catch (error) {
+                 return error
+             }
+         },
+         getNextPageParam: (lastPage, pages) => {
+             const hasNextPage =
+                 parseInt(lastPage?.data?.response?.number, 10) + 1 <
+                 parseInt(lastPage?.data?.response?.totalPages, 10)
+
+             return hasNextPage
+                 ? parseInt(lastPage?.data?.response?.number, 10) + 1
+                 : null
+         },
+         onSuccess: (data) => {
+             console.log(data)
+         },
+         onError: (error) => {
+             console.log(error)
+         },
+     })
+
+    const isLoading = getWatchListByUser.isLoading ||
+    getLatestMoviesReviews.isLoading ||
+    getLatestSeriesReviews.isLoading ||
+     getLatestDrafts.isLoading
+
+    const hasError =
+        getWatchListByUser.error ||
+        getLatestMoviesReviews.error ||
+        getLatestSeriesReviews.error ||
+        getLatestDrafts.error
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -140,14 +231,23 @@ function CriticProfileManager() {
     }
 
     const watchlistdata = getWatchListByUser.data?.pages
+    const moviesReviewsData = getLatestMoviesReviews.data?.pages
+    const seriesReviewsData = getLatestSeriesReviews.data?.pages
+    const draftsData = getLatestDrafts.data?.pages
 
     return (
         <Fragment>
-            {watchlistdata && (
+            {watchlistdata && moviesReviewsData && seriesReviewsData && (
                 <CriticProfileContainer
                     handleLogout={handleLogout}
                     watchlistdata={watchlistdata}
+                    moviesReviewsData={moviesReviewsData}
+                    seriesReviewsData={seriesReviewsData}
+                    draftsData={draftsData}
                     getWatchListByUser={getWatchListByUser}
+                    getLatestMoviesReviews={getLatestMoviesReviews}
+                    getLatestSeriesReviews={getLatestSeriesReviews}
+                    getLatestDrafts={getLatestDrafts}
                     handleRemoveFromWatchList={handleRemoveFromWatchList}
                 ></CriticProfileContainer>
             )}

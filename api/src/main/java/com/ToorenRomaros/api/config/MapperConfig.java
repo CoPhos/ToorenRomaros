@@ -148,6 +148,7 @@ public class MapperConfig {
         propertyMapperPostDetailsDto.addMappings(
                 mapper -> {
                     mapper.map(src -> src.getUser().getUsername(), PostDetailsDto::setUser);
+                    mapper.map(src -> src.getFilm().getId(), PostDetailsDto::setFilmId);
                 }
         );
 

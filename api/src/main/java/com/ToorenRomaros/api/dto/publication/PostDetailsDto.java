@@ -17,6 +17,24 @@ public class PostDetailsDto {
     private boolean isReview;
     private int rating;
     private String user;
+    private String filmMainImageId;
+    private String filmId;
+
+    public String getFilmId() {
+        return filmId;
+    }
+
+    public void setFilmId(String filmId) {
+        this.filmId = filmId;
+    }
+
+    public String getFilmMainImageId() {
+        return filmMainImageId;
+    }
+
+    public void setFilmMainImageId(String filmMainImageId) {
+        this.filmMainImageId = filmMainImageId;
+    }
 
     public String getUser() {
         return user;

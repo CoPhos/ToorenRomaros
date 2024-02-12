@@ -249,30 +249,18 @@ function EditorContainer(props) {
                     Discard
                 </button>
                 <button
-                    onClick={(e) => props.handlesavePost('draft')}
+                    onClick={(e) => props.handlesavePost('DRAFT')}
                     className="flex flex-row items-center justify-center w-[98px] h-[32px] bg-white-600 rounded hover:bg-white-400 text-white-50 text-small-d-400"
                 >
                     Save Draft
                 </button>
                 <button
-                    onClick={(e) => props.handlesavePost('completed')}
+                    onClick={(e) => props.handlesavePost('PUBLISHED')}
                     className="flex flex-row items-center justify-center w-[98px] h-[32px] bg-green-700 rounded hover:bg-green-600 text-white-50 text-small-d-400"
                 >
                     Post
                 </button>
             </div>
-
-            <button
-                onClick={(e) => {
-                    console.log(
-                        JSON.stringify(
-                            convertToRaw(props.editorState.getCurrentContent())
-                        )
-                    )
-                }}
-            >
-                print to console
-            </button>
         </div>
     )
 }

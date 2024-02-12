@@ -10,20 +10,62 @@ import useInfiniteScrollX from '../hooks/useInfiniteScrollX'
 function CriticProfileContainer({
     handleLogout,
     watchlistdata,
+    moviesReviewsData,
+    seriesReviewsData,
+    draftsData,
     getWatchListByUser,
     handleRemoveFromWatchList,
+    getLatestMoviesReviews,
+    getLatestSeriesReviews,
+    getLatestDrafts,
 }) {
     const { auth } = useAuth()
     const container1Ref = useRef(null)
+    const container2Ref = useRef(null)
+    const container3Ref = useRef(null)
+    const container4Ref = useRef(null)
+
     const renderWathcList =
         watchlistdata &&
         watchlistdata.every((page) => page.data.response.content.length > 0)
+    const renderMoviesReviews =
+        moviesReviewsData &&
+        moviesReviewsData.every((page) => page.data.response.content.length > 0)
+    const renderSeriesReviews =
+        seriesReviewsData &&
+        seriesReviewsData.every((page) => page.data.response.content.length > 0)
+        const renderDrafts =
+            draftsData &&
+            draftsData.every((page) => page.data.response.content.length > 0)
+
     useInfiniteScrollX(
         container1Ref,
         getWatchListByUser.hasNextPage,
         getWatchListByUser.isFetchingNextPage,
         getWatchListByUser.fetchNextPage
     )
+    useInfiniteScrollX(
+        container2Ref,
+        getLatestMoviesReviews.hasNextPage,
+        getLatestMoviesReviews.isFetchingNextPage,
+        getLatestMoviesReviews.fetchNextPage
+    )
+    useInfiniteScrollX(
+        container3Ref,
+        getLatestSeriesReviews.hasNextPage,
+        getLatestSeriesReviews.isFetchingNextPage,
+        getLatestSeriesReviews.fetchNextPage
+    )
+    useInfiniteScrollX(
+        container4Ref,
+        getLatestDrafts.hasNextPage,
+        getLatestDrafts.isFetchingNextPage,
+        getLatestDrafts.fetchNextPage
+    )
+
+    /* At the end this component ended up being
+     almost the same as ProfileContainer i should re use 
+     the code and merge both components... */
     return (
         <Fragment>
             <div className="grid py-2 mt-4 items-start grid-cols-1 min-[880px]:grid-cols-4 min-[880px]:gap-4 lg:px-[0px]">
@@ -67,7 +109,7 @@ function CriticProfileContainer({
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col gap-3 mt-4 max-[880px]:w-full min-[880px]:rounded-md min-[880px]:border min-[880px]:border-white-200 min-[880px]:p-2 min-[880px]:pb-6 min-[880px]:col-start-2 min-[880px]:col-end-5">
+                <div className="flex flex-col gap-6 mt-4 max-[880px]:w-full min-[880px]:rounded-md min-[880px]:border min-[880px]:border-white-200 min-[880px]:p-2 min-[880px]:pb-6 min-[880px]:col-start-2 min-[880px]:col-end-5">
                     <div className="flex flex-col gap-2">
                         <TittleCard
                             tittle={'My Watchlist'}
@@ -79,7 +121,7 @@ function CriticProfileContainer({
                         {renderWathcList ? (
                             <div
                                 ref={container1Ref}
-                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[400px] w-full"
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[440px] w-full"
                             >
                                 {watchlistdata.map((page, pageIndex) => (
                                     <Fragment key={pageIndex}>
@@ -155,64 +197,306 @@ function CriticProfileContainer({
                             mt={'mt-[0px]'}
                         ></TittleCard>
 
-                        <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
-                            <div className="flex flex-row items-center justify-center bg-[#DCDCE6] rounded-[50%] h-[60px] w-[60px]">
-                                <svg
-                                    width="30"
-                                    height="30"
-                                    viewBox="0 0 30 30"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M10.5661 10.0858C11.7763 7.63421 12.971 5.21312 14.1503 2.82249C14.3683 2.38069 14.881 2.23948 15.3304 2.37894C15.6222 2.46976 15.7716 2.65667 15.9052 2.92737C17.0833 5.32503 18.2626 7.71663 19.4431 10.1022C19.447 10.11 19.4531 10.1145 19.4613 10.1157C22.0124 10.4926 24.5869 10.8662 27.1845 11.2366C27.5181 11.2842 27.7521 11.3465 27.8865 11.4235C28.1353 11.5664 28.279 11.8141 28.3177 12.1664C28.357 12.5221 28.1577 12.7846 27.907 13.0278C26.0007 14.8782 24.1042 16.726 22.2175 18.5713C22.213 18.5757 22.2096 18.581 22.2077 18.5868C22.2057 18.5926 22.2053 18.5988 22.2064 18.6047C22.6384 21.1434 23.0792 23.7045 23.5288 26.2881C23.587 26.6233 23.5974 26.8709 23.5599 27.0311C23.4579 27.4647 22.9681 27.7934 22.5046 27.7037C22.3929 27.6823 22.2501 27.6258 22.0763 27.5344C19.7279 26.2992 17.3802 25.0651 15.0333 23.8319C15.024 23.8268 15.0134 23.8242 15.0027 23.8242C14.992 23.8242 14.9814 23.8268 14.9718 23.8319C12.6066 25.0748 10.2382 26.32 7.86673 27.5672C7.38002 27.8235 6.96302 27.7559 6.61576 27.3645C6.389 27.1096 6.38841 26.7926 6.44466 26.4662C6.89193 23.8744 7.34173 21.2543 7.79408 18.6059C7.79516 18.5995 7.79471 18.593 7.79277 18.5869C7.79083 18.5808 7.78746 18.5752 7.78295 18.5707C5.93099 16.7567 4.06791 14.9416 2.19369 13.1256C1.95033 12.8901 1.80521 12.7168 1.75834 12.6059C1.50111 12 1.87435 11.3795 2.5183 11.2864C5.2472 10.8918 7.91166 10.5047 10.5117 10.125C10.5232 10.1234 10.5343 10.119 10.5438 10.1121C10.5532 10.1053 10.5609 10.0962 10.5661 10.0858Z"
-                                        fill="black"
-                                    />
-                                </svg>
+                        {renderMoviesReviews ? (
+                            <div
+                                ref={container2Ref}
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[285px] w-full"
+                            >
+                                {moviesReviewsData.map((page, pageIndex) => (
+                                    <Fragment key={pageIndex}>
+                                        {page.data.response.content.map(
+                                            (item) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="flex flex-row items-center bg-white border border-gray-200 rounded-lg dark:border-gray-100 dark:bg-white-50 min-w-[450px] h-[233px] shadow-md"
+                                                >
+                                                    <img
+                                                        className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
+                                                        src={`${BASE_URL}/images/${item.filmMainImageId}`}
+                                                        alt=""
+                                                    />
+                                                    <div className="flex flex-col items-start justify-between h-full max-h-[230px]">
+                                                        <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
+                                                            <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words max-w-[100%]">
+                                                                {item.tittle}
+                                                            </p>
+                                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words max-w-[100%]">
+                                                                {item.synthesis}
+                                                            </p>
+                                                        </div>
+                                                        <Link
+                                                            to={`/editor/${item.filmId}?edit=${item.id}`}
+                                                            className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
+                                                        >
+                                                            <svg
+                                                                width="16"
+                                                                height="16"
+                                                                viewBox="0 0 16 16"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <g clipPath="url(#clip0_540_2)">
+                                                                    <path
+                                                                        fillRule="evenodd"
+                                                                        clipRule="evenodd"
+                                                                        d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
+                                                                        fill="black"
+                                                                    />
+                                                                </g>
+                                                                <defs>
+                                                                    <clipPath id="clip0_540_2">
+                                                                        <rect
+                                                                            width="16"
+                                                                            height="16"
+                                                                            fill="white"
+                                                                        />
+                                                                    </clipPath>
+                                                                </defs>
+                                                            </svg>
+                                                            <p className="text-tiny-d-300">
+                                                                Edit
+                                                            </p>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            )
+                                        )}
+                                    </Fragment>
+                                ))}
                             </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
+                                <div className="flex flex-row items-center justify-center bg-[#DCDCE6] rounded-[50%] h-[60px] w-[60px]">
+                                    <svg
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 30 30"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M10.5661 10.0858C11.7763 7.63421 12.971 5.21312 14.1503 2.82249C14.3683 2.38069 14.881 2.23948 15.3304 2.37894C15.6222 2.46976 15.7716 2.65667 15.9052 2.92737C17.0833 5.32503 18.2626 7.71663 19.4431 10.1022C19.447 10.11 19.4531 10.1145 19.4613 10.1157C22.0124 10.4926 24.5869 10.8662 27.1845 11.2366C27.5181 11.2842 27.7521 11.3465 27.8865 11.4235C28.1353 11.5664 28.279 11.8141 28.3177 12.1664C28.357 12.5221 28.1577 12.7846 27.907 13.0278C26.0007 14.8782 24.1042 16.726 22.2175 18.5713C22.213 18.5757 22.2096 18.581 22.2077 18.5868C22.2057 18.5926 22.2053 18.5988 22.2064 18.6047C22.6384 21.1434 23.0792 23.7045 23.5288 26.2881C23.587 26.6233 23.5974 26.8709 23.5599 27.0311C23.4579 27.4647 22.9681 27.7934 22.5046 27.7037C22.3929 27.6823 22.2501 27.6258 22.0763 27.5344C19.7279 26.2992 17.3802 25.0651 15.0333 23.8319C15.024 23.8268 15.0134 23.8242 15.0027 23.8242C14.992 23.8242 14.9814 23.8268 14.9718 23.8319C12.6066 25.0748 10.2382 26.32 7.86673 27.5672C7.38002 27.8235 6.96302 27.7559 6.61576 27.3645C6.389 27.1096 6.38841 26.7926 6.44466 26.4662C6.89193 23.8744 7.34173 21.2543 7.79408 18.6059C7.79516 18.5995 7.79471 18.593 7.79277 18.5869C7.79083 18.5808 7.78746 18.5752 7.78295 18.5707C5.93099 16.7567 4.06791 14.9416 2.19369 13.1256C1.95033 12.8901 1.80521 12.7168 1.75834 12.6059C1.50111 12 1.87435 11.3795 2.5183 11.2864C5.2472 10.8918 7.91166 10.5047 10.5117 10.125C10.5232 10.1234 10.5343 10.119 10.5438 10.1121C10.5532 10.1053 10.5609 10.0962 10.5661 10.0858Z"
+                                            fill="black"
+                                        />
+                                    </svg>
+                                </div>
 
-                            <p className="text-center text-body-m-700 lg:text-body-d-700">
-                                No Movie Ratings Yet
-                            </p>
-                            <p className="text-center text-small-m-400 lg:text-small-d-400 mt-1">
-                                Rate each Movie you watched by using a 5 star
-                                scale to share your thoughts and reaction.
-                            </p>
-                        </div>
+                                <p className="text-center text-body-m-700 lg:text-body-d-700">
+                                    No Movie Ratings Yet
+                                </p>
+                                <p className="text-center text-small-m-400 lg:text-small-d-400 mt-1">
+                                    Rate each Movie you watched by using a 5
+                                    star scale to share your thoughts and
+                                    reaction.
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex flex-col gap-2">
                         <TittleCard
-                            tittle={'My Movie Ratings'}
+                            tittle={'My TV Shows Ratings'}
                             to={null}
                             linkText={''}
                             mt={'mt-[0px]'}
                         ></TittleCard>
 
-                        <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
-                            <div className="flex flex-row items-center justify-center bg-[#DCDCE6] rounded-[50%] h-[60px] w-[60px]">
-                                <svg
-                                    width="30"
-                                    height="30"
-                                    viewBox="0 0 30 30"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M10.5661 10.0858C11.7763 7.63421 12.971 5.21312 14.1503 2.82249C14.3683 2.38069 14.881 2.23948 15.3304 2.37894C15.6222 2.46976 15.7716 2.65667 15.9052 2.92737C17.0833 5.32503 18.2626 7.71663 19.4431 10.1022C19.447 10.11 19.4531 10.1145 19.4613 10.1157C22.0124 10.4926 24.5869 10.8662 27.1845 11.2366C27.5181 11.2842 27.7521 11.3465 27.8865 11.4235C28.1353 11.5664 28.279 11.8141 28.3177 12.1664C28.357 12.5221 28.1577 12.7846 27.907 13.0278C26.0007 14.8782 24.1042 16.726 22.2175 18.5713C22.213 18.5757 22.2096 18.581 22.2077 18.5868C22.2057 18.5926 22.2053 18.5988 22.2064 18.6047C22.6384 21.1434 23.0792 23.7045 23.5288 26.2881C23.587 26.6233 23.5974 26.8709 23.5599 27.0311C23.4579 27.4647 22.9681 27.7934 22.5046 27.7037C22.3929 27.6823 22.2501 27.6258 22.0763 27.5344C19.7279 26.2992 17.3802 25.0651 15.0333 23.8319C15.024 23.8268 15.0134 23.8242 15.0027 23.8242C14.992 23.8242 14.9814 23.8268 14.9718 23.8319C12.6066 25.0748 10.2382 26.32 7.86673 27.5672C7.38002 27.8235 6.96302 27.7559 6.61576 27.3645C6.389 27.1096 6.38841 26.7926 6.44466 26.4662C6.89193 23.8744 7.34173 21.2543 7.79408 18.6059C7.79516 18.5995 7.79471 18.593 7.79277 18.5869C7.79083 18.5808 7.78746 18.5752 7.78295 18.5707C5.93099 16.7567 4.06791 14.9416 2.19369 13.1256C1.95033 12.8901 1.80521 12.7168 1.75834 12.6059C1.50111 12 1.87435 11.3795 2.5183 11.2864C5.2472 10.8918 7.91166 10.5047 10.5117 10.125C10.5232 10.1234 10.5343 10.119 10.5438 10.1121C10.5532 10.1053 10.5609 10.0962 10.5661 10.0858Z"
-                                        fill="black"
-                                    />
-                                </svg>
+                        {renderSeriesReviews ? (
+                            <div
+                                ref={container3Ref}
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[285px] w-full"
+                            >
+                                {seriesReviewsData.map((page, pageIndex) => (
+                                    <Fragment key={pageIndex}>
+                                        {page.data.response.content.map(
+                                            (item) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="flex flex-row items-start bg-white border border-gray-200 rounded-lg dark:border-gray-100 dark:bg-white-50 min-w-[450px] h-[233px] shadow-md"
+                                                >
+                                                    <img
+                                                        className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
+                                                        src={`${BASE_URL}/images/${item.filmMainImageId}`}
+                                                        alt=""
+                                                    />
+                                                    <div className="flex flex-col items-start justify-between h-full max-h-[230px]">
+                                                        <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
+                                                            <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words ">
+                                                                {item.tittle}
+                                                            </p>
+                                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words ">
+                                                                {item.synthesis}
+                                                            </p>
+                                                        </div>
+                                                        <Link
+                                                            to={`/editor/${item.filmId}?edit=${item.id}`}
+                                                            className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
+                                                        >
+                                                            <svg
+                                                                width="16"
+                                                                height="16"
+                                                                viewBox="0 0 16 16"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <g clipPath="url(#clip0_540_2)">
+                                                                    <path
+                                                                        fillRule="evenodd"
+                                                                        clipRule="evenodd"
+                                                                        d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
+                                                                        fill="black"
+                                                                    />
+                                                                </g>
+                                                                <defs>
+                                                                    <clipPath id="clip0_540_2">
+                                                                        <rect
+                                                                            width="16"
+                                                                            height="16"
+                                                                            fill="white"
+                                                                        />
+                                                                    </clipPath>
+                                                                </defs>
+                                                            </svg>
+                                                            <p className="text-tiny-d-300">
+                                                                Edit
+                                                            </p>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            )
+                                        )}
+                                    </Fragment>
+                                ))}
                             </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
+                                <div className="flex flex-row items-center justify-center bg-[#DCDCE6] rounded-[50%] h-[60px] w-[60px]">
+                                    <svg
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 30 30"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M10.5661 10.0858C11.7763 7.63421 12.971 5.21312 14.1503 2.82249C14.3683 2.38069 14.881 2.23948 15.3304 2.37894C15.6222 2.46976 15.7716 2.65667 15.9052 2.92737C17.0833 5.32503 18.2626 7.71663 19.4431 10.1022C19.447 10.11 19.4531 10.1145 19.4613 10.1157C22.0124 10.4926 24.5869 10.8662 27.1845 11.2366C27.5181 11.2842 27.7521 11.3465 27.8865 11.4235C28.1353 11.5664 28.279 11.8141 28.3177 12.1664C28.357 12.5221 28.1577 12.7846 27.907 13.0278C26.0007 14.8782 24.1042 16.726 22.2175 18.5713C22.213 18.5757 22.2096 18.581 22.2077 18.5868C22.2057 18.5926 22.2053 18.5988 22.2064 18.6047C22.6384 21.1434 23.0792 23.7045 23.5288 26.2881C23.587 26.6233 23.5974 26.8709 23.5599 27.0311C23.4579 27.4647 22.9681 27.7934 22.5046 27.7037C22.3929 27.6823 22.2501 27.6258 22.0763 27.5344C19.7279 26.2992 17.3802 25.0651 15.0333 23.8319C15.024 23.8268 15.0134 23.8242 15.0027 23.8242C14.992 23.8242 14.9814 23.8268 14.9718 23.8319C12.6066 25.0748 10.2382 26.32 7.86673 27.5672C7.38002 27.8235 6.96302 27.7559 6.61576 27.3645C6.389 27.1096 6.38841 26.7926 6.44466 26.4662C6.89193 23.8744 7.34173 21.2543 7.79408 18.6059C7.79516 18.5995 7.79471 18.593 7.79277 18.5869C7.79083 18.5808 7.78746 18.5752 7.78295 18.5707C5.93099 16.7567 4.06791 14.9416 2.19369 13.1256C1.95033 12.8901 1.80521 12.7168 1.75834 12.6059C1.50111 12 1.87435 11.3795 2.5183 11.2864C5.2472 10.8918 7.91166 10.5047 10.5117 10.125C10.5232 10.1234 10.5343 10.119 10.5438 10.1121C10.5532 10.1053 10.5609 10.0962 10.5661 10.0858Z"
+                                            fill="black"
+                                        />
+                                    </svg>
+                                </div>
 
-                            <p className="text-center text-body-m-700 lg:text-body-d-700">
-                                No Movie Ratings Yet
-                            </p>
-                            <p className="text-center text-small-m-400 lg:text-small-d-400 mt-1">
-                                Rate each Movie you watched by using a 5 star
-                                scale to share your thoughts and reaction.
-                            </p>
-                        </div>
+                                <p className="text-center text-body-m-700 lg:text-body-d-700">
+                                    No TV Shows Ratings Yet
+                                </p>
+                                <p className="text-center text-small-m-400 lg:text-small-d-400 mt-1">
+                                    Rate each Movie you watched by using a 5
+                                    star scale to share your thoughts and
+                                    reaction.
+                                </p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <TittleCard
+                            tittle={'My Drafts'}
+                            to={null}
+                            linkText={''}
+                            mt={'mt-[0px]'}
+                        ></TittleCard>
+
+                        {renderDrafts ? (
+                            <div
+                                ref={container4Ref}
+                                className="flex flex-row items-center justify-start gap-3 overflow-x-scroll h-[285px] w-full"
+                            >
+                                {draftsData.map((page, pageIndex) => (
+                                    <Fragment key={pageIndex}>
+                                        {page.data.response.content.map(
+                                            (item) => (
+                                                <div
+                                                    key={item.id}
+                                                    className="flex flex-row items-start bg-white border border-gray-200 rounded-lg dark:border-gray-100 dark:bg-white-50 min-w-[450px] h-[233px] shadow-md"
+                                                >
+                                                    <img
+                                                        className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
+                                                        src={`${BASE_URL}/images/${item.filmMainImageId}`}
+                                                        alt=""
+                                                    />
+                                                    <div className="flex flex-col items-start justify-between h-full max-h-[230px]">
+                                                        <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
+                                                            <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words ">
+                                                                {item.tittle}
+                                                            </p>
+                                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-6 break-words ">
+                                                                {item.synthesis}
+                                                            </p>
+                                                        </div>
+                                                        <Link
+                                                            to={`/editor/${item.filmId}?edit=${item.id}`}
+                                                            className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
+                                                        >
+                                                            <svg
+                                                                width="16"
+                                                                height="16"
+                                                                viewBox="0 0 16 16"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <g clipPath="url(#clip0_540_2)">
+                                                                    <path
+                                                                        fillRule="evenodd"
+                                                                        clipRule="evenodd"
+                                                                        d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
+                                                                        fill="black"
+                                                                    />
+                                                                </g>
+                                                                <defs>
+                                                                    <clipPath id="clip0_540_2">
+                                                                        <rect
+                                                                            width="16"
+                                                                            height="16"
+                                                                            fill="white"
+                                                                        />
+                                                                    </clipPath>
+                                                                </defs>
+                                                            </svg>
+                                                            <p className="text-tiny-d-300">
+                                                                Edit
+                                                            </p>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            )
+                                        )}
+                                    </Fragment>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center bg-[#F3F3F3] p-1 rounded-[4px] py-5">
+                                <div className="flex flex-row items-center justify-center bg-[#DCDCE6] rounded-[50%] h-[60px] w-[60px]">
+                                    <svg
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 30 30"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M10.5661 10.0858C11.7763 7.63421 12.971 5.21312 14.1503 2.82249C14.3683 2.38069 14.881 2.23948 15.3304 2.37894C15.6222 2.46976 15.7716 2.65667 15.9052 2.92737C17.0833 5.32503 18.2626 7.71663 19.4431 10.1022C19.447 10.11 19.4531 10.1145 19.4613 10.1157C22.0124 10.4926 24.5869 10.8662 27.1845 11.2366C27.5181 11.2842 27.7521 11.3465 27.8865 11.4235C28.1353 11.5664 28.279 11.8141 28.3177 12.1664C28.357 12.5221 28.1577 12.7846 27.907 13.0278C26.0007 14.8782 24.1042 16.726 22.2175 18.5713C22.213 18.5757 22.2096 18.581 22.2077 18.5868C22.2057 18.5926 22.2053 18.5988 22.2064 18.6047C22.6384 21.1434 23.0792 23.7045 23.5288 26.2881C23.587 26.6233 23.5974 26.8709 23.5599 27.0311C23.4579 27.4647 22.9681 27.7934 22.5046 27.7037C22.3929 27.6823 22.2501 27.6258 22.0763 27.5344C19.7279 26.2992 17.3802 25.0651 15.0333 23.8319C15.024 23.8268 15.0134 23.8242 15.0027 23.8242C14.992 23.8242 14.9814 23.8268 14.9718 23.8319C12.6066 25.0748 10.2382 26.32 7.86673 27.5672C7.38002 27.8235 6.96302 27.7559 6.61576 27.3645C6.389 27.1096 6.38841 26.7926 6.44466 26.4662C6.89193 23.8744 7.34173 21.2543 7.79408 18.6059C7.79516 18.5995 7.79471 18.593 7.79277 18.5869C7.79083 18.5808 7.78746 18.5752 7.78295 18.5707C5.93099 16.7567 4.06791 14.9416 2.19369 13.1256C1.95033 12.8901 1.80521 12.7168 1.75834 12.6059C1.50111 12 1.87435 11.3795 2.5183 11.2864C5.2472 10.8918 7.91166 10.5047 10.5117 10.125C10.5232 10.1234 10.5343 10.119 10.5438 10.1121C10.5532 10.1053 10.5609 10.0962 10.5661 10.0858Z"
+                                            fill="black"
+                                        />
+                                    </svg>
+                                </div>
+
+                                <p className="text-center text-body-m-700 lg:text-body-d-700">
+                                    No Drafs Yet
+                                </p>
+                                <p className="text-center text-small-m-400 lg:text-small-d-400 mt-1">
+                                    Browse films to create a new Post
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
