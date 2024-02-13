@@ -77,7 +77,7 @@ function MobileNavMenu({ fillColor, to }) {
                 </p>
             </Link>
 
-            <Link
+            {/* <Link
                 to="/blog"
                 className="flex flex-col items-center justify-center w-5 gap-1"
             >
@@ -106,7 +106,7 @@ function MobileNavMenu({ fillColor, to }) {
                 >
                     Blog
                 </p>
-            </Link>
+            </Link> */}
 
             <Link
                 to={`${to}`}

@@ -62,7 +62,7 @@ function ReviewCard({ expand, data, critic }) {
 
     const fullReviewDiv = (
         <Link
-            to="/blog"
+            to={`/post/${data.id}`}
             className="flex flex-row items-center justify-start gap-1 hover:cursor-pointer group w-fit pt-2 pr-2"
         >
             <p className="text-small-m-400 lg:text-small-d-400 text-blue-800 group-hover:text-blue-600">

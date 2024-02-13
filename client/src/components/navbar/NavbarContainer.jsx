@@ -142,7 +142,7 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                                     ></LinksPanel>
                                 </div>
                             </li>
-                            <li className="group px-2 hover:bg-white-100 rounded-md h-6">
+                            {/* <li className="group px-2 hover:bg-white-100 rounded-md h-6">
                                 <div className="h-full flex flex-row items-center justify-center">
                                     <Link
                                         to="/blog"
@@ -151,7 +151,7 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                                         Blog
                                     </Link>
                                 </div>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                     <div className="flex flex-row items-center justify-start gap-2">

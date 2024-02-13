@@ -48,7 +48,7 @@ export default function App() {
                             path="/film/:uuid/reviews/"
                             element={<AllReviewsManager />}
                         />
-                        <Route path="/blog" element={<HomeBlogManager />} />
+                        <Route path="/post/:uuid" element={<HomeBlogManager />} />
                         <Route
                             path="/unauthorized"
                             element={<Unauthorized />}
