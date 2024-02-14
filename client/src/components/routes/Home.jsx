@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react'
 
 //components
-import ButtonCreatePostManager from '../button/ButtonCreatePostManager'
 
 //utils
 import TittleCard from '../cards/tittle/TittleCard'
@@ -9,7 +8,7 @@ import SpotlightCarouselManager from '../spotlightCarousel/SpotlightCarouselMana
 import RegularCarouselManager from '../regularCarousel/RegularCarouselManager';
 import TopFilmsManager from '../SimpleTop/TopFilmsManager';
 import VideosTopManager from '../videosTop/VideosTopManager';
-import BlogTopManager from '../blogTop/BlogTopManager';
+
 
 function Home() {
     return (
@@ -91,21 +90,11 @@ function Home() {
                 promiseName={'latestCertifiedImages'}
             ></RegularCarouselManager>
 
-            <TittleCard
-                tittle={'TRAILERS & VIDEOS'}
-                to={'/adasd'}
-                linkText={'View all'}
-            ></TittleCard>
-            <VideosTopManager></VideosTopManager>
-
-            <TittleCard
-                tittle={'FROM OUR BLOG'}
-                to={'/adasd'}
-                linkText={'View all'}
-            ></TittleCard>
-            <BlogTopManager></BlogTopManager>
-
-            <ButtonCreatePostManager></ButtonCreatePostManager>
+            <TittleCard tittle={'FROM OUR BLOG'}></TittleCard>
+            <VideosTopManager
+                query={`?latest=true&size=4`}
+                queryName={'latesPost'}
+            ></VideosTopManager>
         </Fragment>
     )
 }

@@ -1,32 +1,54 @@
-import React from 'react'
-import VideosTopContainer from './VideosTopContainer';
+import React, {Fragment} from 'react'
+import axios from '../../utils/constants'
+import { useQuery } from 'react-query';
 
-function VideosTopManager() {
-    const data = {
-        0: {
-            videoType: 'Interview',
-            tittle: 'Napoleon',
-            text: 'Ridley Scott and Vanessa Kirby on Working with Joaquin Phoenix ',
+import VideosTopContainer from './VideosTopContainer'
+
+function VideosTopManager({ query, queryName }) {
+    const getLatestPost = useQuery({
+        queryKey: [queryName],
+        queryFn: async () => {
+            try {
+                return axios.get(`/posts${query}`)
+            } catch (error) {
+                return error
+            }
         },
-        1: {
-            videoType: 'Scene breakdown',
-            tittle: 'Monarch',
-            text: 'Ridley Scott and Vanessa Kirby on Working with Joaquin Phoenix ',
+        onSuccess: (data) => {
+            console.log(data)
         },
-        2: {
-            videoType: 'Trailer',
-            tittle: 'Fast and furious X-2',
-            text: 'Ridley Scott and Vanessa Kirby on Working with Joaquin Phoenix ',
+        onError: (error) => {
+            console.log(error)
         },
-        3: {
-            videoType: 'Interview',
-            tittle: 'Awards tour',
-            text: 'Ridley Scott and Vanessa Kirby on Working with Joaquin Phoenix ',
-        },
+    })
+
+    const isLoading = getLatestPost.isLoading
+
+    const hasError = getLatestPost.error
+
+    if (isLoading) {
+        return <p>Loading...</p>
     }
-  return (
-    <VideosTopContainer data={data}></VideosTopContainer>
-  )
+
+    if (hasError) {
+        return (
+            <div>
+                <p>
+                    Oops! Something went wrong while fetching the data.
+                    <br />
+                </p>
+            </div>
+        )
+    }
+
+    const data = getLatestPost.data?.data?.response
+
+    return (
+        <Fragment>
+            {data && <VideosTopContainer data={data}></VideosTopContainer>}
+        </Fragment>
+    )
+    
 }
 
 export default VideosTopManager

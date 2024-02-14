@@ -8,9 +8,11 @@ function VideosTopContainer({data}) {
               return (
                   <VideoCard
                       key={index}
-                      videoType={value.videoType}
+                      to={`/post/${value.id}`}
+                      videoType={value.tag}
                       tittle={value.tittle}
-                      text={value.text}
+                      text={value.headline}
+                      image={value.mainImageOneDpi}
                   ></VideoCard>
               )
           })}

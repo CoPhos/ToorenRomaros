@@ -1,16 +1,16 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { BASE_URL } from '../../../utils/constants'
 
-function VideoCard({ videoType, tittle, text, to }) {
+function VideoCard({ videoType, tittle, text, to, image }) {
     return (
         <Link
-            to="/asdas"
-            className="w-[320px] md:w-[265px] group hover:cursor-pointer"
+            to={to}
+            className="w-[320px] md:w-[265px] group hover:cursor-pointer h-[290px]"
         >
             <div className="w-[320px] md:w-[265px] h-[151px] relative">
                 <img
-                    //srcset="https://small 480w, https://medium 800w, https://large 1100w"
-                    src="https://blog-admin.siriusxm.com/wp-content/uploads/2023/07/barbie-interview.jpg"
+                    src={`${BASE_URL}/images/${image}`}
                     alt="Elva dressed as a fairy"
                     className="w-full h-[151px] object-cover object-center"
                 />
@@ -21,10 +21,10 @@ function VideoCard({ videoType, tittle, text, to }) {
                 </div>
             </div>
             <div>
-                <p className="text-body-m-700 lg:text-body-d-700 group-hover:text-red-600">
+                <p className="text-body-m-700 lg:text-body-d-700 group-hover:text-red-600 overflow-hidden text-ellipsis line-clamp-3">
                     {tittle}
                 </p>
-                <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
+                <p className="text-small-m-400 lg:text-small-d-400 group-hover:text-red-600 overflow-hidden text-ellipsis line-clamp-2">
                     {text}
                 </p>
             </div>
