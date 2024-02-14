@@ -4,8 +4,6 @@ import { useQuery } from 'react-query';
 import axios from '../../utils/constants'
 
 import SinglePostContainer from './SinglePostContainer';
-import HomeBlogContainer from './HomeBlogContainer';
-import HomeBlogLoginContainer from './HomeBlogLoginContainer';
 
 function HomeBlogManager() {
 const params = useParams()
@@ -27,9 +25,11 @@ const getPostById = useQuery({
     },
 })
 
-const isLoading = getPostById.isLoading 
 
-const hasError = getPostById.error 
+
+const isLoading = getPostById.isLoading
+
+const hasError = getPostById.error
 
 if (isLoading) {
     return <p>Loading...</p>
@@ -52,11 +52,11 @@ const postData = getPostById.data?.data?.response
       <Fragment>
           {/* home blog page is pending for know ill just implement individual post page {login ? <HomeBlogLoginContainer></HomeBlogLoginContainer> : <HomeBlogContainer></HomeBlogContainer>} */}
           {postData && (
-              <SinglePostContainer
-                  postData={postData}
-                  uuid={params.uuid}
-              ></SinglePostContainer>
-          )}
+                  <SinglePostContainer
+                      postData={postData}
+                      uuid={params.uuid}
+                  ></SinglePostContainer>
+              )}
       </Fragment>
   )
 }
