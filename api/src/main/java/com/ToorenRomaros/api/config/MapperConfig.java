@@ -149,6 +149,7 @@ public class MapperConfig {
                 mapper -> {
                     mapper.map(src -> src.getUser().getUsername(), PostDetailsDto::setUser);
                     mapper.map(src -> src.getFilm().getId(), PostDetailsDto::setFilmId);
+                    mapper.map(src -> src.getTag().getTag(), PostDetailsDto::setTag);
                 }
         );
 
@@ -178,6 +179,7 @@ public class MapperConfig {
                     mapper.map(src -> src.getUser().getId(), PostDto::setUser);
                     mapper.map(src -> src.getTag().getTag(), PostDto::setTag);
                     mapper.map(src -> src.getFilm().getId(), PostDto::setFilm);
+                    mapper.map(src -> src.getTag().getId(), PostDto::setTagId);
                 }
         );
 

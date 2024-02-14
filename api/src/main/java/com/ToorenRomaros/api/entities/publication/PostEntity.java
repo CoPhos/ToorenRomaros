@@ -67,17 +67,14 @@ public class PostEntity {
         this.user = user;
     }
 
-    public PostEntity(UUID id, String tittle, LocalDateTime publicationDateTime, int likeCount, String headline, UserEntity user) {
+    public PostEntity(UUID id, String tittle, LocalDateTime publicationDateTime, int likeCount, String headline, TagEntity tag) {
         this.id = id;
         this.publicationDateTime = publicationDateTime;
         this.likeCount = likeCount;
         this.tittle = tittle;
         this.headline = headline;
-        this.user = user;
+        this.tag = tag;
     }
-    //@Formula("()")
-    //private String discussCount;
-
     public UUID getId() {
         return id;
     }

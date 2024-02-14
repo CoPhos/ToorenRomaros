@@ -60,7 +60,6 @@ public class PostController {
         response.put("totalPages", posts.get("totalPages"));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     @PatchMapping("/posts/{id}")
     ResponseEntity<Map<String, Object>> updatePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
                                                       @RequestBody UpdatePostDto postDto) throws Exception {

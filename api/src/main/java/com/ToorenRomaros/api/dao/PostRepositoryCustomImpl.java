@@ -22,30 +22,19 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     @Override
     public Map<String, Object> findPostsMainInfoByLatestOrPopularOrTags(List<UUID> tags, boolean isReview, boolean latest, boolean popular, int page, int size) {
         try {
-            StringBuilder queryText = new StringBuilder("SELECT DISTINCT new com.ToorenRomaros.api.entities.publication.PostEntity(p.id, p.tittle, p.publicationDateTime, p.likeCount, p.headline, p.user) FROM PostEntity as p ");
+            StringBuilder queryText = new StringBuilder("SELECT DISTINCT new com.ToorenRomaros.api.entities.publication.PostEntity(p.id, p.tittle, p.publicationDateTime, p.likeCount, p.headline, p.tag) FROM PostEntity p ");
             StringBuilder queryCountText = new StringBuilder("SELECT COUNT(DISTINCT p.id) FROM post as p ");
             int argumentCounter = 1;
             List<UUID> providedParameters = new ArrayList<UUID>();
 
             if (tags != null && !tags.isEmpty()) {
-                queryText.append("INNER JOIN TagPostEntity as tp ON tp.post.id=p.id AND tp.tag.id IN (?");
+                queryText.append("WHERE p.tag.id=?");
                 queryText.append(argumentCounter);
 
-                queryCountText.append("INNER JOIN tag_post as tp ON tp.post_id=p.id AND tp.tag_id IN (?");
+                queryCountText.append("WHERE p.tag_id=?");
                 queryCountText.append(argumentCounter);
                 argumentCounter++;
                 providedParameters.add(tags.get(0));
-
-                for (int i = 1; i < tags.size(); i++) {
-                    queryText.append(", ?");
-                    queryText.append(argumentCounter);
-                    queryCountText.append(", ?");
-                    queryCountText.append(argumentCounter);
-                    argumentCounter++;
-                    providedParameters.add(tags.get(i));
-                }
-                queryText.append(") ");
-                queryCountText.append(") ");
             }
             if (isReview) {
                 queryText.append(" AND p.isReview=TRUE ");

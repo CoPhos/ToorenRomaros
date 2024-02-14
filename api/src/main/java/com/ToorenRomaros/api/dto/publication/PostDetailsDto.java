@@ -17,8 +17,44 @@ public class PostDetailsDto {
     private boolean isReview;
     private int rating;
     private String user;
+    private String tag;
     private String filmMainImageId;
     private String filmId;
+    private String mainImageThreeDpi;
+    private String mainImageTwoDpi;
+    private String mainImageOneDpi;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getMainImageThreeDpi() {
+        return mainImageThreeDpi;
+    }
+
+    public void setMainImageThreeDpi(String mainImageThreeDpi) {
+        this.mainImageThreeDpi = mainImageThreeDpi;
+    }
+
+    public String getMainImageTwoDpi() {
+        return mainImageTwoDpi;
+    }
+
+    public void setMainImageTwoDpi(String mainImageTwoDpi) {
+        this.mainImageTwoDpi = mainImageTwoDpi;
+    }
+
+    public String getMainImageOneDpi() {
+        return mainImageOneDpi;
+    }
+
+    public void setMainImageOneDpi(String mainImageOneDpi) {
+        this.mainImageOneDpi = mainImageOneDpi;
+    }
 
     public String getFilmId() {
         return filmId;

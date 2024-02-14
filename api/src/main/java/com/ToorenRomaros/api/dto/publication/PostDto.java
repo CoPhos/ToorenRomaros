@@ -25,6 +25,15 @@ public class PostDto {
     private String headline;
     private boolean isReview;
     private String mainImageId;
+    private String tagId;
+
+    public String getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(String tagId) {
+        this.tagId = tagId;
+    }
 
     public String getMainImageId() {
         return mainImageId;

@@ -5,6 +5,8 @@ import com.ToorenRomaros.api.dto.publication.PostDto;
 import com.ToorenRomaros.api.dto.publication.UpdatePostDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
+import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
+import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
 import com.ToorenRomaros.api.entities.publication.PostEntity;
 import com.ToorenRomaros.api.entities.tag.TagEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
@@ -24,10 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,9 +88,28 @@ public class PostServiceImpl implements PostService {
                 popular, page, size);
         List<PostEntity> postEntities = (List<PostEntity>) result.get("queryResult");
         result.replace("queryResult", postEntities.stream().map(postEntity -> {
-            return modelMapper.map(postEntity, PostDetailsDto.class);
+            List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());
+            PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
+            findImageEntityByAttribute(imageEntity, ImageSizeEnum.ONE_DPI).ifPresentOrElse(
+                    imageEntity1 -> postDetailsDto.setMainImageOneDpi(imageEntity1.getId().toString()),
+                    () -> {}
+            );
+            findImageEntityByAttribute(imageEntity, ImageSizeEnum.TWO_DPI).ifPresentOrElse(
+                    imageEntity1 -> postDetailsDto.setMainImageTwoDpi(imageEntity1.getId().toString()),
+                    () -> {}
+            );
+            findImageEntityByAttribute(imageEntity, ImageSizeEnum.THREE_DPI).ifPresentOrElse(
+                    imageEntity1 -> postDetailsDto.setMainImageThreeDpi(imageEntity1.getId().toString()),
+                    () -> {}
+            );
+            return postDetailsDto;
         }).collect(Collectors.toList()));
         return result;
+    }
+    public static Optional<ImageEntity> findImageEntityByAttribute(List<ImageEntity> imageEntities, ImageSizeEnum targetValue) {
+        return imageEntities.stream()
+                .filter(imageEntity -> targetValue.equals(imageEntity.getImageSize()))
+                .findFirst();
     }
 
     @Override
@@ -127,21 +145,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePostById(UUID id, UpdatePostDto postDto) {
-       try{
-           PostEntity newPostEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id + " not found"));
-           PostEntity postEntity = modelMapper.map(postDto, PostEntity.class);
-           BeanUtils.copyProperties(postEntity, newPostEntity, Utils.getNullPropertyNames(postEntity));
-           if (postDto.getTag() != null && !postDto.getTag().isEmpty()) {
-               TagEntity tagEntity = tagRepository.getTagByName(postDto.getTag()).orElseThrow(() -> new ResourceNotFoundException("Tag: " + postDto.getTag() + " not found"));
-               postEntity.setTag(tagEntity);
-           }
-           PostEntity updatedPost = postRepository.save(newPostEntity);
-           return modelMapper.map(updatedPost, PostDto.class);
-       }catch (Exception e){
-           log.info(e.getMessage());
-           log.info(String.valueOf(e.getCause()));
-       }
-       return null;
+        PostEntity newPostEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id + " not found"));
+        PostEntity postEntity = modelMapper.map(postDto, PostEntity.class);
+        BeanUtils.copyProperties(postEntity, newPostEntity, Utils.getNullPropertyNames(postEntity));
+        if (postDto.getTag() != null && !postDto.getTag().isEmpty()) {
+            TagEntity tagEntity = tagRepository.getTagByName(postDto.getTag()).orElseThrow(() -> new ResourceNotFoundException("Tag: " + postDto.getTag() + " not found"));
+            postEntity.setTag(tagEntity);
+        }
+        PostEntity updatedPost = postRepository.save(newPostEntity);
+        return modelMapper.map(updatedPost, PostDto.class);
     }
 
     @Override
@@ -149,12 +161,12 @@ public class PostServiceImpl implements PostService {
         Page<PostEntity> postEntities = postRepository.getLatestReviewsByUserIdAndFilmType(userId, filmType, pageable);
 
         return postEntities.map(postEntity -> {
-           List <ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("FILM_MAIN", postEntity.getFilm().getId().toString());
-           PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
-           if(!imageEntity.isEmpty()){
-               postDetailsDto.setFilmMainImageId(imageEntity.get(0).getId().toString());
-           }
-           return postDetailsDto;
+            List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("FILM_MAIN", postEntity.getFilm().getId().toString());
+            PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
+            if (!imageEntity.isEmpty()) {
+                postDetailsDto.setFilmMainImageId(imageEntity.get(0).getId().toString());
+            }
+            return postDetailsDto;
         });
     }
 
@@ -163,9 +175,9 @@ public class PostServiceImpl implements PostService {
         Page<PostEntity> postEntities = postRepository.getLatestDraftsByUserId(userId, pageable);
 
         return postEntities.map(postEntity -> {
-            List <ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("FILM_MAIN", postEntity.getFilm().getId().toString());
+            List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("FILM_MAIN", postEntity.getFilm().getId().toString());
             PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
-            if(!imageEntity.isEmpty()){
+            if (!imageEntity.isEmpty()) {
                 postDetailsDto.setFilmMainImageId(imageEntity.get(0).getId().toString());
             }
             return postDetailsDto;
