@@ -37,7 +37,7 @@ function SignUpContainer({
                 discover top movies, TV shows, posts, and more!
             </p>
 
-            <section className="w-[344px]">
+            <section className="w-[300px] min-[380px]:w-[344px]">
                 <div
                     ref={errorRef}
                     className={

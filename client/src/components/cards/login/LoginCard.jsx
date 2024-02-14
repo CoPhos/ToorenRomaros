@@ -73,7 +73,7 @@ function LoginCard({ handleSubmit, handleChange, formData, closePopup }) {
                             Sign in
                         </button>
                     </div>
-                   
+
                     {/* here */}
                 </div>
             </div>

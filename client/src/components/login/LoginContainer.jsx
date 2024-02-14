@@ -21,7 +21,7 @@ function LoginContainer({
                 Welcome back!
             </p>
 
-            <section className="w-[344px]">
+            <section className="w-[300px] min-[380px]:w-[344px]">
                 <div
                     ref={errorRef}
                     className={
@@ -38,7 +38,7 @@ function LoginContainer({
 
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col items-start justify-center gap-1 w-[344px] mt-8"
+                    className="flex flex-col items-start justify-center gap-1 w-full mt-8"
                 >
                     <div className="w-full">
                         <label

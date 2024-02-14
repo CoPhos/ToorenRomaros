@@ -212,7 +212,7 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                             style={{ top: 0, left: 0 }}
                         ></div>
 
-                        <div className="p-8 rounded-md w-[596px] bg-white-50 z-50">
+                        <div className="p-8 rounded-md min-[596px]:w-[596px] w-full bg-white-50 z-50">
                             <button
                                 onClick={closePopup}
                                 className="text-gray-600 hover:text-gray-800 relative left-[95%] top-1"
