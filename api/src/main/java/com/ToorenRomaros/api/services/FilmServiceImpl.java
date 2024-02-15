@@ -63,14 +63,12 @@ public class FilmServiceImpl implements FilmService {
                                                      String[] orderBy,
                                                      String userRating,
                                                      String superRating,
+                                                     String searchQuery,
                                                      int page,
                                                      int size) {
         Map<String, Object> result = filmRepository.findDinamicQuery(streamSites, genres, suitableFor,
-                filmType, atTheaters, atStreaming, commingSoonStreaming, commingSoonTheaters, orderBy, userRating, superRating, page, size);
+                filmType, atTheaters, atStreaming, commingSoonStreaming, commingSoonTheaters, orderBy, userRating, superRating,searchQuery, page, size);
         List<FilmEntity> filmEntities = (List<FilmEntity>) result.get("queryResult");
-        if (filmEntities == null) {
-            throw new ResourceNotFoundException("Resource not found");
-        }
         result.replace("queryResult", filmEntities.stream().map(filmEntity -> {
             List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", filmEntity.getId().toString());
             log.info(imageEntities.get(0).getId().toString());

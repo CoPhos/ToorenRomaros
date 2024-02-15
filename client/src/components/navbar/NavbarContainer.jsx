@@ -6,8 +6,25 @@ import gemstone from '../../assests/gemstone.png'
 import LinksPanel from './LinksPanel';
 import LoginManager from '../login/LoginManager';
 import SignUpManager from '../signup/SignUpManager';
+import SearchPanel from './SearchPanel';
 
-function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery }) {
+function Navbar({
+    user,
+    roles,
+    moviesExplore,
+    tvExplore,
+    moviesQuery,
+    tvQuery,
+    searchQuery,
+    handleOnChange,
+    getFilmsBySearchQuery,
+    getPostBySearchQuery,
+    isDivVisible,
+    setDivVisibility,
+    inputRef,
+    divRef,
+    setSearchQuery,
+}) {
     const { isPopupOpen, setisPopupOpen } = useContext(LoginPopUpContext)
     const [active, setactive] = useState(1)
 
@@ -27,10 +44,34 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
         }
     }, [isPopupOpen])
 
-    let toProfile; 
-    if(roles?.includes('USER')){
-        toProfile='/profile'
-    }else if( roles?.includes('CRITIC')){toProfile='/critic' }
+    useEffect(() => {
+        setDivVisibility(
+            searchQuery.trim() !== '' &&
+                document.activeElement === inputRef.current
+        )
+    }, [searchQuery])
+
+    const handleClickOutside = (event) => {
+        if (divRef.current && !divRef.current.contains(event.target)) {
+            setSearchQuery('')
+            setDivVisibility(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside)
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside)
+        }
+    }, [])
+
+    let toProfile
+    if (roles?.includes('USER')) {
+        toProfile = '/profile'
+    } else if (roles?.includes('CRITIC')) {
+        toProfile = '/critic'
+    }
 
     const baseClassesButton =
         'text-white-500 text-h3-m-700  lg:text-h3-d-700 border-[none] hover:cursor-pointer py-1 px-1'
@@ -53,8 +94,8 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                         </p>
                     </div>
                 </Link>
-                <div className="flex flex-row items-center justify-between gap-2 lg:hidden">
-                    <Link to="/search">
+                <div className="flex flex-row items-center justify-between gap-2 min-[880px]:hidden">
+                    {/* <Link to="/search">
                         <svg
                             width="24"
                             height="24"
@@ -67,7 +108,7 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                                 fill="#656565"
                             />
                         </svg>
-                    </Link>
+                    </Link> */}
                     {user ? (
                         <Link
                             to={`${toProfile}`}
@@ -93,7 +134,7 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                     )}
                 </div>
 
-                <div className="flex-row items-center justify-center gap-3 hidden lg:flex">
+                <div className="flex-row items-center justify-center gap-3 hidden min-[880px]:flex">
                     <div className="relative">
                         <ul className="flex flex-row items-center justify-between gap-4">
                             <li className="group px-2 hover:bg-white-100 rounded-t-md h-6">
@@ -155,7 +196,7 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                         </ul>
                     </div>
                     <div className="flex flex-row items-center justify-start gap-2">
-                        <div className="flex flex-row items-center justify-start gap-1 w-[265px] h-5 bg-white-100 rounded-3xl px-2">
+                        <div className="flex flex-row items-center justify-start gap-1 w-[265px] h-5 bg-white-100 rounded-3xl px-2 relative">
                             <svg
                                 width="24"
                                 height="24"
@@ -169,12 +210,22 @@ function Navbar({ user, roles, moviesExplore, tvExplore, moviesQuery, tvQuery })
                                 />
                             </svg>
                             <input
+                                ref={inputRef}
                                 placeholder="Search Movies, Tv, Actors..."
                                 type="text"
                                 id="fname"
                                 name="fname"
+                                value={searchQuery}
+                                onChange={(event) => handleOnChange(event)}
                                 className="outline-none bg-transparent text-small-d-400 w-full"
                             />
+                            {isDivVisible && (
+                                <SearchPanel
+                                    divRef={divRef}
+                                    filmQuery={getFilmsBySearchQuery}
+                                    postQuery={getPostBySearchQuery}
+                                ></SearchPanel>
+                            )}
                         </div>
                         {user ? (
                             <Link

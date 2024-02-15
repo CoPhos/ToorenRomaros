@@ -31,6 +31,7 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                                                 String[] orderBy,
                                                 String userRating,
                                                 String superRating,
+                                                String searchQuery,
                                                 int page,
                                                 int size) {
        try {
@@ -114,6 +115,11 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
            } else if (Objects.equals(superRating, "up")) {
                queryText.append(" and film.average_super_rating > 60");
            }
+           if(searchQuery != null){
+               queryText.append(" AND film.tittle LIKE '%");
+               queryText.append(searchQuery);
+               queryText.append("%' ");
+           }
 
            String[] orderby = orderBy[0].split("-", 2);
            queryText.append(" ORDER BY film.");
@@ -127,7 +133,7 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                queryText.append(" ");
                queryText.append(arrOfString[1].toUpperCase());
           }
-
+            log.info(queryText.toString());
            Query query = em.createNativeQuery(queryText.toString(), FilmEntity.class);
 
            StringBuilder queryCountText = new StringBuilder(queryText);

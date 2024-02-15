@@ -10,7 +10,6 @@ import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
 import com.ToorenRomaros.api.dto.user.RefreshTokenDto;
-import com.ToorenRomaros.api.dto.user.UserFollowerDto;
 import com.ToorenRomaros.api.dto.watchList.WatchListDto;
 import com.ToorenRomaros.api.entities.film.EpisodeEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
@@ -23,7 +22,6 @@ import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
 import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
-import com.ToorenRomaros.api.entities.user.UserFollowerEntity;
 import com.ToorenRomaros.api.entities.watchList.WatchListEntity;
 import com.ToorenRomaros.api.services.WatchListServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,16 +52,6 @@ public class MapperConfig {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-
-        //User
-        TypeMap<UserFollowerEntity, UserFollowerDto> propertyMapperFollower = modelMapper.createTypeMap(UserFollowerEntity.class, UserFollowerDto.class);
-        propertyMapperFollower.addMappings(
-                mapper -> {
-                    mapper.map(src -> src.getUser().getUsername(), UserFollowerDto::setUser);
-                    mapper.map(src -> src.getFollower().getUsername(), UserFollowerDto::setFollower);
-                    mapper.map(UserFollowerEntity::getFollowDate, UserFollowerDto::setFollowDate);
-                }
-        );
 
         //Film
         TypeMap<Movie, MovieDto> propertyMapperMoviePrequelSequel = modelMapper.createTypeMap(Movie.class, MovieDto.class);

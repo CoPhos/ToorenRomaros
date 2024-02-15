@@ -49,10 +49,11 @@ public class PostController {
                                                              @RequestParam(required = false) boolean isReview,
                                                              @RequestParam(required = false) boolean latest,
                                                              @RequestParam(required = false) boolean popular,
+                                                             @RequestParam(required = false) String search,
                                                              @RequestParam(defaultValue = "0") int page,
                                                              @RequestParam(defaultValue = "6") int size) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        Map<String, Object> posts = postService.getPostByCustomQuery(tags, isReview, latest, popular, page, size);
+        Map<String, Object> posts = postService.getPostByCustomQuery(tags, isReview, latest, popular, search,page, size);
         response.put("response", posts.get("queryResult"));
         response.put("currentPage", posts.get("pageNumber"));
         response.put("pageSize", posts.get("pageSize"));

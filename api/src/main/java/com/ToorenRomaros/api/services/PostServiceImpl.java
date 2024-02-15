@@ -83,28 +83,34 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, int page, int size) {
-        Map<String, Object> result = postRepository.findPostsMainInfoByLatestOrPopularOrTags(tags, isReview, latest,
-                popular, page, size);
-        List<PostEntity> postEntities = (List<PostEntity>) result.get("queryResult");
-        result.replace("queryResult", postEntities.stream().map(postEntity -> {
-            List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());
-            PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
-            findImageEntityByAttribute(imageEntity, ImageSizeEnum.ONE_DPI).ifPresentOrElse(
-                    imageEntity1 -> postDetailsDto.setMainImageOneDpi(imageEntity1.getId().toString()),
-                    () -> {}
-            );
-            findImageEntityByAttribute(imageEntity, ImageSizeEnum.TWO_DPI).ifPresentOrElse(
-                    imageEntity1 -> postDetailsDto.setMainImageTwoDpi(imageEntity1.getId().toString()),
-                    () -> {}
-            );
-            findImageEntityByAttribute(imageEntity, ImageSizeEnum.THREE_DPI).ifPresentOrElse(
-                    imageEntity1 -> postDetailsDto.setMainImageThreeDpi(imageEntity1.getId().toString()),
-                    () -> {}
-            );
-            return postDetailsDto;
-        }).collect(Collectors.toList()));
-        return result;
+    public Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, String searchQuery, int page, int size) {
+       try{
+           Map<String, Object> result = postRepository.findPostsMainInfoByLatestOrPopularOrTags(tags, isReview, latest,
+                   popular, searchQuery, page, size);
+           List<PostEntity> postEntities = (List<PostEntity>) result.get("queryResult");
+           result.replace("queryResult", postEntities.stream().map(postEntity -> {
+               List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());
+               PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
+               findImageEntityByAttribute(imageEntity, ImageSizeEnum.ONE_DPI).ifPresentOrElse(
+                       imageEntity1 -> postDetailsDto.setMainImageOneDpi(imageEntity1.getId().toString()),
+                       () -> {}
+               );
+               findImageEntityByAttribute(imageEntity, ImageSizeEnum.TWO_DPI).ifPresentOrElse(
+                       imageEntity1 -> postDetailsDto.setMainImageTwoDpi(imageEntity1.getId().toString()),
+                       () -> {}
+               );
+               findImageEntityByAttribute(imageEntity, ImageSizeEnum.THREE_DPI).ifPresentOrElse(
+                       imageEntity1 -> postDetailsDto.setMainImageThreeDpi(imageEntity1.getId().toString()),
+                       () -> {}
+               );
+               return postDetailsDto;
+           }).collect(Collectors.toList()));
+           return result;
+       }catch (Exception e){
+           log.info(e.getMessage());
+           log.info(String.valueOf(e.getCause()));
+       }
+       return  null;
     }
     public static Optional<ImageEntity> findImageEntityByAttribute(List<ImageEntity> imageEntities, ImageSizeEnum targetValue) {
         return imageEntities.stream()

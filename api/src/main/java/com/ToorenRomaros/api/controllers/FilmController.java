@@ -49,11 +49,12 @@ public class FilmController {
                                                     @RequestParam(defaultValue = "tittle-asc") String[] orderBy,
                                                     @RequestParam(required = false) String userRating,
                                                     @RequestParam(required = false) String superRating,
+                                                    @RequestParam(required = false) String search,
                                                     @RequestParam(defaultValue = "0") int page,
                                                     @RequestParam(defaultValue = "6") int size) throws Exception {
         Map<String, Object> response = new HashMap<>();
         Map<String, Object> films = filmService.getFilmByDynamicQuery(streamId, genres, suitableFor, filmType,
-                atTheaters, atStreaming, commingSoonStreaming, commingSoonTheaters, orderBy, userRating, superRating, page, size);
+                atTheaters, atStreaming, commingSoonStreaming, commingSoonTheaters, orderBy, userRating, superRating,search, page, size);
         response.put("response", films.get("queryResult"));
         response.put("currentPage", films.get("pageNumber"));
         response.put("pageSize", films.get("pageSize"));

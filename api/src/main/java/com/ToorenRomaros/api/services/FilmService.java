@@ -23,6 +23,7 @@ public interface FilmService {
                                                String[] orderBy,
                                                String userRating,
                                                String superRating,
+                                               String searchQuery,
                                                int page,
                                                int size);
 }

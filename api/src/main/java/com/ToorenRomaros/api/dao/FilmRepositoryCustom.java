@@ -18,6 +18,7 @@ public interface FilmRepositoryCustom {
                                          String[] orderBy,
                                          String userRating,
                                          String superRating,
+                                         String searchQuery,
                                          int page,
                                          int size);
 }

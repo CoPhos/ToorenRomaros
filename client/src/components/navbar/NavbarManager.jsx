@@ -1,12 +1,24 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useRef } from 'react'
 import useAuth from '../hooks/useAuth'
 import { useQuery } from 'react-query'
 import axios from '../../utils/constants'
+import { useDebounce } from 'use-debounce';
+
 import NavbarContainer from './NavbarContainer.jsx'
 
 function NavbarManager() {
     const { auth } = useAuth()
     const FILM_URL = '/films'
+    const [searchQuery, setSearchQuery] = useState('')
+    const [isDivVisible, setDivVisibility] = useState(false)
+    const inputRef = useRef(null)
+    const divRef = useRef(null)
+
+    const [debouncedSearchQuery] = useDebounce(searchQuery, 800)
+
+    function handleOnChange(event) {
+        setSearchQuery(event.target.value)
+    }
 
     const moviesExplore = {
         0: { tittle: 'Movies Home', to: '/browse?at=home&filmType=1' },
@@ -89,7 +101,7 @@ function NavbarManager() {
             }
         },
         onSuccess: (data) => {
-           // console.log(data?.data)
+            // console.log(data?.data)
         },
         onError: (error) => {
             console.log(error)
@@ -116,6 +128,46 @@ function NavbarManager() {
         },
     })
 
+    const getFilmsBySearchQuery = useQuery({
+        queryKey: ['getFilmsBySearchQuery', debouncedSearchQuery],
+        queryFn: async () => {
+            if (debouncedSearchQuery.trim() === '') {
+                return []
+            }
+            try {
+                return axios.get(FILM_URL + '?search=' + debouncedSearchQuery)
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data?.data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
+
+     const getPostBySearchQuery = useQuery({
+         queryKey: ['getPostBySearchQuery', debouncedSearchQuery],
+         queryFn: async () => {
+             if (debouncedSearchQuery.trim() === '') {
+                 return []
+             }
+             try {
+                 return axios.get('/posts' + '?search=' + debouncedSearchQuery)
+             } catch (error) {
+                 return error
+             }
+         },
+         onSuccess: (data) => {
+             console.log(data?.data)
+         },
+         onError: (error) => {
+             console.log(error)
+         },
+     })
+
     return (
         <Fragment>
             <NavbarContainer
@@ -125,6 +177,15 @@ function NavbarManager() {
                 tvExplore={tvExplore}
                 moviesQuery={getNewMovies}
                 tvQuery={getNewTv}
+                searchQuery={searchQuery}
+                handleOnChange={handleOnChange}
+                getFilmsBySearchQuery={getFilmsBySearchQuery}
+                getPostBySearchQuery={getPostBySearchQuery}
+                isDivVisible={isDivVisible}
+                setDivVisibility={setDivVisibility}
+                inputRef={inputRef}
+                divRef={divRef}
+                setSearchQuery={setSearchQuery}
             ></NavbarContainer>
         </Fragment>
     )
