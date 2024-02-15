@@ -1,16 +1,24 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useMutation } from 'react-query'
+import useAuth from '../hooks/useAuth'
+import { jwtDecode } from 'jwt-decode'
+import { useNavigate, useLocation } from 'react-router-dom'
+
 
 import SignUpContainer from './SignUpContainer';
 import axios from '../../utils/constants'
 
-function SignUpManager({active}) {
+function SignUpManager({ active, closePopup }) {
     const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
     const PASSWORD_REGEX =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     const REGISTER_URL = '/users'
+    const { login } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/'
 
     const [user, setuser] = useState('')
     const [validUsername, setvalidUsername] = useState(false)
@@ -28,7 +36,7 @@ function SignUpManager({active}) {
     const [validmatchPassword, setvalidMatchPassword] = useState(false)
     const [matchPasswordFocus, setmatchPasswordFocus] = useState(false)
 
-    const [errorMessage, seterrorMessage] = useState("")
+    const [errorMessage, seterrorMessage] = useState('')
 
     const userRef = useRef()
     const errorRef = useRef()
@@ -64,13 +72,29 @@ function SignUpManager({active}) {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        withCredentials: true,
                     },
+                    withCredentials: true,
                 }
             )
         },
         {
             onSuccess: (data) => {
+                console.log(data)
+                const id = data?.data?.userId
+                const accessToken = data?.data?.accessToken
+                const refreshToken = data?.data?.refreshToken
+                const roles = jwtDecode(accessToken).roles || []
+                const email = data?.data?.email
+                login(
+                    id,
+                    user,
+                    password,
+                    roles,
+                    accessToken,
+                    refreshToken,
+                    email
+                )
+                navigate(from, { replace: true })
                 setuser('')
                 setvalidUsername(false)
                 setuserFocus(false)
@@ -84,7 +108,7 @@ function SignUpManager({active}) {
                 setvalidMatchPassword(false)
                 setmatchPasswordFocus(false)
                 seterrorMessage('')
-
+                closePopup()
             },
             onError: (error) => {
                 handleApiError(error)
@@ -116,44 +140,42 @@ function SignUpManager({active}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-         if (!USER_REGEX.test(user) || !PASSWORD_REGEX.test(password)) {
-             seterrorMessage('Invalid Entry')
-             return
-         }
-         mutation.mutate()
+        if (!USER_REGEX.test(user) || !PASSWORD_REGEX.test(password)) {
+            seterrorMessage('Invalid Entry')
+            return
+        }
+        mutation.mutate()
     }
 
-    
-
-  return (
-      <SignUpContainer
-          active={active}
-          userRef={userRef}
-          errorRef={errorRef}
-          errorMessage={errorMessage}
-          user={user}
-          setuser={setuser}
-          setemail={setemail}
-          validUsername={validUsername}
-          setuserFocus={setuserFocus}
-          email={email}
-          validEmail={validEmail}
-          setemailFocus={setemailFocus}
-          emailFocus={emailFocus}
-          userFocus={userFocus}
-          password={password}
-          setpassword={setpassword}
-          setpasswordFocus={setpasswordFocus}
-          passwordFocus={passwordFocus}
-          validPassword={validPassword}
-          matchPassword={matchPassword}
-          setmatchPassword={setmatchPassword}
-          setmatchPasswordFocus={setmatchPasswordFocus}
-          validmatchPassword={validmatchPassword}
-          matchPasswordFocus={matchPasswordFocus}
-          handleSubmit={handleSubmit}
-      ></SignUpContainer>
-  )
+    return (
+        <SignUpContainer
+            active={active}
+            userRef={userRef}
+            errorRef={errorRef}
+            errorMessage={errorMessage}
+            user={user}
+            setuser={setuser}
+            setemail={setemail}
+            validUsername={validUsername}
+            setuserFocus={setuserFocus}
+            email={email}
+            validEmail={validEmail}
+            setemailFocus={setemailFocus}
+            emailFocus={emailFocus}
+            userFocus={userFocus}
+            password={password}
+            setpassword={setpassword}
+            setpasswordFocus={setpasswordFocus}
+            passwordFocus={passwordFocus}
+            validPassword={validPassword}
+            matchPassword={matchPassword}
+            setmatchPassword={setmatchPassword}
+            setmatchPasswordFocus={setmatchPasswordFocus}
+            validmatchPassword={validmatchPassword}
+            matchPasswordFocus={matchPasswordFocus}
+            handleSubmit={handleSubmit}
+        ></SignUpContainer>
+    )
 }
 
 export default SignUpManager
