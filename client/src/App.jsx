@@ -17,6 +17,7 @@ import RequiredAuth from './components/routes/RequiredAuth';
 import Unauthorized from './components/routes/Unauthorized';
 import NotFound from './components/routes/NotFound'
 import { LoginPopUpProvider } from '../src/components/context/LoginPopUpProvider'
+import { ActionNotificationProvider } from '../src/components/context/ActionNotificationProvider'
 import CriticProfileManager from './components/profile/CriticProfileManager';
 
 const queryClient = new QueryClient({
@@ -33,71 +34,72 @@ export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <LoginPopUpProvider>
-                <Routes>
-                    <Route path="/" element={<Layout></Layout>}>
-                        {/* public routes */}
-                        <Route exact path="/" element={<Home />} />
-                        <Route
-                            exact
-                            path="/film/:uuid/"
-                            element={<FilmDetails />}
-                        />
-                        <Route path="/browse" element={<Browse />} />
-                        <Route
-                            exact
-                            path="/film/:uuid/reviews/"
-                            element={<AllReviewsManager />}
-                        />
-                        <Route path="/post/:uuid" element={<HomeBlogManager />} />
-                        <Route
-                            path="/unauthorized"
-                            element={<Unauthorized />}
-                        />
-
-                        {/* private routes */}
-                        <Route
-                            element={<RequiredAuth allowedRoles={['CRITIC']} />}
-                        >
+                <ActionNotificationProvider>
+                    <Routes>
+                        <Route path="/" element={<Layout></Layout>}>
+                            {/* public routes */}
+                            <Route exact path="/" element={<Home />} />
                             <Route
                                 exact
-                                path="/editor/:uuid"
-                                element={<EditorManager />}
+                                path="/film/:uuid/"
+                                element={<FilmDetails />}
                             />
-                        </Route>
+                            <Route path="/browse" element={<Browse />} />
+                            <Route
+                                exact
+                                path="/film/:uuid/reviews/"
+                                element={<AllReviewsManager />}
+                            />
+                            <Route
+                                path="/post/:uuid"
+                                element={<HomeBlogManager />}
+                            />
+                            <Route
+                                path="/unauthorized"
+                                element={<Unauthorized />}
+                            />
 
-                        <Route
-                            element={
-                                <RequiredAuth
-                                    allowedRoles={['USER']}
+                            {/* private routes */}
+                            <Route
+                                element={
+                                    <RequiredAuth allowedRoles={['CRITIC']} />
+                                }
+                            >
+                                <Route
+                                    exact
+                                    path="/editor/:uuid"
+                                    element={<EditorManager />}
                                 />
-                            }
-                        >
+                            </Route>
+
                             <Route
-                                exact
-                                path="/profile"
-                                element={<ProfileManager />}
-                            />
-                        </Route>
-                        <Route
-                            element={
-                                <RequiredAuth
-                                    allowedRoles={['CRITIC']}
+                                element={
+                                    <RequiredAuth allowedRoles={['USER']} />
+                                }
+                            >
+                                <Route
+                                    exact
+                                    path="/profile"
+                                    element={<ProfileManager />}
                                 />
-                            }
-                        >
+                            </Route>
                             <Route
-                                exact
-                                path="/critic"
-                                element={<CriticProfileManager />}
-                            />
+                                element={
+                                    <RequiredAuth allowedRoles={['CRITIC']} />
+                                }
+                            >
+                                <Route
+                                    exact
+                                    path="/critic"
+                                    element={<CriticProfileManager />}
+                                />
+                            </Route>
+
+                            {/* 404 */}
+                            <Route path="*" element={<NotFound />} />
                         </Route>
-
-                        {/* 404 */}
-                        <Route path="*" element={<NotFound />} />
-                    </Route>
-
-                   
-                </Routes>
+                    </Routes>
+                </ActionNotificationProvider>
             </LoginPopUpProvider>
         </QueryClientProvider>
     )

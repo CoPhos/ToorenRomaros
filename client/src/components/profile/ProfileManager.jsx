@@ -1,9 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, Fragment, useContext } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import axios from '../../utils/constants'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query'
+import { ActionNotificationContext } from '../context/ActionNotificationProvider'
 
 import ProfileContainer from './ProfileContainer'
 
@@ -14,6 +15,14 @@ function ProfileManager() {
     const { logout, auth } = useAuth()
     const navigate = useNavigate()
     const pageSize = 10
+    const { notificationText, setnotificationText } = useContext(
+        ActionNotificationContext
+    )
+    const { isNotificationPopupOpen, setisNotificationPopupOpen } = useContext(
+        ActionNotificationContext
+    )
+    const { type, settype } = useContext(ActionNotificationContext)
+
 
     const [commentId, setcommentId] = useState(null)
     const [hoveredIndex, setHoveredIndex] = useState(null)
@@ -217,9 +226,16 @@ function ProfileManager() {
             }
         },
         {
-            onSuccess: (data) => {},
+            onSuccess: (data) => {
+                setnotificationText('Removed From Watchlist Successfully.')
+                settype('success')
+                setisNotificationPopupOpen(true)
+            },
             onError: (error) => {
                 console.log(error)
+                settype('error')
+                setnotificationText(error.message)
+                setisNotificationPopupOpen(true)
             },
         }
     )
