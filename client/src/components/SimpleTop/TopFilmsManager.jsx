@@ -1,44 +1,43 @@
-import React from 'react'
-import TopFilmsContainer from './TopFilmsContainer';
+import React, { useContext } from 'react'
+import { useQuery } from 'react-query'
+import axios from '../../utils/constants'
+import TopFilmsContainer from './TopFilmsContainer'
 
-function TopFilmsManager({ tittle, to, linkText }) {
-    const data = {
-        0: {
-            text: 'Painkiller: Season 0',
-            rating: '38',        
+function TopFilmsManager({ tittle, to, linkText, parameters, queryName }) {
+
+    const FILM_URL = '/films'
+
+    const getFilms = useQuery({
+        queryKey: [queryName],
+        queryFn: async () => {
+            return axios.get(FILM_URL + parameters)
         },
-        1: {
-            text: 'Only murders in the Building: Sea the mother of god',
-            rating: '',        
+        onSuccess: (data) => {
+            console.log(data)
         },
-        2: {
-            text: 'Dark Winds: Season 1',
-            rating: '100',        
-        },
-        3: {
-            text: 'The Crowded Room: Season 0',
-            rating: '22',        
-        },
-        4: {
-            text: 'Painkiller: Season 0',
-            rating: '38',
-       
-        },
-        5: {
-            text: 'Only murders in the Building: Sea the mother of god',
-            rating: '',
-       
-        },
-        6: {
-            text: 'Dark Winds: Season 1',
-            rating: '100',        
-        },
-        7: {
-            text: 'The Crowded Room: Season 0',
-            rating: '22',        
-        },
+    })
+
+    const isLoading = getFilms.isLoading
+
+    const hasError = getFilms.error
+
+    if (isLoading) {
+        return <p>Loading...</p>
     }
-     
+
+    if (hasError) {
+        return (
+            <div>
+                <p>
+                    Oops! Something went wrong while fetching the data.
+                    <br />
+                </p>
+            </div>
+        )
+    }
+
+    const data = getFilms.data?.data?.response
+
     return (
         <TopFilmsContainer
             tittle={tittle}

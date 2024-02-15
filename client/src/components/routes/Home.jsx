@@ -44,23 +44,42 @@ function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-2 lg:gap-y-4 lg:gap-x-[128px] mb-3">
                 <TopFilmsManager
                     tittle={'MOST POPULAR TV ON RT'}
-                    to={'/adasd'}
+                    to={'/browse?filmType=all&sortBy=view_count-Desc'}
                     linkText={'View all'}
+                    parameters={
+                        '?filmType=all&sortBy=view_count-Desc&page=0&size=10'
+                    }
+                    queryName={'popularOnRt'}
                 ></TopFilmsManager>
+
                 <TopFilmsManager
                     tittle={'POPULAR STREAMING MOVIES'}
-                    to={'/adasd'}
+                    to={'/browse?at=home&filmType=1&sortBy=view_count-Desc'}
                     linkText={'View all'}
+                    parameters={
+                        '?at=home&filmType=1&sortBy=view_count-Desc&page=0&size=10'
+                    }
+                    queryName={'popularStreaming'}
                 ></TopFilmsManager>
+
                 <TopFilmsManager
                     tittle={'NEW TV THIS WEEK'}
-                    to={'/adasd'}
+                    to={
+                        '/browse?at=upcoming&filmType=all&sortBy=added_date-Desc'
+                    }
                     linkText={'View all'}
+                    parameters={
+                        '?at=upcoming&filmType=all&sortBy=added_date-Desc&page=0&size=10'
+                    }
+                    queryName={'newThisWeek'}
                 ></TopFilmsManager>
+
                 <TopFilmsManager
                     tittle={'NEW & UPCOMING MOVIES IN THEATERS'}
-                    to={'/adasd'}
+                    to={'/browse?at=upcoming&filmType=1'}
                     linkText={'View all'}
+                    parameters={'?at=upcoming&filmType=1&page=0&size=10'}
+                    queryName={'newAndUpcomingAtTheaters'}
                 ></TopFilmsManager>
             </div>
 

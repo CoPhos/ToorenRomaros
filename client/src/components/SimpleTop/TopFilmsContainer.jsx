@@ -15,11 +15,11 @@ function TopFilmsContainer({tittle, to, linkText, data}) {
                                 border-white-200 h-[54px]"
                           >
                               <Link
-                                  to="/sadas"
+                                  to={`/film/${value.id}`}
                                   className="flex flex-row items-center justify-between h-full group"
                               >
                                   <p className="grow-[3] max-w-full overflow-hidden text-ellipsis line-clamp-1 break-words text-small-m-400 lg:text-small-d-400 group-hover:cursor-pointer group-hover:text-red-600">
-                                      {value.text}
+                                      {value.tittle}
                                   </p>
                                   <div className="flex flex-row items-center justify-end">
                                       <div className="flex flex-row items-center justify-start w-[56px] gap-0.5 group-hover:cursor-pointer group-hover:text-red-600">
@@ -779,8 +779,9 @@ function TopFilmsContainer({tittle, to, linkText, data}) {
                                               </defs>
                                           </svg>
                                           <p className="text-small-m-400 lg:text-small-d-400 ">
-                                              {value.rating
-                                                  ? value.rating + '%'
+                                              {value.averageUserRating
+                                                  ? value.averageUserRating +
+                                                    '%'
                                                   : '--'}
                                           </p>
                                       </div>
@@ -792,42 +793,6 @@ function TopFilmsContainer({tittle, to, linkText, data}) {
               })}
           </ul>
       </div>
-      //   const RatingDiv = styled.div`
-      // display: flex;
-      // flex-direction: row;
-      // align-items: center;
-      // gap: 4px;
-      // justify-self: end;
-
-      //   padding: 0;
-      // width: 100%;
-      // li {
-      //     display: flex;
-      //     flex-direction: row;
-      //     align-items: center;
-      //     justify-content: space-between;
-      //     list-style-type: none;
-      //     padding: 0;
-      //     margin: 0;
-      //     width: 100%;
-      //     border-bottom: 1px solid ${(props) => props.theme.colors.line};
-      //     .movieRtng {
-      //         max-width: 282px;
-      //         overflow: hidden;
-      //         text-overflow: ellipsis;
-      //         display: -webkit-box;
-      //         -webkit-line-clamp: 1;
-      //         -webkit-box-orient: vertical;
-      //         overflow: hidden;
-      //     }
-      // }
-      // li:hover,
-      // li:focus {
-      //     cursor: pointer;
-      //     p {
-      //         color: ${(props) => props.theme.colors.hyperlinks};
-      //     }
-      // }
   )
 }
 
