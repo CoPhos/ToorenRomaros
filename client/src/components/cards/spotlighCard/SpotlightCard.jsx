@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { BASE_URL } from '../../../utils/constants'
 
 function SpotlightCard({ insideText, images }) {
@@ -9,7 +10,10 @@ function SpotlightCard({ insideText, images }) {
     
   
     return (
-        <div className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative">
+        <Link
+            to={`/post/${insideText.id}`}
+            className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative"
+        >
             <img
                 srcSet={`${small} 480w, ${medium} 800w`}
                 sizes="(max-width: 650px) 480px, 800px"
@@ -29,7 +33,7 @@ function SpotlightCard({ insideText, images }) {
                     {insideText.headline}
                 </p>
             </div>
-        </div>
+        </Link>
     )
 }
 
