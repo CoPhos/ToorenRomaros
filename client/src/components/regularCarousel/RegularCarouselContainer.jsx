@@ -2,7 +2,7 @@ import React from 'react'
 import MovieCard from '../cards/movieCard/MovieCard'
 import Carousel from 'react-elastic-carousel'
 
-function RegularCarouselContainer({ data, handleAddWatchList }) {
+function RegularCarouselContainer({ data }) {
     console.log(data)
     const breakPointsMovie = [
         { width: 1, itemsToShow: 2, itemsToScroll: 2 },
@@ -30,7 +30,7 @@ function RegularCarouselContainer({ data, handleAddWatchList }) {
                             data={item}
                             id={item.id}
                             images={item.mainImageId}
-                            handleAddWatchList={handleAddWatchList}
+                            addWathcList={true}
                         />
                     )
                 })}
