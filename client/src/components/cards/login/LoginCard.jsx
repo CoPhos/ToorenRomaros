@@ -49,6 +49,7 @@ function LoginCard({ handleSubmit, handleChange, formData, closePopup }) {
                             width={42}
                             height={42}
                             title="logo"
+                            loading="lazy"
                         ></img>
                         <p className="font-SonsieOne text-h3-m-400 lg:text-h3-d-400">
                             Cinnabar

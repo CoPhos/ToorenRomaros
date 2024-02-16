@@ -82,6 +82,7 @@ function CriticProfileContainer({
                                 //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                                 src="https://image.tmdb.org/t/p/w235_and_h235_face/3dxEx32JnxUO34Wx0Y8tulUwlyh.jpg"
                                 alt="Elva dressed as a fairy"
+                                loading="lazy"
                                 className="w-[70px] h-[70px] rounded-[50%] object-cover object-center"
                             />
                             <div className="flex flex-col items-start justify-start">
@@ -214,6 +215,7 @@ function CriticProfileContainer({
                                                         className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
                                                         src={`${BASE_URL}/images/${item.filmMainImageId}`}
                                                         alt=""
+                                                        loading="lazy"
                                                     />
                                                     <div className="flex flex-col items-start justify-between h-full max-h-[230px]">
                                                         <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
@@ -318,6 +320,7 @@ function CriticProfileContainer({
                                                         className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
                                                         src={`${BASE_URL}/images/${item.filmMainImageId}`}
                                                         alt=""
+                                                        loading="lazy"
                                                     />
                                                     <div className="flex flex-col items-start justify-between h-full max-h-[230px]">
                                                         <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
@@ -422,6 +425,7 @@ function CriticProfileContainer({
                                                         className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
                                                         src={`${BASE_URL}/images/${item.filmMainImageId}`}
                                                         alt=""
+                                                        loading="lazy"
                                                     />
                                                     <div className="flex flex-col items-start justify-between h-full max-h-[230px]">
                                                         <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">

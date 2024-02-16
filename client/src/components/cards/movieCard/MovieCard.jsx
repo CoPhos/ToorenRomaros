@@ -110,6 +110,7 @@ function MovieCard({
                     <img
                         src={image}
                         alt="Elva dressed as a fairy"
+                        loading="lazy"
                         className="w-[128px] h-[168px] md:w-[170px] md:h-[258px] rounded-lg object-cover object-center group-hover:opacity-75"
                     />
                     <div className="flex flex-row items-center gap-1 mt-1">

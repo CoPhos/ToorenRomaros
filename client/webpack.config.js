@@ -1,18 +1,26 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin =
+    require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { ALL } = require("dns");
 
 module.exports = {
+    mode: 'production',
+    optimization: {
+        minimizer: [new TerserPlugin()],
+    },
     entry: './src/index.js',
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'public', 'index.html'),
         }),
+        new BundleAnalyzerPlugin({ openAnalyzer: true }),
     ],
     devServer: {
         historyApiFallback: true,

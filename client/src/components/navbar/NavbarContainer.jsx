@@ -1,12 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { LoginPopUpContext } from '../context/LoginPopUpProvider'
 
 import gemstone from '../../assests/gemstone.png'
-import LinksPanel from './LinksPanel';
-import LoginManager from '../login/LoginManager';
-import SignUpManager from '../signup/SignUpManager';
-import SearchPanel from './SearchPanel';
+import LinksPanel from './LinksPanel'
+const LoginManager = lazy(() => import( '../login/LoginManager'));
+const SignUpManager = lazy(() => import('../signup/SignUpManager')) ;
+const SearchPanel = lazy(() => import('./SearchPanel')) ;
+
 
 function Navbar({
     user,
@@ -220,11 +221,12 @@ function Navbar({
                                 className="outline-none bg-transparent text-small-d-400 w-full"
                             />
                             {isDivVisible && (
+                                 <Suspense fallback={<h1></h1>}>
                                 <SearchPanel
                                     divRef={divRef}
                                     filmQuery={getFilmsBySearchQuery}
                                     postQuery={getPostBySearchQuery}
-                                ></SearchPanel>
+                                ></SearchPanel></Suspense>
                             )}
                         </div>
                         {user ? (
@@ -323,6 +325,7 @@ function Navbar({
                                         Sign in
                                     </button>
                                 </div>
+                                 <Suspense fallback={<h1></h1>}>
                                 <SignUpManager
                                     active={active}
                                     closePopup={closePopup}
@@ -330,7 +333,7 @@ function Navbar({
                                 <LoginManager
                                     active={active}
                                     closePopup={closePopup}
-                                ></LoginManager>
+                                ></LoginManager></Suspense>
                             </div>
                         </div>
                     </div>

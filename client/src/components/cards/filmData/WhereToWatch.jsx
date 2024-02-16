@@ -11,6 +11,7 @@ function WhereToWatch({ data }) {
             <img
                 className="rounded-[50%] object-cover object-center w-[70px] h-[70px]"
                 src={`${BASE_URL}/images/${data.images.id}`}
+                loading="lazy"
             ></img>
 
             <div className="flex flex-col items-center justify-start">

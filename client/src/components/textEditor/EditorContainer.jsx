@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, Fragment } from 'react'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
-import { convertToRaw } from 'draft-js'
 import { BASE_URL } from '../../utils/constants'
 
 import SortPanel from '../cards/browse/SortPanel'

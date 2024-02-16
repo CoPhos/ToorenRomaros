@@ -18,6 +18,7 @@ function SpotlightCard({ insideText, images }) {
                 srcSet={`${small} 480w, ${medium} 800w`}
                 sizes="(max-width: 650px) 480px, 800px"
                 src={large}
+                loading="lazy"
                 alt="Elva dressed as a fairy"
                 className="w-full h-full min-h-[300px] lg:min-h-[390px] lg:w-full lg:h-auto object-cover object-center"
             />

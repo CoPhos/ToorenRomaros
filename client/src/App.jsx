@@ -1,31 +1,38 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { QueryClientProvider, QueryClient } from 'react-query';
-import './index.css'; 
+import { QueryClientProvider, QueryClient } from 'react-query'
+import './index.css'
 
 //components
+const Home = lazy(() => import('./components/routes/Home'))
+const FilmDetails = lazy(() => import('./components/routes/FilmDetails'))
+const Browse = lazy(() => import('./components/routes/Browse'))
+const EditorManager = lazy(() =>
+    import('./components/textEditor/EditorManager')
+)
+const ProfileManager = lazy(() => import('./components/profile/ProfileManager'))
+const AllReviewsManager = lazy(() =>
+    import('./components/allReviews/AllReviewsManager')
+)
+const HomeBlogManager = lazy(() =>
+    import('./components/homeBlog/HomeBlogManager')
+)
+const Layout = lazy(() => import('./components/routes/Layout'))
+const RequiredAuth = lazy(() => import('./components/routes/RequiredAuth'))
+const Unauthorized = lazy(() => import('./components/routes/Unauthorized'))
+const NotFound = lazy(() => import('./components/routes/NotFound'))
+const CriticProfileManager = lazy(() =>
+    import('./components/profile/CriticProfileManager')
+)
 
-import Home from './components/routes/Home';
-import FilmDetails from './components/routes/FilmDetails';
-import Browse from './components/routes/Browse';
-import EditorManager from './components/textEditor/EditorManager'
-import ProfileManager from './components/profile/ProfileManager';
-import AllReviewsManager from './components/allReviews/AllReviewsManager'
-import HomeBlogManager from './components/homeBlog/HomeBlogManager';
-import Layout from './components/routes/Layout';
-import RequiredAuth from './components/routes/RequiredAuth';
-import Unauthorized from './components/routes/Unauthorized';
-import NotFound from './components/routes/NotFound'
 import { LoginPopUpProvider } from '../src/components/context/LoginPopUpProvider'
 import { ActionNotificationProvider } from '../src/components/context/ActionNotificationProvider'
-import CriticProfileManager from './components/profile/CriticProfileManager';
 
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            refetchOnWindowFocus: false, 
+            refetchOnWindowFocus: false,
             cacheTime: 0,
-            
         },
     },
 })
@@ -35,70 +42,76 @@ export default function App() {
         <QueryClientProvider client={queryClient}>
             <LoginPopUpProvider>
                 <ActionNotificationProvider>
-                    <Routes>
-                        <Route path="/" element={<Layout></Layout>}>
-                            {/* public routes */}
-                            <Route exact path="/" element={<Home />} />
-                            <Route
-                                exact
-                                path="/film/:uuid/"
-                                element={<FilmDetails />}
-                            />
-                            <Route path="/browse" element={<Browse />} />
-                            <Route
-                                exact
-                                path="/film/:uuid/reviews/"
-                                element={<AllReviewsManager />}
-                            />
-                            <Route
-                                path="/post/:uuid"
-                                element={<HomeBlogManager />}
-                            />
-                            <Route
-                                path="/unauthorized"
-                                element={<Unauthorized />}
-                            />
-
-                            {/* private routes */}
-                            <Route
-                                element={
-                                    <RequiredAuth allowedRoles={['CRITIC']} />
-                                }
-                            >
+                    <Suspense fallback={<h1></h1>}>
+                        <Routes>
+                            <Route path="/" element={<Layout></Layout>}>
+                                {/* public routes */}
+                                <Route exact path="/" element={<Home />} />
                                 <Route
                                     exact
-                                    path="/editor/:uuid"
-                                    element={<EditorManager />}
+                                    path="/film/:uuid/"
+                                    element={<FilmDetails />}
                                 />
-                            </Route>
-
-                            <Route
-                                element={
-                                    <RequiredAuth allowedRoles={['USER']} />
-                                }
-                            >
+                                <Route path="/browse" element={<Browse />} />
                                 <Route
                                     exact
-                                    path="/profile"
-                                    element={<ProfileManager />}
+                                    path="/film/:uuid/reviews/"
+                                    element={<AllReviewsManager />}
                                 />
-                            </Route>
-                            <Route
-                                element={
-                                    <RequiredAuth allowedRoles={['CRITIC']} />
-                                }
-                            >
                                 <Route
-                                    exact
-                                    path="/critic"
-                                    element={<CriticProfileManager />}
+                                    path="/post/:uuid"
+                                    element={<HomeBlogManager />}
                                 />
-                            </Route>
+                                <Route
+                                    path="/unauthorized"
+                                    element={<Unauthorized />}
+                                />
 
-                            {/* 404 */}
-                            <Route path="*" element={<NotFound />} />
-                        </Route>
-                    </Routes>
+                                {/* private routes */}
+                                <Route
+                                    element={
+                                        <RequiredAuth
+                                            allowedRoles={['CRITIC']}
+                                        />
+                                    }
+                                >
+                                    <Route
+                                        exact
+                                        path="/editor/:uuid"
+                                        element={<EditorManager />}
+                                    />
+                                </Route>
+
+                                <Route
+                                    element={
+                                        <RequiredAuth allowedRoles={['USER']} />
+                                    }
+                                >
+                                    <Route
+                                        exact
+                                        path="/profile"
+                                        element={<ProfileManager />}
+                                    />
+                                </Route>
+                                <Route
+                                    element={
+                                        <RequiredAuth
+                                            allowedRoles={['CRITIC']}
+                                        />
+                                    }
+                                >
+                                    <Route
+                                        exact
+                                        path="/critic"
+                                        element={<CriticProfileManager />}
+                                    />
+                                </Route>
+
+                                {/* 404 */}
+                                <Route path="*" element={<NotFound />} />
+                            </Route>
+                        </Routes>
+                    </Suspense>
                 </ActionNotificationProvider>
             </LoginPopUpProvider>
         </QueryClientProvider>

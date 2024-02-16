@@ -156,6 +156,7 @@ function ProfileContainer({
                                 //srcset="https://small 480w, https://medium 800w, https://large 1100w"
                                 src="https://image.tmdb.org/t/p/w235_and_h235_face/3dxEx32JnxUO34Wx0Y8tulUwlyh.jpg"
                                 alt="Elva dressed as a fairy"
+                                loading="lazy"
                                 className="w-[70px] h-[70px] rounded-[50%] object-cover object-center"
                             />
                             <div className="flex flex-col items-start justify-start">
@@ -288,72 +289,74 @@ function ProfileContainer({
                                                         className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
                                                         src={`${BASE_URL}/images/${item.mainImageId}`}
                                                         alt=""
+                                                        loading="lazy"
                                                     />
                                                     <div className="flex flex-col items-start justify-between h-full max-h-[178px]">
                                                         <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
-                                                        <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words max-w-[100%]">
-                                                            {item.filmName}
-                                                        </p>
-                                                        <p className="text-tag overflow-hidden text-ellipsis line-clamp-5 break-words max-w-[100%]">
-                                                            {item.body}
-                                                        </p>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => {
-                                                            setcommentId(
-                                                                item.id
-                                                            )
-                                                            setcurrentIndex(
-                                                                item.rating / 10
-                                                            )
-                                                            setHoveredIndex(
-                                                                item.rating / 10
-                                                            )
-                                                            setFormData({
-                                                                text: item.body,
-                                                            })
-                                                            setfilmData({
-                                                                filmdata: {
-                                                                    tittle: item.filmName,
-                                                                    mainImageId:
-                                                                        item.mainImageId,
-                                                                },
-                                                            })
-                                                            openPopup()
-                                                        }}
-                                                        className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
-                                                    >
-                                                        <svg
-                                                            width="16"
-                                                            height="16"
-                                                            viewBox="0 0 16 16"
-                                                            fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words max-w-[100%]">
+                                                                {item.filmName}
+                                                            </p>
+                                                            <p className="text-tag overflow-hidden text-ellipsis line-clamp-5 break-words max-w-[100%]">
+                                                                {item.body}
+                                                            </p>
+                                                        </div>
+                                                        <button
+                                                            onClick={() => {
+                                                                setcommentId(
+                                                                    item.id
+                                                                )
+                                                                setcurrentIndex(
+                                                                    item.rating /
+                                                                        10
+                                                                )
+                                                                setHoveredIndex(
+                                                                    item.rating /
+                                                                        10
+                                                                )
+                                                                setFormData({
+                                                                    text: item.body,
+                                                                })
+                                                                setfilmData({
+                                                                    filmdata: {
+                                                                        tittle: item.filmName,
+                                                                        mainImageId:
+                                                                            item.mainImageId,
+                                                                    },
+                                                                })
+                                                                openPopup()
+                                                            }}
+                                                            className="flex flex-row items-center gap-1 self-end pr-1 pb-1"
                                                         >
-                                                            <g clipPath="url(#clip0_540_2)">
-                                                                <path
-                                                                    fillRule="evenodd"
-                                                                    clipRule="evenodd"
-                                                                    d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
-                                                                    fill="black"
-                                                                />
-                                                            </g>
-                                                            <defs>
-                                                                <clipPath id="clip0_540_2">
-                                                                    <rect
-                                                                        width="16"
-                                                                        height="16"
-                                                                        fill="white"
+                                                            <svg
+                                                                width="16"
+                                                                height="16"
+                                                                viewBox="0 0 16 16"
+                                                                fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <g clipPath="url(#clip0_540_2)">
+                                                                    <path
+                                                                        fillRule="evenodd"
+                                                                        clipRule="evenodd"
+                                                                        d="M14.4 14.1034H1.6V1.97778H8V0.462071H0V15.6191H16V8.04057H14.4V14.1034ZM4.8 7.96176L12.6712 0.380981L16 3.51621L7.8736 11.072H4.8V7.96176Z"
+                                                                        fill="black"
                                                                     />
-                                                                </clipPath>
-                                                            </defs>
-                                                        </svg>
-                                                        <p className="text-tiny-d-300">
-                                                            Edit
-                                                        </p>
-                                                    </button>
+                                                                </g>
+                                                                <defs>
+                                                                    <clipPath id="clip0_540_2">
+                                                                        <rect
+                                                                            width="16"
+                                                                            height="16"
+                                                                            fill="white"
+                                                                        />
+                                                                    </clipPath>
+                                                                </defs>
+                                                            </svg>
+                                                            <p className="text-tiny-d-300">
+                                                                Edit
+                                                            </p>
+                                                        </button>
                                                     </div>
-                                                    
                                                 </div>
                                             )
                                         )}
@@ -414,6 +417,7 @@ function ProfileContainer({
                                                         className="object-cover object-center rounded-tl-lg rounded-bl-lg w-[120px] h-full"
                                                         src={`${BASE_URL}/images/${item.mainImageId}`}
                                                         alt=""
+                                                        loading="lazy"
                                                     />
                                                     <div className="flex flex-col items-start justify-between h-full max-h-[178px]">
                                                         <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
