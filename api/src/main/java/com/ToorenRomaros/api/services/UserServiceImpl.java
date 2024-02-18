@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
                 });
     }
 
-    private UserSignedInDto createSignedUserWithRefreshToken(UserEntity userEntity) {
+    public  UserSignedInDto createSignedUserWithRefreshToken(UserEntity userEntity) {
         UserSignedInDto userSignedInDto = createSignedInUser(userEntity);
         userSignedInDto.setRefreshToken(createRefreshToken(userEntity));
         return userSignedInDto;
@@ -158,13 +158,13 @@ public class UserServiceImpl implements UserService {
         return new UserSignedInDto(userEntity.getUsername(), token,userEntity.getEmail(), userEntity.getId().toString());
     }
 
-    private String createRefreshToken(UserEntity user) {
+    public  String createRefreshToken(UserEntity user) {
         String token = RandomHolder.randomKey(128);
         userTokenRepository.save(new UserTokenEntity().setRefreshToken(token).setUser(user));
         return token;
     }
 
-    private static class RandomHolder {
+    public static class RandomHolder {
         static final Random random = new SecureRandom();
 
         public static String randomKey(int length) {

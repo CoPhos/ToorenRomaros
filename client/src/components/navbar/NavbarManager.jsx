@@ -1,13 +1,14 @@
-import React, { Fragment, useState, useRef } from 'react'
+import React, { Fragment, useState, useRef, useEffect } from 'react'
 import useAuth from '../hooks/useAuth'
 import { useQuery } from 'react-query'
 import axios from '../../utils/constants'
-import { useDebounce } from 'use-debounce';
+import { useDebounce } from 'use-debounce'
+import { jwtDecode } from 'jwt-decode'
 
 import NavbarContainer from './NavbarContainer.jsx'
 
 function NavbarManager() {
-    const { auth } = useAuth()
+    const { auth, login } = useAuth()
     const FILM_URL = '/films'
     const [searchQuery, setSearchQuery] = useState('')
     const [isDivVisible, setDivVisibility] = useState(false)
@@ -19,6 +20,39 @@ function NavbarManager() {
     function handleOnChange(event) {
         setSearchQuery(event.target.value)
     }
+  function getDecodedCookie(cookieName) {
+      const cookies = document.cookie.split(';').map((cookie) => cookie.trim())
+
+      for (const cookie of cookies) {
+          const [name, value] = cookie.split('=')
+
+          if (name === cookieName) {
+              const decodedValue = decodeURIComponent(value.replace(/\+/g, ' '))
+              return decodedValue
+          }
+      }
+
+      return undefined
+  }
+
+    useEffect(() => {
+        const id = getDecodedCookie('id')
+        const user = getDecodedCookie('name')
+        const accessToken = getDecodedCookie('accessToken')
+        const refreshToken = getDecodedCookie('refreshToken')
+        const email = getDecodedCookie('email')
+
+        console.log(id)
+        console.log(user)
+        console.log(accessToken)
+        console.log(refreshToken)
+        console.log(email)
+        if (id && user && accessToken && accessToken && refreshToken && email) {
+            console.log('in')
+            const roles = jwtDecode(accessToken).roles || []
+            login(id, user, roles, accessToken, refreshToken, email)
+        }
+    }, [])
 
     const moviesExplore = {
         0: { tittle: 'Movies Home', to: '/browse?at=home&filmType=1' },
@@ -148,25 +182,25 @@ function NavbarManager() {
         },
     })
 
-     const getPostBySearchQuery = useQuery({
-         queryKey: ['getPostBySearchQuery', debouncedSearchQuery],
-         queryFn: async () => {
-             if (debouncedSearchQuery.trim() === '') {
-                 return []
-             }
-             try {
-                 return axios.get('/posts' + '?search=' + debouncedSearchQuery)
-             } catch (error) {
-                 return error
-             }
-         },
-         onSuccess: (data) => {
-             console.log(data?.data)
-         },
-         onError: (error) => {
-             console.log(error)
-         },
-     })
+    const getPostBySearchQuery = useQuery({
+        queryKey: ['getPostBySearchQuery', debouncedSearchQuery],
+        queryFn: async () => {
+            if (debouncedSearchQuery.trim() === '') {
+                return []
+            }
+            try {
+                return axios.get('/posts' + '?search=' + debouncedSearchQuery)
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data?.data)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+    })
 
     return (
         <Fragment>

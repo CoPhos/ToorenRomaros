@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     Optional<UserEntity> findByUsername(String username);
-
+    Optional<UserEntity> findByEmail(String email);
     @Query(value = "select count(*) from user u where u.username=?1 or u.email=?2", nativeQuery = true)
     Integer findByUsernameOrEmail(String username, String email);
 }

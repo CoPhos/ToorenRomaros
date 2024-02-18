@@ -73,7 +73,6 @@ function LoginManager({ active, closePopup }) {
                 login(
                     id,
                     user,
-                    password,
                     roles,
                     accessToken,
                     refreshToken,

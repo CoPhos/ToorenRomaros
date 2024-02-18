@@ -9,13 +9,12 @@ export const AuthProvider = ({children}) => {
   const login = (
       id,
       user,
-      password,
       roles,
       accessToken,
       refreshToken,
       email
   ) => {
-      setauth({ id, user, password, roles, accessToken, refreshToken, email })
+      setauth({ id, user, roles, accessToken, refreshToken, email })
       setisAuthenticated(true)
   }
 

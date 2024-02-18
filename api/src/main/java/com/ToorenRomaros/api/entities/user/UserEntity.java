@@ -53,6 +53,14 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.USER;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String username,String email) {
+        this.username = username;
+        this.email = email;
+    }
+
     public String getUsername() {
         return username;
     }
