@@ -5,6 +5,8 @@ import com.ToorenRomaros.api.entities.user.UserEntity;
 import org.springframework.security.core.userdetails.User;
 
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,4 +20,7 @@ public interface UserService {
     UserSignedInDto getSignedInUser(UserEntity userEntity);
     Optional<UserSignedInDto> getAccessToken(RefreshTokenDto refreshTokenDto);
     void removeRefreshToken(String refreshToken);
+    UserSignedInDto createUserAndSignIn(UserEntity userEntity, String email, String name, HttpServletResponse response) throws UnsupportedEncodingException;
+    void storeUserCookies(HttpServletResponse response, UserEntity userEntity, String accessToken, String refreshToken, String email, String name) throws UnsupportedEncodingException;
+
 }

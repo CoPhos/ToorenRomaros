@@ -22,7 +22,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Objects;
 import java.util.Optional;
@@ -171,5 +176,30 @@ public class UserServiceImpl implements UserService {
             return String.format("%" + length + "s", new BigInteger(length * 5/*base 32,2^5*/, random)
                     .toString(32)).replace('\u0020', '0');
         }
+    }
+
+    @Override
+    public UserSignedInDto createUserAndSignIn(UserEntity userEntity, String email, String name, HttpServletResponse response) throws UnsupportedEncodingException {
+        UserSignedInDto userSignedInDto = createSignedUserWithRefreshToken(userEntity);
+        storeUserCookies(response, userEntity, userSignedInDto.getAccessToken(), userSignedInDto.getRefreshToken(), email, name);
+        return userSignedInDto;
+    }
+
+    @Override
+    public void storeUserCookies(HttpServletResponse response, UserEntity userEntity, String accessToken, String refreshToken, String email, String name) throws UnsupportedEncodingException {
+        storeUserInfoInCookie(response, "id", userEntity.getId().toString());
+        storeUserInfoInCookie(response, "accessToken", accessToken);
+        storeUserInfoInCookie(response, "refreshToken", refreshToken);
+        storeUserInfoInCookie(response, "email", email);
+        storeUserInfoInCookie(response, "name", name);
+    }
+
+    private void storeUserInfoInCookie(HttpServletResponse response, String cookieName, String cookieValue) throws UnsupportedEncodingException {
+        String encodedValue = URLEncoder.encode(cookieValue, StandardCharsets.UTF_8);
+        Cookie userCookie = new Cookie(cookieName, encodedValue);
+        userCookie.setMaxAge(30);
+        userCookie.setPath("/");
+        userCookie.setSecure(true);
+        response.addCookie(userCookie);
     }
 }
