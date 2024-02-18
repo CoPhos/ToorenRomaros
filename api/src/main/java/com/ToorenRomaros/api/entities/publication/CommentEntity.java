@@ -23,7 +23,6 @@ public class CommentEntity{
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
     @Column(name = "BODY", columnDefinition = "TEXT")
-    @NotNull(message = "Body can not be null")
     private String body;
     @Column(name = "PUBLICATION_DATETIME", columnDefinition = "DATETIME")
     private LocalDateTime publicationDateTime;

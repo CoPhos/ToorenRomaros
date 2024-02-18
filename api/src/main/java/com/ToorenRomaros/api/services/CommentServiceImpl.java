@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,14 +90,21 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public CommentDto createComment(CommentDto commentDto) {
-        CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
-        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() + " not found"));
-        UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() + " not found"));
-        commentEntity.setFilm(filmEntity);
-        commentEntity.setUser(userEntity);
-        CommentEntity savedComment = commentRepository.save(commentEntity);
-        return modelMapper.map(savedComment, CommentDto.class);
+      try{
+          CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
+          FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() + " not found"));
+          UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() + " not found"));
+          commentEntity.setFilm(filmEntity);
+          commentEntity.setUser(userEntity);
+          CommentEntity savedComment = commentRepository.save(commentEntity);
+          return modelMapper.map(savedComment, CommentDto.class);
+      }catch (Exception e){
+          log.info(e.getMessage());
+          log.info(String.valueOf(e.getCause()));
+      }
+      return null;
     }
 
     @Override

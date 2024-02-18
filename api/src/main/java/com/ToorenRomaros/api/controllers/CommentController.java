@@ -33,10 +33,16 @@ public class CommentController {
 
     @PostMapping("/comments")
     ResponseEntity<Map<String, Object>> createComment(@RequestBody @Valid CommentDto commentDto) throws Exception {
-        CommentDto newComment = commentService.createComment(commentDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("created", newComment);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        try {
+            CommentDto newComment = commentService.createComment(commentDto);
+            Map<String, Object> response = new HashMap<>();
+            response.put("created", newComment);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCause()));
+        }
+       return null;
     }
     @GetMapping("/comments/{id}")
     ResponseEntity<Map<String, Object>> getCommentById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {

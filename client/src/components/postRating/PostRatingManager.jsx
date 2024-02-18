@@ -21,6 +21,11 @@ function PostRatingManager(filmdata) {
     const [isChecked, setIsChecked] = useState(false)
     const [fomrError, setfomrError] = useState(false)
     const [isPopupOpen, setPopupOpen] = useState(false)
+    const isValidUUID = (str) => {
+        const uuidRegex =
+            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+        return uuidRegex.test(str)
+    }
 
     const closePopup = () => {
         setPopupOpen(false)
@@ -31,11 +36,24 @@ function PostRatingManager(filmdata) {
     function handleOnClick(e, index) {
         if (isAuthenticated) {
             setcurrentIndex(index)
-            const data = JSON.stringify({
-                publicationDateTime: new Date(),
-                rating: (index + 1) * 10,
-            })
-            updateComment.mutate(data)
+
+            if (userCommentData?.id && isValidUUID(userCommentData.id)) {
+                const data = JSON.stringify({
+                    publicationDateTime: new Date(),
+                    rating: (index + 1) * 10,
+                })
+                console.log('in 1')
+                updateComment.mutate(data)
+            } else {
+                const data = JSON.stringify({
+                    userId: auth.id,
+                    filmId: params.uuid,
+                    publicationDateTime: new Date(),
+                    rating: (index + 1) * 10,
+                })
+                console.log("in 2")
+                postComment.mutate(data)
+            }
         } else {
             setisPopupOpen(true)
         }
@@ -58,13 +76,26 @@ function PostRatingManager(filmdata) {
         e.preventDefault()
         if (formData.text.length <= 5000) {
             setfomrError(false)
-            const data = JSON.stringify({
-                body: formData.text,
-                publicationDateTime: new Date(),
-                spoiler: isChecked,
-                rating: hoveredIndex * 10,
-            })
-            updateComment.mutate(data)
+           
+            if (userCommentData?.id && isValidUUID(userCommentData.id)) {
+                 const data = JSON.stringify({
+                     body: formData.text,
+                     publicationDateTime: new Date(),
+                     spoiler: isChecked,
+                     rating: hoveredIndex * 10,
+                 })
+                updateComment.mutate(data)
+            } else {
+                 const data = JSON.stringify({
+                     userId: auth.id,
+                     filmId: params.uuid,
+                     body: formData.text,
+                     publicationDateTime: new Date(),
+                     spoiler: isChecked,
+                     rating: hoveredIndex * 10,
+                 })
+                postComment.mutate(data)
+            }
             setPopupOpen(false)
         } else {
             setfomrError(true)
@@ -129,6 +160,29 @@ function PostRatingManager(filmdata) {
         },
         onSuccess: (data) => {
             console.log(data)
+            userCommentData.refetch()
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+        enabled: false,
+    })
+
+    const postComment = useMutation({
+        mutationKey: ['postComment', params.uuid, auth.id],
+        mutationFn: async (form) => {
+            try {
+                return axiosPrivate.post(`/comments`, form, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data)
         },
         onError: (error) => {
             console.log(error)
@@ -143,7 +197,7 @@ function PostRatingManager(filmdata) {
             } else if (auth.id && auth.roles.includes('CRITIC')) {
                 getLatestPostCriticReview.refetch()
             }
-        } 
+        }
     }, [])
 
     const isLoading =

@@ -17,8 +17,8 @@ function EditCommentCard({
     handleCheckboxChange,
     closePopup,
 }) {
-    console.log(formData)
-    const characters = 5000 - formData.text.length
+   
+    const characters = formData?.text?.length ? 5000 - formData.text.length : 5000
     return (
         <div
             className="fixed w-[100vw] h-[100vh] flex items-center justify-center z-50 "

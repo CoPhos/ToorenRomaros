@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public class CommentDto {
     private UUID id;
-    @NotNull(message = "Body can not be null")
     private String body;
     @FutureOrPresent(message = "Publication date can not be past")
     @NotNull(message = "Publication Date-time can not be null")
