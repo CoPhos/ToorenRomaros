@@ -13,7 +13,6 @@ import VideosTopManager from '../videosTop/VideosTopManager';
 function Home() {
     return (
         <Fragment>
-            <a href='http://localhost:9090/oauth2/authorization/google'>google</a>
             <SpotlightCarouselManager></SpotlightCarouselManager>
 
             <TittleCard
