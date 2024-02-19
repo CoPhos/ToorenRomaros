@@ -1,9 +1,12 @@
 const path = require("path");
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin =
     require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const { ALL } = require("dns");
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' })
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
 
 module.exports = {
     mode: 'production',
@@ -21,7 +24,20 @@ module.exports = {
             template: path.join(__dirname, 'public', 'index.html'),
         }),
         new BundleAnalyzerPlugin({ openAnalyzer: true }),
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(dotenv.parsed),
+            'process.env.NODE_ENV': JSON.stringify(
+                isDevelopment ? 'development' : 'production'
+            ),
+        }),
     ],
+    resolve: {
+        fallback: {
+            fs: false,
+            os: false,
+            path: false,
+        },
+    },
     devServer: {
         historyApiFallback: true,
         static: {
