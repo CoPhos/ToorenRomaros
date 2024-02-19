@@ -9,6 +9,13 @@ import SignUpContainer from './SignUpContainer';
 import axios from '../../utils/constants'
 
 function SignUpManager({ active, closePopup }) {
+      const recaptchaRef = useRef()
+      const [captchaToken, setcaptchaToken] = useState(null)
+      const [submiteEnable, setsubmiteEnable] = useState(false)
+
+      function onChange(value) {
+          setcaptchaToken(value)
+      }
     const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
     const PASSWORD_REGEX =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
@@ -37,7 +44,7 @@ function SignUpManager({ active, closePopup }) {
     const [matchPasswordFocus, setmatchPasswordFocus] = useState(false)
 
     const [errorMessage, seterrorMessage] = useState('')
-
+ 
     const userRef = useRef()
     const errorRef = useRef()
 
@@ -62,20 +69,25 @@ function SignUpManager({ active, closePopup }) {
 
     const mutation = useMutation(
         async () => {
-            return axios.post(
-                REGISTER_URL,
-                JSON.stringify({
-                    username: user,
-                    password: password,
-                    email: email,
-                }),
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    withCredentials: true,
-                }
-            )
+           try {
+               return axios.post(
+                   REGISTER_URL,
+                   JSON.stringify({
+                       username: user,
+                       password: password,
+                       email: email,
+                   }),
+                   {
+                       headers: {
+                           'Content-Type': 'application/json',
+                           recaptcha: captchaToken,
+                       },
+                       withCredentials: true,
+                   }
+               )
+           } catch (error) {
+               return error
+           }
         },
         {
             onSuccess: (data) => {
@@ -88,7 +100,6 @@ function SignUpManager({ active, closePopup }) {
                 login(
                     id,
                     user,
-                    password,
                     roles,
                     accessToken,
                     refreshToken,
@@ -111,6 +122,7 @@ function SignUpManager({ active, closePopup }) {
                 closePopup()
             },
             onError: (error) => {
+                recaptchaRef.current.reset()
                 handleApiError(error)
                 errorRef.current.focus()
             },
@@ -174,6 +186,11 @@ function SignUpManager({ active, closePopup }) {
             validmatchPassword={validmatchPassword}
             matchPasswordFocus={matchPasswordFocus}
             handleSubmit={handleSubmit}
+            captchaToken={captchaToken}
+            submiteEnable={submiteEnable}
+            setsubmiteEnable={setsubmiteEnable}
+            onChange={onChange}
+            recaptchaRef={recaptchaRef}
         ></SignUpContainer>
     )
 }

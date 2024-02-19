@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.config;
 
 import com.ToorenRomaros.api.entities.user.RoleEnum;
 
+import com.ToorenRomaros.api.services.RecaptchaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +26,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -61,9 +63,11 @@ public class SecurityConfig {
     @Value("${fronted.url}")
     private String frontendUrl;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final RecaptchaService recaptchaService;
 
-    public SecurityConfig(OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
+    public SecurityConfig(OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler, RecaptchaService recaptchaService) {
         this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
+        this.recaptchaService = recaptchaService;
     }
 
     @Bean
@@ -109,7 +113,9 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .oauth2Login()
-                .successHandler(oAuth2LoginSuccessHandler);
+                .successHandler(oAuth2LoginSuccessHandler)
+                .and()
+                .addFilterBefore(new RecaptchaFilter(recaptchaService), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -173,7 +179,7 @@ public class SecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(List.of(frontendUrl));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "Accept"));
+		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "Accept", "recaptcha"));
         configuration.setAllowCredentials(true);
 //        configuration.addAllowedOrigin("*");
 //        configuration.addAllowedHeader("*");

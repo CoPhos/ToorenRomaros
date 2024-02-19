@@ -2,15 +2,22 @@ import React, { useState, useEffect, useRef } from 'react'
 import useAuth from '../hooks/useAuth'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useMutation } from 'react-query'
-import {jwtDecode} from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 
 import LoginContainer from './LoginContainer'
 import axios from '../../utils/constants'
 
-
 function LoginManager({ active, closePopup }) {
     const LOGIN_URL = '/auth/token'
     const { login } = useAuth()
+    
+    const recaptchaRef = useRef()
+    const [captchaToken, setcaptchaToken] = useState(null)
+    const [submiteEnable, setsubmiteEnable] = useState(false)
+
+    function onChange(value) {
+        setcaptchaToken(value)
+    }
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -44,40 +51,35 @@ function LoginManager({ active, closePopup }) {
 
     const mutation = useMutation(
         async () => {
-           try {
-            return axios.post(
-                LOGIN_URL,
-                JSON.stringify({
-                    username: user,
-                    password: password,
-                }),
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    withCredentials: true,
-                }
-            )
-           } catch (error) {
-            return error
-           }
+            try {
+                return axios.post(
+                    LOGIN_URL,
+                    JSON.stringify({
+                        username: user,
+                        password: password,
+                    }),
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            recaptcha: captchaToken,
+                        },
+                        withCredentials: true,
+                    }
+                )
+                
+            } catch (error) {
+                
+                return error
+            }
         },
         {
             onSuccess: (data) => {
                 const id = data?.data?.Ok?.userId
                 const accessToken = data?.data?.Ok?.accessToken
                 const refreshToken = data?.data?.Ok?.refreshToken
-                console.log(refreshToken)
                 const roles = jwtDecode(accessToken).roles || []
                 const email = data?.data?.Ok?.email
-                login(
-                    id,
-                    user,
-                    roles,
-                    accessToken,
-                    refreshToken,
-                    email
-                ) 
+                login(id, user, roles, accessToken, refreshToken, email)
                 setuser('')
                 setpassword('')
                 seterrorMessage('')
@@ -85,6 +87,7 @@ function LoginManager({ active, closePopup }) {
                 navigate(from, { replace: true })
             },
             onError: (error) => {
+                recaptchaRef.current.reset()
                 handleApiError(error)
                 errorRef.current.focus()
             },
@@ -115,6 +118,11 @@ function LoginManager({ active, closePopup }) {
             password={password}
             setpassword={setpassword}
             errorMessage={errorMessage}
+            captchaToken={captchaToken}
+            submiteEnable={submiteEnable}
+            setsubmiteEnable={setsubmiteEnable}
+            onChange={onChange}
+            recaptchaRef={recaptchaRef}
         ></LoginContainer>
     )
 }
