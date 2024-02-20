@@ -12,13 +12,24 @@
     box-sizing: inherit;
 }
 #root {
-    /* overflow-y: hidden; */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    width: 100vw;
 }
 
 html {
     font-size: 20px;
     margin: 0px;
     padding: 0px;
+}
+
+footer {
+    margin-top: auto;
 }
 
 .carousel {
@@ -180,5 +191,12 @@ body {
 @media only screen and (max-width: 904px) {
     html {
         font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    main {
+        padding-left: 8px;
+        padding-right: 8px;
     }
 }
