@@ -17,7 +17,10 @@ function Layout({ }) {
     else if (location.pathname.includes('/blog')){ fillColor = 'blog'}
     else if (location.pathname.includes('/profile') ||location.pathname.includes('/critic') || location.pathname.includes('/admin')){ fillColor='profile'}
     else if (location.pathname === '/notification') {fillColor = 'notification'}
-
+ 
+    const onlyLogo =
+        location.pathname.includes('/forgot-password') ||
+        location.pathname.includes('/confirm-reset')
 
     let toProfile
     if (auth?.roles?.includes('USER')) {
@@ -28,11 +31,13 @@ function Layout({ }) {
 
         return (
             <Fragment>
-                <NavbarManager></NavbarManager>
+                <NavbarManager onlyLogo={onlyLogo}></NavbarManager>
                 <main>
                     <Outlet />
                 </main>
-                <MobileNavMenu fillColor={fillColor} to={toProfile}/>
+                {!onlyLogo && (
+                    <MobileNavMenu fillColor={fillColor} to={toProfile} />
+                )}
                 <Footer></Footer>
             </Fragment>
         )

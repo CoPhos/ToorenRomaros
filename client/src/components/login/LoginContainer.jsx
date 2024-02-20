@@ -17,6 +17,7 @@ function LoginContainer({
     setsubmiteEnable,
     onChange,
     recaptchaRef,
+    closePopup,
 }) {
     const show = 'flex flex-col items-center justify-start gap-2 w-full'
     const notShow = 'hidden'
@@ -103,8 +104,9 @@ function LoginContainer({
                         />
                     </div>
                     <Link
-                        to="/forgotpassword"
+                        to="/forgot-password"
                         className="text-tiny-m-700 lg:text-tiny-d-700 underline hover:cursor-pointer w-full text-center"
+                        onClick={() => closePopup()}
                     >
                         Forgot Password?
                     </Link>

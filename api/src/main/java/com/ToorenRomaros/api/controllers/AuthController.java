@@ -13,9 +13,11 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.springframework.http.ResponseEntity.*;
 
@@ -48,6 +50,19 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
         response.put("ok", "admin0");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PostMapping("/auth/forgot-password")
+    ResponseEntity<String> sendPasswordResetEmail(@RequestBody @Valid RecoverPasswordDto recoverPasswordDto) throws MessagingException {
+        userService.sendResetPasswordEmail(recoverPasswordDto.getEmail());
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Email sended");
+    }
+
+    @PatchMapping("/auth/reset-password")
+    ResponseEntity<String> resetPassword(@RequestBody @Valid RecoverPasswordDto recoverPasswordDto) {
+        userService.resetPassword(recoverPasswordDto.getToken(), recoverPasswordDto.getNewPassword());
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body("Password updated sucessfully");
     }
 
     @PostMapping("/users")

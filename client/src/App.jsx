@@ -27,6 +27,8 @@ const CriticProfileManager = lazy(() =>
 
 import { LoginPopUpProvider } from '../src/components/context/LoginPopUpProvider'
 import { ActionNotificationProvider } from '../src/components/context/ActionNotificationProvider'
+import PasswordRecoverManager from './components/PasswordRecover/PasswordRecoverManager';
+import ConfirmResetManager from './components/PasswordRecover/ConfirmResetManager';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -47,6 +49,16 @@ export default function App() {
                             <Route path="/" element={<Layout></Layout>}>
                                 {/* public routes */}
                                 <Route exact path="/" element={<Home />} />
+                                <Route
+                                    exact
+                                    path="/forgot-password"
+                                    element={<PasswordRecoverManager />}
+                                />
+                                <Route
+                                    exact
+                                    path="/confirm-reset"
+                                    element={<ConfirmResetManager />}
+                                />
                                 <Route
                                     exact
                                     path="/film/:uuid/"

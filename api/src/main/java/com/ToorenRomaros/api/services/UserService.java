@@ -5,6 +5,7 @@ import com.ToorenRomaros.api.entities.user.UserEntity;
 import org.springframework.security.core.userdetails.User;
 
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -22,5 +23,6 @@ public interface UserService {
     void removeRefreshToken(String refreshToken);
     UserSignedInDto createUserAndSignIn(UserEntity userEntity, String email, String name, HttpServletResponse response) throws UnsupportedEncodingException;
     void storeUserCookies(HttpServletResponse response, UserEntity userEntity, String accessToken, String refreshToken, String email, String name) throws UnsupportedEncodingException;
-
+    void sendResetPasswordEmail(String email) throws MessagingException;
+    void resetPassword(String token, String newPassword);
 }

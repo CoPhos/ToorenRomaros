@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode'
 
 import NavbarContainer from './NavbarContainer.jsx'
 
-function NavbarManager() {
+function NavbarManager({ onlyLogo }) {
     const { auth, login } = useAuth()
     const FILM_URL = '/films'
     const [searchQuery, setSearchQuery] = useState('')
@@ -20,20 +20,24 @@ function NavbarManager() {
     function handleOnChange(event) {
         setSearchQuery(event.target.value)
     }
-  function getDecodedCookie(cookieName) {
-      const cookies = document.cookie.split(';').map((cookie) => cookie.trim())
+    function getDecodedCookie(cookieName) {
+        const cookies = document.cookie
+            .split(';')
+            .map((cookie) => cookie.trim())
 
-      for (const cookie of cookies) {
-          const [name, value] = cookie.split('=')
+        for (const cookie of cookies) {
+            const [name, value] = cookie.split('=')
 
-          if (name === cookieName) {
-              const decodedValue = decodeURIComponent(value.replace(/\+/g, ' '))
-              return decodedValue
-          }
-      }
+            if (name === cookieName) {
+                const decodedValue = decodeURIComponent(
+                    value.replace(/\+/g, ' ')
+                )
+                return decodedValue
+            }
+        }
 
-      return undefined
-  }
+        return undefined
+    }
 
     useEffect(() => {
         const id = getDecodedCookie('id')
@@ -220,6 +224,7 @@ function NavbarManager() {
                 inputRef={inputRef}
                 divRef={divRef}
                 setSearchQuery={setSearchQuery}
+                onlyLogo={onlyLogo}
             ></NavbarContainer>
         </Fragment>
     )

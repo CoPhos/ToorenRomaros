@@ -1,11 +1,14 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.user.*;
+import com.ToorenRomaros.api.entities.user.PasswordConfirmationTokenEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.user.UserTokenEntity;
 import com.ToorenRomaros.api.exeptions.GenericAlreadyExistsException;
 import com.ToorenRomaros.api.exeptions.InvalidRefreshTokenException;
+import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
+import com.ToorenRomaros.api.repositories.user.PasswordConfirmationTokenRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.repositories.user.UserTokenRepository;
 import com.ToorenRomaros.api.security.CustomUserDetails;
@@ -22,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
@@ -29,6 +33,7 @@ import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
@@ -43,15 +48,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder bCryptPasswordEncoder;
     private final JwtManager tokenManager;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordConfirmationTokenRepository passwordConfirmationTokenRepository;
+    private final MailService mailService;
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    public UserServiceImpl(UserRepository userRepository, UserTokenRepository userTokenRepository, ModelMapper modelMapper, PasswordEncoder bCryptPasswordEncoder, JwtManager tokenManager, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserTokenRepository userTokenRepository, ModelMapper modelMapper, PasswordEncoder bCryptPasswordEncoder, JwtManager tokenManager, PasswordEncoder passwordEncoder, PasswordConfirmationTokenRepository passwordConfirmationTokenRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.userTokenRepository = userTokenRepository;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.tokenManager = tokenManager;
         this.passwordEncoder = passwordEncoder;
+        this.passwordConfirmationTokenRepository = passwordConfirmationTokenRepository;
+        this.mailService = mailService;
     }
 
     @Override
@@ -117,7 +126,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserSignedInDto> getAccessToken(RefreshTokenDto refreshTokenDto) {
         //TODO: implement time expiration
-        try{
+        try {
             return userTokenRepository.findByRefreshToken(refreshTokenDto.getRefreshToken())
                     .map(userTokenEntity -> {
                         UserSignedInDto userSignedInDto = createSignedInUser(userTokenEntity.getUser());
@@ -125,7 +134,7 @@ public class UserServiceImpl implements UserService {
                         userTokenRepository.delete(userTokenEntity);
                         return Optional.of(userSignedInDto).orElseThrow(() -> new InvalidRefreshTokenException("Invalid token."));
                     });
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             log.info(String.valueOf(e.getCause()));
         }
@@ -141,7 +150,7 @@ public class UserServiceImpl implements UserService {
                 });
     }
 
-    public  UserSignedInDto createSignedUserWithRefreshToken(UserEntity userEntity) {
+    public UserSignedInDto createSignedUserWithRefreshToken(UserEntity userEntity) {
         UserSignedInDto userSignedInDto = createSignedInUser(userEntity);
         userSignedInDto.setRefreshToken(createRefreshToken(userEntity));
         return userSignedInDto;
@@ -160,10 +169,10 @@ public class UserServiceImpl implements UserService {
                 userEntity.getPassword(),
                 Objects.nonNull(userEntity.getRole()) ? userEntity.getRole().name() : ""));
 
-        return new UserSignedInDto(userEntity.getUsername(), token,userEntity.getEmail(), userEntity.getId().toString());
+        return new UserSignedInDto(userEntity.getUsername(), token, userEntity.getEmail(), userEntity.getId().toString());
     }
 
-    public  String createRefreshToken(UserEntity user) {
+    public String createRefreshToken(UserEntity user) {
         String token = RandomHolder.randomKey(128);
         userTokenRepository.save(new UserTokenEntity().setRefreshToken(token).setUser(user));
         return token;
@@ -201,5 +210,34 @@ public class UserServiceImpl implements UserService {
         userCookie.setPath("/");
         userCookie.setSecure(true);
         response.addCookie(userCookie);
+    }
+
+    @Override
+    public void sendResetPasswordEmail(String email) throws MessagingException {
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("No user was found corresponding to the email: " + email));
+        PasswordConfirmationTokenEntity passwordConfirmationTokenEntity = new PasswordConfirmationTokenEntity(userEntity);
+        PasswordConfirmationTokenEntity savedPasswordConfirmationTokenEntity = passwordConfirmationTokenRepository.save(passwordConfirmationTokenEntity);
+        mailService.sendNewMail(email, "Password Recovery", "http://localhost:3000/confirm-reset?token=" + savedPasswordConfirmationTokenEntity.getToken().toString());
+    }
+
+    @Transactional
+    @Override
+    public void resetPassword(String token, String newPassword) {
+       try{
+           PasswordConfirmationTokenEntity passwordConfirmationTokenEntity = passwordConfirmationTokenRepository.findByToken(token).orElseThrow(() -> new ResourceNotFoundException("Invalid token"));
+           log.info(passwordConfirmationTokenEntity.getId().toString());
+           log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+           if (LocalDateTime.now().isBefore(passwordConfirmationTokenEntity.getExpirationDate())) {
+               UserEntity userEntity = passwordConfirmationTokenEntity.getUser();
+               String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+               userEntity.setPassword(encodedPassword);
+               passwordConfirmationTokenRepository.delete(passwordConfirmationTokenEntity);
+           }else {
+               throw new ResourceNotFoundException("test exception");
+           }
+       }catch (Exception e){
+           log.info(e.getMessage());
+           log.info(String.valueOf(e.getCause()));
+       }
     }
 }

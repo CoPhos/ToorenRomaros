@@ -123,6 +123,7 @@ function LoginManager({ active, closePopup }) {
             setsubmiteEnable={setsubmiteEnable}
             onChange={onChange}
             recaptchaRef={recaptchaRef}
+            closePopup={closePopup}
         ></LoginContainer>
     )
 }
