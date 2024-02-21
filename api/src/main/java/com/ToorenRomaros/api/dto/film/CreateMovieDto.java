@@ -35,5 +35,4 @@ public class MovieDto extends FilmDto {
     public void setAtTheaters(Boolean atTheaters) {
         this.atTheaters = atTheaters;
     }
-
 }

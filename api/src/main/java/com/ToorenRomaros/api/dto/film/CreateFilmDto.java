@@ -2,9 +2,7 @@ package com.ToorenRomaros.api.dto.film;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.hibernate.annotations.Formula;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -21,6 +19,7 @@ import java.util.Objects;
 public class FilmDto {
     private String id;
     @Size(max = 255, message = "Tittle max size is 255 characters.")
+    @NotNull(message = "Title can not be null")
     private String tittle;
     @Size(max = 255, message = "Synopsis max size is 255 characters.")
     private String synopsis;
@@ -32,6 +31,7 @@ public class FilmDto {
     private String suitableFor;
     private LocalDate coomingSoon;
     private LocalDate streamingReleaseDate;
+    @NotNull(message = "Film type can not be null")
     private Integer filmType;
     private String sagaId;
     private Float averageSuperRating;
