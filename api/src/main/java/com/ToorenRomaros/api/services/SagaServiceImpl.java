@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.SagaDto;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
+import com.ToorenRomaros.api.exeptions.InvalidRefreshTokenException;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.SagaRepository;
 import com.ToorenRomaros.api.utils.Utils;
@@ -20,32 +21,30 @@ public class SagaServiceImpl implements SagaService{
         this.sagaRepository = sagaRepository;
         this.modelMapper = modelMapper;
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public SagaDto createSaga(SagaDto sagaDto) {
         SagaEntity sagaEntity = modelMapper.map(sagaDto, SagaEntity.class);
         SagaEntity savedSaga = sagaRepository.save(sagaEntity);
         return modelMapper.map(savedSaga, SagaDto.class);
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public SagaDto updateSaga(UUID id, SagaDto sagaDto) {
         SagaEntity sagaEntity = modelMapper.map(sagaDto, SagaEntity.class);
-        SagaEntity newSagaEntity = sagaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
+        SagaEntity newSagaEntity = sagaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Saga not found."));
         BeanUtils.copyProperties(sagaEntity, newSagaEntity, Utils.getNullPropertyNames(sagaEntity));
         SagaEntity savedSaga = sagaRepository.save(newSagaEntity);
         return modelMapper.map(savedSaga, SagaDto.class);
     }
-
     @Override
     public SagaDto getSagaById(UUID id) {
-        SagaEntity sagaEntity = sagaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
+        SagaEntity sagaEntity = sagaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Saga not found."));
         return modelMapper.map(sagaEntity, SagaDto.class);
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public void deleteSaga(UUID id) {
-        sagaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-        sagaRepository.deleteById(id);
+        sagaRepository.findById(id)
+                .ifPresentOrElse(sagaRepository::delete, () -> {
+                    throw new InvalidRefreshTokenException("Saga not found.");
+                });
     }
 }

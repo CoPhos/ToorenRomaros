@@ -4,8 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +19,7 @@ public class SagaEntity {
     private UUID id;
     @Column(name = "NAME", columnDefinition = "VARCHAR(255)")
     @Size(max = 255, message = "max size is 255 characters")
+    @NotNull(message = "Saga name can not be null.")
     private String name;
 
     public SagaEntity(String name) {
