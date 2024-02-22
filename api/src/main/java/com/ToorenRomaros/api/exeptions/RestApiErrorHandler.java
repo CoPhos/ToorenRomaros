@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -67,7 +65,6 @@ public class RestApiErrorHandler {
             HttpServletRequest request,
             AccessDeniedException ex,
             Locale locale) {
-        //InvalidRefreshTokenException
         String errorMsg = String.format("%s %s",ErrorCode.ACCESS_DENIED.getErrMsgKey(), ex.getMessage());
         Error error = ErrorUtils
                 .createError(errorMsg, ErrorCode.ACCESS_DENIED.getErrCode(),
@@ -131,8 +128,6 @@ public class RestApiErrorHandler {
                                                                                            Locale locale) {
         List<String> errors = ex.getBindingResult().getFieldErrors()
                 .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
-
-
         return new ResponseEntity<>(getErrorsMap(errors, request), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
     private Map<String, List<String>> getErrorsMap(List<String> errors, HttpServletRequest request) {
@@ -143,19 +138,18 @@ public class RestApiErrorHandler {
                         HttpStatus.BAD_REQUEST.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());
-
         errorResponse.put("errors", errors);
         errorResponse.put("info", List.of(error.getErrorCode(), error.getMessage(), error.getStatus().toString(), error.getUrl(), error.getTimestamp().toString()));
         return errorResponse;
     }
-    @ExceptionHandler(MethodNotAllowedException.class)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<Error> handleMethodNotAllowedException(
             HttpServletRequest request,
-            MethodNotAllowedException ex,
+            HttpRequestMethodNotSupportedException  ex,
             Locale locale) {
         Error error = ErrorUtils
                 .createError(String
-                                .format("%s. Supported methods: %s", ex.getMessage(), ex.getSupportedMethods()),
+                                .format("%s. Supported methods: %s", ex.getMessage(), Arrays.toString(ex.getSupportedMethods())),
                         ErrorCode.HTTP_REQUEST_METHOD_NOT_SUPPORTED.getErrCode(),
                         HttpStatus.METHOD_NOT_ALLOWED.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
