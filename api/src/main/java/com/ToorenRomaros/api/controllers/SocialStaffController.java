@@ -1,11 +1,8 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.film.FilmDto;
-import com.ToorenRomaros.api.dto.socials.SocialDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericAddRequestDto;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
 import com.ToorenRomaros.api.services.SocialGenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

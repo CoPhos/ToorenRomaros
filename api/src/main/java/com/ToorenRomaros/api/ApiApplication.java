@@ -41,7 +41,7 @@ public class ApiApplication {
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_saga.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_social.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_streamSite.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_episode.sql"));
+			//resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_episode.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-tvshows.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-movies.sql"));
 			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_tag.sql"));

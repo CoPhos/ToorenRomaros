@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -22,8 +23,9 @@ public class FilmEntity {
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-    @Column(name = "TITTLE", columnDefinition = "VARCHAR(255)")
+    @Column(name = "TITTLE", columnDefinition = "VARCHAR(255)", unique = true)
     @Size(max = 255, message = "max size is 255 characters")
+    @NotNull(message = "Title can not be null")
     private String tittle;
     @Column(name = "SYNOPSIS", columnDefinition = "VARCHAR(255)")
     @Size(max = 255, message = "max size is 255 characters")

@@ -3,7 +3,7 @@ package com.ToorenRomaros.api.dto.film;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-public class CreateMovieDto extends CreateFilmDto {
+public class UpdateMovieDto extends UpdateFilmDto{
     @Size(max = 15, message = "Box office max size is 15 characters")
     private String boxOffice;
     @Size(max = 5, message = "Run time max size is 5 characters")

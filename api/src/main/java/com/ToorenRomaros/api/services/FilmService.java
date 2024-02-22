@@ -1,16 +1,18 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.film.FilmDto;
+import com.ToorenRomaros.api.dto.film.CreateFilmDto;
+import com.ToorenRomaros.api.dto.film.UpdateFilmDto;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public interface FilmService {
-     FilmDto createFilm(FilmDto filmDto);
-     FilmDto getFilmById(UUID id);
-     List<FilmDto>  getAllFilmsBySagaId(UUID id);
-     FilmDto updateFilm(UUID id, FilmDto filmDto);
+     CreateFilmDto createFilm(CreateFilmDto createFilmDto);
+     CreateFilmDto getFilmById(UUID id);
+     List<CreateFilmDto>  getAllFilmsBySagaId(UUID id);
+     UpdateFilmDto updateFilm(UUID id, UpdateFilmDto updateFilmDto);
      void deleteFilm(UUID id);
      Map<String, Object> getFilmByDynamicQuery(List<String> streamSites,
                                                List<String> genres,
@@ -25,5 +27,5 @@ public interface FilmService {
                                                String superRating,
                                                String searchQuery,
                                                int page,
-                                               int size);
+                                               int size) throws SQLException;
 }

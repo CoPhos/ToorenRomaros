@@ -1,8 +1,8 @@
 package com.ToorenRomaros.api.exeptions;
 
 import com.fasterxml.jackson.core.JsonParseException;
-
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,25 +32,6 @@ import static com.ToorenRomaros.api.security.Constants.TOKEN_URL;
 
 @ControllerAdvice
 public class RestApiErrorHandler {
-
-    private final MessageSource messageSource;
-    @Autowired
-    public RestApiErrorHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
-    //TODO mapping exception
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Error> handleException(HttpServletRequest request, Exception ex,
-                                                 Locale locale) {
-        Error error = ErrorUtils
-                .createError(ErrorCode.GENERIC_ERROR.getErrMsgKey(), ErrorCode.GENERIC_ERROR.getErrCode(),
-                        HttpStatus.INTERNAL_SERVER_ERROR.value()).setUrl(request.getRequestURL().toString())
-                .setReqMethod(request.getMethod())
-                .setTimestamp(Instant.now());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<Error> handleHttpMediaTypeNotSupportedException(HttpServletRequest request,
                                                                           HttpMediaTypeNotSupportedException ex,
@@ -97,7 +76,6 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
-
     @ExceptionHandler(HttpMessageNotWritableException.class)
     public ResponseEntity<Error> handleHttpMessageNotWritableException(HttpServletRequest request,
                                                                        HttpMessageNotWritableException ex,
@@ -110,7 +88,6 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
     public ResponseEntity<Error> handleHttpMediaTypeNotAcceptableException(HttpServletRequest request,
                                                                            HttpMediaTypeNotAcceptableException ex,
@@ -131,12 +108,11 @@ public class RestApiErrorHandler {
         Error error = ErrorUtils
                 .createError(ErrorCode.HTTP_MESSAGE_NOT_READABLE.getErrMsgKey(),
                         ErrorCode.HTTP_MESSAGE_NOT_READABLE.getErrCode(),
-                        HttpStatus.NOT_ACCEPTABLE.value()).setUrl(request.getRequestURL().toString())
+                        HttpStatus.BAD_REQUEST.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-
     @ExceptionHandler(JsonParseException.class)
     public ResponseEntity<Error> handleJsonParseException(HttpServletRequest request,
                                                           JsonParseException ex,
@@ -147,9 +123,8 @@ public class RestApiErrorHandler {
                         HttpStatus.NOT_ACCEPTABLE.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(error, HttpStatus.NOT_ACCEPTABLE);
     }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, List<String>>> handleMethodArgumentNotValidException(HttpServletRequest request,
                                                                                            MethodArgumentNotValidException ex,
@@ -173,7 +148,6 @@ public class RestApiErrorHandler {
         errorResponse.put("info", List.of(error.getErrorCode(), error.getMessage(), error.getStatus().toString(), error.getUrl(), error.getTimestamp().toString()));
         return errorResponse;
     }
-
     @ExceptionHandler(MethodNotAllowedException.class)
     public ResponseEntity<Error> handleMethodNotAllowedException(
             HttpServletRequest request,
@@ -188,7 +162,6 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.METHOD_NOT_ALLOWED);
     }
-
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Error> handleIllegalArgumentException(
             HttpServletRequest request,
@@ -211,6 +184,20 @@ public class RestApiErrorHandler {
         Error error = ErrorUtils
                 .createError(String
                                 .format("%s %s", ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrMsgKey(), ex.getRootCause()),
+                        ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrCode(),
+                        HttpStatus.BAD_REQUEST.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<Error> handleSQLGrammarException(
+            HttpServletRequest request,
+            SQLException ex,
+            Locale locale) {
+        Error error = ErrorUtils
+                .createError(String
+                                .format("%s %s", ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrMsgKey(),"Verify Params"),
                         ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrCode(),
                         HttpStatus.BAD_REQUEST.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
@@ -246,7 +233,6 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(GenericAlreadyExistsException.class)
     public ResponseEntity<Error> handleGenericAlreadyExistsException(HttpServletRequest request,
                                                                      GenericAlreadyExistsException ex, Locale locale) {
@@ -260,7 +246,6 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_ACCEPTABLE);
     }
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Error> handleResourceNotFoundException(HttpServletRequest request,
                                                                  ResourceNotFoundException ex, Locale locale) {
@@ -273,7 +258,6 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(InvalidRefreshTokenException.class)
     public ResponseEntity<Error> handleInvalidRefreshTokenException(
             HttpServletRequest request,
@@ -286,5 +270,17 @@ public class RestApiErrorHandler {
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Error> handleException(HttpServletRequest request, Exception ex,
+                                                 Locale locale) {
+            Error error = ErrorUtils
+                    .createError(ErrorCode.GENERIC_ERROR.getErrMsgKey(), ErrorCode.GENERIC_ERROR.getErrCode(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()).setUrl(request.getRequestURL().toString())
+                    .setReqMethod(request.getMethod())
+                    .setTimestamp(Instant.now());
+
+            return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 }

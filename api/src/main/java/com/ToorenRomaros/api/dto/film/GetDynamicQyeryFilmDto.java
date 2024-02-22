@@ -3,7 +3,6 @@ package com.ToorenRomaros.api.dto.film;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
@@ -11,8 +10,8 @@ import java.time.LocalDate;
         property = "filmType",
         visible = true)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = MovieDto.class, name = "1"),
-        @JsonSubTypes.Type(value = SerieDto.class, name = "2"),
+        @JsonSubTypes.Type(value = CreateMovieDto.class, name = "1"),
+        @JsonSubTypes.Type(value = CreateSerieDto.class, name = "2"),
 })
 public class GetDynamicQyeryFilmDto {
     private String id;

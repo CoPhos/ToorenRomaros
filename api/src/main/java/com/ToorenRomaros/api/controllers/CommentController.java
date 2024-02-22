@@ -1,6 +1,5 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.publication.CommentDto;
 import com.ToorenRomaros.api.services.CommentService;
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 

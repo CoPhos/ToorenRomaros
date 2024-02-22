@@ -1,6 +1,5 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteDto;
 import com.ToorenRomaros.api.services.StreamSiteService;
 import org.springframework.http.HttpStatus;

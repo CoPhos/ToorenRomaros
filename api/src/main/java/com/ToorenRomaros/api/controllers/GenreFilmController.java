@@ -1,6 +1,5 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.film.FilmDto;
 import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
 import com.ToorenRomaros.api.services.GenreFilmService;
 import org.springframework.http.HttpStatus;

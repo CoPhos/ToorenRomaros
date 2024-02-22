@@ -1,8 +1,9 @@
 package com.ToorenRomaros.api.config;
 
-import com.ToorenRomaros.api.dto.film.EpisodeDto;
-import com.ToorenRomaros.api.dto.film.MovieDto;
-import com.ToorenRomaros.api.dto.film.SerieDto;
+import com.ToorenRomaros.api.dto.film.CreateMovieDto;
+import com.ToorenRomaros.api.dto.film.CreateSerieDto;
+import com.ToorenRomaros.api.dto.film.UpdateMovieDto;
+import com.ToorenRomaros.api.dto.film.UpdateSerieDto;
 import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
 import com.ToorenRomaros.api.dto.media.GetListImagesDto;
 import com.ToorenRomaros.api.dto.publication.*;
@@ -11,7 +12,6 @@ import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
 import com.ToorenRomaros.api.dto.user.RefreshTokenDto;
 import com.ToorenRomaros.api.dto.watchList.WatchListDto;
-import com.ToorenRomaros.api.entities.film.EpisodeEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
@@ -23,14 +23,8 @@ import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.entities.watchList.WatchListEntity;
-import com.ToorenRomaros.api.services.WatchListServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.modelmapper.*;
 import org.modelmapper.convention.MatchingStrategies;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,15 +32,6 @@ import java.lang.reflect.InvocationTargetException;
 
 @Configuration
 public class MapperConfig {
-    private static final Logger log = LoggerFactory.getLogger(MapperConfig.class);
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        return mapper;
-    }
-
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
@@ -54,16 +39,28 @@ public class MapperConfig {
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 
         //Film
-        TypeMap<Movie, MovieDto> propertyMapperMoviePrequelSequel = modelMapper.createTypeMap(Movie.class, MovieDto.class);
-        propertyMapperMoviePrequelSequel.addMappings(
+        TypeMap<Movie, CreateMovieDto> propertyMapperCreateMovieSaga = modelMapper.createTypeMap(Movie.class, CreateMovieDto.class);
+        propertyMapperCreateMovieSaga.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getSaga().getName(), MovieDto::setSagaId);
+                    mapper.map(src -> src.getSaga().getName(), CreateMovieDto::setSagaId);
                 }
         );
-        TypeMap<Serie, SerieDto> propertyMapperSeriePrequelSequel = modelMapper.createTypeMap(Serie.class, SerieDto.class);
-        propertyMapperSeriePrequelSequel.addMappings(
+        TypeMap<Serie, CreateSerieDto> propertyMapperCreateSerieSaga = modelMapper.createTypeMap(Serie.class, CreateSerieDto.class);
+        propertyMapperCreateSerieSaga.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getSaga().getName(), SerieDto::setSagaId);
+                    mapper.map(src -> src.getSaga().getName(), CreateSerieDto::setSagaId);
+                }
+        );
+        TypeMap<Movie, UpdateMovieDto> propertyMapperUpdateMovieSaga = modelMapper.createTypeMap(Movie.class, UpdateMovieDto.class);
+        propertyMapperUpdateMovieSaga.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getSaga().getName(), UpdateMovieDto::setSagaId);
+                }
+        );
+        TypeMap<Serie, UpdateSerieDto> propertyMapperUpdateSerieSaga = modelMapper.createTypeMap(Serie.class, UpdateSerieDto.class);
+        propertyMapperUpdateSerieSaga.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getSaga().getName(), UpdateSerieDto::setSagaId);
                 }
         );
 
@@ -111,14 +108,6 @@ public class MapperConfig {
                     mapper.map(src -> src.getFilm().getTittle(), StreamSiteFilmDto::setFilmName);
                     mapper.map(src -> src.getStreamSite().getName(), StreamSiteFilmDto::setStreamSiteName);
                     mapper.map(src -> src.getStreamSite().getId(), StreamSiteFilmDto::setStreamsiteId);
-                }
-        );
-
-        //Episode
-        TypeMap<EpisodeEntity, EpisodeDto> propertyMapperEpisodeDto = modelMapper.createTypeMap(EpisodeEntity.class, EpisodeDto.class);
-        propertyMapperEpisodeDto.addMappings(
-                mapper -> {
-                    mapper.map(src -> src.getSerie().getId(), EpisodeDto::setSerieId);
                 }
         );
 

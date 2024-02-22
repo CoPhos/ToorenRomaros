@@ -4,58 +4,67 @@ import com.ToorenRomaros.api.dto.film.*;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
-import com.ToorenRomaros.api.services.FilmServiceImpl;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FilmMapper {
-
     private final ModelMapper modelMapper;
-
     public FilmMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
-    private static final Logger log = LoggerFactory.getLogger(FilmMapper.class);
-     public FilmEntity mapToFilmEntity(FilmDto filmDto){
-        if(filmDto instanceof MovieDto) {
-            return modelMapper.map(filmDto, Movie.class);
-        }
-        if(filmDto instanceof SerieDto){
-            return modelMapper.map(filmDto, Serie.class);
-        }
-        return null;
-    }
 
-    public FilmDto mapToFilmDto(FilmEntity filmEntity){
-        try{
-            if(filmEntity instanceof Movie){
-                FilmDto filmDto = modelMapper.map(filmEntity, MovieDto.class);
-                filmDto.setFilmType(1);
-                return filmDto;
-            }
-            if (filmEntity instanceof Serie){
-                FilmDto filmDto = modelMapper.map(filmEntity, SerieDto.class);
-                filmDto.setFilmType(2);
-                return filmDto;
-            }
-            return null;
-        }catch (Exception e){
-            log.info(e.getMessage());
-            log.info(String.valueOf(e.getCause()));
+    public FilmEntity mapUpdateFilmDtoToFilmEntity(UpdateFilmDto updateFilmDto) {
+        if (updateFilmDto instanceof UpdateMovieDto) {
+            return modelMapper.map(updateFilmDto, Movie.class);
+        }
+        if (updateFilmDto instanceof UpdateSerieDto) {
+            return modelMapper.map(updateFilmDto, Serie.class);
         }
         return null;
     }
-    public GetDynamicQyeryFilmDto mapToGetDynamicQueryFilmDto(FilmEntity filmEntity){
-        if(filmEntity instanceof Movie){
+    public UpdateFilmDto mapFilmEntityToUpdateFilmDto(FilmEntity filmEntity) {
+        if (filmEntity instanceof Movie) {
+            UpdateFilmDto updateFilmDto = modelMapper.map(filmEntity, UpdateMovieDto.class);
+            updateFilmDto.setFilmType(1);
+            return updateFilmDto;
+        }
+        if (filmEntity instanceof Serie) {
+            UpdateFilmDto updateFilmDto = modelMapper.map(filmEntity, UpdateSerieDto.class);
+            updateFilmDto.setFilmType(2);
+            return updateFilmDto;
+        }
+        return null;
+    }
+    public FilmEntity mapCreateFilmDtoToFilmEntity(CreateFilmDto createFilmDto) {
+        if (createFilmDto instanceof CreateMovieDto) {
+            return modelMapper.map(createFilmDto, Movie.class);
+        }
+        if (createFilmDto instanceof CreateSerieDto) {
+            return modelMapper.map(createFilmDto, Serie.class);
+        }
+        return null;
+    }
+    public CreateFilmDto mapFilmEntityToCreateFilmDto(FilmEntity filmEntity) {
+        if (filmEntity instanceof Movie) {
+            CreateFilmDto createFilmDto = modelMapper.map(filmEntity, CreateMovieDto.class);
+            createFilmDto.setFilmType(1);
+            return createFilmDto;
+        }
+        if (filmEntity instanceof Serie) {
+            CreateFilmDto createFilmDto = modelMapper.map(filmEntity, CreateSerieDto.class);
+            createFilmDto.setFilmType(2);
+            return createFilmDto;
+        }
+        return null;
+    }
+    public GetDynamicQyeryFilmDto mapToGetDynamicQueryFilmDto(FilmEntity filmEntity) {
+        if (filmEntity instanceof Movie) {
             GetDynamicQyeryFilmDto filmDto = modelMapper.map(filmEntity, GetDynamicQueryMovieDto.class);
             filmDto.setFilmType(1);
             return filmDto;
         }
-        if (filmEntity instanceof Serie){
+        if (filmEntity instanceof Serie) {
             GetDynamicQyeryFilmDto filmDto = modelMapper.map(filmEntity, GetDynamicQuerySerieDto.class);
             filmDto.setFilmType(2);
             return filmDto;

@@ -1,39 +1,35 @@
 package com.ToorenRomaros.api.dao;
 
 import com.ToorenRomaros.api.entities.film.FilmEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.*;
 
 @Repository
 public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
-    private static final Logger log = LoggerFactory.getLogger(FilmRepositoryCustomImpl.class);
     private final EntityManager em;
-
     public FilmRepositoryCustomImpl(EntityManager em) {
         this.em = em;
     }
-
     @Override
-    public Map<String, Object> findDinamicQuery(List<String> streamSites,
-                                                List<String> genres,
-                                                List<String> suitableFor,
-                                                String filmType,
-                                                String atTheaters,
-                                                String atStreaming,
-                                                String commingSoonStreaming,
-                                                String commingSoonTheaters,
-                                                String[] orderBy,
-                                                String userRating,
-                                                String superRating,
-                                                String searchQuery,
-                                                int page,
-                                                int size) {
+    public Map<String, Object> findByDinamicQuery(List<String> streamSites,
+                                                  List<String> genres,
+                                                  List<String> suitableFor,
+                                                  String filmType,
+                                                  String atTheaters,
+                                                  String atStreaming,
+                                                  String commingSoonStreaming,
+                                                  String commingSoonTheaters,
+                                                  String[] orderBy,
+                                                  String userRating,
+                                                  String superRating,
+                                                  String searchQuery,
+                                                  int page,
+                                                  int size) throws SQLException {
        try {
            StringBuilder queryText = new StringBuilder("SELECT DISTINCT film.* FROM film" +
                    " LEFT JOIN stream_film ON stream_film.film_id=film.id" +
@@ -94,7 +90,6 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
            if (atTheaters != null) {
                queryText.append(" and film.at_theaters = ?");
                queryText.append(argumentCounter);
-               argumentCounter++;
                providedParameters.add(atTheaters);
            }
            if (commingSoonStreaming != null || commingSoonTheaters != null) {
@@ -133,19 +128,16 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
                queryText.append(" ");
                queryText.append(arrOfString[1].toUpperCase());
           }
-            log.info(queryText.toString());
            Query query = em.createNativeQuery(queryText.toString(), FilmEntity.class);
 
            StringBuilder queryCountText = new StringBuilder(queryText);
            queryCountText.delete(0, 22);
            queryCountText.insert(0, "SELECT COUNT(DISTINCT film.id)");
-           log.info(queryCountText.toString());
 
            Query countQuery = em.createNativeQuery(queryCountText.toString());
 
            argumentCounter = 1;
            for (String providedParameter : providedParameters) {
-               log.info(String.valueOf(argumentCounter));
                query.setParameter(argumentCounter, providedParameter);
                countQuery.setParameter(argumentCounter, providedParameter);
                argumentCounter++;
@@ -155,7 +147,6 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
 
            query.setFirstResult(page * size);
            query.setMaxResults(size);
-           log.info(query.unwrap(org.hibernate.query.NativeQuery.class).getQueryString());
 
            List<FilmEntity> queryResultList = query.getResultList();
 
@@ -167,8 +158,7 @@ public class FilmRepositoryCustomImpl implements FilmRepositoryCustom {
            result.put("pageNumber", page);
            return result;
        }catch (Exception e){
-           log.info(e.getMessage());
+           throw new SQLException();
        }
-        return null;
     }
 }

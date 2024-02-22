@@ -74,6 +74,7 @@ function LoginManager({ active, closePopup }) {
         },
         {
             onSuccess: (data) => {
+                console.log(data)
                 const id = data?.data?.Ok?.userId
                 const accessToken = data?.data?.Ok?.accessToken
                 const refreshToken = data?.data?.Ok?.refreshToken
