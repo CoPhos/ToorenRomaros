@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SagaRepository extends JpaRepository<SagaEntity, UUID> {
-    @Query(nativeQuery = true, value = "select * from saga s where s.film_id = ?1")
-    Optional<SagaEntity> findSagaByFilmId(String id);
+    @Query(nativeQuery = true, value = "SELECT * FROM saga s WHERE s.film_id = ?1")
+    Optional<SagaEntity> findByFilmId(String id);
 }

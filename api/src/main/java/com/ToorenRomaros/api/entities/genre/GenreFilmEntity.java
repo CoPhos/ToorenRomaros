@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.entities.genre;
 
 import com.ToorenRomaros.api.entities.film.FilmEntity;
-import com.ToorenRomaros.api.entities.staff.StaffEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -17,14 +16,12 @@ public class GenreFilmEntity {
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-
     @ManyToOne
     @JoinColumn(name = "film_id")
     FilmEntity film;
     @ManyToOne
     @JoinColumn(name = "genre_id")
     GenreEntity genre;
-
     public GenreFilmEntity(FilmEntity film, GenreEntity genre) {
         this.film = film;
         this.genre = genre;

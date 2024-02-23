@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Entity
@@ -18,8 +19,8 @@ public class GenreEntity {
     private UUID id;
     @Column(name = "GENRE")
     @NotNull(message = "Genre name can not be null")
+    @Size(max = 36, message = "Genre name can not be longer than 36 characters")
     private String genre;
-
     public UUID getId() {
         return id;
     }

@@ -1,9 +1,7 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
 import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
-import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;

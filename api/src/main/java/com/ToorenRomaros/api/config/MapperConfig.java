@@ -4,7 +4,8 @@ import com.ToorenRomaros.api.dto.film.CreateMovieDto;
 import com.ToorenRomaros.api.dto.film.CreateSerieDto;
 import com.ToorenRomaros.api.dto.film.UpdateMovieDto;
 import com.ToorenRomaros.api.dto.film.UpdateSerieDto;
-import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
+import com.ToorenRomaros.api.dto.genre.CreateGenreFilmDto;
+import com.ToorenRomaros.api.dto.genre.GetGenreFilmDto;
 import com.ToorenRomaros.api.dto.media.GetListImagesDto;
 import com.ToorenRomaros.api.dto.publication.*;
 import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
@@ -93,11 +94,11 @@ public class MapperConfig {
         );
 
         //GenreFilm
-        TypeMap<GenreFilmEntity, GenreFilmDto> propertyMapperGenreFilmDto = modelMapper.createTypeMap(GenreFilmEntity.class, GenreFilmDto.class);
+        TypeMap<GenreFilmEntity, GetGenreFilmDto> propertyMapperGenreFilmDto = modelMapper.createTypeMap(GenreFilmEntity.class, GetGenreFilmDto.class);
         propertyMapperGenreFilmDto.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getFilm().getTittle(), GenreFilmDto::setFilm);
-                    mapper.map(src -> src.getGenre().getGenre(), GenreFilmDto::setGenre);
+                    mapper.map(src -> src.getFilm().getTittle(), GetGenreFilmDto::setFilm);
+                    mapper.map(src -> src.getGenre().getGenre(), GetGenreFilmDto::setGenre);
                 }
         );
 

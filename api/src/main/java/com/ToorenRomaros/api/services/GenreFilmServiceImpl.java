@@ -1,17 +1,15 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
-import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
+import com.ToorenRomaros.api.dto.genre.CreateGenreFilmDto;
+import com.ToorenRomaros.api.dto.genre.GetGenreFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.genre.GenreEntity;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
-import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.genre.GenreFilmRepository;
 import com.ToorenRomaros.api.repositories.genre.GenreRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class GenreFilmServiceImpl implements GenreFilmService{
-
     private final GenreFilmRepository genreFilmRepository;
     private final FilmRepository filmRepository;
     private final GenreRepository genreRepository;
@@ -32,45 +29,35 @@ public class GenreFilmServiceImpl implements GenreFilmService{
         this.genreRepository = genreRepository;
         this.modelMapper = modelMapper;
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public GenreFilmDto createGenreFilm(GenreFilmDto genreFilmDto) {
-        GenreEntity genreEntity = genreRepository.findById(UUID.fromString(genreFilmDto.getGenre())).orElseThrow(() -> new ResourceNotFoundException("'" + genreFilmDto.getGenre() + "'"));
-        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(genreFilmDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("'" + genreFilmDto.getFilm() + "'"));
-
+    public GetGenreFilmDto createGenreFilm(CreateGenreFilmDto createGenreFilmDto) {
+        GenreEntity genreEntity = genreRepository.findById(UUID.fromString(createGenreFilmDto.getGenre())).orElseThrow(() -> new ResourceNotFoundException("Genre not found."));
+        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createGenreFilmDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
         GenreFilmEntity genreFilmEntity = new GenreFilmEntity(filmEntity, genreEntity);
         GenreFilmEntity savedGenreFilm = genreFilmRepository.save(genreFilmEntity);
-
-        return modelMapper.map(savedGenreFilm, GenreFilmDto.class);
+        return modelMapper.map(savedGenreFilm, GetGenreFilmDto.class);
     }
-
     @Override
-    public List<GenreFilmDto> getGenreFilm(UUID id) {
-        List<GenreFilmEntity> genreFilmEntities = genreFilmRepository.findGenreByFilmId(id.toString());
-        if(genreFilmEntities == null){
-            throw new ResourceNotFoundException("Resource not found");
-        }
+    public List<GetGenreFilmDto> getGenreFilm(UUID id) {
+        List<GenreFilmEntity> genreFilmEntities = genreFilmRepository.findAllByFilmId(id.toString());
         return genreFilmEntities.stream().map(genreFilmEntity -> {
-            return modelMapper.map(genreFilmEntity, GenreFilmDto.class);
+            return modelMapper.map(genreFilmEntity, GetGenreFilmDto.class);
         }).collect(Collectors.toList());
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public GenreFilmDto updateGenreFilm(UUID id, GenreFilmDto genreFilmDto) {
-        GenreFilmEntity genreFilmEntity = genreFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-
-        if(genreFilmDto.getFilm() != null){
-            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(genreFilmDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("'" + genreFilmDto.getFilm() + "'"));
+    public GetGenreFilmDto updateGenreFilm(UUID id, CreateGenreFilmDto createGenreFilmDto) {
+        GenreFilmEntity genreFilmEntity = genreFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
+        if(createGenreFilmDto.getFilm() != null){
+            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createGenreFilmDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("'" + createGenreFilmDto.getFilm() + "'"));
             genreFilmEntity.setFilm(filmEntity);
         }
-        if(genreFilmDto.getGenre() != null){
-            GenreEntity genreEntity = genreRepository.findById(UUID.fromString(genreFilmDto.getGenre())).orElseThrow(() -> new ResourceNotFoundException("'" + genreFilmDto.getGenre() + "'"));
+        if(createGenreFilmDto.getGenre() != null){
+            GenreEntity genreEntity = genreRepository.findById(UUID.fromString(createGenreFilmDto.getGenre())).orElseThrow(() -> new ResourceNotFoundException("'" + createGenreFilmDto.getGenre() + "'"));
             genreFilmEntity.setGenre(genreEntity);
         }
         GenreFilmEntity updatedGenreFilm = genreFilmRepository.save(genreFilmEntity);
-        return modelMapper.map(updatedGenreFilm, GenreFilmDto.class);
+        return modelMapper.map(updatedGenreFilm, GetGenreFilmDto.class);
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public void deleteGenreFilm(UUID id) {
         genreFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));

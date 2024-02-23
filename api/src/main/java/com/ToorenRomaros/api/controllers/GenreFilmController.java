@@ -1,6 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.genre.GenreFilmDto;
+import com.ToorenRomaros.api.dto.genre.CreateGenreFilmDto;
 import com.ToorenRomaros.api.services.GenreFilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +24,9 @@ public class GenreFilmController {
     }
 
     @PostMapping("/films/genres")
-    ResponseEntity<Map<String, Object>> createFilmGenre(@RequestBody @Valid GenreFilmDto genreFilmDto) throws Exception {
-        GenreFilmDto newFilmGenre = genreFilmService.createGenreFilm(genreFilmDto);
+    ResponseEntity<Map<String, Object>> createFilmGenre(@RequestBody @Valid CreateGenreFilmDto createGenreFilmDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newFilmGenre);
+        response.put("created",  genreFilmService.createGenreFilm(createGenreFilmDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/films/{id}/genres")
@@ -37,10 +36,9 @@ public class GenreFilmController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PutMapping("/films/{id}/genres")
-    ResponseEntity<Map<String, Object>> updateFilmGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid GenreFilmDto genreFilmDto) throws Exception {
-        GenreFilmDto updatedFilmGenre = genreFilmService.updateGenreFilm(UUID.fromString(id), genreFilmDto);
+    ResponseEntity<Map<String, Object>> updateFilmGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid CreateGenreFilmDto createGenreFilmDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedFilmGenre);
+        response.put("updated", genreFilmService.updateGenreFilm(UUID.fromString(id), createGenreFilmDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/films/genres/{id}")
