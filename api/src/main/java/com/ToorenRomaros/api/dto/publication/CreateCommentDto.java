@@ -6,8 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class CommentDto {
-    private UUID id;
+public class CreateCommentDto {
     private String body;
     @FutureOrPresent(message = "Publication date can not be past")
     @NotNull(message = "Publication Date-time can not be null")
@@ -17,58 +16,21 @@ public class CommentDto {
     private boolean reported;
     @NotNull(message = "User id can not be null")
     private String userId;
-    private String username;
     @NotNull(message = "Film id can not be null")
     private String filmId;
     private int rating;
     private boolean spoiler;
-    private String filmName;
-    private String mainImageId;
-    private String theatersReleaseDate;
-
-    public String getTheatersReleaseDate() {
-        return theatersReleaseDate;
-    }
-    public void setTheatersReleaseDate(String theatersReleaseDate) {
-        this.theatersReleaseDate = theatersReleaseDate;
-    }
-    public String getFilmName() {
-        return filmName;
-    }
-    public void setFilmName(String filmName) {
-        this.filmName = filmName;
-    }
-    public String getMainImageId() {
-        return mainImageId;
-    }
-    public void setMainImageId(String mainImageId) {
-        this.mainImageId = mainImageId;
-    }
     public boolean isSpoiler() {
         return spoiler;
     }
-
     public void setSpoiler(boolean spoiler) {
         this.spoiler = spoiler;
     }
-
     public int getRating() {
         return rating;
     }
     public void setRating(int rating) {
         this.rating = rating;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public UUID getId() {
-        return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
     }
     public String getBody() {
         return body;

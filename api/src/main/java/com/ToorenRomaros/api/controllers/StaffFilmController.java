@@ -1,9 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.staff.StaffDto;
-import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
-import com.ToorenRomaros.api.dto.user.UserAddRequestDto;
-import com.ToorenRomaros.api.dto.user.UserDto;
+import com.ToorenRomaros.api.dto.staff.CreateStaffFilmDto;
 import com.ToorenRomaros.api.services.StaffFilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +24,9 @@ public class StaffFilmController {
     }
 
     @PostMapping("/films/staffs")
-    ResponseEntity<Map<String, Object>> createStaffFilm(@RequestBody @Valid StaffFilmDto staffFilmDto) throws Exception {
-        StaffFilmDto newStaffFilm = staffFilmService.addStaffFilm(staffFilmDto);
+    ResponseEntity<Map<String, Object>> createStaffFilm(@RequestBody @Valid CreateStaffFilmDto createStaffFilmDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newStaffFilm);
+        response.put("response", staffFilmService.addStaffFilm(createStaffFilmDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/films/{id}/staffs")
@@ -39,13 +35,6 @@ public class StaffFilmController {
         response.put("response", staffFilmService.getAllStaffFromFilm(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
 
-    }
-    @PutMapping("/films/staffs/{id}")
-    ResponseEntity<Map<String, Object>> updateUser(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody StaffFilmDto staffFilmDto) throws Exception {
-        StaffFilmDto updatedStaffFilm = staffFilmService.updateStaffFilm(UUID.fromString(id), staffFilmDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedStaffFilm);
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/films/staffs/{id}")
     ResponseEntity<String> deleteStaffFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {

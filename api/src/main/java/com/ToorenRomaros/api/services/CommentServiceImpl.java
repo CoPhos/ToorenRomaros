@@ -1,19 +1,20 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.publication.CommentDto;
+import com.ToorenRomaros.api.dto.publication.CreateCommentDto;
+import com.ToorenRomaros.api.dto.publication.GetCommentDto;
+import com.ToorenRomaros.api.dto.publication.UpdateCommentDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.publication.CommentEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
+import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.publication.CommentRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,13 +28,11 @@ import java.util.UUID;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-
     private final UserRepository userRepository;
     private final FilmRepository filmRepository;
     private final CommentRepository commentRepository;
     private final ImageRepostiroy imageRepostiroy;
     private final ModelMapper modelMapper;
-    private static final Logger log = LoggerFactory.getLogger(CommentServiceImpl.class);
 
     public CommentServiceImpl(UserRepository userRepository, FilmRepository filmRepository, CommentRepository commentRepository, ImageRepostiroy imageRepostiroy, ModelMapper modelMapper) {
         this.userRepository = userRepository;
@@ -54,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<CommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, Pageable pageable) {
+    public Page<GetCommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, Pageable pageable) {
         int maxRating;
         int lowRating;
         switch (rating) {
@@ -79,80 +78,71 @@ public class CommentServiceImpl implements CommentService {
         return commentEntities.map(commentEntity -> {
             List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
             if (!imageEntities.isEmpty()) {
-                CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
-                commentDto.setMainImageId(imageEntities.get(0).getId().toString());
-                commentDto.setFilmName(commentEntity.getFilm().getTittle());
-                return commentDto;
+                GetCommentDto getCommentDto = modelMapper.map(commentEntity, GetCommentDto.class);
+                getCommentDto.setMainImageId(imageEntities.get(0).getId().toString());
+                getCommentDto.setFilmName(commentEntity.getFilm().getTittle());
+                return getCommentDto;
             } else {
-                return modelMapper.map(commentEntity, CommentDto.class);
+                return modelMapper.map(commentEntity, GetCommentDto.class);
             }
         });
     }
 
     @Override
     @Transactional
-    public CommentDto createComment(CommentDto commentDto) {
-      try{
-          CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
-          FilmEntity filmEntity = filmRepository.findById(UUID.fromString(commentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film: " + commentDto.getFilmId() + " not found"));
-          UserEntity userEntity = userRepository.findById(UUID.fromString(commentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User: " + commentDto.getUserId() + " not found"));
-          commentEntity.setFilm(filmEntity);
-          commentEntity.setUser(userEntity);
-          CommentEntity savedComment = commentRepository.save(commentEntity);
-          return modelMapper.map(savedComment, CommentDto.class);
-      }catch (Exception e){
-          log.info(e.getMessage());
-          log.info(String.valueOf(e.getCause()));
-      }
-      return null;
+    public GetCommentDto createComment(CreateCommentDto createCommentDto) {
+        CommentEntity commentEntity = modelMapper.map(createCommentDto, CommentEntity.class);
+        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createCommentDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film not found"));
+        UserEntity userEntity = userRepository.findById(UUID.fromString(createCommentDto.getUserId())).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        commentEntity.setFilm(filmEntity);
+        commentEntity.setUser(userEntity);
+        CommentEntity savedComment = commentRepository.save(commentEntity);
+        return modelMapper.map(savedComment, GetCommentDto.class);
     }
-
     @Override
-    public CommentDto getCommentById(UUID id) {
-        CommentEntity comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
-        return modelMapper.map(comment, CommentDto.class);
+    public GetCommentDto getCommentById(UUID id) {
+        CommentEntity comment = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+        return modelMapper.map(comment, GetCommentDto.class);
     }
-
     @Override
-    public CommentDto getCommentByFilmIdAndUserId(UUID filmId, UUID userId) {
-        CommentEntity commentEntity = commentRepository.getCommentByFilmIdAndUserId(filmId.toString(), userId.toString()).orElseThrow(() -> new ResourceNotFoundException("No Post Found for User: " + userId));
-        return modelMapper.map(commentEntity, CommentDto.class);
+    public GetCommentDto getCommentByFilmIdAndUserId(UUID filmId, UUID userId) {
+        CommentEntity commentEntity = commentRepository.getCommentByFilmIdAndUserId(filmId.toString(), userId.toString()).orElseThrow(() -> new ResourceNotFoundException("No Post Found."));
+        return modelMapper.map(commentEntity, GetCommentDto.class);
     }
-
     @Override
-    public Page<CommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, Boolean reported, int filmType, Pageable pageable) {
+    public Page<GetCommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, Boolean reported, int filmType, Pageable pageable) {
         Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByUserIdAndReportedAndFilmType(id, reported, filmType, pageable);
         return commentEntities.map(commentEntity -> {
             List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
             if (!imageEntities.isEmpty()) {
-                CommentDto commentDto = modelMapper.map(commentEntity, CommentDto.class);
-                commentDto.setMainImageId(imageEntities.get(0).getId().toString());
-                commentDto.setFilmName(commentEntity.getFilm().getTittle());
-                return commentDto;
+                GetCommentDto getCommentDto = modelMapper.map(commentEntity, GetCommentDto.class);
+                getCommentDto.setMainImageId(imageEntities.get(0).getId().toString());
+                getCommentDto.setFilmName(commentEntity.getFilm().getTittle());
+                return getCommentDto;
             } else {
-                return modelMapper.map(commentEntity, CommentDto.class);
+                return modelMapper.map(commentEntity, GetCommentDto.class);
             }
         });
     }
-
     @Override
-    public Page<CommentDto> getAllCommentByFilmId(UUID id, Boolean reported, Pageable pageable) {
+    public Page<GetCommentDto> getAllCommentByFilmId(UUID id, Boolean reported, Pageable pageable) {
         Page<CommentEntity> commentEntities = commentRepository.getAllCommentsByFilmIdAndReported(id, reported, pageable);
-        return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, CommentDto.class));
+        return commentEntities.map(commentEntity -> modelMapper.map(commentEntity, GetCommentDto.class));
     }
-
     @Override
-    public CommentDto updateComment(UUID id, CommentDto commentDto) {
-        CommentEntity newCommentEntity = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
-        CommentEntity commentEntity = modelMapper.map(commentDto, CommentEntity.class);
+    public GetCommentDto updateComment(UUID id, UpdateCommentDto updateCommentDto) {
+        CommentEntity newCommentEntity = commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment not found."));
+        CommentEntity commentEntity = modelMapper.map(updateCommentDto, CommentEntity.class);
         BeanUtils.copyProperties(commentEntity, newCommentEntity, Utils.getNullPropertyNames(commentEntity));
         CommentEntity updatedComment = commentRepository.save(newCommentEntity);
-        return modelMapper.map(updatedComment, CommentDto.class);
+        return modelMapper.map(updatedComment, GetCommentDto.class);
     }
 
     @Override
     public void deleteComment(UUID id) {
-        commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment: " + id + " not found"));
-        commentRepository.deleteById(id);
+        commentRepository.findById(id)
+                .ifPresentOrElse(commentRepository::delete, () -> {
+                    throw new UserNotFoundException("Comment not found.");
+                });
     }
 }

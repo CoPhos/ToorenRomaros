@@ -1,13 +1,14 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.streamSite.StreamSiteDto;
+import com.ToorenRomaros.api.dto.streamSite.CreateStreamSiteDto;
+import com.ToorenRomaros.api.dto.streamSite.GetStreamSiteDto;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteEntity;
+import com.ToorenRomaros.api.dto.streamSite.UpdateStreamSiteDto;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.streamSite.StreamSiteRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -21,31 +22,29 @@ public class StreamSiteServiceImpl implements StreamSiteService{
         this.streamSiteRepository = streamSiteRepository;
         this.modelMapper = modelMapper;
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public StreamSiteDto createStreamSite(StreamSiteDto streamSiteDto) {
-        StreamSiteEntity streamSiteEntity = modelMapper.map(streamSiteDto, StreamSiteEntity.class);
+    public GetStreamSiteDto createStreamSite(CreateStreamSiteDto createStreamSiteDto) {
+        StreamSiteEntity streamSiteEntity = modelMapper.map(createStreamSiteDto, StreamSiteEntity.class);
         StreamSiteEntity savedStreamSite = streamSiteRepository.save(streamSiteEntity);
-        return modelMapper.map(savedStreamSite, StreamSiteDto.class);
+        return modelMapper.map(savedStreamSite, GetStreamSiteDto.class);
     }
     @Override
-    public StreamSiteDto getStreamSite(UUID id) {
-        StreamSiteEntity streamSiteEntity = streamSiteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-        return modelMapper.map(streamSiteEntity, StreamSiteDto.class);
+    public GetStreamSiteDto getStreamSite(UUID id) {
+        StreamSiteEntity streamSiteEntity = streamSiteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stream site not found."));
+        return modelMapper.map(streamSiteEntity, GetStreamSiteDto.class);
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public StreamSiteDto updateStreamSite(UUID id, StreamSiteDto streamSiteDto) {
-        StreamSiteEntity streamSiteEntity = modelMapper.map(streamSiteDto, StreamSiteEntity.class);
-        StreamSiteEntity newStreamSiteEntity = streamSiteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-
+    public GetStreamSiteDto updateStreamSite(UUID id, UpdateStreamSiteDto createStreamSiteDto) {
+        StreamSiteEntity streamSiteEntity = modelMapper.map(createStreamSiteDto, StreamSiteEntity.class);
+        StreamSiteEntity newStreamSiteEntity = streamSiteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stream site not found."));
         BeanUtils.copyProperties(streamSiteEntity, newStreamSiteEntity, Utils.getNullPropertyNames(streamSiteEntity));
-
-        return modelMapper.map(newStreamSiteEntity, StreamSiteDto.class);
-    }@PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
+        return modelMapper.map(newStreamSiteEntity, GetStreamSiteDto.class);
+    }
     @Override
     public void deleteStreamSite(UUID id) {
-        streamSiteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-        streamSiteRepository.deleteById(id);
+        streamSiteRepository.findById(id)
+                .ifPresentOrElse(streamSiteRepository::delete, () -> {
+                    throw new ResourceNotFoundException("Stream site not found.");
+                });
     }
 }

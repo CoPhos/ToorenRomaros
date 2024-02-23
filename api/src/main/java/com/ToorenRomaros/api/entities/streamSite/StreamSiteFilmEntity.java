@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +20,7 @@ public class StreamSiteFilmEntity {
     private UUID id;
     @Column(name = "URL", columnDefinition = "VARCHAR(255)")
     @NotNull(message = "Url can not be null")
+    @Size(max = 255, message = "max size is 255 characters")
     private String url;
     @Column(name = "RENT", columnDefinition = "Boolean")
     @NotNull(message = "rent can not be null")
@@ -26,7 +28,6 @@ public class StreamSiteFilmEntity {
     @Column(name = "BUY", columnDefinition = "Boolean")
     @NotNull(message = "Buy can not be null")
     private Boolean buy;
-
     @ManyToOne
     @JoinColumn(name = "film_id")
     private FilmEntity film;

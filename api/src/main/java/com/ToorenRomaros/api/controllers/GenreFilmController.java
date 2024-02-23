@@ -26,8 +26,8 @@ public class GenreFilmController {
     @PostMapping("/films/genres")
     ResponseEntity<Map<String, Object>> createFilmGenre(@RequestBody @Valid CreateGenreFilmDto createGenreFilmDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created",  genreFilmService.createGenreFilm(createGenreFilmDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.put("response",  genreFilmService.createGenreFilm(createGenreFilmDto));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @GetMapping("/films/{id}/genres")
     ResponseEntity<Map<String, Object>> getFilmGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
@@ -35,10 +35,10 @@ public class GenreFilmController {
         response.put("response", genreFilmService.getGenreFilm(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PutMapping("/films/{id}/genres")
+    @PatchMapping("/films/{id}/genres")
     ResponseEntity<Map<String, Object>> updateFilmGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid CreateGenreFilmDto createGenreFilmDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", genreFilmService.updateGenreFilm(UUID.fromString(id), createGenreFilmDto));
+        response.put("response", genreFilmService.updateGenreFilm(UUID.fromString(id), createGenreFilmDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/films/genres/{id}")

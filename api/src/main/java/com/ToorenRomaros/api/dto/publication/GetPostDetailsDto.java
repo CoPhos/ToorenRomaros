@@ -5,7 +5,7 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class PostDetailsDto {
+public class GetPostDetailsDto {
     private UUID id;
     @FutureOrPresent(message = "Publication date can not be past")
     private LocalDateTime publicationDateTime;

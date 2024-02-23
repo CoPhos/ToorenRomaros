@@ -1,6 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
+import com.ToorenRomaros.api.dto.streamSite.CreateStreamSiteFilmDto;
 import com.ToorenRomaros.api.services.StreamSiteFilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +22,15 @@ public class StreamSiteFilmController {
     }
 
     @PostMapping("/streaming/film")
-    ResponseEntity<Map<String, Object>> createStreamSiteFilm(@RequestBody @Valid StreamSiteFilmDto streamSiteFilmDto) throws Exception {
-        StreamSiteFilmDto newStreamSiteFilm = streamSiteFilmService.createStreamSiteFilm(streamSiteFilmDto);
+    ResponseEntity<Map<String, Object>> createStreamSiteFilm(@RequestBody @Valid CreateStreamSiteFilmDto createStreamSiteFilmDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newStreamSiteFilm);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.put("response", streamSiteFilmService.createStreamSiteFilm(createStreamSiteFilmDto));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @GetMapping("/films/{id}/streamingsites")
     ResponseEntity<Map<String, Object>> getStreamSiteFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
         response.put("response", streamSiteFilmService.getStreamSitesByFilmId(UUID.fromString(id)));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-    @PutMapping("/streaming/film/{id}")
-    ResponseEntity<Map<String, Object>> updateStreamSiteFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid StreamSiteFilmDto streamSiteFilmDto) throws Exception {
-        StreamSiteFilmDto updatedStreamSiteFilm = streamSiteFilmService.updateStreamSiteFilm(UUID.fromString(id), streamSiteFilmDto);
-        Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedStreamSiteFilm);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/streaming/film/{id}")

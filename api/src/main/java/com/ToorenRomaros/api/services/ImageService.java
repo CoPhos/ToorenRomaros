@@ -21,14 +21,21 @@ import java.util.UUID;
 
 public interface ImageService {
     static final Logger log = LoggerFactory.getLogger(ImageService.class);
+
     Map<String, String> uploadImage(MultipartFile originalImage, String ownerId, String imageType) throws IOException;
+
     byte[] getImageById(String imageId) throws IOException;
+
     List<GetListImagesDto> getImageByImageType(String imageType, String ownerId);
+
     List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid);
+
     List<GetListImagesDto> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(String imageType, String filmid);
-    default void deleteAllImagesFromEntitiy(String id, ImageRepostiroy imageRepostiroy){
-            imageRepostiroy.deleteByOwnerId(id);
+
+    default void deleteAllImagesFromEntitiy(String id, ImageRepostiroy imageRepostiroy) {
+        imageRepostiroy.deleteByOwnerId(id);
     }
+
     default String processImage(String suffix,
                                 BufferedImage bufferedImage,
                                 int width, int height,
@@ -37,31 +44,24 @@ public interface ImageService {
                                 ImageTypeEnum imageType,
                                 ImageSizeEnum imageSize,
                                 ImageRepostiroy imageRepostiroy) throws IOException {
-      try {
-          String filePath = folderPath + suffix + UUID.randomUUID() + ".jpg";
+        String filePath = folderPath + suffix + UUID.randomUUID() + ".jpg";
 
-          File directory = new File(filePath).getParentFile();
-          if (!directory.exists()) {
-              if (directory.mkdirs()) {
-                  // Directories created successfully
-              }
-          }
+        File directory = new File(filePath).getParentFile();
+        if (!directory.exists()) {
+            if (directory.mkdirs()) {
+                // Directories created successfully
+            }
+        }
 
-          if (width > 0 && height > 0) {
-              BufferedImage resizedImage = Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, width, height, Scalr.OP_ANTIALIAS);
-              ImageIO.write(resizedImage, "jpg", new File(filePath));
-          } else {
-              ImageIO.write(bufferedImage, "jpg", new File(filePath));
-          }
-          ImageEntity imageEntity = new ImageEntity(filePath, LocalDateTime.now(), imageType, imageSize, entity);
-          ImageEntity savedImage = imageRepostiroy.save(imageEntity);
-          return savedImage.getId().toString();
-      }catch (Exception e){
-          log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-          log.info(e.getMessage());
-          log.info(String.valueOf(e.getCause()));
-      }
-        return null;
+        if (width > 0 && height > 0) {
+            BufferedImage resizedImage = Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, width, height, Scalr.OP_ANTIALIAS);
+            ImageIO.write(resizedImage, "jpg", new File(filePath));
+        } else {
+            ImageIO.write(bufferedImage, "jpg", new File(filePath));
+        }
+        ImageEntity imageEntity = new ImageEntity(filePath, LocalDateTime.now(), imageType, imageSize, entity);
+        ImageEntity savedImage = imageRepostiroy.save(imageEntity);
+        return savedImage.getId().toString();
     }
 }
 

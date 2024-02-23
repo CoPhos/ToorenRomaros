@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Service("ImageServiceDefaultImpl")
 public class ImageServiceDefaultImpl implements ImageService {
-    private static final Logger log = LoggerFactory.getLogger(ImageServiceDefaultImpl.class);
     private final ImageRepostiroy imageRepostiroy;
     private final ModelMapper modelMapper;
 
@@ -55,7 +54,7 @@ public class ImageServiceDefaultImpl implements ImageService {
 
     @Override
     public byte[] getImageById(String imageId) throws IOException {
-        ImageEntity fileData = imageRepostiroy.findById(UUID.fromString(imageId)).orElseThrow(() -> new ResourceNotFoundException("'" + imageId + "'"));
+        ImageEntity fileData = imageRepostiroy.findById(UUID.fromString(imageId)).orElseThrow(() -> new ResourceNotFoundException("Image not found."));
         String filePath = fileData.getFilePath();
         return Files.readAllBytes(new File(filePath).toPath());
     }

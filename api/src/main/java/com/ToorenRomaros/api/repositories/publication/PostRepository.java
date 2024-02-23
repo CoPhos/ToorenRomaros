@@ -40,4 +40,6 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID>, PostRep
     Page<PostEntity> getLatestReviewsByUserIdAndFilmType(UUID userId, int filmType, Pageable pageable);
     @Query("SELECT p FROM PostEntity p WHERE p.user.id=?1 and p.status='DRAFT'")
     Page<PostEntity> getLatestDraftsByUserId(UUID userId, Pageable pageable);
+
+
 }

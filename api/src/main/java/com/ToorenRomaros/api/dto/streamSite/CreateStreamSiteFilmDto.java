@@ -1,37 +1,27 @@
 package com.ToorenRomaros.api.dto.streamSite;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
-public class StreamSiteFilmDto {
-
-    private UUID id;
+public class CreateStreamSiteFilmDto {
     @NotNull(message = "Url can not be null")
+    @Size(max = 255, message = "max size is 255 characters")
     private String url;
     @NotNull(message = "rent can not be null")
     private Boolean rent;
     @NotNull(message = "Buy can not be null")
     private Boolean buy;
-    private String filmName;
-    private String streamSiteName;
-    private UUID streamsiteId;
+    private String filmId;
+    private String streamsiteId;
 
-    public UUID getStreamsiteId() {
+    public String getStreamsiteId() {
         return streamsiteId;
     }
 
-    public void setStreamsiteId(UUID streamsiteId) {
+    public void setStreamsiteId(String streamsiteId) {
         this.streamsiteId = streamsiteId;
     }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -56,19 +46,11 @@ public class StreamSiteFilmDto {
         this.buy = buy;
     }
 
-    public String getFilmName() {
-        return filmName;
+    public String getFilmId() {
+        return filmId;
     }
 
-    public void setFilmName(String filmName) {
-        this.filmName = filmName;
-    }
-
-    public String getStreamSiteName() {
-        return streamSiteName;
-    }
-
-    public void setStreamSiteName(String streamSiteName) {
-        this.streamSiteName = streamSiteName;
+    public void setFilmId(String filmId) {
+        this.filmId = filmId;
     }
 }

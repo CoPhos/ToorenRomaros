@@ -1,6 +1,7 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
+import com.ToorenRomaros.api.dto.streamSite.CreateStreamSiteFilmDto;
+import com.ToorenRomaros.api.dto.streamSite.GetStreamSiteFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
@@ -8,10 +9,7 @@ import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.streamSite.StreamSiteFilmRepository;
 import com.ToorenRomaros.api.repositories.streamSite.StreamSiteRepository;
-import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,55 +30,31 @@ public class StreamSiteFilmServiceImpl implements StreamSiteFilmService{
         this.filmRepository = filmRepository;
         this.modelMapper = modelMapper;
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
-    public StreamSiteFilmDto createStreamSiteFilm(StreamSiteFilmDto streamSiteFilmDto) {
-        StreamSiteFilmEntity streamSiteFilmEntity = modelMapper.map(streamSiteFilmDto, StreamSiteFilmEntity.class);
+    public GetStreamSiteFilmDto createStreamSiteFilm(CreateStreamSiteFilmDto createStreamSiteFilmDto) {
+        StreamSiteFilmEntity streamSiteFilmEntity = modelMapper.map(createStreamSiteFilmDto, StreamSiteFilmEntity.class);
 
-        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(streamSiteFilmDto.getFilmName())).orElseThrow(() -> new ResourceNotFoundException("'" + streamSiteFilmDto.getFilmName() + "'"));
-        StreamSiteEntity streamSiteEntity = streamSiteRepository.findById(UUID.fromString(streamSiteFilmDto.getStreamSiteName())).orElseThrow(() -> new ResourceNotFoundException("'" + streamSiteFilmDto.getStreamSiteName() + "'"));
+        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createStreamSiteFilmDto.getFilmId())).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
+        StreamSiteEntity streamSiteEntity = streamSiteRepository.findById(UUID.fromString(createStreamSiteFilmDto.getStreamsiteId())).orElseThrow(() -> new ResourceNotFoundException("Stream site not found."));
 
         streamSiteFilmEntity.setFilm(filmEntity);
         streamSiteFilmEntity.setStreamSite(streamSiteEntity);
 
         StreamSiteFilmEntity savedStreamSiteFilmEntity = streamSiteFilmRepository.save(streamSiteFilmEntity);
-        return modelMapper.map(savedStreamSiteFilmEntity, StreamSiteFilmDto.class);
+        return modelMapper.map(savedStreamSiteFilmEntity, GetStreamSiteFilmDto.class);
     }
-
     @Override
-    public List<StreamSiteFilmDto> getStreamSitesByFilmId(UUID id) {
+    public List<GetStreamSiteFilmDto> getStreamSitesByFilmId(UUID id) {
         List<StreamSiteFilmEntity> streamSiteFilmEntities = streamSiteFilmRepository.findAllStreamSitesByFilmId(id.toString());
-        if(streamSiteFilmEntities == null){
-            throw new ResourceNotFoundException("Resource not found");
-        }
         return streamSiteFilmEntities.stream().map(streamSiteFilmEntity -> {
-            return modelMapper.map(streamSiteFilmEntity, StreamSiteFilmDto.class);
+            return modelMapper.map(streamSiteFilmEntity, GetStreamSiteFilmDto.class);
         }).collect(Collectors.toList());
     }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
-    @Override
-    public StreamSiteFilmDto updateStreamSiteFilm(UUID id, StreamSiteFilmDto streamSiteFilmDto) {
-        StreamSiteFilmEntity streamSiteFilmEntity = modelMapper.map(streamSiteFilmDto, StreamSiteFilmEntity.class);
-        StreamSiteFilmEntity newStreamSiteFilmEntity = streamSiteFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-
-        BeanUtils.copyProperties(streamSiteFilmEntity, newStreamSiteFilmEntity, Utils.getNullPropertyNames(streamSiteFilmEntity));
-
-        if(streamSiteFilmDto.getFilmName() != null){
-            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(streamSiteFilmDto.getFilmName())).orElseThrow(() -> new ResourceNotFoundException("'" + streamSiteFilmDto.getFilmName() + "'"));
-            streamSiteFilmEntity.setFilm(filmEntity);
-        }
-        if(streamSiteFilmDto.getStreamSiteName() != null){
-            StreamSiteEntity streamSiteEntity = streamSiteRepository.findById(UUID.fromString(streamSiteFilmDto.getStreamSiteName())).orElseThrow(() -> new ResourceNotFoundException("'" + streamSiteFilmDto.getStreamSiteName() + "'"));
-            streamSiteFilmEntity.setStreamSite(streamSiteEntity);
-        }
-        StreamSiteFilmEntity savedStreamSiteFilmEntity = streamSiteFilmRepository.save(newStreamSiteFilmEntity);
-
-        return modelMapper.map(savedStreamSiteFilmEntity, StreamSiteFilmDto.class);
-    }
-    @PreAuthorize("hasRole('adminrole') || hasRole('moderator')")
     @Override
     public void deleteStreamSiteFilm(UUID id) {
-        streamSiteFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-        streamSiteFilmRepository.deleteById(id);
+        streamSiteFilmRepository.findById(id)
+                .ifPresentOrElse(streamSiteFilmRepository::delete, () -> {
+                    throw new ResourceNotFoundException("Relationship not found.");
+                });
     }
 }

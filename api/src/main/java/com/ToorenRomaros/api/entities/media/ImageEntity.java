@@ -12,8 +12,10 @@ import org.hibernate.annotations.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -36,14 +38,16 @@ public class ImageEntity {
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
     @Column(name = "FILE_PATH", columnDefinition = "VARCHAR(255)")
+    @NotNull(message = "File path can not be null")
     private String filePath;
     @Column(name = "CREATED_AT", columnDefinition = "DATETIME")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "IMAGE_TYPE")
+    @NotNull(message = "Image type can not be null")
     @Enumerated(EnumType.STRING)
     private ImageTypeEnum imageType;
-
     @Column(name = "IMAGE_SIZE")
+    @NotNull(message = "Image size can not be null")
     @Enumerated(EnumType.STRING)
     private ImageSizeEnum imageSize;
     @Any(metaDef = "OwnerMetaDef", metaColumn = @Column(name = "OWNER_TYPE"))

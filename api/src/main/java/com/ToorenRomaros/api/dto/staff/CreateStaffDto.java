@@ -1,32 +1,26 @@
 package com.ToorenRomaros.api.dto.staff;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class StaffDto {
-    private UUID id;
+public class CreateStaffDto {
     @NotNull(message = "Firstname can not be null")
+    @Size(max = 50, message = "max size is 50 characters")
     private String firstName;
     @NotNull(message = "Lastname can not be null")
+    @Size(max = 50, message = "max size is 50 characters")
     private String lastName;
     @NotNull(message = "Biography can not be null")
     private String biography;
     @NotNull(message = "Birthday can not be null")
     @PastOrPresent(message = "Birthday can not be future")
     private LocalDate birthday;
+    @Size(max = 50, message = "max size is 50 characters")
     @NotNull(message = "Birthplace can not be null")
     private String birthplace;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;

@@ -1,6 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.watchList.WatchListDto;
+import com.ToorenRomaros.api.dto.watchList.CreateWatchListDto;
 import com.ToorenRomaros.api.services.WatchListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,15 +41,10 @@ public class WatchListController {
 
     }
     @PostMapping("/watchLists")
-    ResponseEntity<Map<String, Object>> createWatchList(@RequestBody @Valid WatchListDto watchListDto) throws Exception {
-        try{
-        WatchListDto CretedWatchListDto = watchListService.createWatchList(watchListDto);
+    ResponseEntity<Map<String, Object>> createWatchList(@RequestBody @Valid CreateWatchListDto createWatchListDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", CretedWatchListDto);
-        return new ResponseEntity<>(response, HttpStatus.OK); }catch (Exception e){
-            log.info(e.getMessage());
-        }
-        return null;
+        response.put("response", watchListService.createWatchList(createWatchListDto));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @DeleteMapping("/watchLists/users/{userId}")
     ResponseEntity<String>  deleteFilmFromWatchList(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String userId,

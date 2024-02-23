@@ -1,10 +1,8 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.controllers.FilmController;
 import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
 import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
 import com.ToorenRomaros.api.entities.publication.PostEntity;
-import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.publication.PostRepository;
@@ -24,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service("ImageServicePostImpl")
-public class ImageServicePostImpl extends ImageServiceDefaultImpl{
+public class ImageServicePostImpl extends ImageServiceDefaultImpl {
     @Value("${images.folderPath}")
     private String FOLDER_PATH;
     private static final Logger log = LoggerFactory.getLogger(ImageServicePostImpl.class);
@@ -39,22 +37,15 @@ public class ImageServicePostImpl extends ImageServiceDefaultImpl{
 
     @Override
     public Map<String, String> uploadImage(MultipartFile originalImage, String ownerId, String imageType) throws IOException {
-       try{
-           byte[] bytes = originalImage.getBytes();
-           BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
+        byte[] bytes = originalImage.getBytes();
+        BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
-           PostEntity postEntity = postRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new UserNotFoundException("'" + ownerId + "'"));
+        PostEntity postEntity = postRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new UserNotFoundException("Post not found."));
 
-           Map<String, String> data = new HashMap<>();
-           data.put("original", processImage("posts/"+ownerId+"/original_", bufferedImage, 0, 0, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.THREE_DPI, this.imageRepostiroy));
-           data.put("960x880", processImage( "posts/"+ownerId+"/960x880_", bufferedImage, 960, 880, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.TWO_DPI, this.imageRepostiroy));
-           data.put("660x580", processImage( "posts/"+ownerId+"/660x580_", bufferedImage, 660, 580, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType),  ImageSizeEnum.ONE_DPI,this.imageRepostiroy));
-           return data;
-       }catch (Exception e){
-           log.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-         log.info(e.getMessage());
-         log.info(String.valueOf(e.getCause()));
-       }
-       return null;
+        Map<String, String> data = new HashMap<>();
+        data.put("original", processImage("posts/" + ownerId + "/original_", bufferedImage, 0, 0, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.THREE_DPI, this.imageRepostiroy));
+        data.put("960x880", processImage("posts/" + ownerId + "/960x880_", bufferedImage, 960, 880, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.TWO_DPI, this.imageRepostiroy));
+        data.put("660x580", processImage("posts/" + ownerId + "/660x580_", bufferedImage, 660, 580, postEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.ONE_DPI, this.imageRepostiroy));
+        return data;
     }
 }

@@ -1,6 +1,7 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.staff.StaffDto;
+import com.ToorenRomaros.api.dto.staff.CreateStaffDto;
+import com.ToorenRomaros.api.dto.staff.UpdateStaffDto;
 import com.ToorenRomaros.api.services.StaffService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,24 +25,21 @@ public class StaffController {
     }
 
     @PostMapping("/staffs")
-    ResponseEntity<Map<String, Object>> createStaff(@RequestBody @Valid StaffDto staffDto) throws Exception {
-        StaffDto newStaff = staffService.createStaff(staffDto);
+    ResponseEntity<Map<String, Object>> createStaff(@RequestBody @Valid CreateStaffDto createStaffDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newStaff);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.put("response", staffService.createStaff(createStaffDto));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @GetMapping("/staffs/{id}")
     ResponseEntity<Map<String, Object>> getStaff(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        StaffDto staff = staffService.getStaffById(UUID.fromString(id));
         Map<String, Object> response = new HashMap<>();
-        response.put("response", staff);
+        response.put("response", staffService.getStaffById(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PutMapping("/staffs/{id}")
-    ResponseEntity<Map<String, Object>> updateStaff(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody StaffDto staffDto) throws Exception {
-        StaffDto updatedStaff = staffService.updateStaff(UUID.fromString(id), staffDto);
+    @PatchMapping("/staffs/{id}")
+    ResponseEntity<Map<String, Object>> updateStaff(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UpdateStaffDto createStaffDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedStaff);
+        response.put("response", staffService.updateStaff(UUID.fromString(id), createStaffDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/staffs/{id}")

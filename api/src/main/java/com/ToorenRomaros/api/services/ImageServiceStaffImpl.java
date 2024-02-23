@@ -3,7 +3,6 @@ package com.ToorenRomaros.api.services;
 import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
 import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
 import com.ToorenRomaros.api.entities.staff.StaffEntity;
-import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.staff.StaffRepository;
@@ -37,7 +36,7 @@ public class ImageServiceStaffImpl  extends ImageServiceDefaultImpl{
         byte[] bytes = originalImage.getBytes();
         BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
-        StaffEntity staffEntity = staffRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new UserNotFoundException("'" + ownerId + "'"));
+        StaffEntity staffEntity = staffRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new UserNotFoundException("Staff not found."));
 
         Map<String, String> data = new HashMap<>();
         data.put("original", processImage("staffs/"+ownerId+"/original_", bufferedImage, 0, 0, staffEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.ONE_DPI,this.imageRepostiroy));

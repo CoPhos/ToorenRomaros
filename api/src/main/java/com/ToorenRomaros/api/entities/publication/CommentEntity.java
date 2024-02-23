@@ -25,19 +25,19 @@ public class CommentEntity{
     @Column(name = "BODY", columnDefinition = "TEXT")
     private String body;
     @Column(name = "PUBLICATION_DATETIME", columnDefinition = "DATETIME")
-    private LocalDateTime publicationDateTime;
-    @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10) DEFAULT 0")
+    private LocalDateTime publicationDateTime = LocalDateTime.now();
+    @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10)")
     @Min(value = 0, message = "Like count can not be negative")
-    private int likeCount;
-    @Column(name = "REPORTED", columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean reported;
+    private int likeCount = 0;
+    @Column(name = "REPORTED", columnDefinition = "BOOLEAN")
+    private boolean reported = false;
     @Column(name = "RATING", columnDefinition = "FLOAT")
     @NotNull(message = "Rating can not be null")
     @Min(value=0, message = "Rating can not be less than 0")
     @Max(value = 100, message = "Rating can not be bigger than 100")
     private int rating;
-    @Column(name = "IS_SPOILER", columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean spoiler;
+    @Column(name = "IS_SPOILER", columnDefinition = "BOOLEAN")
+    private boolean spoiler = false;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;

@@ -1,10 +1,8 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
 import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
 import com.ToorenRomaros.api.entities.user.UserEntity;
-import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
@@ -38,7 +36,7 @@ public class ImageServiceUserImpl extends ImageServiceDefaultImpl{
         byte[] bytes = originalImage.getBytes();
         BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
-        UserEntity userEntity = userRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new UserNotFoundException("'" + ownerId + "'"));
+        UserEntity userEntity = userRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new UserNotFoundException("User not found."));
 
         Map<String, String> data = new HashMap<>();
         data.put("80x80", processImage("users/"+ownerId+"/80x80_", bufferedImage, 80, 80, userEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.ONE_DPI,this.imageRepostiroy));

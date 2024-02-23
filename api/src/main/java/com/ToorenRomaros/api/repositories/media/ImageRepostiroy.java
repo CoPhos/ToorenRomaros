@@ -18,9 +18,10 @@ public interface ImageRepostiroy extends JpaRepository<ImageEntity, UUID> {
     List<ImageEntity> findAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmId);
     @Query(nativeQuery = true, value = "select distinct i.* from image as i inner join stream_film as fs on fs.stream_id=i.owner_id and i.image_type=?1 and fs.film_id=?2")
     List<ImageEntity> findAllImagesFromStreamSiteByImageTypeAndStreamSiteId(String imageType, String filmId);
-
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM image WHERE owner_id=?1")
     void deleteByOwnerId(String id);
+    @Query(nativeQuery = true, value = "SELECT FROM image WHERE owner_id=?1")
+    Optional<ImageEntity> findByOwner(UUID id);
 }

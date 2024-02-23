@@ -71,7 +71,7 @@ public class FilmController {
     @PatchMapping("/films/{id}")
     ResponseEntity<Map<String, Object>> updateFilm(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UpdateFilmDto updateFilmDto) {
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", filmService.updateFilm(UUID.fromString(id), updateFilmDto));
+        response.put("response", filmService.updateFilm(UUID.fromString(id), updateFilmDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/films/{id}")

@@ -4,22 +4,19 @@ import com.ToorenRomaros.api.dto.film.CreateMovieDto;
 import com.ToorenRomaros.api.dto.film.CreateSerieDto;
 import com.ToorenRomaros.api.dto.film.UpdateMovieDto;
 import com.ToorenRomaros.api.dto.film.UpdateSerieDto;
-import com.ToorenRomaros.api.dto.genre.CreateGenreFilmDto;
 import com.ToorenRomaros.api.dto.genre.GetGenreFilmDto;
 import com.ToorenRomaros.api.dto.media.GetListImagesDto;
 import com.ToorenRomaros.api.dto.publication.*;
-import com.ToorenRomaros.api.dto.socials.SocialGenericDto;
-import com.ToorenRomaros.api.dto.staff.StaffFilmDto;
-import com.ToorenRomaros.api.dto.streamSite.StreamSiteFilmDto;
+import com.ToorenRomaros.api.dto.staff.GetStaffFilmDto;
+import com.ToorenRomaros.api.dto.streamSite.GetStreamSiteFilmDto;
 import com.ToorenRomaros.api.dto.user.RefreshTokenDto;
-import com.ToorenRomaros.api.dto.watchList.WatchListDto;
+import com.ToorenRomaros.api.dto.watchList.CreateWatchListDto;
+import com.ToorenRomaros.api.dto.watchList.GetWatchListDto;
 import com.ToorenRomaros.api.entities.film.Movie;
 import com.ToorenRomaros.api.entities.film.Serie;
 import com.ToorenRomaros.api.entities.genre.GenreFilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.publication.*;
-import com.ToorenRomaros.api.entities.socials.SocialStaffEntity;
-import com.ToorenRomaros.api.entities.socials.SocialUserEntity;
 import com.ToorenRomaros.api.entities.staff.StaffFilmEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteFilmEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
@@ -65,31 +62,13 @@ public class MapperConfig {
                 }
         );
 
-        //Social
-        TypeMap<SocialStaffEntity, SocialGenericDto> propertyMapperSocialStaffToDto = modelMapper.createTypeMap(SocialStaffEntity.class, SocialGenericDto.class);
-        propertyMapperSocialStaffToDto.addMappings(
-                mapper -> {
-                    mapper.map(src -> src.getStaff().getFirstName(), SocialGenericDto::setGenericName);
-                    mapper.map(src -> src.getSocial().getName(), SocialGenericDto::setSocialName);
-                }
-        );
-
-        //socialUser
-        TypeMap<SocialUserEntity, SocialGenericDto> propertyMapperSocialUseroDto = modelMapper.createTypeMap(SocialUserEntity.class, SocialGenericDto.class);
-        propertyMapperSocialUseroDto.addMappings(
-                mapper -> {
-                    mapper.map(src -> src.getUser().getUsername(), SocialGenericDto::setGenericName);
-                    mapper.map(src -> src.getSocial().getName(), SocialGenericDto::setSocialName);
-                }
-        );
-
         //StaffFilm
-        TypeMap<StaffFilmEntity, StaffFilmDto> propertyMapperStaffFilmDto = modelMapper.createTypeMap(StaffFilmEntity.class, StaffFilmDto.class);
+        TypeMap<StaffFilmEntity, GetStaffFilmDto> propertyMapperStaffFilmDto = modelMapper.createTypeMap(StaffFilmEntity.class, GetStaffFilmDto.class);
         propertyMapperStaffFilmDto.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getFilm().getTittle(), StaffFilmDto::setFilmName);
-                    mapper.map(src -> src.getStaff().getFullName(), StaffFilmDto::setStaffName);
-                    mapper.map(src -> src.getStaff().getId(), StaffFilmDto::setStaffId);
+                    mapper.map(src -> src.getFilm().getTittle(), GetStaffFilmDto::setFilmName);
+                    mapper.map(src -> src.getStaff().getFullName(), GetStaffFilmDto::setStaffName);
+                    mapper.map(src -> src.getStaff().getId(), GetStaffFilmDto::setStaffId);
                 }
         );
 
@@ -103,61 +82,41 @@ public class MapperConfig {
         );
 
         //StreamSiteFilm
-        TypeMap<StreamSiteFilmEntity, StreamSiteFilmDto> propertyMapperStreamSiteFilmDto = modelMapper.createTypeMap(StreamSiteFilmEntity.class, StreamSiteFilmDto.class);
+        TypeMap<StreamSiteFilmEntity, GetStreamSiteFilmDto> propertyMapperStreamSiteFilmDto = modelMapper.createTypeMap(StreamSiteFilmEntity.class, GetStreamSiteFilmDto.class);
         propertyMapperStreamSiteFilmDto.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getFilm().getTittle(), StreamSiteFilmDto::setFilmName);
-                    mapper.map(src -> src.getStreamSite().getName(), StreamSiteFilmDto::setStreamSiteName);
-                    mapper.map(src -> src.getStreamSite().getId(), StreamSiteFilmDto::setStreamsiteId);
+                    mapper.map(src -> src.getFilm().getTittle(), GetStreamSiteFilmDto::setFilmName);
+                    mapper.map(src -> src.getStreamSite().getName(), GetStreamSiteFilmDto::setStreamSiteName);
+                    mapper.map(src -> src.getStreamSite().getId(), GetStreamSiteFilmDto::setStreamsiteId);
                 }
         );
 
         //Comment
-        TypeMap<CommentEntity, CommentDto> propertyMapperCommentDto = modelMapper.createTypeMap(CommentEntity.class, CommentDto.class);
+        TypeMap<CommentEntity, GetCommentDto> propertyMapperCommentDto = modelMapper.createTypeMap(CommentEntity.class, GetCommentDto.class);
         propertyMapperCommentDto.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getFilm().getId(), CommentDto::setFilmId);
-                    mapper.map(src -> src.getUser().getId(), CommentDto::setUserId);
-                    mapper.map(src -> src.getUser().getUsername(), CommentDto::setUsername);
+                    mapper.map(src -> src.getFilm().getId(), GetCommentDto::setFilmId);
+                    mapper.map(src -> src.getUser().getId(), GetCommentDto::setUserId);
+                    mapper.map(src -> src.getUser().getUsername(), GetCommentDto::setUsername);
                 }
         );
 
-        TypeMap<PostEntity, PostDetailsDto> propertyMapperPostDetailsDto = modelMapper.createTypeMap(PostEntity.class, PostDetailsDto.class);
+        TypeMap<PostEntity, GetPostDetailsDto> propertyMapperPostDetailsDto = modelMapper.createTypeMap(PostEntity.class, GetPostDetailsDto.class);
         propertyMapperPostDetailsDto.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getUser().getUsername(), PostDetailsDto::setUser);
-                    mapper.map(src -> src.getFilm().getId(), PostDetailsDto::setFilmId);
-                    mapper.map(src -> src.getTag().getTag(), PostDetailsDto::setTag);
+                    mapper.map(src -> src.getUser().getUsername(), GetPostDetailsDto::setUser);
+                    mapper.map(src -> src.getFilm().getId(), GetPostDetailsDto::setFilmId);
+                    mapper.map(src -> src.getTag().getTag(), GetPostDetailsDto::setTag);
                 }
         );
-
-
-        //Discuss
-        TypeMap<DiscussEntity, DiscussDto> propertyMapperDiscussDto = modelMapper.createTypeMap(DiscussEntity.class, DiscussDto.class);
-        propertyMapperDiscussDto.addMappings(
-                mapper -> {
-                    mapper.map(src -> src.getPost().getId(), DiscussDto::setPostId);
-                    mapper.map(src -> src.getUser().getId(), DiscussDto::setUserId);
-                }
-        );
-
-        //ParentChild
-        TypeMap<ParentChildDiscussEntity, ParentChildDiscussDto> propertyMapperParentChildDto = modelMapper.createTypeMap(ParentChildDiscussEntity.class, ParentChildDiscussDto.class);
-        propertyMapperParentChildDto.addMappings(
-                mapper -> {
-                    mapper.map(src -> src.getParent().getId(), ParentChildDiscussDto::setParentId);
-                    mapper.map(src -> src.getChild().getId(), ParentChildDiscussDto::setChildId);
-                }
-        );
-
         //PostDto
-        TypeMap<PostEntity, PostDto> propertyMapperPostDto = modelMapper.createTypeMap(PostEntity.class, PostDto.class);
+        TypeMap<PostEntity, GetPostDto> propertyMapperPostDto = modelMapper.createTypeMap(PostEntity.class, GetPostDto.class);
         propertyMapperPostDto.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getUser().getId(), PostDto::setUser);
-                    mapper.map(src -> src.getTag().getTag(), PostDto::setTag);
-                    mapper.map(src -> src.getFilm().getId(), PostDto::setFilm);
-                    mapper.map(src -> src.getTag().getId(), PostDto::setTagId);
+                    mapper.map(src -> src.getUser().getId(), GetPostDto::setUser);
+                    mapper.map(src -> src.getTag().getTag(), GetPostDto::setTag);
+                    mapper.map(src -> src.getFilm().getId(), GetPostDto::setFilm);
+                    mapper.map(src -> src.getTag().getId(), GetPostDto::setTagId);
                 }
         );
 
@@ -170,14 +129,14 @@ public class MapperConfig {
         );
 
         //Watchlist
-        TypeMap<WatchListEntity, WatchListDto> propertyMapperWatchListDto = modelMapper.createTypeMap(WatchListEntity.class, WatchListDto.class);
+        TypeMap<WatchListEntity, GetWatchListDto> propertyMapperWatchListDto = modelMapper.createTypeMap(WatchListEntity.class, GetWatchListDto.class);
         propertyMapperWatchListDto.addMappings(
                 mapper -> {
-                    mapper.map(src -> src.getFilm().getId(), WatchListDto::setFilm);
-                    mapper.map(src -> src.getUser().getId(), WatchListDto::setUser);
-                    mapper.map(src -> src.getFilm().getAverageSuperRating(), WatchListDto::setAverageSuperRating);
-                    mapper.map(src -> src.getFilm().getAverageUserRating(), WatchListDto::setAverageUserRating);
-                    mapper.map(src -> src.getFilm().getTittle(), WatchListDto::setTittle);
+                    mapper.map(src -> src.getFilm().getId(), GetWatchListDto::setFilm);
+                    mapper.map(src -> src.getUser().getId(), GetWatchListDto::setUser);
+                    mapper.map(src -> src.getFilm().getAverageSuperRating(), GetWatchListDto::setAverageSuperRating);
+                    mapper.map(src -> src.getFilm().getAverageUserRating(), GetWatchListDto::setAverageUserRating);
+                    mapper.map(src -> src.getFilm().getTittle(), GetWatchListDto::setTittle);
 
                 }
         );

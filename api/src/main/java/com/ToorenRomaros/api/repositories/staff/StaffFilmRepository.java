@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface StaffFilmRepository extends JpaRepository<StaffFilmEntity, UUID> {
 
-    @Query(nativeQuery = true, value = "select * from film_staff f where f.film_id = ?1")
+    @Query(nativeQuery = true, value = "SELECT * FROM film_staff f WHERE f.film_id = ?1")
     List<StaffFilmEntity> findAllStaffByFilmId(String id );
 }

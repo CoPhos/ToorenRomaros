@@ -1,6 +1,7 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.streamSite.StreamSiteDto;
+import com.ToorenRomaros.api.dto.streamSite.CreateStreamSiteDto;
+import com.ToorenRomaros.api.dto.streamSite.UpdateStreamSiteDto;
 import com.ToorenRomaros.api.services.StreamSiteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,24 +24,21 @@ public class StreamSiteController {
     }
 
     @PostMapping("/streaming")
-    ResponseEntity<Map<String, Object>> createStreamSite(@RequestBody @Valid StreamSiteDto streamSiteDto) throws Exception {
-        StreamSiteDto newStreamSite = streamSiteService.createStreamSite(streamSiteDto);
+    ResponseEntity<Map<String, Object>> createStreamSite(@RequestBody @Valid CreateStreamSiteDto createStreamSiteDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newStreamSite);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.put("response", streamSiteService.createStreamSite(createStreamSiteDto));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @GetMapping("/streaming/{id}")
     ResponseEntity<Map<String, Object>> getStreamSite(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
-        StreamSiteDto streamSite = streamSiteService.getStreamSite(UUID.fromString(id));
         Map<String, Object> response = new HashMap<>();
-        response.put("response", streamSite);
+        response.put("response", streamSiteService.getStreamSite(UUID.fromString(id)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PutMapping("/streaming/{id}")
-    ResponseEntity<Map<String, Object>> updateStreamSite(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid StreamSiteDto streamSiteDto) throws Exception {
-        StreamSiteDto updatedStreamSite = streamSiteService.updateStreamSite(UUID.fromString(id), streamSiteDto);
+    @PatchMapping("/streaming/{id}")
+    ResponseEntity<Map<String, Object>> updateStreamSite(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid UpdateStreamSiteDto createStreamSiteDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedStreamSite);
+        response.put("response", streamSiteService.updateStreamSite(UUID.fromString(id), createStreamSiteDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/streaming/{id}")

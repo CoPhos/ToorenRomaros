@@ -1,14 +1,14 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.watchList.WatchListDto;
+import com.ToorenRomaros.api.dto.watchList.CreateWatchListDto;
+import com.ToorenRomaros.api.dto.watchList.GetWatchListDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface WatchListService {
-    WatchListDto createWatchList(WatchListDto watchListDto);
-    Page<WatchListDto> getWatchListFromUserByFilmType(UUID id, String filmType, Pageable pageRequest);
+    GetWatchListDto createWatchList(CreateWatchListDto createWatchListDto);
+    Page<GetWatchListDto> getWatchListFromUserByFilmType(UUID id, String filmType, Pageable pageRequest);
     void deleteFromWatchListByUserIdAndFilmId(UUID userId, UUID filmiId);
 }

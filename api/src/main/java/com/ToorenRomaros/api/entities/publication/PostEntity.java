@@ -7,10 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,10 +22,10 @@ public class PostEntity {
     private UUID id;
     @Column(name = "PUBLICATION_DATETIME", columnDefinition = "DATETIME")
     @FutureOrPresent(message = "Publication date can not be past")
-    private LocalDateTime publicationDateTime;
-    @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10) DEFAULT 0")
+    private LocalDateTime publicationDateTime = LocalDateTime.now();
+    @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10)")
     @Min(value = 0, message = "Like count can not be negative")
-    private int likeCount;
+    private int likeCount = 0;
     @Column(name = "TITTLE", columnDefinition = "VARCHAR(255)")
     private String tittle;
     @Column(name = "SYNTHESIS", columnDefinition = "VARCHAR(1000)")

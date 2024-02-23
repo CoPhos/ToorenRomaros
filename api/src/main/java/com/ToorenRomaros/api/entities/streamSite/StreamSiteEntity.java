@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Entity
@@ -17,10 +18,12 @@ public class StreamSiteEntity {
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
     @Column(name = "NAME", columnDefinition = "VARCHAR(50)")
+    @Size(max = 50, message = "max size is 50 characters")
     @NotNull(message = "Stream site name can not be null")
     private String name;
     @Column(name = "PRICE", columnDefinition = "VARCHAR(8)")
     @NotNull(message = "Price can not be null")
+    @Size(max = 8, message = "max size is 8 characters")
     private String price;
 
     public UUID getId() {

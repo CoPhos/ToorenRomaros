@@ -1,12 +1,12 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.publication.PostDetailsDto;
-import com.ToorenRomaros.api.dto.publication.PostDto;
+import com.ToorenRomaros.api.dto.publication.GetPostDetailsDto;
+import com.ToorenRomaros.api.dto.publication.CreatePostDto;
+import com.ToorenRomaros.api.dto.publication.GetPostDto;
 import com.ToorenRomaros.api.dto.publication.UpdatePostDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
-import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
 import com.ToorenRomaros.api.entities.publication.PostEntity;
 import com.ToorenRomaros.api.entities.tag.TagEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
@@ -26,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,27 +50,27 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto createPost(PostDto postDto) {
-        PostEntity postEntity = modelMapper.map(postDto, PostEntity.class);
-        UserEntity userEntity = userRepository.findById(UUID.fromString(postDto.getUser())).orElseThrow(() -> new ResourceNotFoundException("User: " + postDto.getUser() + " not found"));
-        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(postDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("Film: " + postDto.getFilm() + " not found"));
-        TagEntity tagEntity = tagRepository.findById(UUID.fromString(postDto.getTag())).orElseThrow(() -> new ResourceNotFoundException("Tag: " + postDto.getTag() + " not found"));
+    public CreatePostDto createPost(CreatePostDto createPostDto) {
+        PostEntity postEntity = modelMapper.map(createPostDto, PostEntity.class);
+        UserEntity userEntity = userRepository.findById(UUID.fromString(createPostDto.getUser())).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createPostDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("Film not found"));
+        TagEntity tagEntity = tagRepository.findById(UUID.fromString(createPostDto.getTag())).orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
         postEntity.setUser(userEntity);
         postEntity.setFilm(filmEntity);
         postEntity.setTag(tagEntity);
         PostEntity savedPost = postRepository.save(postEntity);
-        return modelMapper.map(savedPost, PostDto.class);
+        return modelMapper.map(savedPost, CreatePostDto.class);
     }
 
     @Override
-    public PostDto getPostById(UUID id) {
+    public GetPostDto getPostById(UUID id) {
         PostEntity postEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id + " not found"));
-        PostDto postDto = modelMapper.map(postEntity, PostDto.class);
+        GetPostDto getPostDto = modelMapper.map(postEntity, GetPostDto.class);
         List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());
         if (!imageEntities.isEmpty()) {
-            postDto.setMainImageId(imageEntities.get(0).getId().toString());
+            getPostDto.setMainImageId(imageEntities.get(0).getId().toString());
         }
-        return postDto;
+        return getPostDto;
     }
 
     @Override
@@ -83,35 +84,33 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, String searchQuery, int page, int size) {
-       try{
-           Map<String, Object> result = postRepository.findPostsMainInfoByLatestOrPopularOrTags(tags, isReview, latest,
-                   popular, searchQuery, page, size);
-           List<PostEntity> postEntities = (List<PostEntity>) result.get("queryResult");
-           result.replace("queryResult", postEntities.stream().map(postEntity -> {
-               List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());
-               PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
-               findImageEntityByAttribute(imageEntity, ImageSizeEnum.ONE_DPI).ifPresentOrElse(
-                       imageEntity1 -> postDetailsDto.setMainImageOneDpi(imageEntity1.getId().toString()),
-                       () -> {}
-               );
-               findImageEntityByAttribute(imageEntity, ImageSizeEnum.TWO_DPI).ifPresentOrElse(
-                       imageEntity1 -> postDetailsDto.setMainImageTwoDpi(imageEntity1.getId().toString()),
-                       () -> {}
-               );
-               findImageEntityByAttribute(imageEntity, ImageSizeEnum.THREE_DPI).ifPresentOrElse(
-                       imageEntity1 -> postDetailsDto.setMainImageThreeDpi(imageEntity1.getId().toString()),
-                       () -> {}
-               );
-               return postDetailsDto;
-           }).collect(Collectors.toList()));
-           return result;
-       }catch (Exception e){
-           log.info(e.getMessage());
-           log.info(String.valueOf(e.getCause()));
-       }
-       return  null;
+    public Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, String searchQuery, int page, int size) throws SQLException {
+        Map<String, Object> result = postRepository.findPostsMainInfoByLatestOrPopularOrTags(tags, isReview, latest,
+                popular, searchQuery, page, size);
+        List<PostEntity> postEntities = (List<PostEntity>) result.get("queryResult");
+        result.replace("queryResult", postEntities.stream().map(postEntity -> {
+            List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());
+            GetPostDetailsDto getPostDetailsDto = modelMapper.map(postEntity, GetPostDetailsDto.class);
+            findImageEntityByAttribute(imageEntity, ImageSizeEnum.ONE_DPI).ifPresentOrElse(
+                    imageEntity1 -> getPostDetailsDto.setMainImageOneDpi(imageEntity1.getId().toString()),
+                    () -> {
+                    }
+            );
+            findImageEntityByAttribute(imageEntity, ImageSizeEnum.TWO_DPI).ifPresentOrElse(
+                    imageEntity1 -> getPostDetailsDto.setMainImageTwoDpi(imageEntity1.getId().toString()),
+                    () -> {
+                    }
+            );
+            findImageEntityByAttribute(imageEntity, ImageSizeEnum.THREE_DPI).ifPresentOrElse(
+                    imageEntity1 -> getPostDetailsDto.setMainImageThreeDpi(imageEntity1.getId().toString()),
+                    () -> {
+                    }
+            );
+            return getPostDetailsDto;
+        }).collect(Collectors.toList()));
+        return result;
     }
+
     public static Optional<ImageEntity> findImageEntityByAttribute(List<ImageEntity> imageEntities, ImageSizeEnum targetValue) {
         return imageEntities.stream()
                 .filter(imageEntity -> targetValue.equals(imageEntity.getImageSize()))
@@ -119,7 +118,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<PostDetailsDto> getReviewPostsByFilmIdAndRatingOrderByField(UUID id, String rating, Pageable pageable) {
+    public Page<GetPostDetailsDto> getReviewPostsByFilmIdAndRatingOrderByField(UUID id, String rating, Pageable pageable) {
         int maxRating;
         int lowRating;
         switch (rating) {
@@ -140,68 +139,73 @@ public class PostServiceImpl implements PostService {
                 lowRating = 0;
         }
         Page<PostEntity> postEntities = postRepository.getReviewPostsByFilmIdAndRatingOrderByField(id, maxRating, lowRating, pageable);
-        return postEntities.map(postEntity -> modelMapper.map(postEntity, PostDetailsDto.class));
+        return postEntities.map(postEntity -> modelMapper.map(postEntity, GetPostDetailsDto.class));
     }
 
     @Override
-    public Page<PostDetailsDto> getReviewPostsByFilmId(UUID id, Pageable pageable) {
+    public Page<GetPostDetailsDto> getReviewPostsByFilmId(UUID id, Pageable pageable) {
         Page<PostEntity> postEntities = postRepository.getReviewPostsByFilmId(id, pageable);
-        return postEntities.map(postEntity -> modelMapper.map(postEntity, PostDetailsDto.class));
+        return postEntities.map(postEntity -> modelMapper.map(postEntity, GetPostDetailsDto.class));
     }
 
     @Override
-    public PostDto updatePostById(UUID id, UpdatePostDto postDto) {
-        PostEntity newPostEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id + " not found"));
+    public GetPostDto updatePostById(UUID id, UpdatePostDto postDto) {
+        PostEntity newPostEntity = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         PostEntity postEntity = modelMapper.map(postDto, PostEntity.class);
         BeanUtils.copyProperties(postEntity, newPostEntity, Utils.getNullPropertyNames(postEntity));
         if (postDto.getTag() != null && !postDto.getTag().isEmpty()) {
-            TagEntity tagEntity = tagRepository.getTagByName(postDto.getTag()).orElseThrow(() -> new ResourceNotFoundException("Tag: " + postDto.getTag() + " not found"));
+            TagEntity tagEntity = tagRepository.getTagByName(postDto.getTag()).orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
             postEntity.setTag(tagEntity);
         }
         PostEntity updatedPost = postRepository.save(newPostEntity);
-        return modelMapper.map(updatedPost, PostDto.class);
+        return modelMapper.map(updatedPost, GetPostDto.class);
     }
 
     @Override
-    public Page<PostDetailsDto> getLatestReviewsByUserIdAndFilmType(UUID userId, int filmType, Pageable pageable) {
+    public Page<GetPostDetailsDto> getLatestReviewsByUserIdAndFilmType(UUID userId, int filmType, Pageable pageable) {
         Page<PostEntity> postEntities = postRepository.getLatestReviewsByUserIdAndFilmType(userId, filmType, pageable);
 
         return postEntities.map(postEntity -> {
             List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("FILM_MAIN", postEntity.getFilm().getId().toString());
-            PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
+            GetPostDetailsDto getPostDetailsDto = modelMapper.map(postEntity, GetPostDetailsDto.class);
             if (!imageEntity.isEmpty()) {
-                postDetailsDto.setFilmMainImageId(imageEntity.get(0).getId().toString());
+                getPostDetailsDto.setFilmMainImageId(imageEntity.get(0).getId().toString());
             }
-            return postDetailsDto;
+            return getPostDetailsDto;
         });
     }
 
     @Override
-    public Page<PostDetailsDto> getLatestDraftsByUserId(UUID userId, Pageable pageable) {
+    public Page<GetPostDetailsDto> getLatestDraftsByUserId(UUID userId, Pageable pageable) {
         Page<PostEntity> postEntities = postRepository.getLatestDraftsByUserId(userId, pageable);
 
         return postEntities.map(postEntity -> {
             List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("FILM_MAIN", postEntity.getFilm().getId().toString());
-            PostDetailsDto postDetailsDto = modelMapper.map(postEntity, PostDetailsDto.class);
+            GetPostDetailsDto getPostDetailsDto = modelMapper.map(postEntity, GetPostDetailsDto.class);
             if (!imageEntity.isEmpty()) {
-                postDetailsDto.setFilmMainImageId(imageEntity.get(0).getId().toString());
+                getPostDetailsDto.setFilmMainImageId(imageEntity.get(0).getId().toString());
             }
-            return postDetailsDto;
+            return getPostDetailsDto;
         });
     }
 
     @Override
-    public PostDetailsDto getLatestReviewPostByFilmIdAndUserIdAndRatingNotNull(UUID userId, UUID filmId) {
+    public GetPostDetailsDto getLatestReviewPostByFilmIdAndUserIdAndRatingNotNull(UUID userId, UUID filmId) {
         PostEntity postEntity = postRepository.getLatestReviewPostByFilmIdAndUserIdAndRatingNotNull(userId.toString(), filmId.toString())
                 .orElse(null);
-        return modelMapper.map(postEntity, PostDetailsDto.class);
+        return modelMapper.map(postEntity, GetPostDetailsDto.class);
     }
 
     @Transactional
     @Override
     public void deletePostById(UUID id) {
-        postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post: " + id + " not found"));
-        postRepository.deleteById(id);
-        imageRepostiroy.deleteByOwnerId(id.toString());
+        postRepository.findById(id)
+                .ifPresentOrElse(postRepository::delete, () -> {
+                    throw new ResourceNotFoundException("Post not found");
+                });
+        imageRepostiroy.findByOwner(id)
+                .ifPresentOrElse(imageRepostiroy::delete, () -> {
+                    throw new ResourceNotFoundException("Image not found");
+                });
     }
 }

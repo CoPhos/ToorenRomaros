@@ -48,11 +48,11 @@ public class GenreFilmServiceImpl implements GenreFilmService{
     public GetGenreFilmDto updateGenreFilm(UUID id, CreateGenreFilmDto createGenreFilmDto) {
         GenreFilmEntity genreFilmEntity = genreFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
         if(createGenreFilmDto.getFilm() != null){
-            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createGenreFilmDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("'" + createGenreFilmDto.getFilm() + "'"));
+            FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createGenreFilmDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
             genreFilmEntity.setFilm(filmEntity);
         }
         if(createGenreFilmDto.getGenre() != null){
-            GenreEntity genreEntity = genreRepository.findById(UUID.fromString(createGenreFilmDto.getGenre())).orElseThrow(() -> new ResourceNotFoundException("'" + createGenreFilmDto.getGenre() + "'"));
+            GenreEntity genreEntity = genreRepository.findById(UUID.fromString(createGenreFilmDto.getGenre())).orElseThrow(() -> new ResourceNotFoundException("Genre not found."));
             genreFilmEntity.setGenre(genreEntity);
         }
         GenreFilmEntity updatedGenreFilm = genreFilmRepository.save(genreFilmEntity);
@@ -60,7 +60,9 @@ public class GenreFilmServiceImpl implements GenreFilmService{
     }
     @Override
     public void deleteGenreFilm(UUID id) {
-        genreFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("'" + id + "'"));
-        genreFilmRepository.deleteById(id);
+        genreFilmRepository.findById(id)
+                .ifPresentOrElse(genreFilmRepository::delete, () -> {
+                    throw new ResourceNotFoundException("Genre relationship not found.");
+                });
     }
 }

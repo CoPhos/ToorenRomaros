@@ -1,6 +1,7 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.tag.TagDto;
+import com.ToorenRomaros.api.dto.tag.CreateTagDto;
+import com.ToorenRomaros.api.dto.tag.GetTagDto;
 import com.ToorenRomaros.api.entities.tag.TagEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.repositories.tag.TagRepository;
@@ -20,16 +21,16 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public TagDto createTag(TagDto tagDto) {
-        TagEntity tagEntity = modelMapper.map(tagDto, TagEntity.class);
-        return modelMapper.map(tagRepository.save(tagEntity), TagDto.class);
+    public GetTagDto createTag(CreateTagDto createTagDto) {
+        TagEntity tagEntity = modelMapper.map(createTagDto, TagEntity.class);
+        return modelMapper.map(tagRepository.save(tagEntity), GetTagDto.class);
     }
 
     @Override
-    public TagDto updateTag(UUID id, TagDto tagDto) {
-        TagEntity tagEntity = tagRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
-        BeanUtils.copyProperties(tagDto, tagEntity, Utils.getNullPropertyNames(tagDto));
-        return modelMapper.map(tagRepository.save(tagEntity), TagDto.class);
+    public GetTagDto updateTag(UUID id, CreateTagDto createTagDto) {
+        TagEntity tagEntity = tagRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tag not found"));
+        BeanUtils.copyProperties(createTagDto, tagEntity, Utils.getNullPropertyNames(createTagDto));
+        return modelMapper.map(tagRepository.save(tagEntity), GetTagDto.class);
     }
 
     @Override

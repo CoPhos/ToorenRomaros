@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
 import com.ToorenRomaros.api.dto.genre.GenreDto;
-import com.ToorenRomaros.api.dto.socials.SocialDto;
 import com.ToorenRomaros.api.services.GenreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +27,8 @@ public class GenreController {
     ResponseEntity<Map<String, Object>> createGenre(@RequestBody @Valid GenreDto genreDto) throws Exception {
         GenreDto newGenre = genreService.createGenre(genreDto);
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newGenre);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.put("response", newGenre);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @GetMapping("/genre/{id}")
     ResponseEntity<Map<String, Object>> getGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
@@ -38,11 +37,11 @@ public class GenreController {
         response.put("response", genre);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PutMapping("/genre/{id}")
+    @PatchMapping("/genre/{id}")
     ResponseEntity<Map<String, Object>> updateGenre(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody GenreDto genreDto) throws Exception {
         GenreDto updatedGenre = genreService.updateGenre(UUID.fromString(id), genreDto);
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedGenre);
+        response.put("response", updatedGenre);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/genre/{id}")

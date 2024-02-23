@@ -1,26 +1,22 @@
 package com.ToorenRomaros.api.dao;
 
-import com.ToorenRomaros.api.entities.publication.PostEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.*;
 
 @Repository
 public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     private final EntityManager em;
-    private static final Logger log = LoggerFactory.getLogger(PostRepositoryCustomImpl.class);
-
     public PostRepositoryCustomImpl(EntityManager em) {
         this.em = em;
     }
 
     @Override
-    public Map<String, Object> findPostsMainInfoByLatestOrPopularOrTags(List<UUID> tags, boolean isReview, boolean latest, boolean popular,String searchQuery, int page, int size) {
+    public Map<String, Object> findPostsMainInfoByLatestOrPopularOrTags(List<UUID> tags, boolean isReview, boolean latest, boolean popular,String searchQuery, int page, int size) throws SQLException {
         try {
             StringBuilder queryText = new StringBuilder("SELECT DISTINCT new com.ToorenRomaros.api.entities.publication.PostEntity(p.id, p.tittle, p.publicationDateTime, p.likeCount, p.headline, p.tag) FROM PostEntity p ");
             StringBuilder queryCountText = new StringBuilder("SELECT COUNT(DISTINCT p.id) FROM post as p ");
@@ -95,8 +91,7 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
             result.put("pageNumber", page);
             return result;
         } catch (Exception e) {
-            log.info(e.getMessage());
+            throw new SQLException();
         }
-        return null;
     }
 }

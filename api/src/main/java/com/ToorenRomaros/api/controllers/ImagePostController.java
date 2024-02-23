@@ -29,7 +29,7 @@ public class ImagePostController {
                                                     @RequestParam("imageType") @NotNull String imageType,
                                                     @RequestParam @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("created", imageService.uploadImage(file, id, imageType));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.put("response", imageService.uploadImage(file, id, imageType));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

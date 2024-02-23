@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Entity
@@ -19,8 +20,10 @@ public class StaffFilmEntity {
     private UUID id;
     @NotNull(message = "Role can not be null")
     @Column(name = "ROLE", columnDefinition = "VARCHAR(50)")
+    @Size(max = 50, message = "max size is 50 characters")
     private String role;
     @Column(name = "APPEAR_AS", columnDefinition = "VARCHAR(50)")
+    @Size(max = 50, message = "max size is 50 characters")
     private String appearAs;
     @ManyToOne
     @JoinColumn(name = "film_id")

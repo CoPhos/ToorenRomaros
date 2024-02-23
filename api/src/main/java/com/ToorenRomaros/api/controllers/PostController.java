@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.publication.CommentDto;
-import com.ToorenRomaros.api.dto.publication.PostDto;
+import com.ToorenRomaros.api.dto.publication.CreatePostDto;
 import com.ToorenRomaros.api.dto.publication.UpdatePostDto;
 import com.ToorenRomaros.api.services.PostService;
 import org.springframework.data.domain.PageRequest;
@@ -30,11 +29,11 @@ public class PostController {
         this.postService = postService;
     }
     @PostMapping("/posts")
-    ResponseEntity<Map<String, Object>> createPost(@RequestBody @Valid PostDto postDto) throws Exception {
-        PostDto newPost = postService.createPost(postDto);
+    ResponseEntity<Map<String, Object>> createPost(@RequestBody @Valid CreatePostDto createPostDto) throws Exception {
+        CreatePostDto newPost = postService.createPost(createPostDto);
         Map<String, Object> response = new HashMap<>();
-        response.put("created", newPost);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        response.put("response", newPost);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/posts/{id}")
@@ -63,10 +62,9 @@ public class PostController {
     }
     @PatchMapping("/posts/{id}")
     ResponseEntity<Map<String, Object>> updatePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
-                                                      @RequestBody UpdatePostDto postDto) throws Exception {
-        PostDto updatedPost = postService.updatePostById(UUID.fromString(id), postDto);
+                                                      @RequestBody @Valid UpdatePostDto postDto) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", updatedPost);
+        response.put("response", postService.updatePostById(UUID.fromString(id), postDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/films/{id}/posts/ratings")
@@ -122,7 +120,7 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{id}")
-    ResponseEntity<String>  deletePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
+    ResponseEntity<String> deletePost(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id) throws Exception {
         postService.deletePostById(UUID.fromString(id));
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body("Post: " + id + " deleted successfully");

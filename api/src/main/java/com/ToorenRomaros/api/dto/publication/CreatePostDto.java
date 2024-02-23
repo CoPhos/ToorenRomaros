@@ -6,8 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class PostDto {
-    private UUID id;
+public class CreatePostDto {
     @FutureOrPresent(message = "Publication date can not be past")
     private LocalDateTime publicationDateTime;
     @Min(value = 0, message = "Like count can not be negative")
@@ -24,31 +23,7 @@ public class PostDto {
     private String content;
     private String headline;
     private boolean isReview;
-    private String mainImageId;
-    private String tagId;
 
-    public String getTagId() {
-        return tagId;
-    }
-
-    public void setTagId(String tagId) {
-        this.tagId = tagId;
-    }
-
-    public String getMainImageId() {
-        return mainImageId;
-    }
-
-    public void setMainImageId(String mainImageId) {
-        this.mainImageId = mainImageId;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
-    }
     public LocalDateTime getPublicationDateTime() {
         return publicationDateTime;
     }

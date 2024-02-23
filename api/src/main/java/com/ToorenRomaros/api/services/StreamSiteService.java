@@ -1,12 +1,14 @@
 package com.ToorenRomaros.api.services;
 
-import com.ToorenRomaros.api.dto.streamSite.StreamSiteDto;
+import com.ToorenRomaros.api.dto.streamSite.CreateStreamSiteDto;
+import com.ToorenRomaros.api.dto.streamSite.GetStreamSiteDto;
+import com.ToorenRomaros.api.dto.streamSite.UpdateStreamSiteDto;
 
 import java.util.UUID;
 
 public interface StreamSiteService {
-    StreamSiteDto createStreamSite(StreamSiteDto streamSiteDto);
-    StreamSiteDto getStreamSite(UUID id);
-    StreamSiteDto updateStreamSite(UUID id, StreamSiteDto streamSiteDto);
+    GetStreamSiteDto createStreamSite(CreateStreamSiteDto createStreamSiteDto);
+    GetStreamSiteDto getStreamSite(UUID id);
+    GetStreamSiteDto updateStreamSite(UUID id, UpdateStreamSiteDto createStreamSiteDto);
     void deleteStreamSite(UUID id);
 }

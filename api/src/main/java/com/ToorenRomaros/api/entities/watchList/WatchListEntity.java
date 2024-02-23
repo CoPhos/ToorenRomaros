@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.util.UUID;
 @Entity
@@ -25,6 +26,7 @@ public class WatchListEntity {
     @JoinColumn(name = "user_id")
     UserEntity user;
     @Column(name = "ADDED_DATE", columnDefinition = "DATE")
+    @FutureOrPresent(message = "Added date can not be past")
     private LocalDate addedDate= LocalDate.now();
     @Column(name = "WATCHED", columnDefinition = "Boolean")
     private boolean watched=false;

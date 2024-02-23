@@ -37,7 +37,7 @@ public class SagaController {
     @PatchMapping("/sagas/{id}")
     ResponseEntity<Map<String, Object>> updateSaga(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id, @RequestBody @Valid SagaDto sagaDto){
         Map<String, Object> response = new HashMap<>();
-        response.put("updated", sagaService.updateSaga(UUID.fromString(id), sagaDto));
+        response.put("response", sagaService.updateSaga(UUID.fromString(id), sagaDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/sagas/{id}")

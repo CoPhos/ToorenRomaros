@@ -2,10 +2,8 @@ package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.entities.media.ImageSizeEnum;
 import com.ToorenRomaros.api.entities.media.ImageTypeEnum;
-import com.ToorenRomaros.api.entities.staff.StaffEntity;
 import com.ToorenRomaros.api.entities.streamSite.StreamSiteEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
-import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.streamSite.StreamSiteRepository;
 import org.modelmapper.ModelMapper;
@@ -39,7 +37,7 @@ public class ImageServiceStreamSiteImpl extends ImageServiceDefaultImpl{
         byte[] bytes = originalImage.getBytes();
         BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
-        StreamSiteEntity streamSiteEntity = streamSiteRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new ResourceNotFoundException("'" + ownerId + "'"));
+        StreamSiteEntity streamSiteEntity = streamSiteRepository.findById(UUID.fromString(ownerId)).orElseThrow(() -> new ResourceNotFoundException("Stream site not found."));
 
         Map<String, String> data = new HashMap<>();
         data.put("original", processImage("streamsites/"+ownerId+"/original_", bufferedImage, 0, 0, streamSiteEntity, FOLDER_PATH, ImageTypeEnum.valueOf(imageType), ImageSizeEnum.ONE_DPI,this.imageRepostiroy));
