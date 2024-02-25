@@ -14,8 +14,8 @@ public class GenericAlreadyExistsException extends RuntimeException {
 
     public GenericAlreadyExistsException(final String message) {
         super(message);
-        this.errMsgKey = ErrorCode.RESOURCE_NOT_FOUND.getErrMsgKey();
-        this.errorCode = ErrorCode.RESOURCE_NOT_FOUND.getErrCode();
+        this.errMsgKey = ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrMsgKey();
+        this.errorCode = ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION.getErrCode();
     }
 
     public String getErrMsgKey() {

@@ -3,18 +3,10 @@ package com.ToorenRomaros.api.dto.user;
 import javax.validation.constraints.NotNull;
 
 public class RecoverPasswordDto {
-    @NotNull
-    private String email;
+    @NotNull(message = "new password can not be null")
     private String newPassword;
+    @NotNull(message = "Verification token can not be null")
     private String token;
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getNewPassword() {
         return newPassword;
@@ -24,11 +16,11 @@ public class RecoverPasswordDto {
         this.newPassword = newPassword;
     }
 
-    public String getEmail() {
-        return email;
+    public String getToken() {
+        return token;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

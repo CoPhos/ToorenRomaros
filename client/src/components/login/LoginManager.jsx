@@ -16,6 +16,7 @@ function LoginManager({ active, closePopup }) {
     const [submiteEnable, setsubmiteEnable] = useState(false)
 
     function onChange(value) {
+        console.log(value)
         setcaptchaToken(value)
     }
 

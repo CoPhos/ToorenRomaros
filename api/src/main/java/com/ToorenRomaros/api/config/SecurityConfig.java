@@ -2,6 +2,8 @@ package com.ToorenRomaros.api.config;
 
 import com.ToorenRomaros.api.entities.user.RoleEnum;
 
+import com.ToorenRomaros.api.filters.RecaptchaFilter;
+import com.ToorenRomaros.api.security.OAuth2LoginSuccessHandler;
 import com.ToorenRomaros.api.services.RecaptchaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +35,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -97,22 +98,13 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, TOKEN_URL).permitAll()
-                .antMatchers(HttpMethod.DELETE, TOKEN_URL).permitAll()
-                .antMatchers(HttpMethod.POST, SIGNUP_URL).permitAll()
-                .antMatchers(HttpMethod.POST, REFRESH_URL).permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/images/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/**/media/images/").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/**/image").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/films/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/posts/images/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/auth/forgot-password").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/api/v1/auth/reset-password").permitAll()
-                .antMatchers(HttpMethod.GET, FILMS_URL).permitAll()
                 .antMatchers(H2_URL_PREFIX).permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/v1/admin/**")
-                .hasAuthority(RoleEnum.ADMIN.getAuthority())
+                .antMatchers(SWAGGER_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.GET, GET_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.DELETE, TOKEN_URL).permitAll()
+                .antMatchers(HttpMethod.POST, POST_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.PATCH, RESET_PASSWORD_URL).permitAll()
+                .mvcMatchers(HttpMethod.POST, ADMIN_URL).hasAuthority(RoleEnum.ADMIN.getAuthority())
                 .anyRequest().authenticated()
                 .and()
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(
@@ -131,7 +123,7 @@ public class SecurityConfig {
 
     private static class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
         @Override
-        public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         }
     }

@@ -26,7 +26,6 @@ function ConfirmResetManager() {
                 return axios.patch(
                     '/auth/reset-password',
                     JSON.stringify({
-                        email: 'adsasd',
                         newPassword: password,
                         token: token,
                     }),
@@ -48,7 +47,6 @@ function ConfirmResetManager() {
             console.log(token)
             console.log(
                 JSON.stringify({
-                    email: 'adsasd',
                     newPassword: password,
                     token: token,
                 })

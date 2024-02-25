@@ -58,6 +58,19 @@ public class FilmMapper {
         }
         return null;
     }
+    public GetFilmDto mapFilmEntityToGetFilmDto(FilmEntity filmEntity) {
+        if (filmEntity instanceof Movie) {
+            GetFilmDto getFilmDto = modelMapper.map(filmEntity, GetMovieDto.class);
+            getFilmDto.setFilmType(1);
+            return getFilmDto;
+        }
+        if (filmEntity instanceof Serie) {
+            GetFilmDto getFilmDto = modelMapper.map(filmEntity, GetSerieDto.class);
+            getFilmDto.setFilmType(2);
+            return getFilmDto;
+        }
+        return null;
+    }
     public GetDynamicQyeryFilmDto mapToGetDynamicQueryFilmDto(FilmEntity filmEntity) {
         if (filmEntity instanceof Movie) {
             GetDynamicQyeryFilmDto filmDto = modelMapper.map(filmEntity, GetDynamicQueryMovieDto.class);

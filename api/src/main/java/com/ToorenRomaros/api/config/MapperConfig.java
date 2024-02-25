@@ -1,9 +1,6 @@
 package com.ToorenRomaros.api.config;
 
-import com.ToorenRomaros.api.dto.film.CreateMovieDto;
-import com.ToorenRomaros.api.dto.film.CreateSerieDto;
-import com.ToorenRomaros.api.dto.film.UpdateMovieDto;
-import com.ToorenRomaros.api.dto.film.UpdateSerieDto;
+import com.ToorenRomaros.api.dto.film.*;
 import com.ToorenRomaros.api.dto.genre.GetGenreFilmDto;
 import com.ToorenRomaros.api.dto.media.GetListImagesDto;
 import com.ToorenRomaros.api.dto.publication.*;
@@ -47,6 +44,18 @@ public class MapperConfig {
         propertyMapperCreateSerieSaga.addMappings(
                 mapper -> {
                     mapper.map(src -> src.getSaga().getName(), CreateSerieDto::setSagaId);
+                }
+        );
+        TypeMap<Movie, GetMovieDto> propertyMapperGetMovieSaga = modelMapper.createTypeMap(Movie.class, GetMovieDto.class);
+        propertyMapperGetMovieSaga.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getSaga().getName(), GetMovieDto::setSagaId);
+                }
+        );
+        TypeMap<Serie, GetSerieDto> propertyMapperGetSerieSaga = modelMapper.createTypeMap(Serie.class, GetSerieDto.class);
+        propertyMapperGetSerieSaga.addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getSaga().getName(), GetSerieDto::setSagaId);
                 }
         );
         TypeMap<Movie, UpdateMovieDto> propertyMapperUpdateMovieSaga = modelMapper.createTypeMap(Movie.class, UpdateMovieDto.class);

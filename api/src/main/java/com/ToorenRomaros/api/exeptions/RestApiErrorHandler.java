@@ -15,8 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -42,6 +44,49 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    /* These exceptions occur at the security chain level and not at a controller/service level,so they won't be catched here
+    also providing many details about why and authentication/authorization fails might not be a good practice
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Error> handleBadCredentialsException(
+            HttpServletRequest request,
+            BadCredentialsException ex,
+            Locale locale) {
+        String errorMsg = String.format("%s %s",ErrorCode.ACCESS_DENIED.getErrMsgKey(), ex.getMessage());
+        Error error = ErrorUtils
+                .createError(errorMsg, ErrorCode.ACCESS_DENIED.getErrCode(),
+                        HttpStatus.UNAUTHORIZED.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        return new ResponseEntity<>(error, new HttpHeaders(),HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler(InvalidBearerTokenException.class)
+    public ResponseEntity<Error> handleInvalidBearerTokenException(
+            HttpServletRequest request,
+            InvalidBearerTokenException ex,
+            Locale locale) {
+
+        String errorMsg = String.format("%s %s",ErrorCode.ACCESS_DENIED.getErrMsgKey(), ex.getMessage());
+        Error error = ErrorUtils
+                .createError(errorMsg, ErrorCode.ACCESS_DENIED.getErrCode(),
+                        HttpStatus.UNAUTHORIZED.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Error> handleAccessDeniedException(
+            HttpServletRequest request,
+            AccessDeniedException ex,
+            Locale locale) {
+        String errorMsg = String.format("%s %s",ErrorCode.ACCESS_DENIED.getErrMsgKey(), ex.getMessage());
+        Error error = ErrorUtils
+                .createError(errorMsg, ErrorCode.ACCESS_DENIED.getErrCode(),
+                        HttpStatus.UNAUTHORIZED.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Error> handleAuthenticationException(
             HttpServletRequest request,
@@ -58,21 +103,9 @@ public class RestApiErrorHandler {
                         HttpStatus.UNAUTHORIZED.value()).setUrl(TOKEN_URL)
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());
-        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Error> handleAccessDeniedException(
-            HttpServletRequest request,
-            AccessDeniedException ex,
-            Locale locale) {
-        String errorMsg = String.format("%s %s",ErrorCode.ACCESS_DENIED.getErrMsgKey(), ex.getMessage());
-        Error error = ErrorUtils
-                .createError(errorMsg, ErrorCode.ACCESS_DENIED.getErrCode(),
-                        HttpStatus.FORBIDDEN.value()).setUrl(request.getRequestURL().toString())
-                .setReqMethod(request.getMethod())
-                .setTimestamp(Instant.now());
-        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
-    }
+    */
     @ExceptionHandler(HttpMessageNotWritableException.class)
     public ResponseEntity<Error> handleHttpMessageNotWritableException(HttpServletRequest request,
                                                                        HttpMessageNotWritableException ex,
@@ -235,10 +268,10 @@ public class RestApiErrorHandler {
                         String
                                 .format("%s %s", ErrorCode.GENERIC_ALREADY_EXISTS.getErrMsgKey(), ex.getMessage()),
                         ex.getErrorCode(),
-                        HttpStatus.NOT_ACCEPTABLE.value()).setUrl(request.getRequestURL().toString())
+                        HttpStatus.CONFLICT.value()).setUrl(request.getRequestURL().toString())
                 .setReqMethod(request.getMethod())
                 .setTimestamp(Instant.now());
-        return new ResponseEntity<>(error, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Error> handleResourceNotFoundException(HttpServletRequest request,

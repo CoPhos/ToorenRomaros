@@ -1,4 +1,4 @@
-package com.ToorenRomaros.api.config;
+package com.ToorenRomaros.api.security;
 
 import com.ToorenRomaros.api.dto.user.UserSignedInDto;
 import com.ToorenRomaros.api.entities.user.UserEntity;

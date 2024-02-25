@@ -1,4 +1,4 @@
-package com.ToorenRomaros.api.config;
+package com.ToorenRomaros.api.filters;
 
 import com.ToorenRomaros.api.dto.recaptcha.RecaptchaResponseDto;
 

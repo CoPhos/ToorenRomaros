@@ -2,6 +2,7 @@ package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.film.CreateFilmDto;
 import com.ToorenRomaros.api.dto.film.GetDynamicQyeryFilmDto;
+import com.ToorenRomaros.api.dto.film.GetFilmDto;
 import com.ToorenRomaros.api.dto.film.UpdateFilmDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.film.SagaEntity;
@@ -35,14 +36,14 @@ public class FilmServiceImpl implements FilmService {
         this.imageRepostiroy = imageRepostiroy;
     }
     @Override
-    public CreateFilmDto createFilm(CreateFilmDto createFilmDto) {
+    public GetFilmDto createFilm(CreateFilmDto createFilmDto) {
         FilmEntity newMovie = filmMapper.mapCreateFilmDtoToFilmEntity(createFilmDto);
         if (createFilmDto.getSagaId() != null) {
             SagaEntity sagaEntity = sagaRepository.findById(UUID.fromString(createFilmDto.getSagaId())).orElseThrow(() -> new ResourceNotFoundException("Saga not found."));
             newMovie.setSaga(sagaEntity);
         }
         FilmEntity savedMovie = filmRepository.save(newMovie);
-        return filmMapper.mapFilmEntityToCreateFilmDto(savedMovie);
+        return filmMapper.mapFilmEntityToGetFilmDto(savedMovie);
     }
     @Override
     public Map<String, Object> getFilmByDynamicQuery(List<String> streamSites,
@@ -74,10 +75,10 @@ public class FilmServiceImpl implements FilmService {
     }
     @Transactional
     @Override
-    public CreateFilmDto getFilmById(UUID id) {
+    public GetFilmDto getFilmById(UUID id) {
         FilmEntity film = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
         filmRepository.incrementViewCountByFilmId(id.toString());
-        CreateFilmDto createFilmDto = filmMapper.mapFilmEntityToCreateFilmDto(film);
+        GetFilmDto createFilmDto = filmMapper.mapFilmEntityToGetFilmDto(film);
         List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", id.toString());
         if (!imageEntities.isEmpty()) {
             createFilmDto.setMainImageId(imageEntities.get(0).getId().toString());
@@ -85,13 +86,13 @@ public class FilmServiceImpl implements FilmService {
         return createFilmDto;
     }
     @Override
-    public List<CreateFilmDto> getAllFilmsBySagaId(UUID id) {
+    public List<GetFilmDto> getAllFilmsBySagaId(UUID id) {
         List<FilmEntity> filmEntities = filmRepository.findBySagaId(id.toString());
-        return filmEntities.stream().map(filmMapper::mapFilmEntityToCreateFilmDto).collect(Collectors.toList());
+        return filmEntities.stream().map(filmMapper::mapFilmEntityToGetFilmDto).collect(Collectors.toList());
     }
     @Transactional
     @Override
-    public UpdateFilmDto updateFilm(UUID id, UpdateFilmDto updateFilmDto) {
+    public GetFilmDto updateFilm(UUID id, UpdateFilmDto updateFilmDto) {
         FilmEntity newFilm = filmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
         FilmEntity film = filmMapper.mapUpdateFilmDtoToFilmEntity(updateFilmDto);
         film.setSaga(null);
@@ -101,7 +102,7 @@ public class FilmServiceImpl implements FilmService {
             newFilm.setSaga(sagaEntity);
         }
         FilmEntity savedFilm = filmRepository.save(newFilm);
-        return filmMapper.mapFilmEntityToUpdateFilmDto(savedFilm);
+        return filmMapper.mapFilmEntityToGetFilmDto(savedFilm);
     }
     @Override
     public void deleteFilm(UUID id) {
