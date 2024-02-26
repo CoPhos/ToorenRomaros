@@ -50,7 +50,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public CreatePostDto createPost(CreatePostDto createPostDto) {
+    public GetPostDto createPost(CreatePostDto createPostDto) {
         PostEntity postEntity = modelMapper.map(createPostDto, PostEntity.class);
         UserEntity userEntity = userRepository.findById(UUID.fromString(createPostDto.getUser())).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createPostDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("Film not found"));
@@ -59,7 +59,7 @@ public class PostServiceImpl implements PostService {
         postEntity.setFilm(filmEntity);
         postEntity.setTag(tagEntity);
         PostEntity savedPost = postRepository.save(postEntity);
-        return modelMapper.map(savedPost, CreatePostDto.class);
+        return modelMapper.map(savedPost, GetPostDto.class);
     }
 
     @Override

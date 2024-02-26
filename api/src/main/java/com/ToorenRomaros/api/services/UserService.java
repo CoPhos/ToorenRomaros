@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserService {
-    public UserDto updateUser(UUID id, UserAddRequestDto user, String username);
+    public UserDto updateUser(UUID id, UpdateUserDto user, String username);
     public UserDto getUserById(UUID id);
     public void deleteUserById(UUID id);
     UserSignedInDto signin(SignInDto signInDto);

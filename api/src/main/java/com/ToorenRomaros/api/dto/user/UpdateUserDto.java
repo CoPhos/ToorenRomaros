@@ -2,11 +2,9 @@ package com.ToorenRomaros.api.dto.user;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-public class UserAddRequestDto {
+public class UpdateUserDto {
 
     private UUID id;
     @Size(max = 32, message = "username max size is 32 characters")
@@ -22,10 +20,10 @@ public class UserAddRequestDto {
     @PositiveOrZero(message = "following count can not be negative")
     private Integer followmeCount;
 
-    public UserAddRequestDto() {
+    public UpdateUserDto() {
     }
 
-    public UserAddRequestDto(UUID id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
+    public UpdateUserDto(UUID id, String username, LocalDate birthday, LocalDate createdDate, String about, Integer followingCount, Integer followmeCount) {
         this.id = id;
         this.username = username;
         this.birthday = birthday;
@@ -35,7 +33,7 @@ public class UserAddRequestDto {
         this.followmeCount = followmeCount;
     }
 
-    public UserAddRequestDto(UUID id, String username, LocalDate birthday, LocalDate createdDate) {
+    public UpdateUserDto(UUID id, String username, LocalDate birthday, LocalDate createdDate) {
         this.id = id;
         this.username = username;
         this.birthday = birthday;

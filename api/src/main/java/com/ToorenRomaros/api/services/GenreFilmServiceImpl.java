@@ -46,7 +46,7 @@ public class GenreFilmServiceImpl implements GenreFilmService{
     }
     @Override
     public GetGenreFilmDto updateGenreFilm(UUID id, CreateGenreFilmDto createGenreFilmDto) {
-        GenreFilmEntity genreFilmEntity = genreFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
+        GenreFilmEntity genreFilmEntity = genreFilmRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Relationship not found."));
         if(createGenreFilmDto.getFilm() != null){
             FilmEntity filmEntity = filmRepository.findById(UUID.fromString(createGenreFilmDto.getFilm())).orElseThrow(() -> new ResourceNotFoundException("Film not found."));
             genreFilmEntity.setFilm(filmEntity);

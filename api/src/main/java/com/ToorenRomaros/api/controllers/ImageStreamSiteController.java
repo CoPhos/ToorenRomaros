@@ -1,6 +1,16 @@
 package com.ToorenRomaros.api.controllers;
 
+import com.ToorenRomaros.api.dto.media.CreateImageDto;
+import com.ToorenRomaros.api.exeptions.Error;
 import com.ToorenRomaros.api.services.ImageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +34,23 @@ public class ImageStreamSiteController {
         this.imageService = imageService;
     }
 
+    @Operation(
+            summary = "Create Image for Stream Site",
+            description = "This endpoint allows users to add a new image to the file system for a specific Stream Site. Users can upload an image file, specify the image type, and provide the film ID.",
+            tags = { "Image", "Stream Site", "post" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = @Content(mediaType = "text/plain")),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema(implementation = Error.class)) }),
+            @ApiResponse(responseCode = "401", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema(implementation = Error.class)) }),
+            @ApiResponse(responseCode = "405", content = { @Content(schema = @Schema(implementation = Error.class)) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+    @Parameters({
+            @Parameter(name = "CreateImageDto", description = "CreateImageDto object", required = true,
+                    content = @Content(mediaType = "form-data",
+                            schema = @Schema(implementation = CreateImageDto.class)))
+    })
+    @SecurityRequirement(name = "Bearer Authentication", scopes = "ADMIN")
     @PostMapping("/streamsites/images")
     ResponseEntity<Map<String, Object>> createImage(@RequestParam("image") @NotNull MultipartFile file,
                                                     @RequestParam("imageType") @NotNull String imageType,

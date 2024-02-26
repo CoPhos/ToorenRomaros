@@ -69,9 +69,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UUID id, UserAddRequestDto userAddRequestDto, String username) {
+    public UserDto updateUser(UUID id, UpdateUserDto updateUserDto, String username) {
         UserEntity newUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("'" + id + "'"));
-        UserEntity newData = modelMapper.map(userAddRequestDto, UserEntity.class);
+        UserEntity newData = modelMapper.map(updateUserDto, UserEntity.class);
 
         BeanUtils.copyProperties(newData, newUser, Utils.getNullPropertyNames(newData));
 

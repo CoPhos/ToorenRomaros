@@ -104,8 +104,8 @@ public class FilmController {
             @Parameter(name = "userRating", description = "Filter films by user rating. \"down\" for ratings less than 60 otherwise \"up\"", in = ParameterIn.QUERY),
             @Parameter(name = "superRating", description = "Filter films by super rating. \"down\" for ratings less than 60 otherwise \"up\"", in = ParameterIn.QUERY),
             @Parameter(name = "search", description = " Perform a search query to filter films by title.", in = ParameterIn.QUERY),
-            @Parameter(name = "page", description = "The number page of the request", in = ParameterIn.QUERY),
-            @Parameter(name = "size", description = "The page size of each request", in = ParameterIn.QUERY),
+            @Parameter(name = "page", description = "The number page of the request.", in = ParameterIn.QUERY),
+            @Parameter(name = "size", description = "The page size of each request. Default is \"6\"", in = ParameterIn.QUERY),
     })
     @GetMapping("/films")
     ResponseEntity<Map<String, Object>> getFilmByDynamicQuery(@RequestParam(required = false) List<String> streamId,

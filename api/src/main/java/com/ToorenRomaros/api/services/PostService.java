@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface PostService {
-    CreatePostDto createPost(CreatePostDto createPostDto);
+    GetPostDto createPost(CreatePostDto createPostDto);
     GetPostDto getPostById(UUID id);
     GetPostDto updatePostById(UUID id, UpdatePostDto postDto);
     Map<String, Object>getTotalRatingByFilmId(UUID id);
