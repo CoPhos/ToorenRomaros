@@ -196,16 +196,11 @@ public class PostServiceImpl implements PostService {
         return modelMapper.map(postEntity, GetPostDetailsDto.class);
     }
 
-    @Transactional
     @Override
     public void deletePostById(UUID id) {
         postRepository.findById(id)
                 .ifPresentOrElse(postRepository::delete, () -> {
                     throw new ResourceNotFoundException("Post not found");
-                });
-        imageRepostiroy.findByOwner(id)
-                .ifPresentOrElse(imageRepostiroy::delete, () -> {
-                    throw new ResourceNotFoundException("Image not found");
                 });
     }
 }

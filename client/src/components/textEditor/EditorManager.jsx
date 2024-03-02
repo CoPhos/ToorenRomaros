@@ -100,12 +100,11 @@ function EditorManager() {
             }
         },
         onSuccess: (data) => {
-            setpostId(data?.data?.created?.id)
+            setpostId(data?.data?.response?.id)
         },
         onError: (error) => {
-          console.log(error)
         },
-        enabled: !edit,
+        enabled: !!!edit,
     })
 
     const discardPost = useMutation({
@@ -191,10 +190,10 @@ function EditorManager() {
                 if (allMutationsSucceeded) {
                     navigate('/', { replace: true })
                 } else {
-                    console.error('At least one mutation failed')
+                   
                 }
             } catch (error) {
-                console.error(error)
+               
             }
         }
     }
@@ -228,7 +227,7 @@ function EditorManager() {
                     }
                 })
                 .catch((error) => {
-                    //console.error('There was an error!', error)
+                    
                 })
         })
     }
