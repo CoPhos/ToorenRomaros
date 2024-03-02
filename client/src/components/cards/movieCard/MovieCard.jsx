@@ -38,7 +38,7 @@ function MovieCard({
         },
 
         onSuccess: (data) => {
-            if (data?.data?.created){ setIsCompleted(true) }
+            if (data?.data?.response){ setIsCompleted(true) }
         },
         onError: (error) => {
         },

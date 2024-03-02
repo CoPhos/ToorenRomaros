@@ -433,6 +433,7 @@ function BrowseContainer({
                                 id={item.id}
                                 images={item.mainImageId}
                                 handleAddWatchList={handleAddWatchList}
+                                addWathcList={true}
                             />
                         ))}
                     </Fragment>
