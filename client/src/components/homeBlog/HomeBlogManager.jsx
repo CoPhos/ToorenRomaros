@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query';
 import axios from '../../utils/constants'
+import ErrorBoundary from '../../utils/ErrorBoundary';
 
 import SinglePostContainer from './SinglePostContainer';
 
@@ -49,15 +50,15 @@ if (hasError) {
 const postData = getPostById.data?.data?.response
 
   return (
-      <Fragment>
+      <ErrorBoundary>
           {/* home blog page is pending for know ill just implement individual post page {login ? <HomeBlogLoginContainer></HomeBlogLoginContainer> : <HomeBlogContainer></HomeBlogContainer>} */}
           {postData && (
-                  <SinglePostContainer
-                      postData={postData}
-                      uuid={params.uuid}
-                  ></SinglePostContainer>
-              )}
-      </Fragment>
+              <SinglePostContainer
+                  postData={postData}
+                  uuid={params.uuid}
+              ></SinglePostContainer>
+          )}
+      </ErrorBoundary>
   )
 }
 

@@ -52,7 +52,6 @@ function BrowseManager({}) {
     })
     const handleCheckboxChange = (event, group) => {
         const checkboxValue = event.target.value
-
         setCheckedCheckboxes((prevCheckboxState) => {
             const currentGroupState = prevCheckboxState[group] || []
 

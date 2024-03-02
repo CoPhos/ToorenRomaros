@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-
+import ErrorBoundary from '../../utils/ErrorBoundary';
 //components
 
 //utils
@@ -12,7 +12,7 @@ import VideosTopManager from '../videosTop/VideosTopManager';
 
 function Home() {
     return (
-        <Fragment>
+        <ErrorBoundary>
             <SpotlightCarouselManager></SpotlightCarouselManager>
 
             <TittleCard
@@ -120,7 +120,7 @@ function Home() {
                 query={`?latest=true&size=4`}
                 queryName={'latesPost'}
             ></VideosTopManager>
-        </Fragment>
+        </ErrorBoundary>
     )
 }
 

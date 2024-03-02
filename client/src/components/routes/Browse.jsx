@@ -1,10 +1,13 @@
 import React from 'react'
-import BrowseManager from '../browse/BrowseManager';
+import ErrorBoundary from '../../utils/ErrorBoundary'
+import BrowseManager from '../browse/BrowseManager'
 
 function Browse({}) {
-  return (
-    <BrowseManager ></BrowseManager>
-  )
+    return (
+        <ErrorBoundary>
+            <BrowseManager/>
+        </ErrorBoundary>
+    )
 }
 
 export default Browse

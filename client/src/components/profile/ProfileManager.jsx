@@ -5,6 +5,7 @@ import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query'
 import { ActionNotificationContext } from '../context/ActionNotificationProvider'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 import ProfileContainer from './ProfileContainer'
 
@@ -359,7 +360,7 @@ function ProfileManager() {
     const moviesCommentsData = getLatestMoviesCommentsByUserId.data?.pages
     const seriesCommentsData = getLatestSeriesCommentsByUserId.data?.pages
     return (
-        <Fragment>
+        <ErrorBoundary>
             {watchlistdata && moviesCommentsData && seriesCommentsData && (
                 <ProfileContainer
                     getLatestMoviesCommentsByUserId={
@@ -391,7 +392,7 @@ function ProfileManager() {
                     handleOnClick={handleOnClick}
                 ></ProfileContainer>
             )}
-        </Fragment>
+        </ErrorBoundary>
     )
 }
 

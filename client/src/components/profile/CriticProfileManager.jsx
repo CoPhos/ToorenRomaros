@@ -4,6 +4,7 @@ import axios from '../../utils/constants'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 import CriticProfileContainer from '../profile/CriticProfileContainer'
 
@@ -236,7 +237,7 @@ function CriticProfileManager() {
     const draftsData = getLatestDrafts.data?.pages
 
     return (
-        <Fragment>
+        <ErrorBoundary>
             {watchlistdata && moviesReviewsData && seriesReviewsData && (
                 <CriticProfileContainer
                     handleLogout={handleLogout}
@@ -251,7 +252,7 @@ function CriticProfileManager() {
                     handleRemoveFromWatchList={handleRemoveFromWatchList}
                 ></CriticProfileContainer>
             )}
-        </Fragment>
+        </ErrorBoundary>
     )
 }
 

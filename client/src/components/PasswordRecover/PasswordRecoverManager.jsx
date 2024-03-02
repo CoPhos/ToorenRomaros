@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import PasswordRecoverContainer from './PasswordRecoverContainer';
 import { useMutation } from 'react-query'
 import axios from '../../utils/constants'
+import ErrorBoundary from '../../utils/ErrorBoundary';
 
 function PasswordRecoverManager() {
     const [email, setemail] = useState("")
@@ -51,13 +52,15 @@ function PasswordRecoverManager() {
     })
 
   return (
-      <PasswordRecoverContainer
-          email={email}
-          handleOnChange={handleOnChange}
-          handleOnSumbit={handleOnSumbit}
-          validEmail={validEmail}
-          emailsended={emailsended}
-      ></PasswordRecoverContainer>
+      <ErrorBoundary>
+          <PasswordRecoverContainer
+              email={email}
+              handleOnChange={handleOnChange}
+              handleOnSumbit={handleOnSumbit}
+              validEmail={validEmail}
+              emailsended={emailsended}
+          ></PasswordRecoverContainer>
+      </ErrorBoundary>
   )
 }
 

@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 import useAuth from '../hooks/useAuth'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 import EditorContainer from './EditorContainer'
 function EditorManager() {
@@ -48,7 +49,6 @@ function EditorManager() {
         } else {
             setPostInfo({ ...postInfo, [key]: e.target.value })
         }
-        
     }
 
     const getExistingPost = useQuery({
@@ -73,11 +73,8 @@ function EditorManager() {
                     convertFromRaw(JSON.parse(data?.data?.response?.content))
                 )
             )
-          
         },
-        onError: (error) => {
-           
-        },
+        onError: (error) => {},
         enabled: !!edit && isValidUUID(edit),
     })
 
@@ -102,8 +99,7 @@ function EditorManager() {
         onSuccess: (data) => {
             setpostId(data?.data?.response?.id)
         },
-        onError: (error) => {
-        },
+        onError: (error) => {},
         enabled: !!!edit,
     })
 
@@ -116,12 +112,8 @@ function EditorManager() {
                 return error
             }
         },
-        onSuccess: (data) => {
-           
-        },
-        onError: (error) => {
-           
-        },
+        onSuccess: (data) => {},
+        onError: (error) => {},
     })
 
     const savePost = useMutation({
@@ -136,33 +128,24 @@ function EditorManager() {
                 ),
                 status: postStatus,
                 tag: postInfo.tag,
-                publicationDateTime: new Date()
+                publicationDateTime: new Date(),
             })
         },
-        onSuccess: (data) => {
-          
-        },
-        onError: (error) => {
-            
-        },
+        onSuccess: (data) => {},
+        onError: (error) => {},
     })
 
     const saveImage = useMutation({
         mutationKey: ['saveImage', auth.id],
         mutationFn: async (formData) => {
-         
             return axiosPrivate.post(`/posts/images`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             })
         },
-        onSuccess: (data) => {
-           
-        },
-        onError: (error) => {
-          
-        },
+        onSuccess: (data) => {},
+        onError: (error) => {},
     })
 
     async function handlesavePost(postStatus) {
@@ -190,11 +173,8 @@ function EditorManager() {
                 if (allMutationsSucceeded) {
                     navigate('/', { replace: true })
                 } else {
-                   
                 }
-            } catch (error) {
-               
-            }
+            } catch (error) {}
         }
     }
 
@@ -215,7 +195,6 @@ function EditorManager() {
                         //const error = (data && data.message) || response.status
                         //setError(error)
                     } else {
-                      
                         resolve({
                             data: {
                                 link:
@@ -226,9 +205,7 @@ function EditorManager() {
                         })
                     }
                 })
-                .catch((error) => {
-                    
-                })
+                .catch((error) => {})
         })
     }
     useEffect(() => {
@@ -255,7 +232,7 @@ function EditorManager() {
                 'Are you sure you want to leave?'
             )
             if (shouldLeave) {
-                 if (!edit) discardPost.mutate()
+                if (!edit) discardPost.mutate()
             } else {
                 event.preventDefault()
             }
@@ -295,22 +272,26 @@ function EditorManager() {
     }, [postInfo.tag])
 
     return (
-        <EditorContainer
-            editorState={editorState}
-            setEditorState={setEditorState}
-            uploadImageCallback={uploadImageCallback}
-            discardPost={discardPost}
-            handlesavePost={handlesavePost}
-            postInfo={postInfo}
-            handleOnChange={handleOnChange}
-            validtittle={validtittle}
-            validheadline={validheadline}
-            validimage={validimage}
-            validsynthesis={validsynthesis}
-            validtag={validtag}
-            handleDiscardPost={handleDiscardPost}
-            mainImage={getExistingPost.data?.data?.response?.mainImageId || ''}
-        ></EditorContainer>
+        <ErrorBoundary>
+            <EditorContainer
+                editorState={editorState}
+                setEditorState={setEditorState}
+                uploadImageCallback={uploadImageCallback}
+                discardPost={discardPost}
+                handlesavePost={handlesavePost}
+                postInfo={postInfo}
+                handleOnChange={handleOnChange}
+                validtittle={validtittle}
+                validheadline={validheadline}
+                validimage={validimage}
+                validsynthesis={validsynthesis}
+                validtag={validtag}
+                handleDiscardPost={handleDiscardPost}
+                mainImage={
+                    getExistingPost.data?.data?.response?.mainImageId || ''
+                }
+            ></EditorContainer>
+        </ErrorBoundary>
     )
 }
 

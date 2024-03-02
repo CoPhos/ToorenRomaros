@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import ConfirmResetContainer from './ConfirmResetContainer'
 import { useMutation } from 'react-query'
 import axios from '../../utils/constants'
+import ErrorBoundary from '../../utils/ErrorBoundary';
 
 function ConfirmResetManager() {
     const PASSWORD_REGEX =
@@ -64,21 +65,23 @@ function ConfirmResetManager() {
     }, [password, matchPassword])
 
     return (
-        <ConfirmResetContainer
-            errorRef={errorRef}
-            errorMessage={errorMessage}
-            password={password}
-            setpassword={setpassword}
-            setpasswordFocus={setpasswordFocus}
-            passwordFocus={passwordFocus}
-            validPassword={validPassword}
-            matchPassword={matchPassword}
-            setmatchPassword={setmatchPassword}
-            setmatchPasswordFocus={setmatchPasswordFocus}
-            validmatchPassword={validmatchPassword}
-            matchPasswordFocus={matchPasswordFocus}
-            handleSubmit={handleSubmit}
-        ></ConfirmResetContainer>
+        <ErrorBoundary>
+            <ConfirmResetContainer
+                errorRef={errorRef}
+                errorMessage={errorMessage}
+                password={password}
+                setpassword={setpassword}
+                setpasswordFocus={setpasswordFocus}
+                passwordFocus={passwordFocus}
+                validPassword={validPassword}
+                matchPassword={matchPassword}
+                setmatchPassword={setmatchPassword}
+                setmatchPasswordFocus={setmatchPasswordFocus}
+                validmatchPassword={validmatchPassword}
+                matchPasswordFocus={matchPasswordFocus}
+                handleSubmit={handleSubmit}
+            ></ConfirmResetContainer>
+        </ErrorBoundary>
     )
 }
 

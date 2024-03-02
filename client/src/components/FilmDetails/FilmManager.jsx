@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from '../../utils/constants'
 import { useQueryClient, useQuery } from 'react-query'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 import FilmDetailsContainer from './FilmDetailsContainer'
 import FilmMainInfoContainer from './FilmMainInfoContainer'
@@ -293,18 +294,14 @@ function FilmManager() {
    const commentsData = getCommonReviews.data?.data?.response?.content
 
    return (
-       <Fragment>
-           {filmData &&
-               commonRatingData &&
-               superRatingData &&
-               (
-                   <FilmMainInfoContainer
-                       data={filmData}
-                       commonRatings={commonRatingData}
-                       superRatings={superRatingData}
-                       
-                   ></FilmMainInfoContainer>
-               )}
+       <ErrorBoundary>
+           {filmData && commonRatingData && superRatingData && (
+               <FilmMainInfoContainer
+                   data={filmData}
+                   commonRatings={commonRatingData}
+                   superRatings={superRatingData}
+               ></FilmMainInfoContainer>
+           )}
            {filmData && staffData && genreData && streamSitesData && (
                <FilmDetailsContainer
                    data={filmData}
@@ -327,7 +324,7 @@ function FilmManager() {
                        comments={commentsData}
                    ></ReviewContainer>
                )}
-       </Fragment>
+       </ErrorBoundary>
    )
 }
 

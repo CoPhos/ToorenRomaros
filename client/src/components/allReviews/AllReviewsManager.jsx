@@ -7,6 +7,7 @@ import {
 import AllReviewsContainer from './AllReviewsContainer'
 import { useInfiniteQuery, useQuery } from 'react-query'
 import axios from '../../utils/constants'
+import ErrorBoundary from '../../utils/ErrorBoundary';
 
 function AllReviewsManager() {
     const pageSize = 10
@@ -222,7 +223,7 @@ function AllReviewsManager() {
     const data = getContent.data?.pages
     const filmImageData = getMainFilmImage.data?.data
     return (
-        <Fragment>
+        <ErrorBoundary>
             {commonRatingData && superRatingData && data && (
                 <AllReviewsContainer
                     handleSelectedOrder={handleSelectedOrder}
@@ -240,7 +241,7 @@ function AllReviewsManager() {
                     filmImageData={filmImageData}
                 ></AllReviewsContainer>
             )}
-        </Fragment>
+        </ErrorBoundary>
     )
 }
 

@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 import NavbarManager from '../navbar/NavbarManager'
 import MobileNavMenu from '../../components/navbar/MobileNavMenu'
@@ -30,7 +31,7 @@ function Layout({ }) {
     }
 
         return (
-            <Fragment>
+            <ErrorBoundary>
                 <NavbarManager onlyLogo={onlyLogo}></NavbarManager>
                 <main>
                     <Outlet />
@@ -39,7 +40,7 @@ function Layout({ }) {
                     <MobileNavMenu fillColor={fillColor} to={toProfile} />
                 )}
                 <Footer></Footer>
-            </Fragment>
+            </ErrorBoundary>
         )
 }
 
