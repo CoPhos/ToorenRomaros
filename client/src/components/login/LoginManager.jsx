@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import useAuth from '../hooks/useAuth'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { jwtDecode } from 'jwt-decode'
 
 import LoginContainer from './LoginContainer'
@@ -9,8 +9,8 @@ import axios from '../../utils/constants'
 
 function LoginManager({ active, closePopup }) {
     const LOGIN_URL = '/auth/token'
-    const { login } = useAuth()
-    
+    const { login, auth, setImage } = useAuth()
+
     const recaptchaRef = useRef()
     const [captchaToken, setcaptchaToken] = useState(null)
     const [submiteEnable, setsubmiteEnable] = useState(false)
@@ -67,9 +67,7 @@ function LoginManager({ active, closePopup }) {
                         withCredentials: true,
                     }
                 )
-                
             } catch (error) {
-                
                 return error
             }
         },
@@ -85,8 +83,6 @@ function LoginManager({ active, closePopup }) {
                 setuser('')
                 setpassword('')
                 seterrorMessage('')
-                closePopup()
-                navigate(from, { replace: true })
             },
             onError: (error) => {
                 recaptchaRef.current.reset()
@@ -95,6 +91,30 @@ function LoginManager({ active, closePopup }) {
             },
         }
     )
+
+    const getProfileImage = useQuery({
+        queryKey: ['getProfileImage'],
+        queryFn: async () => {
+            try {
+                return axios.get(
+                    `${auth.id}/media/images?imageType=USER_PROFILE`
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {
+            console.log(data)
+            const image = data?.data?.[0]?.id
+            setImage(image)
+            closePopup()
+            navigate(from, { replace: true })
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+        enabled: !!auth?.id,
+    })
 
     useEffect(() => {
         userRef.current.focus()

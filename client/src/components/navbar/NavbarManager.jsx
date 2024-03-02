@@ -211,6 +211,7 @@ function NavbarManager({ onlyLogo }) {
             <NavbarContainer
                 user={auth?.user}
                 roles={auth?.roles}
+                image={auth?.imageurl}
                 moviesExplore={moviesExplore}
                 tvExplore={tvExplore}
                 moviesQuery={getNewMovies}

@@ -18,13 +18,17 @@ export const AuthProvider = ({children}) => {
       setisAuthenticated(true)
   }
 
+  const setImage = (imageurl) => {
+    setauth({...auth, imageurl})
+  }
+
   const logout = () => {
       setauth({})
       setisAuthenticated(false)
   }
     return (
         <AuthContext.Provider
-            value={{ auth, isAuthenticated, setauth, login, logout }}
+            value={{ auth, isAuthenticated, setauth, login, logout, setImage }}
         >
             {children}
         </AuthContext.Provider>
