@@ -3,7 +3,7 @@ import { useMutation } from 'react-query'
 import useAuth from '../hooks/useAuth'
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate, useLocation } from 'react-router-dom'
-
+import useApiErrorHandler from '../hooks/useApiErrorHandler'
 
 import SignUpContainer from './SignUpContainer';
 import axios from '../../utils/constants'
@@ -42,30 +42,12 @@ function SignUpManager({ active, closePopup }) {
     const [matchPassword, setmatchPassword] = useState('')
     const [validmatchPassword, setvalidMatchPassword] = useState(false)
     const [matchPasswordFocus, setmatchPasswordFocus] = useState(false)
-
-    const [errorMessage, seterrorMessage] = useState('')
- 
+    
     const userRef = useRef()
     const errorRef = useRef()
-
-    const handleApiError = (error) => {
-        if (!error.response) {
-            seterrorMessage('No Server Response')
-        } else {
-            handleHttpError(error)
-        }
-    }
-
-    const handleHttpError = (error) => {
-        switch (error.response.status) {
-            case 401:
-                seterrorMessage('Unauthorize')
-                break
-            default:
-                console.log(error.response.data.message)
-                seterrorMessage(error.response.data.message)
-        }
-    }
+    
+    const { errorMessage, seterrorMessage, handleApiError } =
+        useApiErrorHandler()
 
     const mutation = useMutation(
         async () => {
@@ -91,7 +73,6 @@ function SignUpManager({ active, closePopup }) {
         },
         {
             onSuccess: (data) => {
-                console.log(data)
                 const id = data?.data?.userId
                 const accessToken = data?.data?.accessToken
                 const refreshToken = data?.data?.refreshToken

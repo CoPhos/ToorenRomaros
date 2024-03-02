@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useMutation, useQuery } from 'react-query'
 import { jwtDecode } from 'jwt-decode'
+import useApiErrorHandler from '../hooks/useApiErrorHandler'
 
 import LoginContainer from './LoginContainer'
 import axios from '../../utils/constants'
@@ -16,7 +17,6 @@ function LoginManager({ active, closePopup }) {
     const [submiteEnable, setsubmiteEnable] = useState(false)
 
     function onChange(value) {
-        console.log(value)
         setcaptchaToken(value)
     }
 
@@ -29,26 +29,8 @@ function LoginManager({ active, closePopup }) {
 
     const [user, setuser] = useState('')
     const [password, setpassword] = useState('')
-    const [errorMessage, seterrorMessage] = useState('')
-
-    const handleApiError = (error) => {
-        if (!error.response) {
-            seterrorMessage('No Server Response')
-        } else {
-            handleHttpError(error)
-        }
-    }
-
-    const handleHttpError = (error) => {
-        switch (error.response.status) {
-            case 401:
-                seterrorMessage('Unauthorize')
-                break
-            default:
-                console.log(error.response.data.message)
-                seterrorMessage(error.response.data.message)
-        }
-    }
+    const { errorMessage, seterrorMessage, handleApiError } =
+        useApiErrorHandler()
 
     const mutation = useMutation(
         async () => {
@@ -73,7 +55,6 @@ function LoginManager({ active, closePopup }) {
         },
         {
             onSuccess: (data) => {
-                console.log(data)
                 const id = data?.data?.Ok?.userId
                 const accessToken = data?.data?.Ok?.accessToken
                 const refreshToken = data?.data?.Ok?.refreshToken
@@ -104,14 +85,13 @@ function LoginManager({ active, closePopup }) {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
             const image = data?.data?.[0]?.id
             setImage(image)
             closePopup()
             navigate(from, { replace: true })
         },
         onError: (error) => {
-            console.log(error)
+           
         },
         enabled: !!auth?.id,
     })
