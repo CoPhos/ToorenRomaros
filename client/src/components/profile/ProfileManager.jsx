@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query'
 import { ActionNotificationContext } from '../context/ActionNotificationProvider'
 import ErrorBoundary from '../../utils/ErrorBoundary'
-
 import ProfileContainer from './ProfileContainer'
 
 function ProfileManager() {
@@ -16,13 +15,12 @@ function ProfileManager() {
     const { logout, auth } = useAuth()
     const navigate = useNavigate()
     const pageSize = 10
-    const { notificationText, setnotificationText } = useContext(
-        ActionNotificationContext
-    )
-    const { isNotificationPopupOpen, setisNotificationPopupOpen } = useContext(
-        ActionNotificationContext
-    )
-    const { type, settype } = useContext(ActionNotificationContext)
+
+    const {
+        setnotificationText,
+        settype,
+        setisNotificationPopupOpen,
+    } = useContext(ActionNotificationContext)
 
 
     const [commentId, setcommentId] = useState(null)
@@ -143,7 +141,9 @@ function ProfileManager() {
             return { previousMoviesData, previousSeriesData }
         },
         onSuccess: (data, variables, context) => {
-         
+           setnotificationText('Updated Successfully.')
+           settype('success')
+           setisNotificationPopupOpen(true)
         },
         onError: (error, variables, context) => {
             queryClient.setQueryData(
@@ -154,6 +154,11 @@ function ProfileManager() {
                 ['getLatestSeriesCommentsByUserId', auth.id],
                 context.previousSeriesData
             )
+             settype('error')
+             setnotificationText(
+                 error?.response?.data?.message || 'No server response'
+             )
+             setisNotificationPopupOpen(true)
         },
         onSettled: () => {
             queryClient.invalidateQueries([
@@ -233,9 +238,8 @@ function ProfileManager() {
                 setisNotificationPopupOpen(true)
             },
             onError: (error) => {
-            
                 settype('error')
-                setnotificationText(error.message)
+                setnotificationText(error?.response?.data?.message || "No server response")
                 setisNotificationPopupOpen(true)
             },
         }
@@ -322,6 +326,8 @@ function ProfileManager() {
         },
        
     })
+
+
     function handleLogout(e) {
         e.preventDefault()
         mutation.mutate()

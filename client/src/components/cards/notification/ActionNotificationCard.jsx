@@ -60,8 +60,8 @@ function Card({
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z"
                         fill="#2E7D32"
                     />
@@ -80,8 +80,8 @@ function Card({
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M12 2C17.522 2 22 6.478 22 12C22 17.522 17.522 22 12 22C6.478 22 2 17.522 2 12C2 6.478 6.478 2 12 2ZM14.293 8.293L12 10.586L9.707 8.293L8.293 9.707L10.586 12L8.293 14.293L9.707 15.707L12 13.414L14.293 15.707L15.707 14.293L13.414 12L15.707 9.707L14.293 8.293Z"
                         fill="#D32F2F"
                     />
@@ -119,8 +119,8 @@ function Card({
         <div
             className={`max-w-[385px] w-fit py-[12px] shadow-md hover:shodow-lg rounded-2xl px-[24px] mr-2 ${color}`}
         >
-            <div class="flex flex-col p-8 items-start justify-center ">
-                <div class="flex flex-row items-center justify-between gap-2">
+            <div className="flex flex-col p-8 items-start justify-center ">
+                <div className="flex flex-row items-center justify-between gap-2">
                     {icon}
                     <p className="text-small-d-400 text-gray-600 max-w-[290px]">
                         {text}

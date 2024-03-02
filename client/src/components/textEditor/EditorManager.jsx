@@ -5,8 +5,10 @@ import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 import useAuth from '../hooks/useAuth'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import ErrorBoundary from '../../utils/ErrorBoundary'
+import { ActionNotificationContext } from '../context/ActionNotificationProvider'
 
 import EditorContainer from './EditorContainer'
+import { data } from 'autoprefixer'
 function EditorManager() {
     const { auth } = useAuth()
     const axiosPrivate = useAxiosPrivate()
@@ -36,6 +38,9 @@ function EditorManager() {
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
         return uuidRegex.test(str)
     }
+
+    const { setnotificationText, settype, setisNotificationPopupOpen } =
+        useContext(ActionNotificationContext)
 
     function handleDiscardPost(event) {
         event.preventDefault()
@@ -74,7 +79,18 @@ function EditorManager() {
                 )
             )
         },
-        onError: (error) => {},
+        onSuccess: (data) => {
+            setnotificationText('Post Loaded Successfully.')
+            settype('success')
+            setisNotificationPopupOpen(true)
+        },
+        onError: (error) => {
+            settype('error')
+            setnotificationText(
+                error?.response?.data?.message || 'No server response'
+            )
+            setisNotificationPopupOpen(true)
+        },
         enabled: !!edit && isValidUUID(edit),
     })
 
@@ -98,8 +114,17 @@ function EditorManager() {
         },
         onSuccess: (data) => {
             setpostId(data?.data?.response?.id)
+            setnotificationText('New Post Created Successfully.')
+            settype('success')
+            setisNotificationPopupOpen(true)
         },
-        onError: (error) => {},
+        onError: (error) => {
+            settype('error')
+            setnotificationText(
+                error?.response?.data?.message || 'No server response'
+            )
+            setisNotificationPopupOpen(true)
+        },
         enabled: !!!edit,
     })
 
@@ -112,8 +137,18 @@ function EditorManager() {
                 return error
             }
         },
-        onSuccess: (data) => {},
-        onError: (error) => {},
+        onSuccess: (data) => {
+            setnotificationText('Post Deleted Successfully.')
+            settype('success')
+            setisNotificationPopupOpen(true)
+        },
+        onError: (error) => {
+            settype('error')
+            setnotificationText(
+                error?.response?.data?.message || 'No server response'
+            )
+            setisNotificationPopupOpen(true)
+        },
     })
 
     const savePost = useMutation({
@@ -131,8 +166,18 @@ function EditorManager() {
                 publicationDateTime: new Date(),
             })
         },
-        onSuccess: (data) => {},
-        onError: (error) => {},
+        onSuccess: (data) => {
+            setnotificationText('Post Saved.')
+            settype('success')
+            setisNotificationPopupOpen(true)
+        },
+        onError: (error) => {
+            settype('error')
+            setnotificationText(
+                error?.response?.data?.message || 'No server response'
+            )
+            setisNotificationPopupOpen(true)
+        },
     })
 
     const saveImage = useMutation({
@@ -145,7 +190,13 @@ function EditorManager() {
             })
         },
         onSuccess: (data) => {},
-        onError: (error) => {},
+        onError: (error) => {
+            settype('error')
+            setnotificationText(
+                error?.response?.data?.message || 'No server response'
+            )
+            setisNotificationPopupOpen(true)
+        },
     })
 
     async function handlesavePost(postStatus) {
@@ -178,13 +229,14 @@ function EditorManager() {
         }
     }
 
-    async function uploadImageCallback(file) {
+    async function uploadImageCallback(file, id) {
         return new Promise((resolve, reject) => {
+            console.log(postId)
             const formData = new FormData()
             formData.append('image', file)
             formData.append('id', postId)
             formData.append('imageType', 'POST_COLLECTION')
-
+            
             fetch('http://localhost:9090/api/v1/posts/images', {
                 method: 'POST',
                 body: formData,
@@ -192,8 +244,9 @@ function EditorManager() {
                 .then(async (response) => {
                     const data = await response.json()
                     if (!response.ok) {
-                        //const error = (data && data.message) || response.status
-                        //setError(error)
+                        settype('error')
+                        setnotificationText('Something went wrong!')
+                        setisNotificationPopupOpen(true)
                     } else {
                         resolve({
                             data: {

@@ -159,10 +159,17 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
+            setnotificationText('Updated Successfully.')
+            settype('success')
+            setisNotificationPopupOpen(true)
             userCommentData.refetch()
         },
         onError: (error) => {
-          
+           settype('error')
+           setnotificationText(
+               error?.response?.data?.message || 'No server response'
+           )
+           setisNotificationPopupOpen(true)
         },
         enabled: false,
     })
@@ -181,10 +188,16 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
-         
+           setnotificationText('Updated Successfully.')
+           settype('success')
+           setisNotificationPopupOpen(true)
         },
         onError: (error) => {
-          
+           settype('error')
+           setnotificationText(
+               error?.response?.data?.message || 'No server response'
+           )
+           setisNotificationPopupOpen(true)
         },
         enabled: false,
     })

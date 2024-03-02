@@ -1,10 +1,11 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, Fragment, useContext } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import axios from '../../utils/constants'
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query'
 import ErrorBoundary from '../../utils/ErrorBoundary'
+import { ActionNotificationContext } from '../context/ActionNotificationProvider'
 
 import CriticProfileContainer from '../profile/CriticProfileContainer'
 
@@ -15,6 +16,8 @@ function CriticProfileManager() {
     const { logout, auth } = useAuth()
     const navigate = useNavigate()
     const pageSize = 10
+    const { setnotificationText, settype, setisNotificationPopupOpen } =
+        useContext(ActionNotificationContext)
 
     function handleLogout(e) {
         e.preventDefault()
@@ -87,9 +90,17 @@ function CriticProfileManager() {
             }
         },
         {
-            onSuccess: (data) => {},
+            onSuccess: (data) => {
+                  setnotificationText('Removed From Watchlist Successfully.')
+                  settype('success')
+                  setisNotificationPopupOpen(true)
+            },
             onError: (error) => {
-              
+               settype('error')
+               setnotificationText(
+                   error?.response?.data?.message || 'No server response'
+               )
+               setisNotificationPopupOpen(true)
             },
         }
     )
