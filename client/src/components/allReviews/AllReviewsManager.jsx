@@ -80,7 +80,6 @@ function AllReviewsManager() {
                         searchParams.get('order') || defaultParams.order
                     }&size=${pageSize}&page=${pageParam}`
                 }
-                //console.log(query)
                 return axios.get(query)
             } catch (error) {
                 return error
@@ -97,10 +96,9 @@ function AllReviewsManager() {
                 : null
         },
         onSuccess: (data) => {
-            //console.log(data)
         },
         onError: (error) => {
-            console.log(error)
+            
         },
     })
     const getCommonRatingFromFilm = useQuery({
@@ -118,10 +116,10 @@ function AllReviewsManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+          
         },
         onError: (error) => {
-            console.log(error)
+          
         },
     })
     const getMainFilmImage = useQuery({
@@ -136,10 +134,10 @@ function AllReviewsManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
     const getSuperRatingFromFilm = useQuery({
@@ -156,10 +154,9 @@ function AllReviewsManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
     const getFilm = useQuery({
@@ -172,10 +169,8 @@ function AllReviewsManager() {
             }
         },
         onSuccess: (data) => {
-            // console.log(data?.data)
         },
         onError: (error) => {
-            console.log(error)
         },
     })
 

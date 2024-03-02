@@ -13,7 +13,7 @@ function RegularCarouselManager({parameters ,queryName, promiseName}) {
           return axios.get(FILM_URL + parameters)
       },
       onSuccess: (data) => {
-          //console.log(data)
+        
       },
   })
 

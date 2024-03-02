@@ -24,7 +24,6 @@ function useRefreshToken() {
                 refreshToken: response.data.refreshToken,
             }
         })
-        console.log(response)
         return response.data.accessToken
     }
 

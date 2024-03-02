@@ -22,10 +22,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            // console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
     const getAllStaffFromFilm = useQuery({
@@ -38,10 +38,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+            
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
     const getProfileImageFromStaffByFilmId = useQuery(
@@ -84,7 +84,7 @@ function FilmManager() {
         {
             enabled: !!getAllStaffFromFilm.data,
             onError: (error) => {
-                console.log(error)
+               
             },
             onSuccess: (data) => {
             },
@@ -100,10 +100,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
     const getCommonRatingFromFilm = useQuery({
@@ -118,10 +118,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
     const getSuperRatingFromFilm = useQuery({
@@ -136,10 +136,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+          
         },
         onError: (error) => {
-            console.log(error)
+          
         },
     })
     const getStreamSitesFromFilm = useQuery({
@@ -154,10 +154,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+         
         },
     })
     const getImageFromStreamsiteByFilmId = useQuery(
@@ -204,7 +204,7 @@ function FilmManager() {
         { enabled: !!getStreamSitesFromFilm.data },
         {
             onError: (error) => {
-                console.log(error)
+               
             },
         }
     )
@@ -220,10 +220,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-           // console.log(data?.data)
+          
         },
         onError: (error) => {
-            console.log(error)
+          
         },
     })
     const getCommonReviews = useQuery({
@@ -238,10 +238,10 @@ function FilmManager() {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
 

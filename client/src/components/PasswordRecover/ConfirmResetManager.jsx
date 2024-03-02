@@ -40,17 +40,9 @@ function ConfirmResetManager() {
             }
         },
         onSuccess: (data) => {
-            console.log(token)
-            console.log(data)
+
         },
         onError: (error) => {
-            console.log(token)
-            console.log(
-                JSON.stringify({
-                    newPassword: password,
-                    token: token,
-                })
-            )
             errorRef.current.focus()
             seterrorMessage(error.code)
         },

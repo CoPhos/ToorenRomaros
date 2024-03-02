@@ -48,7 +48,7 @@ function EditorManager() {
         } else {
             setPostInfo({ ...postInfo, [key]: e.target.value })
         }
-        console.log(postInfo)
+        
     }
 
     const getExistingPost = useQuery({
@@ -73,10 +73,10 @@ function EditorManager() {
                     convertFromRaw(JSON.parse(data?.data?.response?.content))
                 )
             )
-            console.log(data)
+          
         },
         onError: (error) => {
-            console.log(error)
+           
         },
         enabled: !!edit && isValidUUID(edit),
     })
@@ -101,10 +101,9 @@ function EditorManager() {
         },
         onSuccess: (data) => {
             setpostId(data?.data?.created?.id)
-            console.log(data)
         },
         onError: (error) => {
-            console.log(error)
+          console.log(error)
         },
         enabled: !edit,
     })
@@ -119,10 +118,10 @@ function EditorManager() {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
+           
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
 
@@ -142,17 +141,17 @@ function EditorManager() {
             })
         },
         onSuccess: (data) => {
-            console.log(data)
+          
         },
         onError: (error) => {
-            console.log(error)
+            
         },
     })
 
     const saveImage = useMutation({
         mutationKey: ['saveImage', auth.id],
         mutationFn: async (formData) => {
-            console.log(formData)
+         
             return axiosPrivate.post(`/posts/images`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -160,10 +159,10 @@ function EditorManager() {
             })
         },
         onSuccess: (data) => {
-            console.log(data)
+           
         },
         onError: (error) => {
-            console.log(error)
+          
         },
     })
 
@@ -217,7 +216,7 @@ function EditorManager() {
                         //const error = (data && data.message) || response.status
                         //setError(error)
                     } else {
-                        console.log(data)
+                      
                         resolve({
                             data: {
                                 link:

@@ -18,10 +18,10 @@ const getPostById = useQuery({
         }
     },
     onSuccess: (data) => {
-        console.log(data)
+      
     },
     onError: (error) => {
-        console.log(error)
+      
     },
 })
 

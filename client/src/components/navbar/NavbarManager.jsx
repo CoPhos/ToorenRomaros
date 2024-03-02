@@ -45,14 +45,7 @@ function NavbarManager({ onlyLogo }) {
         const accessToken = getDecodedCookie('accessToken')
         const refreshToken = getDecodedCookie('refreshToken')
         const email = getDecodedCookie('email')
-
-        console.log(id)
-        console.log(user)
-        console.log(accessToken)
-        console.log(refreshToken)
-        console.log(email)
         if (id && user && accessToken && accessToken && refreshToken && email) {
-            console.log('in')
             const roles = jwtDecode(accessToken).roles || []
             login(id, user, roles, accessToken, refreshToken, email)
         }
@@ -139,10 +132,10 @@ function NavbarManager({ onlyLogo }) {
             }
         },
         onSuccess: (data) => {
-            // console.log(data?.data)
+          
         },
         onError: (error) => {
-            console.log(error)
+        
         },
     })
 
@@ -159,10 +152,10 @@ function NavbarManager({ onlyLogo }) {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+        
         },
     })
 
@@ -179,10 +172,10 @@ function NavbarManager({ onlyLogo }) {
             }
         },
         onSuccess: (data) => {
-            console.log(data?.data)
+           
         },
         onError: (error) => {
-            console.log(error)
+         
         },
     })
 
@@ -199,10 +192,10 @@ function NavbarManager({ onlyLogo }) {
             }
         },
         onSuccess: (data) => {
-            console.log(data?.data)
+          
         },
         onError: (error) => {
-            console.log(error)
+          
         },
     })
 

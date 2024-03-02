@@ -43,7 +43,7 @@ function PasswordRecoverManager() {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
+    
             setemailsended(true)
         },
         onError: (error) => {},

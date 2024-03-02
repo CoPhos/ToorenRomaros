@@ -142,7 +142,7 @@ function ProfileManager() {
             return { previousMoviesData, previousSeriesData }
         },
         onSuccess: (data, variables, context) => {
-            console.log(data)
+         
         },
         onError: (error, variables, context) => {
             queryClient.setQueryData(
@@ -186,7 +186,7 @@ function ProfileManager() {
                 logout()
             },
             onError: (error) => {
-                console.log(error)
+              
             },
         }
     )
@@ -232,7 +232,7 @@ function ProfileManager() {
                 setisNotificationPopupOpen(true)
             },
             onError: (error) => {
-                console.log(error)
+            
                 settype('error')
                 setnotificationText(error.message)
                 setisNotificationPopupOpen(true)
@@ -260,10 +260,10 @@ function ProfileManager() {
                 : null
         },
         onSuccess: (data) => {
-            console.log(data)
+        
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
     const getLatestMoviesCommentsByUserId = useInfiniteQuery({
@@ -286,10 +286,10 @@ function ProfileManager() {
                 : null
         },
         onSuccess: (data) => {
-            console.log(data)
+         
         },
         onError: (error) => {
-            console.log(error)
+           
         },
        
     })
@@ -314,10 +314,10 @@ function ProfileManager() {
                 : null
         },
         onSuccess: (data) => {
-            console.log(data)
+        
         },
         onError: (error) => {
-            console.log(error)
+           
         },
        
     })

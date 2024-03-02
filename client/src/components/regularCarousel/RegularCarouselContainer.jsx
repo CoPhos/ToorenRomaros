@@ -3,7 +3,6 @@ import MovieCard from '../cards/movieCard/MovieCard'
 import Carousel from 'react-elastic-carousel'
 
 function RegularCarouselContainer({ data }) {
-    console.log(data)
     const breakPointsMovie = [
         { width: 1, itemsToShow: 2, itemsToScroll: 2 },
         { width: 408, itemsToShow: 3, itemsToScroll: 3 },

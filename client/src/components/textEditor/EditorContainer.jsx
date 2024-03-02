@@ -56,16 +56,16 @@ function EditorContainer(props) {
 
      const handlePanelClose = (panelKey, event) => {
          event.preventDefault()
-          console.log(panelKey)
+        
          setOpenPanels((prev) => prev.filter((panel) => panel !== panelKey))
-         console.log(openPanels)
+     
      }
 
      const isPanelOpen = (panelKey) => openPanels.includes(panelKey)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(props.postInfo)
+       
     }
     const IMAGE_URL = '/images/'
     const image = BASE_URL + IMAGE_URL + props.mainImage

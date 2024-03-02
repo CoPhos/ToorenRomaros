@@ -31,7 +31,6 @@ function useAxiosPrivate() {
                     prevRequest.headers[
                         'Authorization'
                     ] = `Bearer ${newAccessToken}`
-                    console.log(newAccessToken)
                     return axiosPrivate(prevRequest)
                 }
                 return Promise.reject(error)

@@ -39,10 +39,8 @@ function MovieCard({
 
         onSuccess: (data) => {
             if (data?.data?.created){ setIsCompleted(true) }
-            console.log(data?.data?.created)
         },
         onError: (error) => {
-            console.log(error)
         },
     })
 

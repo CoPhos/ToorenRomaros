@@ -18,7 +18,6 @@ function BrowseManager({}) {
         return query
     }
     function appendArrayQueryParam(query, key, array) {
-        console.log(array)
         if (array && array.length > 0) {
             query += `&${key}=`
             query += array.join(',')
@@ -190,7 +189,6 @@ function BrowseManager({}) {
                 )
                 query = appendQueryParam(query, 'size', pageSize)
                 query = appendQueryParam(query, 'page', pageParam)
-                console.log(query)
                 return axios.get(query)
             } catch (error) {
                 return error
@@ -206,10 +204,8 @@ function BrowseManager({}) {
                 : null
         },
         onSuccess: (data) => {
-            console.log(data)
         },
         onError: (error) => {
-            console.log(error)
         },
     })
     const postWatchListItem = useMutation({
@@ -227,10 +223,10 @@ function BrowseManager({}) {
         },
 
         onSuccess: (data) => {
-            console.log(data?.data?.created)
+    
         },
         onError: (error) => {
-            console.log(error)
+         
         },
     })
 

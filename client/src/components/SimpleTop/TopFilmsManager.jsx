@@ -13,7 +13,7 @@ function TopFilmsManager({ tittle, to, linkText, parameters, queryName }) {
             return axios.get(FILM_URL + parameters)
         },
         onSuccess: (data) => {
-            console.log(data)
+           
         },
     })
 

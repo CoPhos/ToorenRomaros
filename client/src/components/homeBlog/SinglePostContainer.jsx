@@ -36,10 +36,10 @@ function SinglePostContainer({ postData }) {
         navigator.clipboard
             .writeText(currentURL)
             .then(() => {
-                console.log(currentURL)
+               
             })
             .catch((error) => {
-                console.log(error)
+               
             })
     }
 

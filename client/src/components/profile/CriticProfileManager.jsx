@@ -45,7 +45,7 @@ function CriticProfileManager() {
                 logout()
             },
             onError: (error) => {
-                console.log(error)
+               
             },
         }
     )
@@ -88,7 +88,7 @@ function CriticProfileManager() {
         {
             onSuccess: (data) => {},
             onError: (error) => {
-                console.log(error)
+              
             },
         }
     )
@@ -113,10 +113,10 @@ function CriticProfileManager() {
                 : null
         },
         onSuccess: (data) => {
-            console.log(data)
+         
         },
         onError: (error) => {
-            console.log(error)
+           
         },
     })
 
@@ -141,10 +141,10 @@ function CriticProfileManager() {
                 : null
         },
         onSuccess: (data) => {
-            console.log(data)
+        
         },
         onError: (error) => {
-            console.log(error)
+          
         },
     })
 
@@ -169,10 +169,10 @@ function CriticProfileManager() {
                 : null
         },
         onSuccess: (data) => {
-            console.log(data)
+          
         },
         onError: (error) => {
-            console.log(error)
+         
         },
     })
 
@@ -197,10 +197,10 @@ function CriticProfileManager() {
                  : null
          },
          onSuccess: (data) => {
-             console.log(data)
+           
          },
          onError: (error) => {
-             console.log(error)
+            
          },
      })
 

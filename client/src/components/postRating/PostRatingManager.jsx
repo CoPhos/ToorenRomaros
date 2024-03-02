@@ -42,7 +42,7 @@ function PostRatingManager(filmdata) {
                     publicationDateTime: new Date(),
                     rating: (index + 1) * 10,
                 })
-                console.log('in 1')
+            
                 updateComment.mutate(data)
             } else {
                 const data = JSON.stringify({
@@ -51,7 +51,7 @@ function PostRatingManager(filmdata) {
                     publicationDateTime: new Date(),
                     rating: (index + 1) * 10,
                 })
-                console.log("in 2")
+               
                 postComment.mutate(data)
             }
         } else {
@@ -113,12 +113,12 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
-            //console.log(data?.data)
+           
             setHoveredIndex(data.data.response.rating / 10 - 1)
             setcurrentIndex(data.data.response.rating / 10 - 1)
         },
         onError: (error) => {
-            console.log(error)
+            
         },
         enabled: false,
     })
@@ -134,10 +134,10 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
+           
         },
         onError: (error) => {
-            console.log(error)
+        
         },
         enabled: false,
     })
@@ -159,11 +159,10 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
             userCommentData.refetch()
         },
         onError: (error) => {
-            console.log(error)
+          
         },
         enabled: false,
     })
@@ -182,10 +181,10 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
-            console.log(data)
+         
         },
         onError: (error) => {
-            console.log(error)
+          
         },
         enabled: false,
     })

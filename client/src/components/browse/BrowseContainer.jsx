@@ -21,7 +21,6 @@ function BrowseContainer({
     hasNextPage,
     handleAddWatchList,
 }) {
-    //console.log(filmData)
     const [openPanels, setOpenPanels] = useState([])
 
     const handleButtonClick = (panelKey, event) => {
