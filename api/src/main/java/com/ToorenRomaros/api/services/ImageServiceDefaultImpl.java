@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ImageServiceDefaultImpl implements ImageService {
     private final ImageRepostiroy imageRepostiroy;
     private final ModelMapper modelMapper;
-
+    private static final Logger log = LoggerFactory.getLogger(ImageServiceDefaultImpl.class);
     public ImageServiceDefaultImpl(ImageRepostiroy imageRepostiroy, ModelMapper modelMapper) {
         this.imageRepostiroy = imageRepostiroy;
         this.modelMapper = modelMapper;
@@ -48,8 +48,14 @@ public class ImageServiceDefaultImpl implements ImageService {
 
     @Override
     public List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid) {
-        List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStaffByImageTypeAndFilmid(imageType, filmid);
-        return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
+        try{
+            List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStaffByImageTypeAndFilmid(imageType, filmid);
+            return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
+        }catch (Exception e){
+            log.info(e.getMessage());
+            log.info(String.valueOf(e.getCause()));
+        }
+        return null;
     }
 
     @Override

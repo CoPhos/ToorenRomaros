@@ -87,8 +87,8 @@ public class ImageController {
             @Parameter(name = "imageType ", description = "The type of images to filter (e.g., \"USER_PROFILE\", \"FILM_COLLECTION\").", required = true, in = ParameterIn.QUERY)
     })
     @GetMapping("films/{filmId}/staffs/media/images")
-    ResponseEntity<?> getAllImagesFromStaffByImageTypeAndFilmid(@RequestParam @NotNull String imageType, @PathVariable @NotNull String id) {
-        return new ResponseEntity<>(imageService.getAllImagesFromStaffByImageTypeAndFilmid(imageType, id), HttpStatus.OK);
+    ResponseEntity<?> getAllImagesFromStaffByImageTypeAndFilmid(@RequestParam @NotNull String imageType, @PathVariable @NotNull String filmId) {
+        return new ResponseEntity<>(imageService.getAllImagesFromStaffByImageTypeAndFilmid(imageType, filmId), HttpStatus.OK);
     }
 
     @Operation(
@@ -105,7 +105,7 @@ public class ImageController {
             @Parameter(name = "imageType ", description = "The type of images to filter (e.g., \"USER_PROFILE\", \"FILM_COLLECTION\").", required = true, in = ParameterIn.QUERY)
     })
     @GetMapping("films/{imageId}/streamsites/media/images")
-    ResponseEntity<?> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(@RequestParam @NotNull String imageType, @PathVariable @NotNull String id) {
-        return new ResponseEntity<>(imageService.getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(imageType, id), HttpStatus.OK);
+    ResponseEntity<?> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(@RequestParam @NotNull String imageType, @PathVariable @NotNull String imageId) {
+        return new ResponseEntity<>(imageService.getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(imageType, imageId), HttpStatus.OK);
     }
 }

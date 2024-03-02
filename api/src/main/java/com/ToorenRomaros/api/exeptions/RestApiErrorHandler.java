@@ -87,6 +87,8 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
+
+    */
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Error> handleAuthenticationException(
             HttpServletRequest request,
@@ -105,7 +107,6 @@ public class RestApiErrorHandler {
                 .setTimestamp(Instant.now());
         return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
-    */
     @ExceptionHandler(HttpMessageNotWritableException.class)
     public ResponseEntity<Error> handleHttpMessageNotWritableException(HttpServletRequest request,
                                                                        HttpMessageNotWritableException ex,
