@@ -66,7 +66,7 @@ function EditorManager() {
             }
         },
         onSuccess: (data) => {
-            setpostId(edit)
+            setpostId(data?.data?.response?.id)
             setPostInfo({
                 tittle: data?.data?.response?.tittle,
                 headline: data?.data?.response?.headline,
@@ -78,8 +78,6 @@ function EditorManager() {
                     convertFromRaw(JSON.parse(data?.data?.response?.content))
                 )
             )
-        },
-        onSuccess: (data) => {
             setnotificationText('Post Loaded Successfully.')
             settype('success')
             setisNotificationPopupOpen(true)
@@ -229,7 +227,7 @@ function EditorManager() {
         }
     }
 
-    async function uploadImageCallback(file, id) {
+    async function uploadImageCallback(file) {
         return new Promise((resolve, reject) => {
             console.log(postId)
             const formData = new FormData()
@@ -253,7 +251,7 @@ function EditorManager() {
                                 link:
                                     'http://localhost:9090/api/v1' +
                                     '/images/' +
-                                    data.created['960x880'],
+                                    data.response['960x880'],
                             },
                         })
                     }
@@ -306,6 +304,7 @@ function EditorManager() {
             )
         }
     }, [])
+    
 
     useEffect(() => {
         setvalidtittle(postInfo.tittle.length <= 255)
@@ -323,27 +322,36 @@ function EditorManager() {
     useEffect(() => {
         setvalidtag(postInfo.tag.length > 1)
     }, [postInfo.tag])
-
+ 
+    const display =
+        createNewPost.data?.data?.response?.id ||
+        getExistingPost.data?.data?.response?.id
+    console.log(
+       
+            getExistingPost.data?.data?.response?.id
+    )
     return (
         <ErrorBoundary>
-            <EditorContainer
-                editorState={editorState}
-                setEditorState={setEditorState}
-                uploadImageCallback={uploadImageCallback}
-                discardPost={discardPost}
-                handlesavePost={handlesavePost}
-                postInfo={postInfo}
-                handleOnChange={handleOnChange}
-                validtittle={validtittle}
-                validheadline={validheadline}
-                validimage={validimage}
-                validsynthesis={validsynthesis}
-                validtag={validtag}
-                handleDiscardPost={handleDiscardPost}
-                mainImage={
-                    getExistingPost.data?.data?.response?.mainImageId || ''
-                }
-            ></EditorContainer>
+            {display ? (
+                <EditorContainer
+                    editorState={editorState}
+                    setEditorState={setEditorState}
+                    uploadImageCallback={uploadImageCallback}
+                    discardPost={discardPost}
+                    handlesavePost={handlesavePost}
+                    postInfo={postInfo}
+                    handleOnChange={handleOnChange}
+                    validtittle={validtittle}
+                    validheadline={validheadline}
+                    validimage={validimage}
+                    validsynthesis={validsynthesis}
+                    validtag={validtag}
+                    handleDiscardPost={handleDiscardPost}
+                    mainImage={
+                        getExistingPost.data?.data?.response?.mainImageId || ''
+                    }
+                ></EditorContainer>
+            ) : ""}
         </ErrorBoundary>
     )
 }
