@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@AnyMetaDef(name = "OwnerMetaDef", idType = "uuid-char", metaType = "string",
+@AnyMetaDef(name = "OwnerLikeMetaDef", idType = "uuid-char", metaType = "string",
         metaValues = {
                 @MetaValue(targetEntity = Movie.class, value = "M"),
                 @MetaValue(targetEntity = Serie.class, value = "S"),
@@ -50,7 +50,7 @@ public class ImageEntity {
     @NotNull(message = "Image size can not be null")
     @Enumerated(EnumType.STRING)
     private ImageSizeEnum imageSize;
-    @Any(metaDef = "OwnerMetaDef", metaColumn = @Column(name = "OWNER_TYPE"))
+    @Any(metaDef = "OwnerLikeMetaDef", metaColumn = @Column(name = "OWNER_TYPE"))
     @JoinColumn(name = "OWNER_ID")
     private Object owner;
 
