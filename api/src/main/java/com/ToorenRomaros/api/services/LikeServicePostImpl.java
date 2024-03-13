@@ -1,36 +1,36 @@
 package com.ToorenRomaros.api.services;
 
 import com.ToorenRomaros.api.dto.publication.CreateLikeDto;
-import com.ToorenRomaros.api.entities.publication.CommentEntity;
 import com.ToorenRomaros.api.entities.publication.LikeEntity;
+import com.ToorenRomaros.api.entities.publication.PostEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
-import com.ToorenRomaros.api.repositories.publication.CommentRepository;
 import com.ToorenRomaros.api.repositories.publication.LikeRepository;
+import com.ToorenRomaros.api.repositories.publication.PostRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-@Service("LikeServiceCommentImpl")
-public class LikeServiceCommentImpl implements LikeService{
+@Service("LikeServicePostImpl")
+public class LikeServicePostImpl implements LikeService{
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
-    private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
 
-    public LikeServiceCommentImpl(LikeRepository likeRepository, UserRepository userRepository, CommentRepository commentRepository) {
+    public LikeServicePostImpl(LikeRepository likeRepository, UserRepository userRepository, PostRepository postRepository) {
         this.likeRepository = likeRepository;
         this.userRepository = userRepository;
-        this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
     }
 
     @Override
     public void addLike(CreateLikeDto createLikeDto) {
         UserEntity userEntity = userRepository.findById(UUID.fromString(createLikeDto.getUserId())).orElseThrow(() -> new UserNotFoundException("User not found."));
-        CommentEntity commentEntity = commentRepository.findById(UUID.fromString(createLikeDto.getOwnerId())).orElseThrow(() -> new ResourceNotFoundException("Comment not found."));
+        PostEntity postEntity = postRepository.findById(UUID.fromString(createLikeDto.getOwnerId())).orElseThrow(() -> new ResourceNotFoundException("Post not found."));
         LikeEntity likeEntity = new LikeEntity();
         likeEntity.setUser(userEntity);
-        likeEntity.setOwner(commentEntity);
+        likeEntity.setOwner(postEntity);
         likeRepository.save(likeEntity);
     }
 

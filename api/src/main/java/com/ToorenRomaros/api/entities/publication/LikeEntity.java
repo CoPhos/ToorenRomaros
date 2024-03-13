@@ -15,7 +15,7 @@ import java.util.UUID;
                 @MetaValue(targetEntity = CommentEntity.class, value = "C"),
         })
 @Entity
-@Table(name = "like", uniqueConstraints = @UniqueConstraint(columnNames = {"OWNER_ID", "USER_ID"}))
+@Table(name = "thumbs_up", uniqueConstraints = @UniqueConstraint(columnNames = {"OWNER_ID", "USER_ID"}))
 public class LikeEntity {
         @Id
         @Column(name = "ID", updatable = false, nullable = false, unique = true, columnDefinition = "VARCHAR(36)")

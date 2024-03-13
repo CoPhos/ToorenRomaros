@@ -1,12 +1,8 @@
 package com.ToorenRomaros.api;
 
-import com.ToorenRomaros.api.services.RecaptchaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
@@ -30,23 +26,24 @@ public class ApiApplication {
 	@Bean
 	public ApplicationRunner runner(DataSource dataSource) {
 		return args -> {
-			ResourceDatabasePopulator triggersPopulator = new ResourceDatabasePopulator(false, false, StandardCharsets.UTF_8.toString(), new ClassPathResource("triggers.sql"));
+			ResourceDatabasePopulator triggersPopulator = new ResourceDatabasePopulator(false, false, StandardCharsets.UTF_8.toString(), new ClassPathResource("database/schema/triggers/trg_FilmAverageRating.sql"));
+			triggersPopulator.addScript(new ClassPathResource("database/schema/triggers/trg_totalLikes.sql"));
 			triggersPopulator.setSeparator("//");
 			triggersPopulator.execute(dataSource);
 
-			ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, StandardCharsets.UTF_8.toString(), new ClassPathResource("/DB_Data/init_user.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_film.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_genre.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_staff.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_saga.sql"));
+			ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator(false, false, StandardCharsets.UTF_8.toString(), new ClassPathResource("/database/data/seed/init_user.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_film.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_genre.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_staff.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_saga.sql"));
 //			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_social.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_streamSite.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_streamSite.sql"));
 			//resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_episode.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-tvshows.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_post-movies.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_tag.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_comment.sql"));
-			resourceDatabasePopulator.addScript(new ClassPathResource("/DB_Data/init_image.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_post-tvshows.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_post-movies.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_tag.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_comment.sql"));
+			resourceDatabasePopulator.addScript(new ClassPathResource("/database/data/seed/init_image.sql"));
 			resourceDatabasePopulator.execute(dataSource);
 		};
 	}
