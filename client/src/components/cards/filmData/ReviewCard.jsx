@@ -74,8 +74,7 @@ function ReviewCard({ expand, data, critic, arrayindex }) {
                 }
             },
             onSuccess: () => {
-                
-                queryClient.invalidateQueries('getSuperReviews')
+                queryClient.invalidateQueries(['getCommonReviews', params.uuid])
             },
         }
     )
@@ -135,7 +134,7 @@ function ReviewCard({ expand, data, critic, arrayindex }) {
                 }
             },
             onSuccess: () => {
-                queryClient.invalidateQueries('getSuperReviews')
+                queryClient.invalidateQueries(['getCommonReviews', params.uuid])
             },
         }
     )
