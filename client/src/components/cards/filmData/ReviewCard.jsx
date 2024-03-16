@@ -1,10 +1,96 @@
-import React, { useState, createRef, useEffect, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, createRef, useEffect, useContext } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
+import useAuth from '../../hooks/useAuth'
+import { LoginPopUpContext } from '../../context/LoginPopUpProvider'
+import { Link, useParams } from 'react-router-dom'
 
-function ReviewCard({ expand, data, critic }) {
+function ReviewCard({ expand, data, critic, arrayindex }) {
+    const queryClient = useQueryClient()
+    const params = useParams()
+    const axiosPrivate = useAxiosPrivate()
+    const { setisPopupOpen } = useContext(LoginPopUpContext)
+    const { auth, isAuthenticated } = useAuth()
     const [height, setHeight] = useState(0)
     const [show, setshow] = useState(false)
     const [clapped, setclapped] = useState(false)
+
+    const addClapp = useMutation(
+        async (formData) => {
+            try {
+                
+                return axiosPrivate.post('/comments/likes/', formData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (error) {
+                return error
+            }
+        },
+        {
+            onMutate: async () => {
+                 const previousData = queryClient.getQueryData([
+                     'getCommonReviews',
+                     params.uuid,
+                 ])
+                queryClient.setQueryData(
+                    ['getCommonReviews', params.uuid],
+                    (oldData) => {
+                        if (!oldData) return []
+
+                        return {
+                            ...oldData,
+                            data: {
+                                ...oldData.data,
+                                response: {
+                                    ...oldData.data.response,
+                                    content: oldData.data.response.content.map(
+                                        (item) =>
+                                            item.id == data.id
+                                                ? {
+                                                      ...item,
+                                                      likeCount:
+                                                          (item.likeCount ||
+                                                              0) + 1,
+                                                  }
+                                                : item
+                                    ),
+                                },
+                            },
+                        }
+                    }
+                )
+                return previousData
+            },
+            onError: (err, _, rollback) => {
+                 if (rollback) {
+                     queryClient.setQueryData(
+                         ['getCommonReviews', params.uuid],
+                         rollback
+                     )
+                 }
+            },
+            onSuccess: () => {
+                setclapped(true)
+                queryClient.invalidateQueries('getSuperReviews')
+            },
+        }
+    )
+
+    function handleClapClick(e) {
+        e.preventDefault()
+        if (!isAuthenticated) {
+            setisPopupOpen(true)
+        } else {
+            addClapp.mutate(
+                JSON.stringify({
+                    ownerId: data.id,
+                    userId: auth.id,
+                })
+            )
+        }
+    }
 
     const toggle = () => {
         setshow(!show)
@@ -91,7 +177,7 @@ function ReviewCard({ expand, data, critic }) {
     const reportDiv = (
         <div
             className="flex flex-row items-start justify-start hover:cursor-pointer group w-fit pt-2 pr-2 gap-[4px]"
-            onClick={() => setclapped(true)}
+            onClick={(e) => handleClapClick(e)}
         >
             <svg
                 width="24"
@@ -100,7 +186,7 @@ function ReviewCard({ expand, data, critic }) {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <g clip-path="url(#clip0_584_8)">
+                <g clipPath="url(#clip0_584_8)">
                     <path
                         d="M15.5702 3.90096C15.7841 4.17115 15.9183 4.48146 15.975 4.80284C16.0451 4.74074 16.12 4.68592 16.1968 4.63464L16.6956 4.13594C17.0872 3.74439 17.1474 3.1144 16.8037 2.68022C16.587 2.4064 16.2708 2.26953 15.9547 2.26953C15.6777 2.26953 15.4008 2.37458 15.1906 2.58469L14.563 3.21243C14.9562 3.33226 15.3072 3.56877 15.5702 3.90096Z"
                         className={`${
@@ -150,9 +236,9 @@ function ReviewCard({ expand, data, critic }) {
                     </clipPath>
                 </defs>
             </svg>
-          
+
             <p className="bg-transparent max-w-[80px] border-none text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
-                255
+                {data.likeCount}
             </p>
         </div>
     )
