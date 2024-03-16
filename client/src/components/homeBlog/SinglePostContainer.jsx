@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useContext } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import useAuth from '../hooks/useAuth'
+import { LoginPopUpContext } from '../context/LoginPopUpProvider'
+import { Link, useParams } from 'react-router-dom'
 import { Editor } from 'react-draft-wysiwyg'
 import { EditorState, convertFromRaw } from 'draft-js'
 
@@ -8,6 +12,11 @@ import TittleCard from '../cards/tittle/TittleCard'
 
 function SinglePostContainer({ postData }) {
     const date = new Date(postData.publicationDateTime)
+    const axiosPrivate = useAxiosPrivate()
+    const { setisPopupOpen } = useContext(LoginPopUpContext)
+    const { auth, isAuthenticated } = useAuth()
+    const queryClient = useQueryClient()
+    const params = useParams()
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(
             convertFromRaw(JSON.parse(postData.content))
@@ -16,6 +25,132 @@ function SinglePostContainer({ postData }) {
     const [showShare, setshowShare] = useState(false)
     const [showMore, setshowMore] = useState(false)
     const [clapped, setclapped] = useState(false)
+
+    const addClapp = useMutation(
+        ['addClapp', postData.id],
+        async (formData) => {
+            try {
+                setclapped(true)
+                return axiosPrivate.post('/posts/likes/', formData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+            } catch (error) {
+                return error
+            }
+        },
+        {
+            onMutate: async () => {
+                const previousData = queryClient.getQueryData([
+                    'getPostById',
+                    params.uuid,
+                ])
+                queryClient.setQueryData(
+                    ['getPostById', params.uuid],
+                    (oldData) => {
+                        if (!oldData) return []
+
+                        return {
+                            ...oldData,
+                            data: {
+                                ...oldData.data,
+                                response: {
+                                    ...oldData.data.response,
+                                    likeCount:
+                                        (oldData.data.response
+                                            .likeCount || 0) + 1,
+                                },
+                            },
+                        }
+                    }
+                )
+                return previousData
+            },
+            onError: (err, _, rollback) => {
+                if (rollback) {
+                    setclapped(false)
+                    queryClient.setQueryData(
+                        ['getPostById', params.uuid],
+                        rollback
+                    )
+                }
+            },
+            onSuccess: (data) => {
+                queryClient.invalidateQueries(['getPostById', params.uuid])
+            },
+        }
+    )
+
+    const removeClapp = useMutation(
+        ['removeClapp', postData.id],
+        async () => {
+            try {
+                setclapped(false)
+                return axiosPrivate.delete(
+                    `/comments/likes?owner=${postData.id}&user=${auth.id}`
+                )
+            } catch (error) {
+                return error
+            }
+        },
+        {
+            onMutate: async () => {
+                const previousData = queryClient.getQueryData([
+                    'getPostById',
+                    params.uuid,
+                ])
+                queryClient.setQueryData(
+                    ['getPostById', params.uuid],
+                    (oldData) => {
+                        if (!oldData) return []
+
+                        return {
+                            ...oldData,
+                            data: {
+                                ...oldData.data,
+                                response: {
+                                    ...oldData.data.response,
+                                    likeCount:
+                                        (oldData.data.response
+                                            .likeCount || 0) - 1,
+                                },
+                            },
+                        }
+                    }
+                )
+                return previousData
+            },
+            onError: (err, _, rollback) => {
+                 if (rollback) {
+                     setclapped(true)
+                     queryClient.setQueryData(
+                         ['getPostById', params.uuid],
+                         rollback
+                     )
+                 }
+            },
+            onSuccess: (data) => {
+                queryClient.invalidateQueries(['getPostById', params.uuid])
+            },
+        }
+    )
+
+    function handleClapClick(e) {
+        e.preventDefault()
+        if (!isAuthenticated) {
+            setisPopupOpen(true)
+        } else if (!clapped) {
+            addClapp.mutate(
+                JSON.stringify({
+                    ownerId: postData.id,
+                    userId: auth.id,
+                })
+            )
+        } else {
+            removeClapp.mutate()
+        }
+    }
 
     function handleOnClickShare() {
         setshowShare(!showShare)
@@ -36,12 +171,8 @@ function SinglePostContainer({ postData }) {
         const currentURL = window.location.href
         navigator.clipboard
             .writeText(currentURL)
-            .then(() => {
-               
-            })
-            .catch((error) => {
-               
-            })
+            .then(() => {})
+            .catch((error) => {})
     }
 
     useEffect(() => {
@@ -119,7 +250,7 @@ function SinglePostContainer({ postData }) {
                 <div className="flex flex-row items-center justify-start gap-2 mt-3 ">
                     <div
                         className="flex flex-row items-start justify-start hover:cursor-pointer group w-fit gap-[4px] ml-1"
-                        onClick={() => setclapped(true)}
+                        onClick={(e) => handleClapClick(e)}
                     >
                         <svg
                             width="24"
@@ -128,7 +259,7 @@ function SinglePostContainer({ postData }) {
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
                         >
-                            <g clip-path="url(#clip0_584_8)">
+                            <g clipPath="url(#clip0_584_8)">
                                 <path
                                     d="M15.5702 3.90096C15.7841 4.17115 15.9183 4.48146 15.975 4.80284C16.0451 4.74074 16.12 4.68592 16.1968 4.63464L16.6956 4.13594C17.0872 3.74439 17.1474 3.1144 16.8037 2.68022C16.587 2.4064 16.2708 2.26953 15.9547 2.26953C15.6777 2.26953 15.4008 2.37458 15.1906 2.58469L14.563 3.21243C14.9562 3.33226 15.3072 3.56877 15.5702 3.90096Z"
                                     className={`${
@@ -190,7 +321,7 @@ function SinglePostContainer({ postData }) {
                         </svg>
 
                         <p className="bg-transparent max-w-[80px] border-none text-small-m-400 lg:text-small-d-400 group-hover:text-red-600">
-                            255
+                            {postData.likeCount}
                         </p>
                     </div>
                     <div>

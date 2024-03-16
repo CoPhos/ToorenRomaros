@@ -19,7 +19,6 @@ const getPostById = useQuery({
         }
     },
     onSuccess: (data) => {
-      
     },
     onError: (error) => {
       
