@@ -35,8 +35,8 @@ public class LikeServicePostImpl implements LikeService{
     }
 
     @Override
-    public void removeLike(UUID likeId) {
-        likeRepository.findById(likeId)
+    public void removeLike(UUID ownerId, UUID userId) {
+        likeRepository.getCommentByOwnerIdAndFilmId(ownerId, userId)
                 .ifPresentOrElse(likeRepository::delete, () -> {
                     throw new ResourceNotFoundException("Relationship not found");
                 });

@@ -1,7 +1,5 @@
 package com.ToorenRomaros.api.controllers;
 
-import com.ToorenRomaros.api.dto.genre.CreateGenreFilmDto;
-import com.ToorenRomaros.api.dto.genre.GetGenreFilmDto;
 import com.ToorenRomaros.api.dto.publication.CreateLikeDto;
 import com.ToorenRomaros.api.exeptions.Error;
 import com.ToorenRomaros.api.services.LikeService;
@@ -62,7 +60,7 @@ public class LikeCommentController {
 
     @Operation(
             summary = "Delete Like-Comment Relationship",
-            description = "This endpoint allows users to delete a specific like-comment relationship identified by its unique identifier (relationshipId). Deleting a relationship is a permanent action and cannot be undone.",
+            description = "This endpoint allows users to delete a specific like-comment relationship identified by the user ID and the resource ID. Deleting a relationship is a permanent action and cannot be undone.",
             tags = { "Like", "Comment", "delete" })
     @ApiResponses({
             @ApiResponse(responseCode = "202", content = @Content(mediaType = "text/plain")),
@@ -71,13 +69,15 @@ public class LikeCommentController {
             @ApiResponse(responseCode = "405", content = { @Content(schema = @Schema(implementation = Error.class)) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @Parameters({
-            @Parameter(name = "relationshipId", description = "The ID of the Relationship", required = true, in = ParameterIn.PATH),
+            @Parameter(name = "owner", description = "The ID of the comment", in = ParameterIn.QUERY),
+            @Parameter(name = "user", description = "The ID of the user", in = ParameterIn.QUERY),
     })
-    @SecurityRequirement(name = "Bearer Authentication", scopes = "USER")
-    @DeleteMapping("/comments/likes/{relationshipId}")
-    ResponseEntity<String> deleteLike(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String relationshipId) {
-        likeService.removeLike(UUID.fromString(relationshipId));
+    @SecurityRequirement(name = "Bearer Authentication", scopes = "USER, CRITIC")
+    @DeleteMapping("/comments/likes")
+    ResponseEntity<String> deleteLike(@RequestParam @NotNull @Pattern(regexp = uuidRegExp) UUID owner,
+                                      @RequestParam @NotNull @Pattern(regexp = uuidRegExp)  UUID user) {
+        likeService.removeLike(owner, user);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body("Relationship: " + relationshipId + " deleted successfully");
+                .body("Like deleted successfully");
     }
 }

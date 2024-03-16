@@ -56,9 +56,9 @@ public class LikePostController {
     }
 
     @Operation(
-            summary = "Delete Like-Post Relationship",
-            description = "This endpoint allows users to delete a specific like-Post relationship identified by its unique identifier (relationshipId). Deleting a relationship is a permanent action and cannot be undone.",
-            tags = { "Like", "Post", "delete" })
+            summary = "Delete Like-Comment Relationship",
+            description = "This endpoint allows users to delete a specific like-comment relationship identified by the user ID and the resource ID. Deleting a relationship is a permanent action and cannot be undone.",
+            tags = { "Like", "Comment", "delete" })
     @ApiResponses({
             @ApiResponse(responseCode = "202", content = @Content(mediaType = "text/plain")),
             @ApiResponse(responseCode = "401", content = { @Content(schema = @Schema()) }),
@@ -66,13 +66,15 @@ public class LikePostController {
             @ApiResponse(responseCode = "405", content = { @Content(schema = @Schema(implementation = Error.class)) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @Parameters({
-            @Parameter(name = "relationshipId", description = "The ID of the Relationship", required = true, in = ParameterIn.PATH),
+            @Parameter(name = "owner", description = "The ID of the Post", in = ParameterIn.QUERY),
+            @Parameter(name = "user", description = "The ID of the User", in = ParameterIn.QUERY),
     })
-    @SecurityRequirement(name = "Bearer Authentication", scopes = "USER")
-    @DeleteMapping("/posts/likes/{relationshipId}")
-    ResponseEntity<String> deleteLike(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String relationshipId) {
-        likeService.removeLike(UUID.fromString(relationshipId));
+    @SecurityRequirement(name = "Bearer Authentication", scopes = "USER, CRITIC")
+    @DeleteMapping("/posts/likes")
+    ResponseEntity<String> deleteLike(@RequestParam @NotNull @Pattern(regexp = uuidRegExp) UUID owner,
+                                      @RequestParam @NotNull @Pattern(regexp = uuidRegExp)  UUID user) {
+        likeService.removeLike(owner, user);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body("Relationship: " + relationshipId + " deleted successfully");
+                .body("Like deleted successfully");
     }
 }

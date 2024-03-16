@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface LikeService {
     void addLike(CreateLikeDto createLikeDto);
-    void removeLike(UUID likeId);
+    void removeLike(UUID ownerId, UUID userId);
 }

@@ -16,9 +16,10 @@ function ReviewCard({ expand, data, critic, arrayindex }) {
     const [clapped, setclapped] = useState(false)
 
     const addClapp = useMutation(
+        ['addClapp', data.id],
         async (formData) => {
             try {
-                
+                setclapped(true)
                 return axiosPrivate.post('/comments/likes/', formData, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -30,10 +31,10 @@ function ReviewCard({ expand, data, critic, arrayindex }) {
         },
         {
             onMutate: async () => {
-                 const previousData = queryClient.getQueryData([
-                     'getCommonReviews',
-                     params.uuid,
-                 ])
+                const previousData = queryClient.getQueryData([
+                    'getCommonReviews',
+                    params.uuid,
+                ])
                 queryClient.setQueryData(
                     ['getCommonReviews', params.uuid],
                     (oldData) => {
@@ -64,15 +65,76 @@ function ReviewCard({ expand, data, critic, arrayindex }) {
                 return previousData
             },
             onError: (err, _, rollback) => {
-                 if (rollback) {
-                     queryClient.setQueryData(
-                         ['getCommonReviews', params.uuid],
-                         rollback
-                     )
-                 }
+                if (rollback) {
+                    setclapped(false)
+                    queryClient.setQueryData(
+                        ['getCommonReviews', params.uuid],
+                        rollback
+                    )
+                }
             },
             onSuccess: () => {
-                setclapped(true)
+                
+                queryClient.invalidateQueries('getSuperReviews')
+            },
+        }
+    )
+
+    const removeClapp = useMutation(
+        ['removeClapp', data.id],
+        async () => {
+            try {
+                setclapped(false)
+                return axiosPrivate.delete(`/comments/likes?owner=${data.id}&user=${auth.id}`)
+            } catch (error) {
+                return error
+            }
+        },
+        {
+            onMutate: async () => {
+                const previousData = queryClient.getQueryData([
+                    'getCommonReviews',
+                    params.uuid,
+                ])
+                queryClient.setQueryData(
+                    ['getCommonReviews', params.uuid],
+                    (oldData) => {
+                        if (!oldData) return []
+
+                        return {
+                            ...oldData,
+                            data: {
+                                ...oldData.data,
+                                response: {
+                                    ...oldData.data.response,
+                                    content: oldData.data.response.content.map(
+                                        (item) =>
+                                            item.id == data.id
+                                                ? {
+                                                      ...item,
+                                                      likeCount:
+                                                          (item.likeCount ||
+                                                              0) - 1,
+                                                  }
+                                                : item
+                                    ),
+                                },
+                            },
+                        }
+                    }
+                )
+                return previousData
+            },
+            onError: (err, _, rollback) => {
+                if (rollback) {
+                    setclapped(true)
+                    queryClient.setQueryData(
+                        ['getCommonReviews', params.uuid],
+                        rollback
+                    )
+                }
+            },
+            onSuccess: () => {
                 queryClient.invalidateQueries('getSuperReviews')
             },
         }
@@ -82,13 +144,15 @@ function ReviewCard({ expand, data, critic, arrayindex }) {
         e.preventDefault()
         if (!isAuthenticated) {
             setisPopupOpen(true)
-        } else {
+        } else if (!clapped) {
             addClapp.mutate(
                 JSON.stringify({
                     ownerId: data.id,
                     userId: auth.id,
                 })
             )
+        } else {
+            removeClapp.mutate()
         }
     }
 
