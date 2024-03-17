@@ -1,64 +1,64 @@
 import React, { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from 'react-query';
+import { useQuery } from 'react-query'
 import axios from '../../utils/constants'
-import ErrorBoundary from '../../utils/ErrorBoundary';
+import useAuth from '../hooks/useAuth'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
-import SinglePostContainer from './SinglePostContainer';
+import SinglePostContainer from './SinglePostContainer'
 
 function HomeBlogManager() {
-const params = useParams()
+    const { auth } = useAuth()
+    const params = useParams()
 
-const getPostById = useQuery({
-    queryKey: ['getPostById', params.uuid],
-    queryFn: async () => {
-        try {
-            return axios.get(`/posts/${params.uuid}`)
-        } catch (error) {
-            return error
-        }
-    },
-    onSuccess: (data) => {
-    },
-    onError: (error) => {
-      
-    },
-})
+    const getPostById = useQuery({
+        queryKey: ['getPostById', params.uuid],
+        queryFn: async () => {
+            try {
+                const query = auth.id
+                    ? `/posts/${params.uuid}?userId=${auth.id}`
+                    : `/posts/${params.uuid}`
+                return axios.get(query)
+            } catch (error) {
+                return error
+            }
+        },
+        onSuccess: (data) => {},
+        onError: (error) => {},
+    })
 
+    const isLoading = getPostById.isLoading
 
+    const hasError = getPostById.error
 
-const isLoading = getPostById.isLoading
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
-const hasError = getPostById.error
+    if (hasError) {
+        return (
+            <div>
+                <p>
+                    Oops! Something went wrong while fetching the data.
+                    <br />
+                </p>
+            </div>
+        )
+    }
 
-if (isLoading) {
-    return <p>Loading...</p>
-}
+    const postData = getPostById.data?.data?.response
 
-if (hasError) {
     return (
-        <div>
-            <p>
-                Oops! Something went wrong while fetching the data.
-                <br />
-            </p>
-        </div>
+        <ErrorBoundary>
+            {/* home blog page is pending for now ill just implement individual post page {login ? <HomeBlogLoginContainer></HomeBlogLoginContainer> : <HomeBlogContainer></HomeBlogContainer>} */}
+            {postData && (
+                <SinglePostContainer
+                    postData={postData}
+                    uuid={params.uuid}
+                ></SinglePostContainer>
+            )}
+        </ErrorBoundary>
     )
-}
-
-const postData = getPostById.data?.data?.response
-
-  return (
-      <ErrorBoundary>
-          {/* home blog page is pending for know ill just implement individual post page {login ? <HomeBlogLoginContainer></HomeBlogLoginContainer> : <HomeBlogContainer></HomeBlogContainer>} */}
-          {postData && (
-              <SinglePostContainer
-                  postData={postData}
-                  uuid={params.uuid}
-              ></SinglePostContainer>
-          )}
-      </ErrorBoundary>
-  )
 }
 
 export default HomeBlogManager

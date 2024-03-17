@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public interface PostService {
     GetPostDto createPost(CreatePostDto createPostDto);
-    GetPostDto getPostById(UUID id);
+    GetPostDto getPostById(UUID id, String userId);
     GetPostDto updatePostById(UUID id, UpdatePostDto postDto);
     Map<String, Object>getTotalRatingByFilmId(UUID id);
     Page<GetPostDetailsDto> getReviewPostsByFilmId(UUID id, Pageable pageable);

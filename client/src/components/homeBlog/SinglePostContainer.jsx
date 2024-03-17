@@ -24,7 +24,7 @@ function SinglePostContainer({ postData }) {
     )
     const [showShare, setshowShare] = useState(false)
     const [showMore, setshowMore] = useState(false)
-    const [clapped, setclapped] = useState(false)
+    const [clapped, setclapped] = useState(postData.liked ? true : false)
 
     const addClapp = useMutation(
         ['addClapp', postData.id],

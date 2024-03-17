@@ -6,25 +6,26 @@ import com.ToorenRomaros.api.dto.publication.UpdateCommentDto;
 import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.media.ImageEntity;
 import com.ToorenRomaros.api.entities.publication.CommentEntity;
+import com.ToorenRomaros.api.entities.publication.LikeEntity;
 import com.ToorenRomaros.api.entities.user.UserEntity;
 import com.ToorenRomaros.api.exeptions.ResourceNotFoundException;
 import com.ToorenRomaros.api.exeptions.UserNotFoundException;
 import com.ToorenRomaros.api.repositories.film.FilmRepository;
 import com.ToorenRomaros.api.repositories.media.ImageRepostiroy;
 import com.ToorenRomaros.api.repositories.publication.CommentRepository;
+import com.ToorenRomaros.api.repositories.publication.LikeRepository;
 import com.ToorenRomaros.api.repositories.user.UserRepository;
 import com.ToorenRomaros.api.utils.Utils;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -32,13 +33,15 @@ public class CommentServiceImpl implements CommentService {
     private final FilmRepository filmRepository;
     private final CommentRepository commentRepository;
     private final ImageRepostiroy imageRepostiroy;
+    private final LikeRepository likeRepository;
     private final ModelMapper modelMapper;
 
-    public CommentServiceImpl(UserRepository userRepository, FilmRepository filmRepository, CommentRepository commentRepository, ImageRepostiroy imageRepostiroy, ModelMapper modelMapper) {
+    public CommentServiceImpl(UserRepository userRepository, FilmRepository filmRepository, CommentRepository commentRepository, ImageRepostiroy imageRepostiroy, LikeRepository likeRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.filmRepository = filmRepository;
         this.commentRepository = commentRepository;
         this.imageRepostiroy = imageRepostiroy;
+        this.likeRepository = likeRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -53,7 +56,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<GetCommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, Pageable pageable) {
+    public Page<GetCommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, String userId,Pageable pageable) {
         int maxRating;
         int lowRating;
         switch (rating) {
@@ -76,15 +79,21 @@ public class CommentServiceImpl implements CommentService {
         Page<CommentEntity> commentEntities = commentRepository.getAllCommentByFilmIdAndRatingOrderByField(id, reported, maxRating, lowRating, pageable);
 
         return commentEntities.map(commentEntity -> {
+
+            GetCommentDto getCommentDto = modelMapper.map(commentEntity, GetCommentDto.class);
             List<ImageEntity> imageEntities = imageRepostiroy.findAllImageByImageType("FILM_MAIN", commentEntity.getFilm().getId().toString());
+
+            if(!userId.isBlank()){
+                Optional<LikeEntity> hasLike = likeRepository.getCommentByOwnerIdAndUserId(commentEntity.getId(), UUID.fromString(userId));
+                if(hasLike.isPresent()){
+                    getCommentDto.setLiked(true);
+                }
+            }
             if (!imageEntities.isEmpty()) {
-                GetCommentDto getCommentDto = modelMapper.map(commentEntity, GetCommentDto.class);
                 getCommentDto.setMainImageId(imageEntities.get(0).getId().toString());
                 getCommentDto.setFilmName(commentEntity.getFilm().getTittle());
-                return getCommentDto;
-            } else {
-                return modelMapper.map(commentEntity, GetCommentDto.class);
             }
+            return getCommentDto;
         });
     }
 

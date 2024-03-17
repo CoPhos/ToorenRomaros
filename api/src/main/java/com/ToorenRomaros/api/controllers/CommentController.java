@@ -150,8 +150,9 @@ public class CommentController {
             @ApiResponse(responseCode = "405", content = { @Content(schema = @Schema(implementation = Error.class)) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @Parameters({
-            @Parameter(name = "filmId", description = "ID ofthe film", in = ParameterIn.PATH),
+            @Parameter(name = "filmId", description = "ID of the film", in = ParameterIn.PATH),
             @Parameter(name = "reported", description = "Filter comments based on whether they are reported or not. Default is \"false\".", in = ParameterIn.QUERY),
+            @Parameter(name = "userId", description = "Used to return true if a particular user has approved the comment by giving it a thumbs up.  Default is \"null\".", in = ParameterIn.QUERY),
             @Parameter(name = "rating", description = "Filter comments by rating type (positive, neutral, negative, or all). Default is \"all\".", in = ParameterIn.QUERY),
             @Parameter(name = "order", description = "Order comments by the specified field. Default is \"publicationDateTime\".",  example = "publicationDateTime",in = ParameterIn.QUERY),
             @Parameter(name = "page", description = "The number page of the request", in = ParameterIn.QUERY),
@@ -161,12 +162,13 @@ public class CommentController {
     ResponseEntity<Map<String, Object>> getAllCommentByFilmIdAndRatingOrderByField(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String id,
                                                                                    @RequestParam(defaultValue = "false") Boolean reported,
                                                                                    @RequestParam(defaultValue = "all") String rating,
+                                                                                   @RequestParam(defaultValue = "") String userId,
                                                                                    @RequestParam(defaultValue = "publicationDateTime") String order,
                                                                                    @RequestParam(defaultValue = "0") int page,
                                                                                    @RequestParam(defaultValue = "15") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, order));
         Map<String, Object> response = new HashMap<>();
-        response.put("response", commentService.getAllCommentByFilmIdAndRatingOrderByField(UUID.fromString(id), reported, rating, pageable));
+        response.put("response", commentService.getAllCommentByFilmIdAndRatingOrderByField(UUID.fromString(id), reported, rating, userId,pageable));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

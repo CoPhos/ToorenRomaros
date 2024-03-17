@@ -5,7 +5,7 @@ import useAuth from '../../hooks/useAuth'
 import { LoginPopUpContext } from '../../context/LoginPopUpProvider'
 import { Link, useParams } from 'react-router-dom'
 
-function ReviewCard({ expand, data, critic, arrayindex }) {
+function ReviewCard({ expand, data, critic }) {
     const queryClient = useQueryClient()
     const params = useParams()
     const axiosPrivate = useAxiosPrivate()
@@ -13,7 +13,7 @@ function ReviewCard({ expand, data, critic, arrayindex }) {
     const { auth, isAuthenticated } = useAuth()
     const [height, setHeight] = useState(0)
     const [show, setshow] = useState(false)
-    const [clapped, setclapped] = useState(false)
+    const [clapped, setclapped] = useState(data.liked ? true : false)
 
     const addClapp = useMutation(
         ['addClapp', data.id],

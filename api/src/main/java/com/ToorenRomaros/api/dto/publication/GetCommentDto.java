@@ -20,6 +20,7 @@ public class GetCommentDto {
     private String filmName;
     private String mainImageId;
     private String theatersReleaseDate;
+    private boolean liked;
 
     public UUID getId() {
         return id;
@@ -123,5 +124,13 @@ public class GetCommentDto {
 
     public void setTheatersReleaseDate(String theatersReleaseDate) {
         this.theatersReleaseDate = theatersReleaseDate;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 }

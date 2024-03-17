@@ -80,12 +80,14 @@ public class PostController {
             @ApiResponse(responseCode = "405", content = { @Content(schema = @Schema(implementation = Error.class)) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @Parameters({
-            @Parameter(name = "postId", description = "ID of the Post", required = true, in = ParameterIn.PATH)
+            @Parameter(name = "postId", description = "ID of the Post", required = true, in = ParameterIn.PATH),
+            @Parameter(name = "userId", description = "Used to return true if a particular user has approved the post by giving it a thumbs up.  Default is \"null\".", in = ParameterIn.QUERY),
     })
     @GetMapping("/posts/{postId}")
-    ResponseEntity<Map<String, Object>> getPostById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String postId) {
+    ResponseEntity<Map<String, Object>> getPostById(@PathVariable @NotNull @Pattern(regexp = uuidRegExp) String postId,
+                                                    @RequestParam(defaultValue = "") String userId) {
         Map<String, Object> response = new HashMap<>();
-        response.put("response", postService.getPostById(UUID.fromString(postId)));
+        response.put("response", postService.getPostById(UUID.fromString(postId), userId));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

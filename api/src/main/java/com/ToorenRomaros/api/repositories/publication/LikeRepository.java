@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface LikeRepository extends JpaRepository<LikeEntity, UUID> {
 
     @Query("Select c FROM LikeEntity as c WHERE c.owner.id = ?1 and c.user.id = ?2")
-    Optional<LikeEntity> getCommentByOwnerIdAndFilmId(UUID ownerId, UUID filmId);
+    Optional<LikeEntity> getCommentByOwnerIdAndUserId(UUID ownerId, UUID userId);
 }

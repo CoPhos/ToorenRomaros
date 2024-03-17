@@ -15,7 +15,7 @@ public interface CommentService {
     Page<GetCommentDto> getAllCommentsByUserIdAndReportedAndFilmType(UUID id, Boolean reported, int filmType, Pageable pageable);
     GetCommentDto getCommentByFilmIdAndUserId(UUID filmId, UUID userId);
     Page<GetCommentDto> getAllCommentByFilmId(UUID id, Boolean reported, Pageable pageable);
-    Page<GetCommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, Pageable pageable);
+    Page<GetCommentDto> getAllCommentByFilmIdAndRatingOrderByField(UUID id, Boolean reported, String rating, String userId, Pageable pageable);
     GetCommentDto updateComment(UUID id, UpdateCommentDto updateCommentDto);
     Map<String, Object> getTotalRatingByFilmId(UUID id);
     void deleteComment(UUID id);

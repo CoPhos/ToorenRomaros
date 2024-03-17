@@ -17,7 +17,7 @@ public class GetPostDto {
     private boolean isReview;
     private String mainImageId;
     private String tagId;
-
+    private boolean liked;
     public String getId() {
         return id;
     }
@@ -128,5 +128,13 @@ public class GetPostDto {
 
     public void setTagId(String tagId) {
         this.tagId = tagId;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 }

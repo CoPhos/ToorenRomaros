@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom'
 import axios from '../../utils/constants'
 import { useQueryClient, useQuery } from 'react-query'
 import ErrorBoundary from '../../utils/ErrorBoundary'
-
+import useAuth from '../hooks/useAuth'
 import FilmDetailsContainer from './FilmDetailsContainer'
 import FilmMainInfoContainer from './FilmMainInfoContainer'
 import ReviewContainer from '../review/ReviewContainer'
 
 function FilmManager() {
+    const { auth } = useAuth()
     const params = useParams()
     const queryClient = useQueryClient()
     const FILM_URL = '/films' 
@@ -213,9 +214,7 @@ function FilmManager() {
         queryKey: ['getSuperReviews', params.uuid],
         queryFn: async () => {
             try {
-                return axios.get(
-                    FILM_URL + `/${params.uuid}` + '/posts/reviews?size=8'
-                )
+                return axios.get(FILM_URL + `/${params.uuid}/posts/reviews?size=8`)
             } catch (error) {
                 return error
             }
@@ -231,15 +230,16 @@ function FilmManager() {
         queryKey: ['getCommonReviews', params.uuid],
         queryFn: async () => {
             try {
-                return axios.get(
-                    FILM_URL + `/${params.uuid}` + '/comments?size=8'
-                )
+                const query = auth.id
+                    ? FILM_URL +
+                      `/${params.uuid}/comments?size=8&userId=${auth.id}`
+                    : FILM_URL + `/${params.uuid}/comments?size=8`
+                return axios.get(query)
             } catch (error) {
                 return error
             }
         },
         onSuccess: (data) => {
-           
         },
         onError: (error) => {
            
