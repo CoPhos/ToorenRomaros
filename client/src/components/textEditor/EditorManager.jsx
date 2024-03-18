@@ -30,6 +30,7 @@ function EditorManager() {
     const [validsynthesis, setvalidsynthesis] = useState(false)
     const [validimage, setvalidimage] = useState(false)
     const [validtag, setvalidtag] = useState(false)
+    const [buttonsEnable, setbuttonsEnable] = useState(true)
 
     const edit = searchParams.get('edit') || ''
 
@@ -44,6 +45,7 @@ function EditorManager() {
 
     function handleDiscardPost(event) {
         event.preventDefault()
+        setbuttonsEnable(false)
         discardPost.mutate()
         navigate('/', { replace: true })
     }
@@ -136,6 +138,7 @@ function EditorManager() {
             }
         },
         onSuccess: (data) => {
+            navigate('/', { replace: true })
             setnotificationText('Post Deleted Successfully.')
             settype('success')
             setisNotificationPopupOpen(true)
@@ -146,6 +149,7 @@ function EditorManager() {
                 error?.response?.data?.message || 'No server response'
             )
             setisNotificationPopupOpen(true)
+            setbuttonsEnable(true)
         },
     })
 
@@ -206,6 +210,7 @@ function EditorManager() {
             validtag
         ) {
             try {
+                setbuttonsEnable(false)
                 const requests = [savePost.mutateAsync(postStatus)]
                 if (postInfo.image instanceof File) {
                     const formData = new FormData()
@@ -222,6 +227,7 @@ function EditorManager() {
                 if (allMutationsSucceeded) {
                     navigate('/', { replace: true })
                 } else {
+                    setbuttonsEnable(true)
                 }
             } catch (error) {}
         }
@@ -326,10 +332,7 @@ function EditorManager() {
     const display =
         createNewPost.data?.data?.response?.id ||
         getExistingPost.data?.data?.response?.id
-    console.log(
-       
-            getExistingPost.data?.data?.response?.id
-    )
+    
     return (
         <ErrorBoundary>
             {display ? (
@@ -350,8 +353,11 @@ function EditorManager() {
                     mainImage={
                         getExistingPost.data?.data?.response?.mainImageId || ''
                     }
+                    buttonsEnable={buttonsEnable}
                 ></EditorContainer>
-            ) : ""}
+            ) : (
+                ''
+            )}
         </ErrorBoundary>
     )
 }
