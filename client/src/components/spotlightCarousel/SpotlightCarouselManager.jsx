@@ -11,7 +11,7 @@ function SpotlightCarouselManager() {
     const getLatestPost = useQuery({
         queryKey: ['latestPosts'],
         queryFn: async () => {
-            return axios.get(POST_URL + '?page=0&size=4&latest=true')
+            return axios.get(POST_URL + '?page=0&size=6&latest=true')
         },
     })
 

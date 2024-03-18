@@ -4,20 +4,27 @@ import { BASE_URL } from '../../../utils/constants'
 
 function SpotlightCard({ insideText, images }) {
     const IMAGE_URL = "/images/"
-    const small = BASE_URL + IMAGE_URL + (images?.[0]?.id || '')
-    const medium = BASE_URL + IMAGE_URL + (images?.[1]?.id || '')
-    const large = BASE_URL + IMAGE_URL + (images?.[2]?.id || '')
-    
+    let oneDpiId, twoDpiId, threeDpiId
+
+    images.forEach((obj) => {
+        if (obj.imageSize === 'ONE_DPI') {
+            oneDpiId = BASE_URL + IMAGE_URL + obj.id
+        } else if (obj.imageSize === 'TWO_DPI') {
+            twoDpiId = BASE_URL + IMAGE_URL + obj.id
+        } else if (obj.imageSize === 'THREE_DPI') {
+            threeDpiId = BASE_URL + IMAGE_URL + obj.id
+        }
+    })
   
     return (
         <Link
             to={`/post/${insideText.id}`}
-            className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative"
+            className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative max-h[552px] max-w-[390]"
         >
             <img
-                srcSet={`${small} 480w, ${medium} 800w`}
-                sizes="(max-width: 650px) 480px, 800px"
-                src={large}
+                srcSet={`${oneDpiId} 380w, ${twoDpiId} 500w`}
+                sizes="(max-width: 650px) 480px, 600px"
+                src={threeDpiId}
                 loading="lazy"
                 alt="Elva dressed as a fairy"
                 className="w-full h-full min-h-[300px] lg:min-h-[390px] lg:w-full lg:h-auto object-cover object-center"
