@@ -32,9 +32,7 @@ public interface ImageService {
 
     List<GetListImagesDto> getAllImagesFromStreamSiteByImageTypeAndStreamSiteId(String imageType, String filmid);
 
-    default void deleteAllImagesFromEntitiy(String id, ImageRepostiroy imageRepostiroy) {
-        imageRepostiroy.deleteByOwnerId(id);
-    }
+    void deleteMainImagesByOwnerId(UUID ownerId);
 
     default String processImage(String suffix,
                                 BufferedImage bufferedImage,

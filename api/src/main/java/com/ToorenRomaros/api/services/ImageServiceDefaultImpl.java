@@ -48,14 +48,8 @@ public class ImageServiceDefaultImpl implements ImageService {
 
     @Override
     public List<GetListImagesDto> getAllImagesFromStaffByImageTypeAndFilmid(String imageType, String filmid) {
-        try{
             List<ImageEntity> imageEntities = imageRepostiroy.findAllImagesFromStaffByImageTypeAndFilmid(imageType, filmid);
             return imageEntities.stream().map(imageEntity -> modelMapper.map(imageEntity, GetListImagesDto.class)).collect(Collectors.toList());
-        }catch (Exception e){
-            log.info(e.getMessage());
-            log.info(String.valueOf(e.getCause()));
-        }
-        return null;
     }
 
     @Override
@@ -63,5 +57,10 @@ public class ImageServiceDefaultImpl implements ImageService {
         ImageEntity fileData = imageRepostiroy.findById(UUID.fromString(imageId)).orElseThrow(() -> new ResourceNotFoundException("Image not found."));
         String filePath = fileData.getFilePath();
         return Files.readAllBytes(new File(filePath).toPath());
+    }
+
+    @Override
+    public void deleteMainImagesByOwnerId(UUID ownerId) {
+        imageRepostiroy.deleteMainImageByOwnerId(ownerId.toString());
     }
 }

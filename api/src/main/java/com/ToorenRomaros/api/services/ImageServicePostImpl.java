@@ -19,6 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service("ImageServicePostImpl")
@@ -37,6 +38,9 @@ public class ImageServicePostImpl extends ImageServiceDefaultImpl {
 
     @Override
     public Map<String, String> uploadImage(MultipartFile originalImage, String ownerId, String imageType) throws IOException {
+        if(Objects.equals(imageType, "POST_MAIN")){
+            imageRepostiroy.deleteMainImageByOwnerId(ownerId);
+        }
         byte[] bytes = originalImage.getBytes();
         BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
