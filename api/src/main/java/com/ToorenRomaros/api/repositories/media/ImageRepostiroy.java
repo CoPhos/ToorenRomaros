@@ -24,4 +24,9 @@ public interface ImageRepostiroy extends JpaRepository<ImageEntity, UUID> {
     void deleteByOwnerId(String id);
     @Query(nativeQuery = true, value = "SELECT FROM image WHERE owner_id=?1")
     Optional<ImageEntity> findByOwner(UUID id);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM image WHERE owner_id=?1 AND image_type IN ('FILM_MAIN', 'USER_PROFILE','STREAMSITE_MAIN','POST_MAIN')")
+    void deleteMainImageByOwnerId(String id);
 }
