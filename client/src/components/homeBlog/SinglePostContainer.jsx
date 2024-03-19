@@ -473,7 +473,7 @@ function SinglePostContainer({ postData }) {
                 </div>
 
                 {/* content */}
-                <div className="mt-3">
+                <div className="mt-3 mb-[136px]">
                     <Editor
                         editorState={editorState}
                         readOnly={true}
