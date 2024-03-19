@@ -157,7 +157,7 @@ function EditorManager() {
         mutationKey: ['savePost', auth.id],
         mutationFn: async (postStatus) => {
             return axiosPrivate.patch(`/posts/${postId}`, {
-                tittle: postInfo.tittle,
+                tittle: postInfo.title ? postInfo.title : "Draft without title",
                 headline: postInfo.headline,
                 synthesis: postInfo.synthesis,
                 content: JSON.stringify(
@@ -203,11 +203,13 @@ function EditorManager() {
 
     async function handlesavePost(postStatus) {
         if (
-            validtittle &&
-            validheadline &&
-            validsynthesis &&
-            (validimage || getExistingPost.data?.data?.response?.mainImageId) &&
-            validtag
+            (validtittle &&
+                validheadline &&
+                validsynthesis &&
+                (validimage ||
+                    getExistingPost.data?.data?.response?.mainImageId) &&
+                validtag) ||
+            postStatus == 'DRAFT'
         ) {
             try {
                 setbuttonsEnable(false)
