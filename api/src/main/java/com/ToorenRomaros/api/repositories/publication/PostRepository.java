@@ -1,7 +1,6 @@
 package com.ToorenRomaros.api.repositories.publication;
 
 import com.ToorenRomaros.api.dao.PostRepositoryCustom;
-import com.ToorenRomaros.api.entities.film.FilmEntity;
 import com.ToorenRomaros.api.entities.publication.PostEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,7 @@ public interface PostRepository extends JpaRepository<PostEntity, UUID>, PostRep
             "where p.film.id=?1 and p.isReview=TRUE and p.status='PUBLISHED' and p.rating<=?2 and p.rating>=?3 ")
     Page<PostEntity> getReviewPostsByFilmIdAndRatingOrderByField(UUID id, int maxRating, int lowRating, Pageable pageable);
 
-    @Query("SELECT p FROM PostEntity p WHERE p.user.id=?1 and p.film.filmType=?2")
+    @Query("SELECT p FROM PostEntity p WHERE p.user.id=?1 and p.film.filmType=?2 and status='PUBLISHED'")
     Page<PostEntity> getLatestReviewsByUserIdAndFilmType(UUID userId, int filmType, Pageable pageable);
     @Query("SELECT p FROM PostEntity p WHERE p.user.id=?1 and p.status='DRAFT'")
     Page<PostEntity> getLatestDraftsByUserId(UUID userId, Pageable pageable);
