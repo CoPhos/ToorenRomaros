@@ -483,7 +483,7 @@ function SinglePostContainer({ postData }) {
 
                 <TittleCard tittle={'FROM OUR BLOG'}></TittleCard>
                 <VideosTopManager
-                    query={`?latest=true&tags=${postData.tagId}&size=4`}
+                    query={`?latest=true&popular=true&size=4`}
                     queryName={'latesPostWithtag'}
                 ></VideosTopManager>
             </div>
