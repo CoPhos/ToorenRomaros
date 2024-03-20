@@ -19,7 +19,7 @@ function SpotlightCard({ insideText, images }) {
     return (
         <Link
             to={`/post/${insideText.id}`}
-            className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative max-h[552px] max-w-[390]"
+            className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative max-h[552px] max-w-[390] min-[665px]:px-[4px]"
         >
             <img
                 srcSet={`${oneDpiId} 380w, ${twoDpiId} 500w`}
@@ -27,7 +27,7 @@ function SpotlightCard({ insideText, images }) {
                 src={threeDpiId}
                 loading="lazy"
                 alt="Elva dressed as a fairy"
-                className="w-full h-full min-h-[300px] lg:min-h-[390px] lg:w-full lg:h-auto object-cover object-center"
+                className="w-full h-full max-[425px]:min-h-[290px] max-[425px]:max-h-[290px]  max-[550px]:min-h-[320px] max-[550px]:max-h-[320px]  max-[665px]:min-h-[380px] max-[665px]:max-h-[380px] lg:min-h-[390px] lg:w-full lg:h-auto lg:max-h-none object-cover object-center"
             />
             <div
                 className=" min-h-[80px] absolute left-[28px] right-0 bottom-[16px] my-auto ml-2 p-[10px] overflow-hidden border-solid border-l-4

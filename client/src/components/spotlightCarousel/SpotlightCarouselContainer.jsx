@@ -13,7 +13,7 @@ function SpotlightCarouselContainer({ data }) {
             <Carousel
                 disableArrowsOnEnd={true}
                 enableMouseSwipe={false}
-                itemPadding={[0, 8, 0, 0]}
+                itemPadding={[0, 0, 0, 0]}
                 pagination={true}
                 breakPoints={breakPointsMain}
             >
