@@ -102,7 +102,7 @@ function MovieCard({
     )
 
     return (
-        <div className="max-w-[128px] md:max-w-[170px] min-h-[375px] flex flex-col items-start justify-between">
+        <div className="max-w-[128px] md:max-w-[170px] min-h-[285px] md:min-h-[375px] flex flex-col items-start justify-between">
             <div className="hover:cursor-pointer group">
                 <Link to={`/film/${id}`}>
                     <img
