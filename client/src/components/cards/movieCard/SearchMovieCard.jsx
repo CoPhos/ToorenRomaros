@@ -21,7 +21,7 @@ function SearchMovieCard({ data, isBlog }) {
     }
         return (
             <Link
-                to={`/film/${data.id}`}
+                to={isBlog ? `/post/${data.id}` : `/film/${data.id}`}
                 className="flex flex-row items-start justify-start gap-1"
             >
                 <img
