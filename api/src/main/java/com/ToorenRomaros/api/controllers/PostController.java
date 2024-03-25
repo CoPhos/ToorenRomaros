@@ -98,6 +98,7 @@ public class PostController {
             tags = { "Post", "get" })
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = GetPostDetailsDto.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema(implementation = Error.class)) }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema(implementation = Error.class)) }),
             @ApiResponse(responseCode = "405", content = { @Content(schema = @Schema(implementation = Error.class)) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
@@ -107,6 +108,7 @@ public class PostController {
             @Parameter(name = "latest", description = "Sort posts by the latest. Default is \"false\".", in = ParameterIn.QUERY),
             @Parameter(name = "popular", description = "Sort posts by popularity. Default is \"false\"", in = ParameterIn.QUERY),
             @Parameter(name = "search", description = "Perform a search query to filter posts by title.", in = ParameterIn.QUERY),
+            @Parameter(name = "exclude", description = "ID of a post to ignore in the results.", in = ParameterIn.QUERY),
             @Parameter(name = "page", description = "The number page of the request.", in = ParameterIn.QUERY),
             @Parameter(name = "size", description = "The page size of each request. Default is \"6\"", in = ParameterIn.QUERY),
     })
@@ -116,10 +118,11 @@ public class PostController {
                                                              @RequestParam(required = false) boolean latest,
                                                              @RequestParam(required = false) boolean popular,
                                                              @RequestParam(required = false) String search,
+                                                             @RequestParam(required = false) UUID exclude,
                                                              @RequestParam(defaultValue = "0") int page,
                                                              @RequestParam(defaultValue = "6") int size) throws Exception {
         Map<String, Object> response = new HashMap<>();
-        Map<String, Object> posts = postService.getPostByCustomQuery(tags, isReview, latest, popular, search,page, size);
+        Map<String, Object> posts = postService.getPostByCustomQuery(tags, isReview, latest, popular, search,exclude,page, size);
         response.put("response", posts.get("queryResult"));
         response.put("currentPage", posts.get("pageNumber"));
         response.put("pageSize", posts.get("pageSize"));

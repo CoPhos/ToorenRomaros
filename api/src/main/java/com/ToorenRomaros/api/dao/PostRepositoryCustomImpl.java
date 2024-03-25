@@ -16,7 +16,7 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Map<String, Object> findPostsMainInfoByLatestOrPopularOrTags(List<UUID> tags, boolean isReview, boolean latest, boolean popular,String searchQuery, int page, int size) throws SQLException {
+    public Map<String, Object> findPostsMainInfoByLatestOrPopularOrTags(List<UUID> tags, boolean isReview, boolean latest, boolean popular,String searchQuery,UUID exclude, int page, int size) throws SQLException {
         try {
             StringBuilder queryText = new StringBuilder("SELECT DISTINCT new com.ToorenRomaros.api.entities.publication.PostEntity(p.id, p.tittle, p.publicationDateTime, p.likeCount, p.headline, p.tag) FROM PostEntity p ");
             StringBuilder queryCountText = new StringBuilder("SELECT COUNT(DISTINCT p.id) FROM post as p ");
@@ -50,6 +50,14 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
                 queryCountText.append(" AND p.tittle LIKE '%");
                 queryCountText.append(searchQuery);
                 queryCountText.append("%' ");
+            }
+            if(exclude != null){
+                queryText.append(" AND p.id !='");
+                queryText.append(exclude);
+                queryText.append("' ");
+                queryCountText.append(" AND p.id !='");
+                queryCountText.append(exclude);
+                queryCountText.append("' ");
             }
             if (latest) {
                 queryText.append("ORDER BY p.publicationDateTime DESC ");

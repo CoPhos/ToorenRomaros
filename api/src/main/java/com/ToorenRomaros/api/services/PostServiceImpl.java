@@ -94,9 +94,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, String searchQuery, int page, int size) throws SQLException {
+    public Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, String searchQuery,UUID exclude, int page, int size) throws SQLException {
         Map<String, Object> result = postRepository.findPostsMainInfoByLatestOrPopularOrTags(tags, isReview, latest,
-                popular, searchQuery, page, size);
+                popular, searchQuery, exclude, page, size);
         List<PostEntity> postEntities = (List<PostEntity>) result.get("queryResult");
         result.replace("queryResult", postEntities.stream().map(postEntity -> {
             List<ImageEntity> imageEntity = imageRepostiroy.findAllImageByImageType("POST_MAIN", postEntity.getId().toString());

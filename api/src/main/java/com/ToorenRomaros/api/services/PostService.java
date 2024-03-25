@@ -22,6 +22,6 @@ public interface PostService {
     Page<GetPostDetailsDto> getLatestReviewsByUserIdAndFilmType(UUID userId, int filmType, Pageable pageable);
     Page<GetPostDetailsDto> getLatestDraftsByUserId(UUID userId, Pageable pageable);
     GetPostDetailsDto getLatestReviewPostByFilmIdAndUserIdAndRatingNotNull(UUID userId, UUID filmId);
-    Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, String searchQuery, int page, int size) throws SQLException;
+    Map<String, Object> getPostByCustomQuery(List<UUID> tags, boolean isReview, boolean latest, boolean popular, String searchQuery, UUID exclude, int page, int size) throws SQLException;
     void deletePostById(UUID id);
 }
