@@ -8,7 +8,6 @@ import ErrorBoundary from '../../utils/ErrorBoundary'
 import { ActionNotificationContext } from '../context/ActionNotificationProvider'
 
 import EditorContainer from './EditorContainer'
-import { data } from 'autoprefixer'
 function EditorManager() {
     const { auth } = useAuth()
     const axiosPrivate = useAxiosPrivate()
@@ -105,7 +104,9 @@ function EditorManager() {
                         film: params.uuid,
                         status: 'draft',
                         tag: '20c9127b-79d5-485a-8e59-c14a3dc8a777',
-                        publicationDateTime: new Date().toISOString(),
+                        publicationDateTime: new Date(
+                            'March 25, 2030 08:30:00'
+                        ).toISOString(),
                     })
                 )
             } catch (error) {
@@ -157,7 +158,7 @@ function EditorManager() {
         mutationKey: ['savePost', auth.id],
         mutationFn: async (postStatus) => {
             return axiosPrivate.patch(`/posts/${postId}`, {
-                tittle: postInfo.title ? postInfo.title : "Draft without title",
+                tittle: postInfo.tittle ? postInfo.tittle : 'Draft without title',
                 headline: postInfo.headline,
                 synthesis: postInfo.synthesis,
                 content: JSON.stringify(
@@ -165,7 +166,7 @@ function EditorManager() {
                 ),
                 status: postStatus,
                 tag: postInfo.tag,
-                publicationDateTime: new Date(),
+                publicationDateTime: new Date('March 25, 2030 08:30:00'),
             })
         },
         onSuccess: (data) => {
@@ -237,7 +238,6 @@ function EditorManager() {
 
     async function uploadImageCallback(file) {
         return new Promise((resolve, reject) => {
-            console.log(postId)
             const formData = new FormData()
             formData.append('image', file)
             formData.append('id', postId)
