@@ -19,7 +19,7 @@ function SpotlightCard({ insideText, images }) {
     return (
         <Link
             to={`/post/${insideText.id}`}
-            className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative max-h[552px] max-w-[390] min-[665px]:px-[4px]"
+            className="w-full h-auto lg:w-full lg:h-auto min-h-[260px] relative max-w[552px] max-h-[390px] min-[665px]:px-[4px]"
         >
             <img
                 srcSet={`${oneDpiId} 380w, ${twoDpiId} 500w`}
