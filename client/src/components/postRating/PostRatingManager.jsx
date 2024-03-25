@@ -6,10 +6,14 @@ import useAuth from '../hooks/useAuth'
 import { useMutation, useQuery } from 'react-query'
 import { LoginPopUpContext } from '../context/LoginPopUpProvider'
 import CriticRating from './CriticRating'
+import { ActionNotificationContext } from '../context/ActionNotificationProvider'
 
 function PostRatingManager(filmdata) {
+    
+    const { setnotificationText, settype, setisNotificationPopupOpen } =
+        useContext(ActionNotificationContext)
     const axiosPrivate = useAxiosPrivate()
-    const params = useParams()
+    const params = useParams() 
     const { auth, isAuthenticated } = useAuth()
     const { setisPopupOpen } = useContext(LoginPopUpContext)
     const [currentIndex, setcurrentIndex] = useState(null)
@@ -17,7 +21,6 @@ function PostRatingManager(filmdata) {
     const [formData, setFormData] = useState({
         text: '',
     })
-    const [criticRating, setcriticRating] = useState(null)
     const [isChecked, setIsChecked] = useState(false)
     const [fomrError, setfomrError] = useState(false)
     const [isPopupOpen, setPopupOpen] = useState(false)
@@ -82,7 +85,7 @@ function PostRatingManager(filmdata) {
                      body: formData.text,
                      publicationDateTime: new Date(),
                      spoiler: isChecked,
-                     rating: hoveredIndex * 10,
+                     rating: (hoveredIndex + 1) * 10, 
                  })
                 updateComment.mutate(data)
             } else {
@@ -92,7 +95,7 @@ function PostRatingManager(filmdata) {
                      body: formData.text,
                      publicationDateTime: new Date(),
                      spoiler: isChecked,
-                     rating: hoveredIndex * 10,
+                     rating: (hoveredIndex + 1) * 10,
                  })
                 postComment.mutate(data)
             }
@@ -113,13 +116,12 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
-           
             setHoveredIndex(data.data.response.rating / 10 - 1)
             setcurrentIndex(data.data.response.rating / 10 - 1)
+            setFormData({ text: data.data.response.body })
+            console.log(data)
         },
-        onError: (error) => {
-            
-        },
+        onError: (error) => {},
         enabled: false,
     })
     const getLatestPostCriticReview = useQuery({
@@ -159,15 +161,15 @@ function PostRatingManager(filmdata) {
             }
         },
         onSuccess: (data) => {
-            setnotificationText('Updated Successfully.')
+            setnotificationText('Added Successfully.')
             settype('success')
             setisNotificationPopupOpen(true)
-            userCommentData.refetch()
+            getCommentByFilmIdAndUserId.refetch()
         },
         onError: (error) => {
            settype('error')
            setnotificationText(
-               error?.response?.data?.message || 'No server response'
+               'No server response'
            )
            setisNotificationPopupOpen(true)
         },
@@ -191,11 +193,12 @@ function PostRatingManager(filmdata) {
            setnotificationText('Updated Successfully.')
            settype('success')
            setisNotificationPopupOpen(true)
+           getCommentByFilmIdAndUserId.refetch()
         },
         onError: (error) => {
            settype('error')
            setnotificationText(
-               error?.response?.data?.message || 'No server response'
+               'No server response'
            )
            setisNotificationPopupOpen(true)
         },
@@ -204,7 +207,7 @@ function PostRatingManager(filmdata) {
 
     useEffect(() => {
         if (auth) {
-            if (auth.id && auth?.roles?.includes('USUER')) {
+            if (auth.id && auth?.roles?.includes('USER')) {
                 getCommentByFilmIdAndUserId.refetch()
             } else if (auth.id && auth.roles.includes('CRITIC')) {
                 getLatestPostCriticReview.refetch()
