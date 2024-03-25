@@ -319,7 +319,7 @@ function ProfileContainer({
                                                         alt=""
                                                         loading="lazy"
                                                     />
-                                                    <div className="flex flex-col items-start justify-between h-full max-h-[178px]">
+                                                    <div className="flex flex-col items-start justify-between h-full max-h-[178px] grow-[2]">
                                                         <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
                                                             <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words max-w-[100%]">
                                                                 {item.filmName}
@@ -447,7 +447,7 @@ function ProfileContainer({
                                                         alt=""
                                                         loading="lazy"
                                                     />
-                                                    <div className="flex flex-col items-start justify-between h-full max-h-[178px]">
+                                                    <div className="flex flex-col items-start justify-between h-full max-h-[178px] grow-[2]">
                                                         <div className="flex flex-col items-start justify-start h-full px-1 py-2 w-full">
                                                             <p className="text-small-d-700 overflow-hidden text-ellipsis line-clamp-2 break-words ">
                                                                 {item.filmName}
