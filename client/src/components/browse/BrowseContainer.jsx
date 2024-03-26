@@ -423,7 +423,7 @@ function BrowseContainer({
                 Reset Filters
             </Link>
 
-            <div className="flex flex-row items-center justify-start gap-2 flex-wrap mt-2">
+            <div className="flex flex-row items-center justify-center gap-2 flex-wrap mt-2 mb-[120px]">
                 {filmData?.map((page, pageIndex) => (
                     <Fragment key={pageIndex}>
                         {page.data.response.map((item) => (

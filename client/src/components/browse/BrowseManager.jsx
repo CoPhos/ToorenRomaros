@@ -25,7 +25,7 @@ function BrowseManager({}) {
         return query
     }
 
-    const pageSize = 10
+    const pageSize = 12
     const defaultParams = {
         at: 'theaters',
         filmType: 'all',
@@ -195,11 +195,11 @@ function BrowseManager({}) {
         },
         getNextPageParam: (lastPage, pages) => {
             const hasNextPage =
-                parseInt(lastPage.data.currentPage, 10) + 1 <
-                parseInt(lastPage.data.totalPages, 10)
+                parseInt(lastPage.data.currentPage, 12) + 1 <
+                parseInt(lastPage.data.totalPages, 12)
 
             return hasNextPage
-                ? parseInt(lastPage.data.currentPage, 10) + 1
+                ? parseInt(lastPage.data.currentPage, 12) + 1
                 : null
         },
         onSuccess: (data) => {

@@ -14,10 +14,22 @@ function Layout({ }) {
 
     let fillColor;
     if (location.pathname === '/'){fillColor='home'}
-    else if (location.pathname.includes('/browse')){ fillColor = 'browse'}
-    else if (location.pathname.includes('/blog')){ fillColor = 'blog'}
-    else if (location.pathname.includes('/profile') ||location.pathname.includes('/critic') || location.pathname.includes('/admin')){ fillColor='profile'}
-    else if (location.pathname === '/notification') {fillColor = 'notification'}
+    else if (
+        location.pathname.includes('/browse') ||
+        location.pathname.includes('/post')
+    ) {
+        fillColor = 'browse'
+    } else if (location.pathname.includes('/blog')) {
+        fillColor = 'blog'
+    } else if (
+        location.pathname.includes('/profile') ||
+        location.pathname.includes('/critic') ||
+        location.pathname.includes('/admin')
+    ) {
+        fillColor = 'profile'
+    } else if (location.pathname === '/notification') {
+        fillColor = 'notification'
+    }
  
     const onlyLogo =
         location.pathname.includes('/forgot-password') ||

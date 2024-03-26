@@ -108,8 +108,8 @@ function MobileNavMenu({ fillColor, to }) {
                 </p>
             </Link> */}
 
-            <Link
-                to={`${to}`}
+            {to && <Link
+                to={to}
                 className="flex flex-col items-center justify-center w-5 gap-1"
             >
                 <svg
@@ -139,7 +139,7 @@ function MobileNavMenu({ fillColor, to }) {
                 >
                     Profile
                 </p>
-            </Link>
+            </Link>}
 
             <Link
                 to="/notifications"
@@ -173,6 +173,7 @@ function MobileNavMenu({ fillColor, to }) {
                     Notifications
                 </p>
             </Link>
+         
         </div>
     )
 }

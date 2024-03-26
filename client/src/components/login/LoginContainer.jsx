@@ -31,7 +31,13 @@ function LoginContainer({
     return (
         <div className={`${active === 2 ? show : notShow}`}>
             <p className="text-white-700 text-small-m-400 lg:text-small-d-400 text-center w-full">
-                Welcome back!
+                Welcome back! <br></br> <b>for testing use </b>
+                <br></br>
+                <b> user:</b>
+                john.doe <b>password:</b>tiger <br></br> <b> criticUser:</b>
+                sara.wilson
+                <b> password:</b>
+                tiger
             </p>
 
             <section className="w-[300px] min-[380px]:w-[344px]">
