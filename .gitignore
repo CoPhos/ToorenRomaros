@@ -6,6 +6,7 @@
 *.sw?
 *~
 .#*
+client/dist/
 /api/src/main/resources/media/**
 /api/src/main/resources/.jks
 /api/src/main/resources/application.properties
