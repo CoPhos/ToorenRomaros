@@ -11,7 +11,7 @@ function FilmDetailsContainer({
     streamSites,
 }) {    
     return (
-        <div className="flex flex-col items-start justify-center ml-1">
+        <div className="flex flex-col items-start justify-center ml-1 min-h-[700px]">
             <TittleCard
                 tittle={'Movie Info'}
                 to={null}

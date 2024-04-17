@@ -17,12 +17,14 @@ function SpotlightCarouselContainer({ data }) {
                 pagination={true}
                 breakPoints={breakPointsMain}
             >
-                {data.map(item => {
+                {data.map((item, index) => {
+                    const lazyLoading = index > 1 ? 'lazy' : 'eager'
                     return (
                         <SpotlightCard
                             key={item.id}
                             insideText={item}
                             images={item.images}
+                            lazyLoading={lazyLoading}
                         ></SpotlightCard>
                     )
                 })}

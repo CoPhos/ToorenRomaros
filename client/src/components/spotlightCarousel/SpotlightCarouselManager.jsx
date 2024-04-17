@@ -3,6 +3,7 @@ import axios from '../../utils/constants'
 import SpotlightCarouselContainer from './SpotlightCarouselContainer'
 import { useQuery } from 'react-query'
 import { useQueryClient } from 'react-query'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 function SpotlightCarouselManager() {
     const queryClient = useQueryClient()
@@ -49,22 +50,30 @@ function SpotlightCarouselManager() {
         { enabled: !!getLatestPost.data }
     )
     if (getLatestPost.isLoading || getAllImages.isLoading) {
-        return <p></p>
+        return <div className="h-[390px] "></div>
     }
-    return getLatestPost.error || getAllImages.error ? (
-        <div>
-            <p>
-                Oops! Something went wrong while fetching the data.
-                <br></br>
-                {getLatestPost.error?.message}
-                <br></br>
-                {getAllImages.error?.message}
-            </p>
+    return (
+        <div className='min-h-[325px]'>
+            {getLatestPost.error || getAllImages.error ? (
+                <div>
+                    <p>
+                        Oops! Something went wrong while fetching the data.
+                        <br></br>
+                        {getLatestPost.error?.message}
+                        <br></br>
+                        {getAllImages.error?.message}
+                    </p>
+                </div>
+            ) : (
+                getLatestPost.data.data.response && (
+                    <ErrorBoundary>
+                        <SpotlightCarouselContainer
+                            data={getLatestPost.data.data.response}
+                        />
+                    </ErrorBoundary>
+                )
+            )}
         </div>
-    ) : (
-        <SpotlightCarouselContainer
-            data={getLatestPost.data.data.response}
-        />
     )
 }
 

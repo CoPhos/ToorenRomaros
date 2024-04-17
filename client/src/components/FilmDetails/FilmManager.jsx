@@ -295,35 +295,42 @@ function FilmManager() {
 
    return (
        <ErrorBoundary>
-           {filmData && commonRatingData && superRatingData && (
-               <FilmMainInfoContainer
-                   data={filmData}
-                   commonRatings={commonRatingData}
-                   superRatings={superRatingData}
-               ></FilmMainInfoContainer>
-           )}
-           {filmData && staffData && genreData && streamSitesData && (
-               <FilmDetailsContainer
-                   data={filmData}
-                   staff={staffData}
-                   genre={genreData}
-                   streamSites={streamSitesData}
-               ></FilmDetailsContainer>
-           )}
-           {reviewsData &&
-               commentsData &&
-               commonRatingData &&
-               superRatingData &&
-               filmData && (
-                   <ReviewContainer
+           <div className="min-h-[500px]">
+               {filmData && commonRatingData && superRatingData && (
+                   <FilmMainInfoContainer
+                       data={filmData}
                        commonRatings={commonRatingData}
                        superRatings={superRatingData}
-                       filmData={filmData}
-                       reviews={reviewsData}
-                       uuid={params.uuid}
-                       comments={commentsData}
-                   ></ReviewContainer>
+                   ></FilmMainInfoContainer>
                )}
+           </div>
+
+           <div className="min-h-[700px]">
+               {filmData && staffData && genreData && streamSitesData && (
+                   <FilmDetailsContainer
+                       data={filmData}
+                       staff={staffData}
+                       genre={genreData}
+                       streamSites={streamSitesData}
+                   ></FilmDetailsContainer>
+               )}
+           </div>
+           <div className="min-h-[1000px]">
+               {reviewsData &&
+                   commentsData &&
+                   commonRatingData &&
+                   superRatingData &&
+                   filmData && (
+                       <ReviewContainer
+                           commonRatings={commonRatingData}
+                           superRatings={superRatingData}
+                           filmData={filmData}
+                           reviews={reviewsData}
+                           uuid={params.uuid}
+                           comments={commentsData}
+                       ></ReviewContainer>
+                   )}
+           </div>
        </ErrorBoundary>
    )
 }

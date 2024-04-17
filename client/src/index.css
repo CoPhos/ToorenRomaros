@@ -28,6 +28,10 @@ html {
     padding: 0px;
 }
 
+img {
+    aspect-ratio: attr(width) / attr(height);
+}
+
 footer {
     margin-top: auto;
 }

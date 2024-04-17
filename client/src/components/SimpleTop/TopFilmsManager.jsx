@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useQuery } from 'react-query'
 import axios from '../../utils/constants'
 import TopFilmsContainer from './TopFilmsContainer'
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 function TopFilmsManager({ tittle, to, linkText, parameters, queryName }) {
 
@@ -22,7 +23,7 @@ function TopFilmsManager({ tittle, to, linkText, parameters, queryName }) {
     const hasError = getFilms.error
 
     if (isLoading) {
-        return <p>Loading...</p>
+        return <div className="h-[600px]"></div>
     }
 
     if (hasError) {
@@ -39,12 +40,18 @@ function TopFilmsManager({ tittle, to, linkText, parameters, queryName }) {
     const data = getFilms.data?.data?.response
 
     return (
-        <TopFilmsContainer
-            tittle={tittle}
-            to={to}
-            linkText={linkText}
-            data={data}
-        ></TopFilmsContainer>
+        <div className='min-h-[540px]'>
+            {data && (
+                <ErrorBoundary>
+                    <TopFilmsContainer
+                        tittle={tittle}
+                        to={to}
+                        linkText={linkText}
+                        data={data}
+                    ></TopFilmsContainer>
+                </ErrorBoundary>
+            )}
+        </div>
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import axios from '../../utils/constants'
@@ -27,6 +27,24 @@ function HomeBlogManager() {
         onError: (error) => {},
     })
 
+     function loadFacebookSDK() {
+         if (!window.FB) {
+             const script = document.createElement('script')
+             script.async = true
+             script.defer = true
+             script.crossOrigin = 'anonymous'
+             script.src =
+                 'https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v19.0'
+             script.nonce = '9Z9pNreS'
+             document.body.appendChild(script)
+         }
+     }
+
+     useEffect(() => {
+         loadFacebookSDK()
+     }, [])
+
+
     const isLoading = getPostById.isLoading
 
     const hasError = getPostById.error
@@ -51,12 +69,14 @@ function HomeBlogManager() {
     return (
         <ErrorBoundary>
             {/* home blog page is pending for now ill just implement individual post page {login ? <HomeBlogLoginContainer></HomeBlogLoginContainer> : <HomeBlogContainer></HomeBlogContainer>} */}
-            {postData && (
-                <SinglePostContainer
-                    postData={postData}
-                    uuid={params.uuid}
-                ></SinglePostContainer>
-            )}
+            <div className='min-h-[100vh]'>
+                {postData && (
+                    <SinglePostContainer
+                        postData={postData}
+                        uuid={params.uuid}
+                    ></SinglePostContainer>
+                )}
+            </div>
         </ErrorBoundary>
     )
 }

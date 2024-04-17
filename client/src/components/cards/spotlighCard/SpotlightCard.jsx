@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { BASE_URL } from '../../../utils/constants'
 
-function SpotlightCard({ insideText, images }) {
-    const IMAGE_URL = "/images/"
+function SpotlightCard({ insideText, images, lazyLoading }) {
+    const IMAGE_URL = '/images/'
     let oneDpiId, twoDpiId, threeDpiId
 
     images.forEach((obj) => {
@@ -15,7 +15,7 @@ function SpotlightCard({ insideText, images }) {
             threeDpiId = BASE_URL + IMAGE_URL + obj.id
         }
     })
-  
+
     return (
         <Link
             to={`/post/${insideText.id}`}
@@ -24,8 +24,8 @@ function SpotlightCard({ insideText, images }) {
             <img
                 srcSet={`${oneDpiId} 380w, ${twoDpiId} 500w`}
                 sizes="(max-width: 650px) 480px, 600px"
-                src={threeDpiId}
-                loading="lazy"
+                src={twoDpiId}
+                loading={lazyLoading}
                 alt="Elva dressed as a fairy"
                 className="w-full h-full max-[425px]:min-h-[290px] max-[425px]:max-h-[290px]  max-[550px]:min-h-[320px] max-[550px]:max-h-[320px]  max-[665px]:min-h-[380px] max-[665px]:max-h-[380px] lg:min-h-[390px] lg:w-full lg:h-auto lg:max-h-none object-cover object-center"
             />

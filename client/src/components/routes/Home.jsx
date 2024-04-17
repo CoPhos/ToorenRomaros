@@ -13,7 +13,7 @@ import VideosTopManager from '../videosTop/VideosTopManager';
 function Home() {
     return (
         <ErrorBoundary>
-            <div className="mb-[136px]">
+            <div className="mb-[136px] min-h-[300vh]">
                 <SpotlightCarouselManager></SpotlightCarouselManager>
 
                 <TittleCard
@@ -25,7 +25,7 @@ function Home() {
                 ></TittleCard>
                 <RegularCarouselManager
                     parameters={
-                        '?atTheaters=1&genres=&suitableFor=&streamId=&orderBy=added_date-Desc&size=15'
+                        '?atTheaters=1&genres=&suitableFor=&streamId=&orderBy=added_date-Desc&size=10'
                     }
                     queryName={'NewMovies'}
                     promiseName={'NewMoviesImages'}
@@ -38,7 +38,7 @@ function Home() {
                 ></TittleCard>
                 <RegularCarouselManager
                     parameters={
-                        '?atStreaming=1&filmType=2&genres=&suitableFor=&streamId=&orderBy=added_date-Desc&size=15'
+                        '?atStreaming=1&filmType=2&genres=&suitableFor=&streamId=&orderBy=added_date-Desc&size=10'
                     }
                     queryName={'NewTvSeries'}
                     promiseName={'NewTvSeriesImages'}
@@ -101,7 +101,7 @@ function Home() {
                 ></TittleCard>
                 <RegularCarouselManager
                     parameters={
-                        '?atTheaters=1&genres=&suitableFor=&streamId=&orderBy=view_count-Desc&size=15'
+                        '?atTheaters=1&genres=&suitableFor=&streamId=&orderBy=view_count-Desc&size=10'
                     }
                     queryName={'popularMoviesAtTheaters'}
                     promiseName={'popularMoviesAtTheatersImages'}
@@ -116,7 +116,7 @@ function Home() {
                 ></TittleCard>
                 <RegularCarouselManager
                     parameters={
-                        '?&atStreaming=1&filmType=1&genres=&suitableFor=&streamId=&orderBy=average_super_rating-Desc&size=15'
+                        '?&atStreaming=1&filmType=1&genres=&suitableFor=&streamId=&orderBy=average_super_rating-Desc&size=10'
                     }
                     queryName={'latestCertified'}
                     promiseName={'latestCertifiedImages'}

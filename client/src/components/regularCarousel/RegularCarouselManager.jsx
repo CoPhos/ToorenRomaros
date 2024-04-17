@@ -16,21 +16,29 @@ function RegularCarouselManager({ parameters, queryName, promiseName }) {
     })
 
     if (getFilms.isLoading) {
-        return <p></p>
+        return <div className="h-[390px] "></div>
     }
 
-    return getFilms.error ? (
-        <div>
-            <p>
-                Oops! Something went wrong while fetching the data.
-                <br></br>
-                {getFilms.error?.message}
-            </p>
+    return (
+        <div className="min-h-[285px]">
+            {getFilms.error ? (
+                <div>
+                    <p>
+                        Oops! Something went wrong while fetching the data.
+                        <br></br>
+                        {getFilms.error?.message}
+                    </p>
+                </div>
+            ) : (
+                getFilms.data.data.response && (
+                    <ErrorBoundary>
+                        <RegularCarouselContainer
+                            data={getFilms.data.data.response}
+                        />
+                    </ErrorBoundary>
+                )
+            )}
         </div>
-    ) : (
-        <ErrorBoundary>
-            <RegularCarouselContainer data={getFilms.data.data.response} />
-        </ErrorBoundary>
     )
 }
 

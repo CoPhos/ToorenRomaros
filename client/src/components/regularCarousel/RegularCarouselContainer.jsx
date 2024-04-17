@@ -22,7 +22,8 @@ function RegularCarouselContainer({ data }) {
                 pagination={false}
                 breakPoints={breakPointsMovie}
             >
-                {data.map((item) => {
+                {data.map((item, index) => {
+                    const lazyLoading = index > 4 ? 'lazy' : 'eager'
                     return (
                         <MovieCard
                             key={item.id}
@@ -30,6 +31,7 @@ function RegularCarouselContainer({ data }) {
                             id={item.id}
                             images={item.mainImageId}
                             addWathcList={true}
+                            lazyLoading={lazyLoading}
                         />
                     )
                 })}
