@@ -6,6 +6,7 @@ function PasswordRecoverContainer({
     handleOnSumbit,
     validEmail,
     emailsended,
+    isLoading,
 }) {
     return (
         <div className="flex flex-col items-start justify-start gap-2 p-8 rounded-md min-[596px]:w-[596px] w-full bg-white-50 mx-auto mt-6">
@@ -83,6 +84,7 @@ function PasswordRecoverContainer({
                             </p>
                         </div>
                         <button
+                            disabled={isLoading}
                             type="submit"
                             className="flex flex-row items-center justify-center mt-2 w-full text-white-50 text-small-m-400 lg:text-small-d-400 rounded bg-[#404040] py-1 h-full hover:cursor-pointer hover:opacity-50"
                         >

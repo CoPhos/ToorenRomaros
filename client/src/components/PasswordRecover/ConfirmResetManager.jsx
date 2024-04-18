@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import ConfirmResetContainer from './ConfirmResetContainer'
 import { useMutation } from 'react-query'
 import axios from '../../utils/constants'
-import ErrorBoundary from '../../utils/ErrorBoundary';
+import ErrorBoundary from '../../utils/ErrorBoundary'
 
 function ConfirmResetManager() {
     const PASSWORD_REGEX =
@@ -18,12 +18,13 @@ function ConfirmResetManager() {
     const [matchPasswordFocus, setmatchPasswordFocus] = useState(false)
     const [errorMessage, seterrorMessage] = useState('')
     const token = searchParams.get('token') || ''
+    const [isLoading, setIsLoading] = useState(false)
+    const [redirect, setredirect] = useState(false)
 
     const sendNewPassword = useMutation({
         mutationKey: [sendNewPassword],
         mutationFn: async () => {
             try {
-                
                 return axios.patch(
                     '/auth/reset-password',
                     JSON.stringify({
@@ -41,11 +42,14 @@ function ConfirmResetManager() {
             }
         },
         onSuccess: (data) => {
-
+            setredirect(true)
         },
         onError: (error) => {
             errorRef.current.focus()
             seterrorMessage(error.code)
+        },
+        onSettled: () => {
+            setIsLoading(false)
         },
         enabled: false,
     })
@@ -56,6 +60,7 @@ function ConfirmResetManager() {
             seterrorMessage('Invalid Entry')
             return
         }
+        setIsLoading(true)
         sendNewPassword.mutate()
     }
 
@@ -80,6 +85,8 @@ function ConfirmResetManager() {
                 validmatchPassword={validmatchPassword}
                 matchPasswordFocus={matchPasswordFocus}
                 handleSubmit={handleSubmit}
+                isLoading={isLoading}
+                redirect={redirect}
             ></ConfirmResetContainer>
         </ErrorBoundary>
     )
