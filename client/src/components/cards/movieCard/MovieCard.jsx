@@ -165,7 +165,7 @@ function MovieCard({
                                 <path
                                     d="M4.12744 5.68774L4.15875 5.65643L4.12744 5.68774Z"
                                     stroke="#231F20"
-                                    stroke-miterlimit="10"
+                                    strokeMiterlimit="10"
                                 />
                                 <path
                                     d="M16.9948 5.65643L16.8696 5.60425L13.5771 8.51077H17V5.72948L16.9948 5.65643Z"
