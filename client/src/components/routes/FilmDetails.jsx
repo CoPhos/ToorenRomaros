@@ -39,12 +39,11 @@ function FilmDetails() {
               promiseName={'latestCertifiedImages'}
           ></RegularCarouselManager>
 
-          <TittleCard
-              tittle={'FROM OUR BLOG'}
-              to={'/adasd'}
-              linkText={null}
-          ></TittleCard>
-          <BlogTopManager></BlogTopManager>
+          <TittleCard tittle={'FROM OUR BLOG'}></TittleCard>
+          <VideosTopManager
+              query={`?latest=true&popular=true&size=4`}
+              queryName={'latesPostWithtag'}
+          ></VideosTopManager>
       </Fragment>
   )
 }
