@@ -12,6 +12,7 @@ function SignUpManager({ active, closePopup }) {
       const recaptchaRef = useRef()
       const [captchaToken, setcaptchaToken] = useState(null)
       const [submiteEnable, setsubmiteEnable] = useState(false)
+      const [isLoading, setisLoading] = useState(false)
 
       function onChange(value) {
           setcaptchaToken(value)
@@ -137,6 +138,7 @@ function SignUpManager({ active, closePopup }) {
             seterrorMessage('Invalid Entry')
             return
         }
+        setisLoading(true)
         mutation.mutate()
     }
 
@@ -172,6 +174,7 @@ function SignUpManager({ active, closePopup }) {
             setsubmiteEnable={setsubmiteEnable}
             onChange={onChange}
             recaptchaRef={recaptchaRef}
+            isLoading={isLoading}
         ></SignUpContainer>
     )
 }

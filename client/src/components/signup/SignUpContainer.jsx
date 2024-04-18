@@ -32,15 +32,16 @@ function SignUpContainer({
     setsubmiteEnable,
     onChange,
     recaptchaRef,
+    isLoading,
 }) {
     const show = 'flex flex-col items-center justify-start gap-2 w-full'
     const notShow = 'hidden'
 
-     useEffect(() => {
-         if (captchaToken) {
-             setsubmiteEnable(true)
-         }
-     }, [captchaToken])
+    useEffect(() => {
+        if (captchaToken) {
+            setsubmiteEnable(true)
+        }
+    }, [captchaToken])
 
     return (
         <div className={`${active === 1 ? show : notShow}`}>
@@ -620,13 +621,11 @@ function SignUpContainer({
                     <button
                         type="submit"
                         disabled={
-                            !validUsername ||
+                            (isLoading ||!validUsername ||
                             !validEmail ||
                             !validPassword ||
                             !validmatchPassword ||
-                            !submiteEnable
-                                ? true
-                                : false
+                            !submiteEnable)
                         }
                         className="flex flex-row items-center justify-center mt-2 w-full text-white-50 text-small-m-400 lg:text-small-d-400 rounded bg-[#404040] py-1 h-full hover:cursor-pointer hover:opacity-50"
                     >

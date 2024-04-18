@@ -15,6 +15,7 @@ function LoginManager({ active, closePopup }) {
     const recaptchaRef = useRef()
     const [captchaToken, setcaptchaToken] = useState(null)
     const [submiteEnable, setsubmiteEnable] = useState(false)
+    const [isLoading, setisLoading] = useState(false)
 
     function onChange(value) {
         setcaptchaToken(value)
@@ -107,6 +108,7 @@ function LoginManager({ active, closePopup }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         mutation.mutate()
+        setisLoading(true)
     }
 
     return (
@@ -126,6 +128,7 @@ function LoginManager({ active, closePopup }) {
             onChange={onChange}
             recaptchaRef={recaptchaRef}
             closePopup={closePopup}
+            isLoading={isLoading}
         ></LoginContainer>
     )
 }
