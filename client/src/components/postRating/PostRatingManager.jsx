@@ -119,7 +119,6 @@ function PostRatingManager(filmdata) {
             setHoveredIndex(data.data.response.rating / 10 - 1)
             setcurrentIndex(data.data.response.rating / 10 - 1)
             setFormData({ text: data.data.response.body })
-            console.log(data)
         },
         onError: (error) => {},
         enabled: false,
