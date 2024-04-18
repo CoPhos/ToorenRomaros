@@ -1,21 +1,18 @@
-const path = require("path");
+const path = require('path')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const BundleAnalyzerPlugin =
     require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const dotenv = require('dotenv').config({ path: __dirname + '/.env' })
-const isDevelopment = process.env.NODE_ENV !== 'production'
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
     mode: 'production',
-    optimization: {
-        minimizer: [new TerserPlugin()],
-    },
     entry: './src/index.js',
     output: {
-        filename: 'main.js',
+        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
     },
@@ -27,7 +24,11 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': JSON.stringify(dotenv.parsed),
         }),
+        new MiniCssExtractPlugin(),
     ],
+    optimization: {
+        minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
+    },
     resolve: {
         fallback: {
             fs: false,
@@ -49,7 +50,9 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader'],
+                use: {
+                    loader: 'babel-loader',
+                },
             },
             {
                 test: /\.(png|jpe?g|gif|webp)$/i,
@@ -60,15 +63,10 @@ module.exports = {
                 ],
             },
             {
-                test: /\.css$/i,
+                test: /\.css$/,
                 use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1,
-                        },
-                    },
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
                     'postcss-loader',
                 ],
             },
