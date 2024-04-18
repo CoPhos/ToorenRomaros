@@ -403,7 +403,7 @@ function Navbar({
                                                         : notFocus
                                                 }`}
                                             >
-                                                Register
+                                                Sign in
                                             </button>
                                             <button
                                                 onClick={() => setactive(2)}
@@ -413,18 +413,18 @@ function Navbar({
                                                         : notFocus
                                                 }`}
                                             >
-                                                Sign in
+                                                Register
                                             </button>
                                         </div>
                                         <Suspense fallback={<h1></h1>}>
-                                            <SignUpManager
-                                                active={active}
-                                                closePopup={closePopup}
-                                            ></SignUpManager>
                                             <LoginManager
                                                 active={active}
                                                 closePopup={closePopup}
                                             ></LoginManager>
+                                            <SignUpManager
+                                                active={active}
+                                                closePopup={closePopup}
+                                            ></SignUpManager>
                                         </Suspense>
                                     </div>
                                 </div>

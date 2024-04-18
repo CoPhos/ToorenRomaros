@@ -44,7 +44,7 @@ function SignUpContainer({
     }, [captchaToken])
 
     return (
-        <div className={`${active === 1 ? show : notShow}`}>
+        <div className={`${active === 2 ? show : notShow}`}>
             <p className="text-white-700 text-small-m-400 lg:text-small-d-400 text-center w-full">
                 Get started with a free Cinnabar account to rate, review, and
                 discover top movies, TV shows, posts, and more!
