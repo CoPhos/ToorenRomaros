@@ -14,6 +14,7 @@ function ReviewCard({ expand, data, critic }) {
     const [height, setHeight] = useState(0)
     const [show, setshow] = useState(false)
     const [clapped, setclapped] = useState(data.liked ? true : false)
+    const [showSpoiler, setshowSpoiler] = useState(false)
 
     const addClapp = useMutation(
         ['addClapp', data.id],
@@ -178,6 +179,11 @@ function ReviewCard({ expand, data, critic }) {
         ? 'line-clamp-[unset]'
         : ' overflow-hidden text-ellipsis line-clamp-4'
 
+    const blurClasses =
+        showSpoiler || !Boolean(data.spoiler)
+            ? 'blur-none'
+            : 'blur pointer-events-none '
+
     const dateObject = new Date(data.publicationDateTime)
     let textComponent
     if (height > 98 && expand) {
@@ -239,7 +245,7 @@ function ReviewCard({ expand, data, critic }) {
 
     const reportDiv = (
         <div
-            className="flex flex-row items-start justify-start hover:cursor-pointer group w-fit pt-2 pr-2 gap-[4px]"
+            className="flex flex-row items-start justify-start hover:cursor-pointer group w-fit pt-2 pr-2 gap-[4px] "
             onClick={(e) => handleClapClick(e)}
         >
             <svg
@@ -307,8 +313,15 @@ function ReviewCard({ expand, data, critic }) {
     )
 
     return (
-        <div className="flex flex-col items-start justify-between min-h-[300px] py-2 rounded-md bg-[#f2f2f2] w-full">
-            <div className="flex flex-col items-start justify-start gap-2 px-2">
+        <div
+            className="flex flex-col items-start justify-between min-h-[300px] py-2 rounded-md bg-[#f2f2f2] w-full relative"
+            onClick={() => {
+                setshowSpoiler(true)
+            }}
+        >
+            <div
+                className={`flex flex-col items-start justify-start gap-2 px-2 ${blurClasses} h-full`}
+            >
                 <Link
                     to="/user123"
                     className="flex flex-row items-center justify-start gap-1 group hover:cursor-pointer"
@@ -333,6 +346,11 @@ function ReviewCard({ expand, data, critic }) {
                 </Link>
                 {textComponent}
             </div>
+            {!showSpoiler && Boolean(data.spoiler) && (
+                <div className="absolute rounded-lg  top-[0px] left-[0px] w-full h-full flex flex-row items-center justify-center text-small-m-300 lg:text-small-d-300 p-2 hover:cursor-pointer">
+                    Show Spoiler
+                </div>
+            )}
             <div className="flex flex-row items-start justify-end border-t border-[#d8d8d8] w-full">
                 {expand ? reportDiv : fullReviewDiv}
             </div>
