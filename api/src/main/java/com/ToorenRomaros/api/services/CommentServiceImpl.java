@@ -115,7 +115,7 @@ public class CommentServiceImpl implements CommentService {
     }
     @Override
     public GetCommentDto getCommentByFilmIdAndUserId(UUID filmId, UUID userId) {
-        CommentEntity commentEntity = commentRepository.getCommentByFilmIdAndUserId(filmId.toString(), userId.toString()).orElseThrow(() -> new ResourceNotFoundException("No Post Found."));
+        CommentEntity commentEntity = commentRepository.getCommentByFilmIdAndUserId(filmId.toString(), userId.toString()).orElse(new CommentEntity());
         return modelMapper.map(commentEntity, GetCommentDto.class);
     }
     @Override

@@ -23,7 +23,7 @@ public class CommentEntity{
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
     @Column(name = "BODY", columnDefinition = "TEXT")
-    private String body;
+    private String body = "";
     @Column(name = "PUBLICATION_DATETIME", columnDefinition = "DATETIME")
     private LocalDateTime publicationDateTime = LocalDateTime.now();
     @Column(name = "LIKE_COUNT", columnDefinition = "VARCHAR(10)")
@@ -35,7 +35,7 @@ public class CommentEntity{
     @NotNull(message = "Rating can not be null")
     @Min(value=0, message = "Rating can not be less than 0")
     @Max(value = 100, message = "Rating can not be bigger than 100")
-    private int rating;
+    private int rating = 0;
     @Column(name = "IS_SPOILER", columnDefinition = "BOOLEAN")
     private boolean spoiler = false;
     @ManyToOne
