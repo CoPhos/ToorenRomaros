@@ -71,7 +71,7 @@ function EditorContainer(props) {
     const imageError = !props.validimage && !props.mainImage
     const currentImage = props.mainImage && !props.validimage
     return (
-        <div className="flex flex-col items-start justify-start gap-2 w-full mt-4">
+        <div className="flex flex-col items-start justify-start gap-2 w-full mt-6 mb-[120px]">
             <form
                 onSubmit={(e) => handleSubmit(e)}
                 className="flex flex-col items-start justify-start gap-2 w-full"

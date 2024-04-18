@@ -192,7 +192,7 @@ function SinglePostContainer({ postData }) {
     }, [showShare, showMore])
 
     return (
-        <div className="w-full ">
+        <div className="w-full mb-[120px]">
             <div className="max-w-[685px] px-1 lg:px-3 py-4 mx-auto">
                 {/* tittle  */}
                 <div className="w-full flex flex-col items-start justify-start">
