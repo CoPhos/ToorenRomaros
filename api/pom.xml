@@ -106,6 +106,104 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.44.0</version>
+
+				<configuration>
+					<dockerHost>unix:///var/run/docker.sock</dockerHost>
+					<useColor>true</useColor>
+					<verbose>true</verbose>
+					<images>
+<!--						<image>-->
+<!--							<alias>maven-demo</alias>-->
+<!--							<name>my1795/docker-demo:${project.version}</name>-->
+<!--							<build>-->
+<!--								<dockerFileDir>${project.basedir}/target</dockerFileDir>-->
+<!--								<assembly>-->
+<!--									<mode>dir</mode>-->
+<!--									<descriptorRef>artifact</descriptorRef>-->
+<!--								</assembly>-->
+<!--								<tags>-->
+<!--									<tag>latest</tag>-->
+<!--								</tags>-->
+<!--							</build>-->
+<!--							<run>-->
+<!--								<ports>-->
+<!--									<port>9090:9090</port>-->
+<!--								</ports>-->
+<!--								<links>-->
+<!--									<link>mysql:mysqldb</link>-->
+<!--								</links>-->
+<!--								<dependsOn>-->
+<!--									<container>mysqldb</container>-->
+<!--								</dependsOn>-->
+<!--								<env>-->
+<!--									<SPRING_DATASOURCE_URL>jdbc:mysql://mysqldb:3306/tooren_romaros</SPRING_DATASOURCE_URL>-->
+<!--								</env>-->
+<!--							</run>-->
+<!--						</image>-->
+						<image>
+							<alias>maven-demo</alias>
+							<name>cinnabar/docker:${project.version}</name>
+							<build>
+								<from>openjdk:17-alpine</from>
+								<assemblies>
+									<assembly>
+										<mode>dir</mode>
+										<descriptorRef>artifact</descriptorRef>
+									</assembly>
+								</assemblies>
+								<entryPoint>java -jar maven/${project.artifactId}-${project.version}.jar</entryPoint>
+							</build>
+							<run>
+								<ports>
+									<port>9090:9090</port>
+								</ports>
+								<links>
+									<link>mysql:mysqldb</link>
+								</links>
+								<dependsOn>
+									<container>mysqldb</container>
+								</dependsOn>
+								<env>
+									<SPRING_DATASOURCE_URL>jdbc:mysql://mysqldb:3306/tooren_romaros</SPRING_DATASOURCE_URL>
+								</env>
+							</run>
+						</image>
+						<image>
+							<name>mysql</name>
+							<alias>mysqldb</alias>
+							<run>
+								<ports>
+									<port>3306:3306</port>
+								</ports>
+								<env>
+									<MYSQL_ROOT_PASSWORD>${mysql.password}</MYSQL_ROOT_PASSWORD>
+									<MYSQL_USER>springuser</MYSQL_USER>
+									<MYSQL_PASSWORD>${mysql.password}</MYSQL_PASSWORD>
+									<MYSQL_DATABASE>tooren_romaros</MYSQL_DATABASE>
+								</env>
+								<wait>
+									<time>10000</time>
+								</wait>
+							</run>
+						</image>
+					</images>
+				</configuration>
+
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>default</id>-->
+<!--						<phase>install</phase>-->
+<!--						<goals>-->
+<!--							<goal>run</goal>-->
+<!--							<goal>build</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+			</plugin>
 <!--			<plugin>-->
 <!--			<groupId>org.bsc.maven</groupId>-->
 <!--			<artifactId>maven-processor-plugin</artifactId>-->
@@ -132,8 +230,6 @@
 <!--				</dependency>-->
 <!--			</dependencies>-->
 <!--		</plugin>-->
-
 		</plugins>
 	</build>
-
 </project>
